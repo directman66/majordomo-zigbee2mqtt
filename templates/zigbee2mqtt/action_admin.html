@@ -1,9 +1,25 @@
+<!-- table zwave_devices search -->
+
+
+	 <ul class="nav nav-tabs">
+
+<li [#if TAB=="" || TAB=="indata" #] class="active" [#endif#]><a href="?data_source=<#DATA_SOURCE#>&view_mode=&id=<#ID#>&tab=devices">Zigbee2mqtt devices</a> </li>
+<li [#if TAB=="log" #] class="active" [#endif#]><a href="?data_source=<#DATA_SOURCE#>&view_mode=&id=<#ID#>&tab=log">Log</a> </li>
+<li [#if TAB=="settings" #] class="active" [#endif#]><a href="?data_source=<#DATA_SOURCE#>&view_mode=&id=<#ID#>&tab=settings">Settings</a> </li>
+<li [#if TAB=="help" #] class="active" [#endif#]><a href="?view_mode=<#VIEW_MODE#>&tab=help">Help</a> </li>	
+</ul>
 
  <!-- action usual -->
  <!-- table mqtt search -->
- [#if VIEW_MODE="search_mqtt" || VIEW_MODE=""#]
+ [#if TAB="" || TAB="devices"#]
+ [#if VIEW_MODE="device" || VIEW_MODE=""#]
+  [#inc devices.html#]
+ [#endif VIEW_MODE#]
+
+ [#if VIEW_MODE="view_mqtt"#]
   [#inc mqtt_search_admin.html#]
  [#endif VIEW_MODE#]
+
  <!-- / table mqtt search -->
  <!-- table mqtt edit -->
  [#if VIEW_MODE="edit_mqtt"#]
@@ -15,3 +31,9 @@
    [#inc mqtt_view.html#]
  [#endif VIEW_MODE#]
  <!-- / table mqtt view -->
+
+[#endif#]
+
+[#if TAB="log"#] [#inc log.html#] [#endif#]
+[#if TAB="settings"#] [#inc settings.html#] [#endif#]
+[#if TAB="help"#] [#inc help.html#] [#endif#]
