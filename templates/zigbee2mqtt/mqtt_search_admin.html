@@ -1,107 +1,8 @@
-<!-- table zwave_devices search -->
-<div>
- MQTT  <a class="btn btn-default" href="#" onClick="$('#api_settings').toggle();return false;"><#LANG_SETUP#></a> 
-</div>
-<div style="display:none" id='api_settings'>
-&nbsp;
-<form action="?" method="post" enctype="multipart/form-data" name="frmEdit" class="form-horizontal">
-<fieldset>
 
-<div class="form-group">
- <label class="control-label"[#if ERR_MQTT_CLIENT#] style="color:red;font-weight:bold"[#endif#]>
- MajorDoMo Client:
- </label>
- <div class="controls"><input type="text" name="mqtt_client" value="<#MQTT_CLIENT#>" class="input"></div>
-</div>
-
-
-<div class="form-group">
- <label class="control-label"[#if ERR_MQTT_HOST#] style="color:red;font-weight:bold"[#endif#]>
- Hostname:
- (*)
- </label>
- <div class="controls"><input type="text" name="mqtt_host" value="<#MQTT_HOST#>" class="input"></div>
-</div>
-
-<div class="form-group">
- <label class="control-label"[#if ERR_MQTT_PORT#] style="color:red;font-weight:bold"[#endif#]>
- Port:
- (*)
- </label>
- <div class="controls"><input type="text" name="mqtt_port" value="<#MQTT_PORT#>" class="input"></div>
-</div>
-
-<div class="form-group">
- <label class="control-label"[#if ERR_MQTT_QUERY#] style="color:red;font-weight:bold"[#endif#]>
- Subscription path:
- (*)
- </label>
- <div class="controls"><input type="text" name="mqtt_query" value="<#MQTT_QUERY#>" class="input"></div>
-</div>
-
-<div class="form-group">
- <div class="controls">
- <label><input type="checkbox" name="mqtt_auth" value="1"[#if MQTT_AUTH="1"#] checked[#endif#]> authorization required</label>
- </div>
-</div>
-
-
-<div class="form-group">
- <label class="control-label"[#if ERR_MQTT_USERNAME#] style="color:red;font-weight:bold"[#endif#]>
- Username:
- </label>
- <div class="controls"><input type="text" name="mqtt_username" value="<#MQTT_USERNAME#>" class="input"></div>
-</div>
-
-<div class="form-group">
- <label class="control-label"[#if ERR_MQTT_PASSWORD#] style="color:red;font-weight:bold"[#endif#]>
- Password:
- </label>
- <div class="controls"><input type="password" name="mqtt_password" value="<#MQTT_PASSWORD#>" class="input"></div>
-</div>
-
-
-<div class="form-actions">
-<button type="submit" name="subm" value="Submit" class="btn btn-primary"><#LANG_UPDATE#></button>
-<input type="hidden" name="view_mode" value="update_settings">
-<input type="hidden" name="mode" value="update">
-</div>
-</fieldset>
-</form>
-</div>
 
 &nbsp;
 
-<form action="?" method="get" name="frmFilter">
- <div class="row">
 
-  <div class="col-md-3">
-<input type="text" name="title" value="<#TITLE#>" class="form-control" placeholder="<#LANG_SEARCH#>">
-  </div>
-  <div class="col-md-3">
-  <select class="form-control" name="location_id">
-   <option value="0"><#LANG_FILTER_BY_LOCATION#> (<#LANG_ALL#>)
-   [#begin LOCATIONS#]
-   <option value="[#ID#]"[#if ID="<#LOCATION_ID#>"#] selected[#endif#]>[#TITLE#]
-   [#end LOCATIONS#]
-  </select>
-  </div>
-  <div class="col-md-2">
-    <input type="submit" name="submit" value="<#LANG_SEARCH#>" class="btn btn-default">
-  </div>
-  <div class="col-md-2">
-   [#if TREE="1"#]
-   <a href="?tree=0" class="btn btn-default"><#LANG_LIST_VIEW#></a>
-   [#else#]
-   <a href="?tree=1" class="btn btn-default"><#LANG_TREE_VIEW#></a>
-   [#endif#]
-  </div>
-  <div class="col-md-2">
-   <a href="?view_mode=edit_mqtt" class="btn btn-default"><i class="glyphicon glyphicon-plus"></i> <#LANG_ADD#></a>
-   <a href="?view_mode=clear_trash" class="btn btn-default" title="Delete not linked topics." onclick="return confirm('<#LANG_ARE_YOU_SURE#>');"><i class="glyphicon glyphicon-floppy-remove"></i> <#LANG_OPTIMIZE#></a>
-  </div>
- </div>
-</form>
 &nbsp;
 
 <!-- results -->
@@ -125,8 +26,12 @@
  [#begin RESULT#]
  <li style="list-style-type: none">
   [#if ID!=""#]
+
   [#if TITLE!=""#]<b>&bull;</b>&nbsp;[#endif#]<a href="?view_mode=edit_mqtt&id=[#ID#]" title="[#PATH#]">[#if TITLE=""#]<b>&bull;</b>&nbsp;[#else#][#TITLE#][#endif#]</a> <span id="mqtt[#ID#]" class="mqtt_value">[#VALUE#]</span>
-  [#if LINKED_OBJECT!=""#]<i>([#LINKED_OBJECT#].[#LINKED_PROPERTY#])</i>[#endif LINKED_OBJECT#]
+
+  [#if LINKED_OBJECT!=""#]
+<i>
+([#LINKED_OBJECT#].[#LINKED_PROPERTY#])</i>[#endif LINKED_OBJECT#]
   [#else#]<b>&bull;&nbsp;[#TITLE#]</b>[#endif#]
   [#if RESULT#]<ul>[#tree RESULT#]</ul>[#endif RESULT#]
  </li>
@@ -235,3 +140,4 @@
  valuesUpdateTimeout = setTimeout('getLatestValues()',2000);
 </script>
 
+ <a href="?" class="btn btn-default"><#LANG_CANCEL#></a>
