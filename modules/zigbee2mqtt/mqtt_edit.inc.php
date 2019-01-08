@@ -91,6 +91,11 @@
    }
 
   }
+
+
+
+
+
   //options for 'LOCATION_ID' (select)
   $tmp=SQLSelect("SELECT ID, TITLE FROM locations ORDER BY TITLE");
   $locations_total=count($tmp);
@@ -101,6 +106,10 @@
    if ($rec['LOCATION_ID']==$tmp[$i]['ID']) $tmp[$i]['SELECTED']=1;
   }
   $out['LOCATION_ID_OPTIONS']=$tmp;
+
+
+
+
   if (is_array($rec)) {
    foreach($rec as $k=>$v) {
     if (!is_array($v)) {
