@@ -287,6 +287,28 @@ function run() {
    }
 
    /* Search 'PATH' in database (db) */
+$dev_title=explode('/',$path)[1];
+echo $path.":".$dev_title."<br>";
+
+     $rec=SQLSelectOne("SELECT * FROM zigbee2mqtt_devices WHERE TITLE LIKE '%".DBSafe($dev_title)."%'");
+     
+     if(!$rec['ID']) { /* If path_write foud in db */
+     $rec['TITLE']=$dev_title;
+     $rec['FIND']=date('Y-m-d H:i:s');
+SQLInsert('zigbee2mqtt_devices', $rec);
+       }
+else 
+{
+     $rec['FIND']=date('Y-m-d H:i:s');
+SQLUPDATE('zigbee2mqtt_devices', $rec);
+
+}
+       $dev_id=SQLSelectOne("SELECT * FROM zigbee2mqtt_devices WHERE TITLE LIKE '%".DBSafe($dev_title)."%'")['ID'];
+
+
+
+
+
    $rec=SQLSelectOne("SELECT * FROM zigbee2mqtt WHERE PATH LIKE '".DBSafe($path)."'");
    
    if(!$rec['ID']){ /* If 'PATH' not found in db */
@@ -300,15 +322,18 @@ function run() {
      }
      /* Insert new record in db */
      $rec['PATH']=$path;
+     $rec['DEV_ID']=$dev_id;
      $rec['TITLE']=$path;
      $rec['VALUE']=$value.'';
      $rec['UPDATED']=date('Y-m-d H:i:s');
      $rec['ID']=null;
-     SQLInsert('zigbee2mqtt', $rec);
+SQLInsert('zigbee2mqtt', $rec);
    }else{
      /* Update values in db */
      $rec['VALUE']=$value.'';
+     $rec['DEV_ID']=$dev_id;
      $rec['UPDATED']=date('Y-m-d H:i:s');
+
      SQLUpdate('zigbee2mqtt', $rec);
      /* Update property in linked object if it exist */
      if($rec['LINKED_OBJECT'] && $rec['LINKED_PROPERTY']) {
@@ -333,6 +358,10 @@ function run() {
      }
 
    }
+
+
+
+
  }
 
 /**
@@ -405,9 +434,9 @@ function admin(&$out) {
 
 
  if ($this->data_source=='mqtt' || $this->data_source=='') {
-  if ($this->view_mode=='' || $this->view_mode=='search_mqtt') {
+//  if ($this->view_mode=='' || $this->view_mode=='search_mqtt') {
    $this->search_mqtt($out);
-  }
+//  }
   if ($this->view_mode=='edit_mqtt') {
    $this->edit_mqtt($out, $this->id);
   }
@@ -530,7 +559,26 @@ function usual(&$out) {
 /*
 mqtt - MQTT
 */
+
+
+
+ SQLExec("DROP PROCEDURE IF EXISTS SPLIT_STRING") ;
+ SQLExec("CREATE FUNCTION IF NOT EXISTS  SPLIT_STRING(str VARCHAR(255), delim VARCHAR(12), pos INT) RETURNS VARCHAR(255) RETURN REPLACE(SUBSTRING(SUBSTRING_INDEX(str, delim, pos),        LENGTH(SUBSTRING_INDEX(str, delim, pos-1)) + 1),        delim, '');");
+
+
+
   $data = <<<EOD
+
+ zigbee2mqtt_devices: ID int(10) unsigned NOT NULL auto_increment
+ zigbee2mqtt_devices: TITLE varchar(100) NOT NULL DEFAULT ''
+ zigbee2mqtt_devices: ONLINE varchar(100) NOT NULL DEFAULT ''
+ zigbee2mqtt_devices: MANUFACTURE varchar(100) NOT NULL DEFAULT ''
+ zigbee2mqtt_devices: DEVICE_NAME varchar(100) NOT NULL DEFAULT ''
+ zigbee2mqtt_devices: MODEL varchar(100) NOT NULL DEFAULT ''
+ zigbee2mqtt_devices: LASTPING varchar(100) NOT NULL DEFAULT ''
+ zigbee2mqtt_devices: FIND datetime
+ zigbee2mqtt_devices: LOCATION_ID int(10) NOT NULL DEFAULT '0'
+
  zigbee2mqtt: ID int(10) unsigned NOT NULL auto_increment
  zigbee2mqtt: TITLE varchar(255) NOT NULL DEFAULT ''
  zigbee2mqtt: LOCATION_ID int(10) NOT NULL DEFAULT '0'
@@ -544,6 +592,7 @@ mqtt - MQTT
  zigbee2mqtt: LINKED_METHOD varchar(255) NOT NULL DEFAULT ''
  zigbee2mqtt: QOS int(3) NOT NULL DEFAULT '0'
  zigbee2mqtt: RETAIN int(3) NOT NULL DEFAULT '0'
+ zigbee2mqtt: DEV_ID int(5) NOT NULL DEFAULT ''
  zigbee2mqtt: DISP_FLAG int(3) NOT NULL DEFAULT '0'
 EOD;
   parent::dbInstall($data);
