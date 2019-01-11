@@ -388,11 +388,23 @@ function admin(&$out) {
  if (!$out['MQTT_HOST']) {
   $out['MQTT_HOST']='localhost';
  }
+
+
+ if (!$out['MQTT_CLIENT']) {
+  $out['MQTT_CLIENT']='md_zigbee2mqtt';
+ }
+
+
+ if (!$out['ZIGBEE2MQTTPATH']) {
+  $out['ZIGBEE2MQTTPATH']='/opt/zigbee2mqtt/';
+ }
+
+
  if (!$out['MQTT_PORT']) {
   $out['MQTT_PORT']='1883';
  }
  if (!$out['MQTT_QUERY']) {
-  $out['MQTT_QUERY']='zigbee2mqtt';
+  $out['MQTT_QUERY']='zigbee2mqtt/#';
  }
 
  $out['MQTT_USERNAME']=$this->config['MQTT_USERNAME'];
