@@ -12,6 +12,15 @@
 
 
 <div class="form-group">
+ <label class="control-label"[#if ERR_zigbee2mqttpath#] style="color:red;font-weight:bold"[#endif#]>
+ Zigbee2mqtt path:
+ (*)
+ </label>
+ <div class="controls"><input type="text" name="zigbee2mqttpath" value="<#ZIGBEE2MQTTPATH#>" class="input"></div>
+</div>
+
+
+<div class="form-group">
  <label class="control-label"[#if ERR_MQTT_HOST#] style="color:red;font-weight:bold"[#endif#]>
  Hostname:
  (*)
@@ -61,8 +70,9 @@
 <button type="submit" name="subm" value="Submit" class="btn btn-primary"><#LANG_UPDATE#></button>
 <input type="hidden" name="view_mode" value="update_settings">
 <input type="hidden" name="mode" value="update">
+<input type="hidden" name="tab" value="settings">
 </div>
 </fieldset>
 </form>
-</div>
+
 
