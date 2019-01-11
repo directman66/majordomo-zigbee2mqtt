@@ -1,0 +1,43 @@
+<form action="?" method="post" enctype="multipart/form-data" name="frmEdit" class="form-horizontal">
+<fieldset>
+
+   <table width="100%" border="0">
+    <tr>
+     <td >
+     File:
+     <select name="file" id='file'>
+      <option value="">
+      [#begin FILES#]
+      <option value="[#TITLE#]">[#TITLE#]
+      [#end FILES#]
+     </select>
+     </td>
+     <td align="left">
+     Lines:
+     <select name="limit" id='limit' onChange="checkAllStates();">
+     <option>100
+     <option>200
+     <option>500
+     <option>1000
+     </select>
+      </td>
+	<td>
+
+
+<button type="submit" name="subm" value="Submit" class="btn btn-primary" >Open</button>
+<input type="hidden" name="view_mode" value="update_log">
+<input type="hidden" name="mode" value="update">
+<input type="hidden" name="tab" value="log">
+
+</fieldset>
+</form>
+
+
+     </td>
+
+    </tr>
+</table>
+
+
+[#FN#]:<br>
+[#LOG#]
