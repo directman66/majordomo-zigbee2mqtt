@@ -599,6 +599,8 @@ function usual(&$out) {
 */
  function uninstall() {
   SQLExec('DROP TABLE IF EXISTS zigbee2mqtt');
+  SQLExec('DROP TABLE IF EXISTS zigbee2mqtt_devices');
+   
   parent::uninstall();
  }
 /**
