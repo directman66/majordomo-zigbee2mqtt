@@ -322,6 +322,8 @@ SQLUPDATE('zigbee2mqtt_devices', $rec);
      }
      /* Insert new record in db */
      $rec['PATH']=$path;
+     $rec['METRIKA']=strpos($path,'/'); 
+//     $rec['METRIKA']="1"; 
      $rec['DEV_ID']=$dev_id;
      $rec['TITLE']=$path;
      $rec['VALUE']=$value.'';
@@ -380,6 +382,7 @@ function admin(&$out) {
  $out['MQTT_CLIENT']=$this->config['MQTT_CLIENT'];
  $out['MQTT_HOST']=$this->config['MQTT_HOST'];
  $out['MQTT_PORT']=$this->config['MQTT_PORT'];
+ $out['ZIGBEE2MQTTPATH']=$this->config['ZIGBEE2MQTTPATH'];
  $out['MQTT_QUERY']=$this->config['MQTT_QUERY'];
 
  if (!$out['MQTT_HOST']) {
@@ -396,7 +399,47 @@ function admin(&$out) {
  $out['MQTT_PASSWORD']=$this->config['MQTT_PASSWORD'];
  $out['MQTT_AUTH']=$this->config['MQTT_AUTH'];
 
+
+
+ if ($this->view_mode=='update_log') {
+ $this->getConfig();
+
+global $file;
+global $limit;
+$zigbee2mqttpath=$this->config['zigbee2mqttpatch'];
+$filename=$zigbee2mqttpath.'/data/log/'.$file.'/log.txt';
+$out['FN']=$filename;
+$out['LOG']=file_get_contents ($filename);
+
+//$vm1=$filename;
+// echo "<script type='text/javascript'>";
+// echo "alert('$vm1');";
+// echo "</script>";
+
+
+
+   $this->redirect("?tab=log");
+
+}
+
+
+
+
+//$vm1=$this->view_mode;
+// echo "<script type='text/javascript'>";
+// echo "alert('$vm1');";
+// echo "</script>";
+
+
+
  if ($this->view_mode=='update_settings') {
+
+//$vm1=$this->view_mode;
+// echo "<script type='text/javascript'>";
+// echo "alert('$vm1');";
+// echo "</script>";
+
+
    global $mqtt_client;
    global $mqtt_host;
    global $mqtt_username;
@@ -404,8 +447,11 @@ function admin(&$out) {
    global $mqtt_auth;
    global $mqtt_port;
    global $mqtt_query;
+   global $zigbee2mqttpath;
+//echo $zigbee2mqttpath;
 
    $this->config['MQTT_CLIENT']=trim($mqtt_client);
+   $this->config['ZIGBEE2MQTTPATH']=trim($zigbee2mqttpath);
    $this->config['MQTT_HOST']=trim($mqtt_host);
    $this->config['MQTT_USERNAME']=trim($mqtt_username);
    $this->config['MQTT_PASSWORD']=trim($mqtt_password);
@@ -416,7 +462,7 @@ function admin(&$out) {
 
    setGlobal('cycle_zigbee2mqttControl', 'restart');
 
-   $this->redirect("?");
+   $this->redirect("?tab=settings");
  }
 
  if (!$this->config['MQTT_HOST']) {
@@ -427,6 +473,13 @@ function admin(&$out) {
   $this->config['MQTT_PORT']='1883';
   $this->saveConfig();
  }
+
+ if (!$this->config['ZIGBEE2MQTTPATCH']) {
+  $this->config['ZIGBEE2MQTTPATCH']='/opt/zigbee2mqtt/';
+  $this->saveConfig();
+ }
+
+
  if (!$this->config['MQTT_QUERY']) {
   $this->config['MQTT_QUERY']='zigbee2mqtt';
   $this->saveConfig();
@@ -585,6 +638,7 @@ mqtt - MQTT
  zigbee2mqtt: UPDATED datetime
  zigbee2mqtt: VALUE varchar(255) NOT NULL DEFAULT ''
  zigbee2mqtt: PATH varchar(255) NOT NULL DEFAULT ''
+ zigbee2mqtt: METRIKA varchar(255) NOT NULL DEFAULT ''
  zigbee2mqtt: PATH_WRITE varchar(255) NOT NULL DEFAULT ''
  zigbee2mqtt: REPLACE_LIST varchar(255) NOT NULL DEFAULT ''
  zigbee2mqtt: LINKED_OBJECT varchar(255) NOT NULL DEFAULT ''
