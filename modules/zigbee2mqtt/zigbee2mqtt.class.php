@@ -493,7 +493,7 @@ $out['LOG']=file_get_contents ($filename);
 
 
  if (!$this->config['MQTT_QUERY']) {
-  $this->config['MQTT_QUERY']='zigbee2mqtt';
+  $this->config['MQTT_QUERY']='zigbee2mqtt/#';
   $this->saveConfig();
  }
 
