@@ -233,22 +233,16 @@ function run() {
    }
 $json=array( $rec['METRIKA']=> $value);
 $jsonvalue=json_encode($json) ;
-debmes('Публикую zigbee2mqqtt '.$rec['PATH'].":".$jsonvalue, 'zigbee2mqtt');
+debmes('Публикую zigbee2mqqtt '.$rec['PATH_WRITE'].":".$jsonvalue, 'zigbee2mqtt');
 
 
    if ($rec['PATH_WRITE']) {
-       if (preg_match('/^http:/',$rec['PATH_WRITE'])) {
-           $url=$rec['PATH_WRITE'];
-           $url=str_replace('%VALUE%',$value,$url);
-           getURL($url,0);
-       } else {
-           $mqtt_client->publish($rec['PATH_WRITE'],$value, (int)$rec['QOS'], (int)$rec['RETAIN']);
-       }
-   } else {
 
-
-    $mqtt_client->publish($rec['PATH'],$jsonvalue, (int)$rec['QOS'], (int)$rec['RETAIN']);
+   $mqtt_client->publish($rec['PATH_WRITE'],$jsonvalue, (int)$rec['QOS'], (int)$rec['RETAIN']);
+       
    }
+
+// else {    $mqtt_client->publish($rec['PATH'],$jsonvalue, (int)$rec['QOS'], (int)$rec['RETAIN']);   }
    $mqtt_client->close();
 
   /*
