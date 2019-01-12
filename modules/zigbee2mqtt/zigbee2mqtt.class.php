@@ -304,6 +304,9 @@ debmes('Публикую zigbee2mqqtt '.$rec['PATH_WRITE'].":".$jsonvalue, 'zigb
 $dev_title=explode('/',$path)[1];
 echo $path.":".$dev_title."<br>";
 
+//if (strpos($dev_title,"/set/")==0)
+if (strpos($path,"set")===false)
+{
      $rec=SQLSelectOne("SELECT * FROM zigbee2mqtt_devices WHERE IEEEADDR LIKE '%".DBSafe($dev_title)."%'");
      
      if(!$rec['ID']) { /* If path_write foud in db */
@@ -330,7 +333,7 @@ SQLUPDATE('zigbee2mqtt_devices', $rec);
    
    if(!$rec['ID']){ /* If 'PATH' not found in db */
      /* New query to search 'PATH_WRITE' record in db */
-     $rec=SQLSelectOne("SELECT * FROM zigbee2mqtt WHERE PATH_WRITE LIKE '".DBSafe($path)."'");
+     $rec=SQLSelectOne("SELECT * FROM zigbee2mqtt WHERE PATH LIKE '".DBSafe($path)."'");
      
      if($rec['ID']) { /* If path_write foud in db */
        if($rec['DISP_FLAG']!="0"){ /* check disp_flag */
@@ -378,6 +381,7 @@ SQLInsert('zigbee2mqtt', $rec);
      }
 
    }
+}
 
 
 
