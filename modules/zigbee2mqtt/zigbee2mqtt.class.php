@@ -178,6 +178,9 @@ function run() {
 * @access public
 */
  function setProperty($id, $value, $set_linked=0) {
+
+
+
   $rec=SQLSelectOne("SELECT * FROM zigbee2mqtt WHERE ID='".$id."'");
 
   if (!$rec['ID'] || !$rec['PATH']) {
@@ -228,6 +231,10 @@ function run() {
    {
     return 0;
    }
+$json=array( $rec['METRIKA']=> $value);
+$jsonvalue=json_encode($json) ;
+debmes('Публикую zigbee2mqqtt '.$rec['PATH'].":".$jsonvalue, 'zigbee2mqtt');
+
 
    if ($rec['PATH_WRITE']) {
        if (preg_match('/^http:/',$rec['PATH_WRITE'])) {
@@ -238,7 +245,9 @@ function run() {
            $mqtt_client->publish($rec['PATH_WRITE'],$value, (int)$rec['QOS'], (int)$rec['RETAIN']);
        }
    } else {
-    $mqtt_client->publish($rec['PATH'],$value, (int)$rec['QOS'], (int)$rec['RETAIN']);
+
+
+    $mqtt_client->publish($rec['PATH'],$jsonvalue, (int)$rec['QOS'], (int)$rec['RETAIN']);
    }
    $mqtt_client->close();
 
@@ -290,15 +299,18 @@ function run() {
 $dev_title=explode('/',$path)[1];
 echo $path.":".$dev_title."<br>";
 
-     $rec=SQLSelectOne("SELECT * FROM zigbee2mqtt_devices WHERE TITLE LIKE '%".DBSafe($dev_title)."%'");
+     $rec=SQLSelectOne("SELECT * FROM zigbee2mqtt_devices WHERE IEEEADDR LIKE '%".DBSafe($dev_title)."%'");
      
      if(!$rec['ID']) { /* If path_write foud in db */
      $rec['TITLE']=$dev_title;
+     $rec['IEEEADDR']=$dev_title;
+
      $rec['FIND']=date('Y-m-d H:i:s');
 SQLInsert('zigbee2mqtt_devices', $rec);
        }
 else 
 {
+     $rec['IEEEADDR']=$dev_title;
      $rec['FIND']=date('Y-m-d H:i:s');
 SQLUPDATE('zigbee2mqtt_devices', $rec);
 
@@ -323,6 +335,7 @@ SQLUPDATE('zigbee2mqtt_devices', $rec);
      /* Insert new record in db */
      $rec['PATH']=$path;
      $rec['METRIKA']=substr($path,strrpos($path,'/')+1); 
+     $rec['PATH_WRITE']=substr($path,1,strrpos($path,'/')); 
 //     $rec['METRIKA']="1"; 
      $rec['DEV_ID']=$dev_id;
      $rec['TITLE']=$path;
@@ -564,12 +577,31 @@ $a=file_get_contents ($filename);
 $settings = explode("\n", $a);
 
     $total = count($settings);
-    for ($i=0;$i<$total;$i++) {
+    for ($i=0;$i<$total-1;$i++) {
 
 //echo $settings[$i]."<br><br>";
 $json=json_decode($settings[$i]);
-print_r($json);
-echo "<br><br>";
+//print_r($json);
+//echo "<br><br>";
+        foreach ($json as $key=> $value) {
+	if ($key=='ieeeAddr') $cdev=$value;
+					  }
+
+
+    $res=SQLSelect("SELECT ID FROM zigbee2mqtt_devices where ");
+//
+
+
+        foreach ($json as $key=> $value) {
+if ($key=='ieeeAddr') $cdev=$value;
+}
+
+
+//            if (!is_array($value)) {
+
+//echo $key.":". $value."<br>";
+//}
+//}
 }
 
 
@@ -695,6 +727,7 @@ mqtt - MQTT
 
  zigbee2mqtt_devices: ID int(10) unsigned NOT NULL auto_increment
  zigbee2mqtt_devices: TITLE varchar(100) NOT NULL DEFAULT ''
+
  zigbee2mqtt_devices: ONLINE varchar(100) NOT NULL DEFAULT ''
  zigbee2mqtt_devices: MANUFACTURE varchar(100) NOT NULL DEFAULT ''
  zigbee2mqtt_devices: DEVICE_NAME varchar(100) NOT NULL DEFAULT ''
