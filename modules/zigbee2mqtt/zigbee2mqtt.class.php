@@ -660,6 +660,7 @@ mqtt - MQTT
  zigbee2mqtt: LINKED_METHOD varchar(255) NOT NULL DEFAULT ''
  zigbee2mqtt: QOS int(3) NOT NULL DEFAULT '0'
  zigbee2mqtt: RETAIN int(3) NOT NULL DEFAULT '0'
+ zigbee2mqtt: CONVERTONOFF int(3) NOT NULL DEFAULT '0'
  zigbee2mqtt: DEV_ID int(5) NOT NULL DEFAULT '0'
  zigbee2mqtt: DISP_FLAG int(3) NOT NULL DEFAULT '0'
 EOD;
