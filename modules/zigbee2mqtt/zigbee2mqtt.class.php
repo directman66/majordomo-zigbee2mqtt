@@ -340,7 +340,7 @@ SQLUPDATE('zigbee2mqtt_devices', $rec);
      /* Insert new record in db */
      $rec['PATH']=$path;
      $rec['METRIKA']=substr($path,strrpos($path,'/')+1); 
-     $rec['PATH_WRITE']=substr($path,1,strrpos($path,'/')); 
+     $rec['PATH_WRITE']=substr($path,0,strrpos($path,'/')); 
 //     $rec['METRIKA']="1"; 
      $rec['DEV_ID']=$dev_id;
      $rec['TITLE']=$path;
