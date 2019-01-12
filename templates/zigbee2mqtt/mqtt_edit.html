@@ -22,12 +22,25 @@
  </label>
  <div class="controls"><input  type="text" name="title" value="[#TITLE#]" class="form-control input"></div>
 </div>
+
+<div class="form-group">
+ <label class="control-label"[#if ERR_METRIKA#] style="color:red;font-weight:bold"[#endif#]>
+ Metrika:
+ (*)
+ </label>
+ <div class="controls"><input  type="text" name="metrika" value="[#METRIKA#]" class="input form-control"></div>
+</div>
+
+
 <!-- LOCATION_ID (select) -->
 [#if !IS_SET_LOCATION_ID#]
 <div class="form-group">
  <label class="control-label"[#if ERR_LOCATION_ID#] style="color:red;font-weight:bold"[#endif#]>
  <#LANG_LOCATION#>:
  </label>
+
+
+
 <div class="controls">
  <select name="location_id"  class="form-control input">
   <option value="">select
@@ -36,6 +49,9 @@
  </select>
 </div>
 </div>
+
+
+
 [#endif IS_SET_LOCATION_ID#]
 <!-- PATH (varchar) -->
 <div class="form-group">
@@ -86,6 +102,18 @@
  <input type="radio" name="retain" value="1"[#if RETAIN="1"#] checked[#endif#]> <#LANG_YES#>
  </div>
 </div>
+
+<div class="form-group">
+ <label class="control-label">
+ Convert ON/OFF to 1/0:
+
+ </label>
+ <div class="controls">
+ <input type="radio" name="convertonoff" value="0"[#if CONVERTONOFF!="1"#] checked[#endif#]> <#LANG_NO#>
+ <input type="radio" name="convertonoff" value="1"[#if CONVERTONOFF="1"#] checked[#endif#]> <#LANG_YES#>
+ </div>
+</div>
+
 
 <div class="form-group">
  <label class="control-label"[#if ERR_VALUE#] style="color:red;font-weight:bold"[#endif#]>
