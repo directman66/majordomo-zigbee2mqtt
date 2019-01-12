@@ -523,15 +523,62 @@ $out['LOG']=$a;
          $this->clear_trash();
          $this->redirect("?");
      }
+
+     if ($this->view_mode=='refresh_db') {
+         $this->refresh_db();
+         $this->redirect("?");
+     }
+
+
  }
 }
 
 function clear_trash() {
     $res=SQLSelect("SELECT ID FROM zigbee2mqtt WHERE LINKED_OBJECT='' AND LINKED_PROPERTY=''");
+//    $res=SQLSelect("SELECT ID FROM zigbee2mqtt_devices WHERE LINKED_OBJECT='' AND LINKED_PROPERTY=''");
     $total = count($res);
     for ($i=0;$i<$total;$i++) {
         $this->delete_mqtt($res[$i]['ID']);
     }
+}
+
+
+function refresh_db() {
+
+ $this->getConfig();
+
+$zigbee2mqttpath=$this->config['ZIGBEE2MQTTPATH'];
+$filename=$zigbee2mqttpath.'/data/database.db';
+$a=file_get_contents ($filename);
+//echo $filename;
+
+//''$vm1=$filename;
+// echo "<script type='text/javascript'>";
+// echo "alert('$vm1');";
+// echo "</script>";
+
+// $this->redirect("?tab=log");
+
+
+
+$settings = explode("\n", $a);
+
+    $total = count($settings);
+    for ($i=0;$i<$total;$i++) {
+
+//echo $settings[$i]."<br><br>";
+$json=json_decode($settings[$i]);
+print_r($json);
+echo "<br><br>";
+}
+
+
+
+//    $res=SQLSelect("SELECT ID FROM zigbee2mqtt_devices");
+//
+//    $total = count($res);
+//    for ($i=0;$i<$total;$i++) {
+//    }
 }
 
 /**
@@ -652,7 +699,20 @@ mqtt - MQTT
  zigbee2mqtt_devices: MANUFACTURE varchar(100) NOT NULL DEFAULT ''
  zigbee2mqtt_devices: DEVICE_NAME varchar(100) NOT NULL DEFAULT ''
  zigbee2mqtt_devices: MODEL varchar(100) NOT NULL DEFAULT ''
+ zigbee2mqtt_devices: TYPE varchar(100) NOT NULL DEFAULT ''
  zigbee2mqtt_devices: LASTPING varchar(100) NOT NULL DEFAULT ''
+ zigbee2mqtt_devices: IEEEADDR varchar(100) NOT NULL DEFAULT ''
+ zigbee2mqtt_devices: NWKADDR varchar(100) NOT NULL DEFAULT ''
+ zigbee2mqtt_devices: MANUFID varchar(100) NOT NULL DEFAULT ''
+ zigbee2mqtt_devices: MANUFNAME varchar(100) NOT NULL DEFAULT ''
+ zigbee2mqtt_devices: POWERSOURCE varchar(100) NOT NULL DEFAULT ''
+ zigbee2mqtt_devices: MODELID varchar(100) NOT NULL DEFAULT ''
+ zigbee2mqtt_devices: STATUS varchar(100) NOT NULL DEFAULT ''
+ zigbee2mqtt_devices: JOINTIME varchar(100) NOT NULL DEFAULT ''
+ zigbee2mqtt_devices: DID varchar(100) NOT NULL DEFAULT ''
+ zigbee2mqtt_devices: D_ID varchar(100) NOT NULL DEFAULT ''
+
+
  zigbee2mqtt_devices: FIND datetime
  zigbee2mqtt_devices: LOCATION_ID int(10) NOT NULL DEFAULT '0'
 
