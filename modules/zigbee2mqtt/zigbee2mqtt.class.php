@@ -414,23 +414,33 @@ function admin(&$out) {
 
 
  if ($this->view_mode=='update_log') {
+// if ($this->update_log=='update_log') {
  $this->getConfig();
 
 global $file;
 global $limit;
-$zigbee2mqttpath=$this->config['zigbee2mqttpatch'];
+$zigbee2mqttpath=$this->config['ZIGBEE2MQTTPATH'];
 $filename=$zigbee2mqttpath.'/data/log/'.$file.'/log.txt';
 $out['FN']=$filename;
-$out['LOG']=file_get_contents ($filename);
+//$out['FN']="1234";
+
+$a=file_get_contents ($filename);
+$a =  str_replace( array("\r\n","\r","\n") , '<br>' , $a);
+$out['LOG']=$a;
+
+
+
+
+
+
+                    
 
 //$vm1=$filename;
 // echo "<script type='text/javascript'>";
 // echo "alert('$vm1');";
 // echo "</script>";
 
-
-
-   $this->redirect("?tab=log");
+// $this->redirect("?tab=log");
 
 }
 
