@@ -178,7 +178,7 @@ function run() {
 * @access public
 */
  function setProperty($id, $value, $set_linked=0) {
-
+debmes('Нужно изменить значение '.id.' на '.$value, 'zigbee2mqtt');
 
 
   $rec=SQLSelectOne("SELECT * FROM zigbee2mqtt WHERE ID='".$id."'");
@@ -231,14 +231,25 @@ function run() {
    {
     return 0;
    }
+
+
+if ($rec['CONVERTONOFF']=='1') {
+if ($value=='1')  $json=array( $rec['METRIKA']=> 'ON');
+if ($value=='0')  $json=array( $rec['METRIKA']=> 'OFF');
+$jsonvalue=json_encode($json) ;
+
+
+} else 
+{
 $json=array( $rec['METRIKA']=> $value);
 $jsonvalue=json_encode($json) ;
+}
 debmes('Публикую zigbee2mqqtt '.$rec['PATH_WRITE'].":".$jsonvalue, 'zigbee2mqtt');
 
 
    if ($rec['PATH_WRITE']) {
 
-   $mqtt_client->publish($rec['PATH_WRITE'],$jsonvalue, (int)$rec['QOS'], (int)$rec['RETAIN']);
+   $mqtt_client->publish($rec['PATH_WRITE'].'/set',$jsonvalue, (int)$rec['QOS'], (int)$rec['RETAIN']);
        
    }
 
@@ -421,6 +432,7 @@ function admin(&$out) {
 
 
  if ($this->view_mode=='update_log') {
+
 // if ($this->update_log=='update_log') {
  $this->getConfig();
 
@@ -434,7 +446,7 @@ $out['FN']=$filename;
 $a=file_get_contents ($filename);
 $a =  str_replace( array("\r\n","\r","\n") , '<br>' , $a);
 $out['LOG']=$a;
-
+   $this->search_mqtt($out);
 
 
 
