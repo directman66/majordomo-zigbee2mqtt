@@ -168,7 +168,7 @@ $vm=$this->id;
 
 
 
-                if ($this->tab == 'log') {
+                if ($this->tab == 'log'||$this->view_mode == 'update_log') {
 
                     global $limit;
                     if (!$limit) {
@@ -200,56 +200,11 @@ $vm=$this->id;
 
 
                     }
-                    $filename = ROOT . 'cms/debmes/' . $file;
-                    if (!file_exists($filename)) {
-                        $file = date('Y-m-d') . '_' . $file . '.log';
-                        $filename = ROOT . 'cms/debmes/' . $file;
-                    }
-                    $data = LoadFile($filename);
-                    $lines = explode("\n", $data);
-                    //$lines=array_reverse($lines);
-                    $lines = array_slice($lines, -1 * ($limit), $limit);
-                    $res_lines = array();
-                    $total = count($lines);
-                    $added = 0;
-                    for ($i = 0; $i < $total; $i++) {
 
-                        if (trim($lines[$i]) == '') {
-                            continue;
-                        }
 
-                        if ($filter && preg_match('/' . preg_quote($filter) . '/is', $lines[$i])) {
-                            $res_lines[] = htmlspecialchars($lines[$i]);
-                            $added++;
-                        } elseif (!$filter) {
-                            if (!preg_match('/^\d+:\d+:\d+/is', $lines[$i]) && $added > 0) {
-                                $res_lines[$added - 1] .= "\n" . htmlspecialchars($lines[$i]);
-                            } else {
-                                $line = htmlspecialchars($lines[$i]);
-                                if (preg_match('/^(\d+:\d+:\d+ [\d\.]+)/', $line)) {
-                                    $line = preg_replace('/^(\d+:\d+:\d+ [\d\.]+)/is', '<b>\1</b>', $line);
-                                } elseif (preg_match('/^(\d+:\d+:\d+)/', $line)) {
-                                    $line = preg_replace('/^(\d+:\d+:\d+)/is', '<b>\1</b>', $line);
-                                }
-                                $res_lines[] = $line;
-                                $added++;
-                            }
-                        }
-                        if ($added >= $limit) {
-                            break;
-                        }
-                    }
 
-                    $total = count($res_lines);
-                    for ($i = 0; $i < $total; $i++) {
-                        $line = $res_lines[$i];
-                        $line = str_replace('Warning:', '<font color="#b8860b">Warning:</font>', $line);
-                        $res_lines[$i] = nl2br($line);
-                    }
 
-                    $res_lines = array_reverse($res_lines);
 
-//                    echo implode("<br/>", $res_lines);
 
                 }
 
@@ -260,5 +215,4 @@ $vm=$this->id;
 
 
 ?>
-
 
