@@ -5,7 +5,7 @@
     <tr>
      <td >
      File:
-     <select name="file" id='file'>
+     <select name="file" id='file' onChange="checkAllStates();">
       <option value="">
       [#begin FILES#]
       <option value="[#TITLE#]">[#TITLE#]
@@ -46,3 +46,25 @@
 
 [#FN#]:<br>
 [#LOG#]
+
+<script language="javascript">
+        var checkTimer;
+        var checkTimeout=5000;
+        var playingXray;
+
+        function checkAllStates() {
+         playingXray=1;
+         clearTimeout(checkTimer);
+         var url="?ajax=1&op=getcontent&view_mode=<#VIEW_MODE#>&filter="+encodeURIComponent($('#filter').val())+"&limit="+$('#limit').val()+"&file="+$('#file').val();
+         $.ajax({
+          url: url,
+          }).done(function(data) { 
+          //var currentContent=$('#xrayContent').html();
+          $('#xrayContent').html(data);
+          checkTimer=setTimeout('checkAllStates()', checkTimeout);
+         });
+  return false;
+ }
+
+ checkAllStates();
+</script>
