@@ -2,6 +2,8 @@
 /*
 * @version 0.1 (wizard)
 */
+
+
  global $session;
   if ($this->owner->name=='panel') {
    $out['CONTROLPANEL']=1;
@@ -17,11 +19,19 @@
 
 
 
+
+
+
+
+
+
+
+
    //deviles
 //  $res=SQLSelect("SELECT * FROM zigbee2mqtt_devices WHERE $qry ORDER BY ".$sortby_mqtt);
 //if ($this->view_mode==''||$this->view_mode=='device')
 
-  $res=SQLSelect("SELECT * FROM zigbee2mqtt_devices LEFT JOIN zigbee2mqtt_devices_list ON zigbee2mqtt_devices_list.zigbeeModel=zigbee2mqtt_devices.MODEL ");
+  $res=SQLSelect("SELECT *  FROM (select zigbee2mqtt_devices.ID DEVID, zigbee2mqtt_devices.* from zigbee2mqtt_devices )zigbee2mqtt_devices LEFT JOIN zigbee2mqtt_devices_list ON zigbee2mqtt_devices_list.zigbeeModel=zigbee2mqtt_devices.MODEL ");
 
   if ($res[0]['ID']) {
    if (!$out['TREE']) {
@@ -33,9 +43,28 @@
     //$tmp=explode(' ', $res[$i]['UPDATED']);
     //$res[$i]['UPDATED']=fromDBDate($tmp[0])." ".$tmp[1];
 //    $res[$i]['VALUE']=str_replace('":','": ',$res[$i]['VALUE']);
+$lnk="";
+//    if ($res[$i]['TITLE']==$res[$i]['PATH'] && !$out['TREE']) $res[$i]['PATH']='';
 
-    if ($res[$i]['TITLE']==$res[$i]['PATH'] && !$out['TREE']) $res[$i]['PATH']='';
+$sql="SELECT *  FROM  zigbee2mqtt where LENGTH(LINKED_OBJECT)>2  and DEV_ID='".$res[$i]['DEVID']."'";
+
+  $res2=SQLSelect($sql);
+   $total2=count($res2);
+
+//debmes($sql.'count : '.$total2,'zigbee2mqtt');
+ for($j=0;$j<$total2;$j++) {
+$lnk.=$res2[$j]['LINKED_OBJECT'].'.'.$res2[$j]['LINKED_PROPERTY'].":".$res2[$j]['VALUE'].';  ';
+}
+
+if (strlen($lnk) >2) $lnk='('. substr($lnk, 0, -3).')';
+$res[$i]['LINKED']=$lnk;
+
    }
+//debmes('devid:'.$res[$i]['DEVID'].'count:'.$total2."::::".$lnk,'zigbee2mqtt');
+
+//print_r($res);
+//echo "<br>";
+//echo "<br>";
    $out['DEVICES']=$res;
 
 
@@ -213,10 +242,6 @@ $zigbee2mqttpath=$this->config['ZIGBEE2MQTTPATH'];
 
 
                 }
-
-
-
-
 
 
 
