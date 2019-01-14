@@ -375,10 +375,10 @@ SQLInsert('zigbee2mqtt', $rec);
          }
 
 
-if ($value=='ON') $newvalue=1;
-if ($value=='OFF') $newvalue=0;
+if ($rec['CONVERTONOFF']=='1' && $value=='ON') $newvalue=1;
+if ($rec['CONVERTONOFF']=='1' && $value=='OFF') $newvalue=0;
 
-       setGlobal($rec['LINKED_OBJECT'].'.'.$rec['LINKED_PROPERTY'], $newvalue, array($this->name=>'0'));
+//       setGlobal($rec['LINKED_OBJECT'].'.'.$rec['LINKED_PROPERTY'], $newvalue, array($this->name=>'0'));
      }
      if ($rec['LINKED_OBJECT'] && $cmd_rec['LINKED_METHOD']) {
        callMethod($rec['LINKED_OBJECT'] . '.' . $rec['LINKED_METHOD'], $rec['VALUE']);
@@ -454,7 +454,26 @@ $out['FN']=$filename;
 $a=file_get_contents ($filename);
 $a =  str_replace( array("\r\n","\r","\n") , '<br>' , $a);
 $out['LOG']=$a;
-   $this->search_mqtt($out);
+
+
+            $path = $zigbee2mqttpath.'/data/log';
+
+            if ($handle = opendir($path)) {
+                $files = array();
+
+                while (false !== ($entry = readdir($handle))) {
+                    if ($entry == '.' || $entry == '..')
+                        continue;
+
+                    $files[] = array('TITLE' => $entry);
+                }
+
+                sort($files);
+            }
+
+            $out['FILES'] = $files;
+
+//$this->search_mqtt($out);
 
 
 
@@ -479,6 +498,15 @@ $out['LOG']=$a;
 // echo "alert('$vm1');";
 // echo "</script>";
 
+
+ if ($this->tab=='service') {
+
+$a=shell_exec("sudo systemctl status zigbee2mqtt");
+$a =  str_replace( array("\r\n","\r","\n") , '<br>' , $a);
+$out['status']=$a;
+
+
+}
 
 
  if ($this->view_mode=='update_settings') {
