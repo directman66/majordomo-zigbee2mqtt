@@ -1,30 +1,26 @@
+
+
+
 <form action="?" method="post" enctype="multipart/form-data" name="frmEdit" class="form-horizontal">
 <fieldset>
 
-   <table width="100%" border="0">
+   <table  border="0">
     <tr>
      <td >
      File:
-     <select name="file" id='file' onChange="checkAllStates();">
-      <option value="">
+     <select name="file" id='file' onChange="document.frmEdit.submit();">
+      <option value="[#FN#]">[#FN#]
       [#begin FILES#]
       <option value="[#TITLE#]">[#TITLE#]
       [#end FILES#]
      </select>
      </td>
-     <td align="left">
-     Lines:
-     <select name="limit" id='limit' onChange="checkAllStates();">
-     <option>100
-     <option>200
-     <option>500
-     <option>1000
-     </select>
-      </td>
+
 	<td>
 
 
-<button type="submit" name="subm" value="Submit" class="btn btn-primary" >Open</button>
+<!--<button type="submit" name="subm" value="Submit" class="btn btn-primary" >Open</button> -->
+
 <input type="hidden" name="view_mode" value="update_log">
 <input type="hidden" name="update_log" value="update_log">
 <input type="hidden" name="mode" value="update">
@@ -44,27 +40,7 @@
 </table>
 
 
-[#FN#]:<br>
+[#FN#]:<br><hr>
 [#LOG#]
 
-<script language="javascript">
-        var checkTimer;
-        var checkTimeout=5000;
-        var playingXray;
 
-        function checkAllStates() {
-         playingXray=1;
-         clearTimeout(checkTimer);
-         var url="?ajax=1&op=getcontent&view_mode=<#VIEW_MODE#>&filter="+encodeURIComponent($('#filter').val())+"&limit="+$('#limit').val()+"&file="+$('#file').val();
-         $.ajax({
-          url: url,
-          }).done(function(data) { 
-          //var currentContent=$('#xrayContent').html();
-          $('#xrayContent').html(data);
-          checkTimer=setTimeout('checkAllStates()', checkTimeout);
-         });
-  return false;
- }
-
- checkAllStates();
-</script>
