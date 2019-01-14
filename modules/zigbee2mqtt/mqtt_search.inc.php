@@ -172,7 +172,7 @@ $vm=$this->id;
 // echo "<script type='text/javascript'>";
 // echo "alert('$vm');";
 // echo "</script>";
-
+  $out['ID']=$this->id;
   $res=SQLSelect("SELECT * FROM zigbee2mqtt WHERE dev_id=".$this->id);
   if ($res[0]['ID']) {
    if (!$out['TREE']) {
