@@ -509,6 +509,37 @@ $out['status']=$a;
 }
 
 
+ if ($this->view_mode=='srv_start') {
+$a=shell_exec("sudo systemctl start zigbee2mqtt");
+$a=shell_exec("sudo systemctl status zigbee2mqtt");
+$a =  str_replace( array("\r\n","\r","\n") , '<br>' , $a);
+$out['status']=$a;
+   $this->redirect("?tab=service");
+
+}
+
+ if ($this->view_mode=='srv_stop') {
+$a=shell_exec("sudo systemctl stop zigbee2mqtt");
+$a=shell_exec("sudo systemctl status zigbee2mqtt");
+$a =  str_replace( array("\r\n","\r","\n") , '<br>' , $a);
+$out['status']=$a;
+   $this->redirect("?tab=service");
+
+}
+
+ if ($this->view_mode=='srv_restart') {
+$a=shell_exec("sudo systemctl restart zigbee2mqtt");
+$a=shell_exec("sudo systemctl status zigbee2mqtt");
+$a =  str_replace( array("\r\n","\r","\n") , '<br>' , $a);
+$out['status']=$a;
+
+
+   $this->redirect("?tab=service");
+}
+
+
+
+
  if ($this->view_mode=='update_settings') {
 
 //$vm1=$this->view_mode;
@@ -599,61 +630,49 @@ function clear_trash() {
 
 
 function refresh_db() {
-
  $this->getConfig();
-
 $zigbee2mqttpath=$this->config['ZIGBEE2MQTTPATH'];
 $filename=$zigbee2mqttpath.'/data/database.db';
 $a=file_get_contents ($filename);
-//echo $filename;
-
-//''$vm1=$filename;
-// echo "<script type='text/javascript'>";
-// echo "alert('$vm1');";
-// echo "</script>";
-
-// $this->redirect("?tab=log");
-
-
 
 $settings = explode("\n", $a);
 
     $total = count($settings);
     for ($i=0;$i<$total-1;$i++) {
+	$json=json_decode($settings[$i]);
+        foreach ($json as $key=> $value) {if ($key=='ieeeAddr') $cdev=$value;	  }
 
-//echo $settings[$i]."<br><br>";
-$json=json_decode($settings[$i]);
-//print_r($json);
+$sql="SELECT * FROM zigbee2mqtt_devices where IEEEADDR='$cdev'";
+debmes($sql,'zigbee2mqtt');
+    $res=SQLSelectOne($sql);
+     if($res['ID']) { /* If path_write foud in db */
+{
+debmes($cdev.' в ситеме найден','zigbee2mqtt');
+
+        foreach ($json as $key=> $value) {
+if ($key=='type') $res['TYPE']=$value;
+if ($key=='nwkAddr') $res['NWKADDR']=$value;
+if ($key=='manufId') $res['MANUFID']=$value;
+if ($key=='manufName') $res['MANUFNAME']=$value;
+if ($key=='PowerSource') $res['POWERSOURCE']=$value;
+if ($key=='modelId') $res['MODEL']=$value;
+if ($key=='status') $res['STATUS']=$value;
+if ($key=='devId') $res['DID']=$value;
+if ($key=='_id') $res['D_ID']=$value;
+}
+
+//print_r($res);
 //echo "<br><br>";
-        foreach ($json as $key=> $value) {
-	if ($key=='ieeeAddr') $cdev=$value;
-					  }
+
+SQLUPDATE('zigbee2mqtt_devices', $res);
+
+       }
 
 
-    $res=SQLSelect("SELECT ID FROM zigbee2mqtt_devices where ");
-//
-
-
-        foreach ($json as $key=> $value) {
-if ($key=='ieeeAddr') $cdev=$value;
 }
 
 
-//            if (!is_array($value)) {
-
-//echo $key.":". $value."<br>";
-//}
-//}
-}
-
-
-
-//    $res=SQLSelect("SELECT ID FROM zigbee2mqtt_devices");
-//
-//    $total = count($res);
-//    for ($i=0;$i<$total;$i++) {
-//    }
-}
+}}
 
 /**
 * FrontEnd
@@ -786,10 +805,19 @@ mqtt - MQTT
  zigbee2mqtt_devices: JOINTIME varchar(100) NOT NULL DEFAULT ''
  zigbee2mqtt_devices: DID varchar(100) NOT NULL DEFAULT ''
  zigbee2mqtt_devices: D_ID varchar(100) NOT NULL DEFAULT ''
-
-
  zigbee2mqtt_devices: FIND datetime
  zigbee2mqtt_devices: LOCATION_ID int(10) NOT NULL DEFAULT '0'
+
+ zigbee2mqtt_devices_list: ID int(10) unsigned NOT NULL auto_increment
+ zigbee2mqtt_devices_list: zigbeeModel varchar(100) NOT NULL DEFAULT ''
+ zigbee2mqtt_devices_list: model varchar(100) NOT NULL DEFAULT ''
+ zigbee2mqtt_devices_list: vendor varchar(100) NOT NULL DEFAULT ''
+ zigbee2mqtt_devices_list: description varchar(300) NOT NULL DEFAULT ''
+ zigbee2mqtt_devices_list: extend varchar(100) NOT NULL DEFAULT ''
+ zigbee2mqtt_devices_list: supports varchar(100) NOT NULL DEFAULT ''
+ zigbee2mqtt_devices_list: fromZigbee varchar(300) NOT NULL DEFAULT ''
+ zigbee2mqtt_devices_list: toZigbee varchar(300) NOT NULL DEFAULT ''
+
 
  zigbee2mqtt: ID int(10) unsigned NOT NULL auto_increment
  zigbee2mqtt: TITLE varchar(255) NOT NULL DEFAULT ''
@@ -810,6 +838,280 @@ mqtt - MQTT
  zigbee2mqtt: DISP_FLAG int(3) NOT NULL DEFAULT '0'
 EOD;
   parent::dbInstall($data);
+
+//https://github.com/Koenkk/zigbee-shepherd-converters/blob/master/devices.js
+$par1=SQLSelectOne ("select * from zigbee2mqtt_devices_list where ID=1");
+
+if (!$par1['ID']) {
+
+$par1['zigbeeModel'] = 'lumi.light.aqcn02';
+$par1['model'] = "ZNLDP12LM";		 
+$par1['vendor'] = "Xiaomi";		 
+$par1['description'] = "Aqara smart LED bulb";		 
+$par1['extend'] = "generic.light_onoff_brightness_colortemp";		 
+$par1['supports'] = "";		 
+$par1['fromZigbee'] = "fz.light_brightness, fz.light_color_colortemp, fz.generic_state, fz.xiaomi_bulb_interval, fz.ignore_light_brightness_report, fz.ignore_light_color_colortemp_report, fz.ignore_onoff_change,            fz.ignore_basic_change";		 
+$par1['toZigbee'] = "";		 
+SQLInsert('zigbee2mqtt_devices_list', $par1);						
+
+
+$par1['zigbeeModel'] = 'lumi.sensor_switch';
+$par1['model'] = "WXKG01LM";		 
+$par1['vendor'] = "Xiaomi";		 
+$par1['description'] = "MiJia wireless switch";		 
+$par1['extend'] = "";		 
+$par1['supports'] = "single, double, triple, quadruple, many, long, long_release click";		 
+$par1['fromZigbee'] = "fz.xiaomi_battery_3v, fz.WXKG01LM_click, fz.ignore_onoff_change, fz.ignore_basic_change";		 
+$par1['toZigbee'] = "";		 
+SQLInsert('zigbee2mqtt_devices_list', $par1);						
+
+$par1['zigbeeModel'] = 'lumi.sensor_switch.aq2, lumi.remote.b1acn01\u0000\u0000\u0000\u0000\u0000\u0000';
+$par1['model'] = "WXKG11LM";		 
+$par1['vendor'] = "Xiaomi";		 
+$par1['description'] = "Aqara wireless switch";		 
+$par1['extend'] = "";		 
+$par1['supports'] = "single, double click (and triple, quadruple, hold, release depending on model)";		 
+$par1['fromZigbee'] = " fz.xiaomi_battery_3v, fz.WXKG11LM_click, fz.ignore_onoff_change, fz.ignore_basic_change,            fz.xiaomi_action_click_multistate, fz.ignore_multistate_change,";		 
+$par1['toZigbee'] = "";		 
+SQLInsert('zigbee2mqtt_devices_list', $par1);						
+
+$par1['zigbeeModel'] = 'lumi.sensor_switch.aq3, lumi.sensor_swit';
+$par1['model'] = "WXKG12LM";		 
+$par1['vendor'] = "Xiaomi";		 
+$par1['description'] = "Aqara wireless switch (with gyroscope)";		 
+$par1['extend'] = "";		 
+$par1['supports'] = "single, double, shake, hold, release";		 
+$par1['fromZigbee'] = "fz.xiaomi_battery_3v, fz.WXKG12LM_action_click_multistate, fz.ignore_onoff_change,fz.ignore_basic_change, fz.ignore_multistate_change,";		 
+$par1['toZigbee'] = "";		 
+SQLInsert('zigbee2mqtt_devices_list', $par1);						
+
+$par1['zigbeeModel'] = 'lumi.sensor_86sw1\u0000lu, lumi.remote.b186acn01\u0000\u0000\u0000';
+$par1['model'] = "WXKG03LM";		 
+$par1['vendor'] = "Xiaomi";		 
+$par1['description'] = "Aqara single key wireless wall switch";		 
+$par1['extend'] = "";		 
+$par1['supports'] = "single click";		 
+$par1['fromZigbee'] = "";		 
+$par1['toZigbee'] = "";		 
+SQLInsert('zigbee2mqtt_devices_list', $par1);						
+
+$par1['zigbeeModel'] = 'lumi.sensor_86sw2\u0000Un, lumi.sensor_86sw2.es1, lumi.remote.b286acn01\u0000\u0000\u0000';
+$par1['model'] = "WXKG02LM";		 
+$par1['vendor'] = "Xiaomi";		 
+$par1['description'] = "Aqara double key wireless wall switch";		 
+$par1['extend'] = "";		 
+$par1['supports'] = "left, right and both click";		 
+$par1['fromZigbee'] = "";		 
+$par1['toZigbee'] = "";		 
+SQLInsert('zigbee2mqtt_devices_list', $par1);						
+
+
+$par1['zigbeeModel'] = 'lumi.ctrl_neutral1';
+$par1['model'] = "QBKG04LM";		 
+$par1['vendor'] = "Xiaomi";		 
+$par1['description'] = "Aqara single key wired wall switch";		 
+$par1['extend'] = "";		 
+$par1['supports'] = "on/off";		 
+$par1['fromZigbee'] = "";		 
+$par1['toZigbee'] = "";		 
+SQLInsert('zigbee2mqtt_devices_list', $par1);						
+
+$par1['zigbeeModel'] = 'lumi.ctrl_ln1.aq1, lumi.ctrl_ln1';
+$par1['model'] = "QBKG11LM";		 
+$par1['vendor'] = "Xiaomi";		 
+$par1['description'] = "Aqara single key wired wall switch";		 
+$par1['extend'] = "";		 
+$par1['supports'] = "on/off, power measurement";		 
+$par1['fromZigbee'] = "";		 
+$par1['toZigbee'] = "";		 
+SQLInsert('zigbee2mqtt_devices_list', $par1);						
+
+$par1['zigbeeModel'] = 'lumi.ctrl_neutral2';
+$par1['model'] = "QBKG03LM";		 
+$par1['vendor'] = "Xiaomi";		 
+$par1['description'] = "Aqara double key wired wall switch";		 
+$par1['extend'] = "";		 
+$par1['supports'] = "release/hold, on/off";		 
+$par1['fromZigbee'] = "";		 
+$par1['toZigbee'] = "";		 
+SQLInsert('zigbee2mqtt_devices_list', $par1);						
+
+$par1['zigbeeModel'] = 'lumi.ctrl_ln2.aq1';
+$par1['model'] = "QBKG12LM";		 
+$par1['vendor'] = "Xiaomi";		 
+$par1['description'] = "Aqara double key wired wall switch";		 
+$par1['extend'] = "";		 
+$par1['supports'] = "on/off, power measurement";		 
+$par1['fromZigbee'] = "";		 
+$par1['toZigbee'] = "";		 
+SQLInsert('zigbee2mqtt_devices_list', $par1);						
+
+$par1['zigbeeModel'] = 'lumi.sens';
+$par1['model'] = "WSDCGQ01LM";		 
+$par1['vendor'] = "Xiaomi";		 
+$par1['description'] = "MiJia temperature & humidity sensor";		 
+$par1['extend'] = "";		 
+$par1['supports'] = "temperature and humidity";		 
+$par1['fromZigbee'] = "";		 
+$par1['toZigbee'] = "";		 
+SQLInsert('zigbee2mqtt_devices_list', $par1);						
+
+$par1['zigbeeModel'] = 'lumi.weather';
+$par1['model'] = "WSDCGQ11LM";		 
+$par1['vendor'] = "Xiaomi";		 
+$par1['description'] = "Aqara temperature, humidity and pressure sensor";		 
+$par1['extend'] = "";		 
+$par1['supports'] = "temperature, humidity and pressure";		 
+$par1['fromZigbee'] = "";		 
+$par1['toZigbee'] = "";		 
+SQLInsert('zigbee2mqtt_devices_list', $par1);						
+
+
+$par1['zigbeeModel'] = 'lumi.sensor_motion';
+$par1['model'] = "RTCGQ01LM";		 
+$par1['vendor'] = "Xiaomi";		 
+$par1['description'] = "MiJia human body movement sensor";		 
+$par1['extend'] = "";		 
+$par1['supports'] = "occupancy";		 
+$par1['fromZigbee'] = "";		 
+$par1['toZigbee'] = "";		 
+SQLInsert('zigbee2mqtt_devices_list', $par1);						
+
+$par1['zigbeeModel'] = 'lumi.sensor_motion.aq2';
+$par1['model'] = "RTCGQ11LM";		 
+$par1['vendor'] = "Xiaomi";		 
+$par1['description'] = "Aqara human body movement and illuminance sensor";		 
+$par1['extend'] = "";		 
+$par1['supports'] = "occupancy and illuminance";		 
+$par1['fromZigbee'] = "";		 
+$par1['toZigbee'] = "";		 
+SQLInsert('zigbee2mqtt_devices_list', $par1);						
+
+$par1['zigbeeModel'] = 'lumi.sensor_magnet';
+$par1['model'] = "MCCGQ01LM";		 
+$par1['vendor'] = "Xiaomi";		 
+$par1['description'] = "MiJia door & window contact sensor";		 
+$par1['extend'] = "";		 
+$par1['supports'] = "contact";		 
+$par1['fromZigbee'] = "";		 
+$par1['toZigbee'] = "";		 
+SQLInsert('zigbee2mqtt_devices_list', $par1);						
+
+$par1['zigbeeModel'] = 'lumi.sensor_magnet.aq2';
+$par1['model'] = "MCCGQ11LM";		 
+$par1['vendor'] = "Xiaomi";		 
+$par1['description'] = "Aqara door & window contact sensor";		 
+$par1['extend'] = "";		 
+$par1['supports'] = "contact";		 
+$par1['fromZigbee'] = "";		 
+$par1['toZigbee'] = "";		 
+SQLInsert('zigbee2mqtt_devices_list', $par1);						
+
+$par1['zigbeeModel'] = 'lumi.sensor_wleak.aq1';
+$par1['model'] = "SJCGQ11LM";		 
+$par1['vendor'] = "Xiaomi";		 
+$par1['description'] = "Aqara water leak sensor";		 
+$par1['extend'] = "";		 
+$par1['supports'] = "water leak true/false";		 
+$par1['fromZigbee'] = "";		 
+$par1['toZigbee'] = "";		 
+SQLInsert('zigbee2mqtt_devices_list', $par1);						
+
+$par1['zigbeeModel'] = 'lumi.sensor_cube, lumi.sensor_cube.aqgl01';
+$par1['model'] = "MFKZQ01LM";		 
+$par1['vendor'] = "Xiaomi";		 
+$par1['description'] = "Mi/Aqara smart home cube";		 
+$par1['extend'] = "";		 
+$par1['supports'] = "shake, wakeup, fall, tap, slide, flip180, flip90, rotate_left and rotate_right";		 
+$par1['fromZigbee'] = "";		 
+$par1['toZigbee'] = "";		 
+SQLInsert('zigbee2mqtt_devices_list', $par1);						
+
+$par1['zigbeeModel'] = 'lumi.plug';
+$par1['model'] = "ZNCZ02LM";		 
+$par1['vendor'] = "Xiaomi";		 
+$par1['description'] = "Mi power plug ZigBee";		 
+$par1['extend'] = "";		 
+$par1['supports'] = "on/off, power measurement";		 
+$par1['fromZigbee'] = "";		 
+$par1['toZigbee'] = "";		 
+SQLInsert('zigbee2mqtt_devices_list', $par1);						
+
+$par1['zigbeeModel'] = 'lumi.ctrl_86plug, lumi.ctrl_86plug.aq1';
+$par1['model'] = "QBCZ11LM";		 
+$par1['vendor'] = "Xiaomi";		 
+$par1['description'] = "Aqara socket Zigbee";		 
+$par1['extend'] = "";		 
+$par1['supports'] = "on/off, power measurement";		 
+$par1['fromZigbee'] = "";		 
+$par1['toZigbee'] = "";		 
+SQLInsert('zigbee2mqtt_devices_list', $par1);						
+
+$par1['zigbeeModel'] = 'lumi.sensor_smoke';
+$par1['model'] = "JTYJ-GD-01LM/BW";		 
+$par1['vendor'] = "Xiaomi";		 
+$par1['description'] = "MiJia Honeywell smoke detector";		 
+$par1['extend'] = "";		 
+$par1['supports'] = "smoke";		 
+$par1['fromZigbee'] = "";		 
+$par1['toZigbee'] = "";		 
+SQLInsert('zigbee2mqtt_devices_list', $par1);						
+
+$par1['zigbeeModel'] = 'lumi.sensor_natgas';
+$par1['model'] = "JTQJ-BF-01LM/BW";		 
+$par1['vendor'] = "Xiaomi";		 
+$par1['description'] = "MiJia gas leak detector";		 
+$par1['extend'] = "";		 
+$par1['supports'] = "gas";		 
+$par1['fromZigbee'] = "";		 
+$par1['toZigbee'] = "";		 
+SQLInsert('zigbee2mqtt_devices_list', $par1);						
+
+$par1['zigbeeModel'] = 'lumi.lock.v1';
+$par1['model'] = "A6121";		 
+$par1['vendor'] = "Xiaomi";		 
+$par1['description'] = "Vima Smart Lock";		 
+$par1['extend'] = "";		 
+$par1['supports'] = "inserted, forgotten, key error";		 
+$par1['fromZigbee'] = "";		 
+$par1['toZigbee'] = "";		 
+SQLInsert('zigbee2mqtt_devices_list', $par1);						
+
+$par1['zigbeeModel'] = 'lumi.vibration.aq1';
+$par1['model'] = "DJT11LM";		 
+$par1['vendor'] = "Xiaomi";		 
+$par1['description'] = "Aqara vibration sensor";		 
+$par1['extend'] = "";		 
+$par1['supports'] = "drop, tilt and touch";		 
+$par1['fromZigbee'] = "";		 
+$par1['toZigbee'] = "";		 
+SQLInsert('zigbee2mqtt_devices_list', $par1);						
+
+$par1['zigbeeModel'] = 'lumi.curtain';
+$par1['model'] = "ZNCLDJ11LM";		 
+$par1['vendor'] = "Xiaomi";		 
+$par1['description'] = "Aqara curtain motor";		 
+$par1['extend'] = "";		 
+$par1['supports'] = "open, close, stop, position";		 
+$par1['fromZigbee'] = "";		 
+$par1['toZigbee'] = "";		 
+SQLInsert('zigbee2mqtt_devices_list', $par1);						
+
+//IKEA
+
+
+
+
+
+
+
+
+}
+
+
+
+
+
  }
 // --------------------------------------------------------------------
 }
