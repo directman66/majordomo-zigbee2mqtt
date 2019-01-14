@@ -6,16 +6,22 @@
    $out['CONTROLPANEL']=1;
   }
   $table_name='zigbee2mqtt';
-  $rec=SQLSelectOne("SELECT * FROM $table_name WHERE ID='$id'");
+//$id=$this->id;
+$sql="SELECT * FROM $table_name WHERE ID='$id'";
+debmes($sql,'zigbee2mqtt');
+  $rec=SQLSelectOne($sql);
   if ($this->mode=='update') {
+
+
+
    $ok=1;
   //updating 'TITLE' (varchar, required)
-   global $title;
-   $rec['TITLE']=$title;
-   if ($rec['TITLE']=='') {
-    $out['ERR_TITLE']=1;
-    $ok=0;
-   }
+  // global $title;
+/// /  $rec['TITLE']=$title;
+// /  if ($rec['TITLE']=='') {
+//    $out['ERR_TITLE']=1;
+//    $ok=0;
+//   }
   //updating 'LOCATION_ID' (select)
    if (IsSet($this->location_id)) {
     $rec['LOCATION_ID']=$this->location_id;
@@ -24,15 +30,13 @@
    $rec['LOCATION_ID']=$location_id;
    }
   //updating 'PATH' (varchar, required)
-   global $path;
-   $rec['PATH']=$path;
-   if ($rec['PATH']=='') {
-    $out['ERR_PATH']=1;
-    $ok=0;
-   }
+//   global $path;
+//   $rec['PATH']=$path;
+//   if ($rec['PATH']=='') {
+//    $out['ERR_PATH']=1;
+  //  $ok=0;
+//   }
 
-   global $path_write;
-   $rec['PATH_WRITE']=trim($path_write);
    
    global $disp_flag;
    $rec['DISP_FLAG']=(int)$disp_flag;
@@ -65,16 +69,30 @@
    $rec['LINKED_METHOD']=$linked_method;
 
 
+ debmes('Начинаем добавлять подписку ', 'zigbee2mqtt');
   //UPDATING RECORD
    if ($ok) {
+
+
+
+
     if ($rec['ID']) {
+
      SQLUpdate($table_name, $rec); // update
     } else {
      $new_rec=1;
      $rec['ID']=SQLInsert($table_name, $rec); // adding new record
     }
+    
 
     if ($rec['LINKED_OBJECT'] && $rec['LINKED_PROPERTY']) {
+//$vm=$this->name;
+// echo "<script type='text/javascript'>";
+// echo "alert('$vm');";
+// echo "</script>";
+
+
+     debmes('Добавляем подписку '.$rec['LINKED_OBJECT'].$rec['LINKED_PROPERTY'].":". $this->name, 'zigbee2mqtt');
      addLinkedProperty($rec['LINKED_OBJECT'], $rec['LINKED_PROPERTY'], $this->name);
     }
     if ($old_linked_object && $old_linked_object!=$rec['LINKED_OBJECT'] && $old_linked_property && $old_linked_property!=$rec['LINKED_PROPERTY']) {
