@@ -178,7 +178,7 @@ function run() {
 * @access public
 */
  function setProperty($id, $value, $set_linked=0) {
-debmes('РќСѓР¶РЅРѕ РёР·РјРµРЅРёС‚СЊ Р·РЅР°С‡РµРЅРёРµ '.id.' РЅР° '.$value, 'zigbee2mqtt');
+debmes('Нужно изменить значение '.id.' на '.$value, 'zigbee2mqtt');
 
 
   $rec=SQLSelectOne("SELECT * FROM zigbee2mqtt WHERE ID='".$id."'");
@@ -244,7 +244,7 @@ $jsonvalue=json_encode($json) ;
 $json=array( $rec['METRIKA']=> $value);
 $jsonvalue=json_encode($json) ;
 }
-debmes('РџСѓР±Р»РёРєСѓСЋ zigbee2mqqtt '.$rec['PATH_WRITE'].":".$jsonvalue, 'zigbee2mqtt');
+debmes('Публикую zigbee2mqqtt '.$rec['PATH_WRITE'].":".$jsonvalue, 'zigbee2mqtt');
 
 
    if ($rec['PATH_WRITE']) {
@@ -610,6 +610,15 @@ $out['status']=$a;
 
 }
 
+ if ($this->tab=='map') {
+$maparray=SQLSelectOne ('select * from zigbee2mqtt where value like "digraph%"');
+
+$out['map_array']=$maparray['VALUE'];
+
+
+}
+
+
 
  if ($this->view_mode=='srv_start') {
 $a=shell_exec("sudo systemctl start zigbee2mqtt");
@@ -638,6 +647,14 @@ $out['status']=$a;
 
    $this->redirect("?tab=service");
 }
+
+
+ if ($this->view_mode=='get_map') {
+
+   $this->get_map();
+   $this->redirect("?tab=map");
+}
+
 
 
 
@@ -760,7 +777,7 @@ debmes($sql,'zigbee2mqtt');
     $res=SQLSelectOne($sql);
      if($res['ID']) { /* If path_write foud in db */
 {
-debmes($cdev.' в ситеме найден','zigbee2mqtt');
+debmes($cdev.' � ������ ������','zigbee2mqtt');
 
         foreach ($json as $key=> $value) {
 if ($key=='type') $res['TYPE']=$value;
@@ -873,6 +890,57 @@ function usual(&$out) {
 *
 * @access public
 */
+
+
+
+
+function get_map(){
+  include_once("./lib/mqtt/phpMQTT.php");
+
+   $this->getConfig();
+   if ($mqtt->config['MQTT_CLIENT']) {
+    $client_name=$mqtt->config['MQTT_CLIENT'];
+   } else {
+    $client_name="MajorDoMo MQTT";
+   }
+
+   if ($this->config['MQTT_AUTH']) {
+    $username=$this->config['MQTT_USERNAME'];
+    $password=$this->config['MQTT_PASSWORD'];
+   }
+   if ($this->config['MQTT_HOST']) {
+    $host=$this->config['MQTT_HOST'];
+   } else {
+    $host='localhost';
+   }
+   if ($this->config['MQTT_PORT']) {
+    $port=$this->config['MQTT_PORT'];
+   } else {
+    $port=1883;
+   }
+
+   $mqtt_client = new phpMQTT($host, $port, $client_name.' Client');
+
+   if(!$mqtt_client->connect(true, NULL,$username,$password))
+   {
+    return 0;
+   }
+
+
+debmes('Запрашиваем карту ', 'zigbee2mqtt');
+
+
+
+
+   $mqtt_client->publish('zigbee2mqtt/bridge/networkmap','graphviz');
+   $mqtt_client->publish('zigbee2mqtt/bridge/networkmap','raw');
+   //$mqtt_client->publish($rec['PATH_WRITE'].'/set',$jsonvalue, (int)$rec['QOS'], (int)$rec['RETAIN']);
+
+
+   $mqtt_client->close();
+}
+
+
  function uninstall() {
   SQLExec('DROP TABLE IF EXISTS zigbee2mqtt');
   SQLExec('DROP TABLE IF EXISTS zigbee2mqtt_devices');
