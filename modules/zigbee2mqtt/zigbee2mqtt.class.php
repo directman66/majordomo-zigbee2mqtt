@@ -302,7 +302,7 @@ debmes('РџСѓР±Р»РёРєСѓСЋ zigbee2mqqtt '.$rec['PATH_WRITE'].":".$
 
    /* Search 'PATH' in database (db) */
 $dev_title=explode('/',$path)[1];
-echo $path.":".$dev_title."<br>";
+//echo $path.":".$dev_title."<br>";
 
 //if (strpos($dev_title,"/set/")==0)
 if (strpos($path,"set")===false)
@@ -315,6 +315,8 @@ if (strpos($path,"set")===false)
 
      $rec['FIND']=date('Y-m-d H:i:s');
 SQLInsert('zigbee2mqtt_devices', $rec);
+     $this->refresh_db();
+
        }
 else 
 {
@@ -436,6 +438,106 @@ function admin(&$out) {
  $out['MQTT_USERNAME']=$this->config['MQTT_USERNAME'];
  $out['MQTT_PASSWORD']=$this->config['MQTT_PASSWORD'];
  $out['MQTT_AUTH']=$this->config['MQTT_AUTH'];
+
+
+     if ($this->tab=='edit_device') {
+
+//if ( $this->TAB=='edit_device') {
+//$vm=$this->VIEW_MODE;
+// echo "<script type='text/javascript'>";
+// echo "alert('$vm');";
+// echo "</script>";
+
+
+//echo '123';
+
+  $res=SQLSelectOne("SELECT * FROM zigbee2mqtt_devices where ID=".$this->id);
+
+
+
+$out['ID']=$res['ID'];
+$out['TITLE']=$res['TITLE'];
+$out['MODEL']=$res['MODEL'];
+$out['TYPE']=$res['TYPE'];
+$out['IEEADDR']=$res['IEEADDR'];
+$out['NWKADDR']=$res['NWKADDR'];
+$out['MANIFID']=$res['MANIFID'];
+$out['MANUFNAME']=$res['MANUFNAME'];
+$out['POWEDSOURCE']=$res['POWEDSOURCE'];
+$out['MODELID']=$res['MODELID'];
+$out['STATUS']=$res['STATUS'];
+$out['DID']=$res['DID'];
+$out['D_ID']=$res['D_ID'];
+$out['FIND']=$res['FIND'];
+$out['LOCATION_ID']=$res['LOCATION_ID'];
+
+$res1=SQLSelectOne("SELECT * FROM zigbee2mqtt_devices_list where zigbeeModel='".$res['MODEL']."'");
+$out['MODELNAME']=$res1['model'];
+$out['VENDOR']=$res1['vendor'];
+$out['DESCRIPTION']=$res1['description'];
+$out['EXTEND']=$res1['extend'];
+$out['SUPPORTS']=$res1['supports'];
+$out['FROMZIGBEE']=$res1['fromZigbee'];
+$out['TOZIGBEE']=$res1['toZigbee'];
+
+  //options for 'LOCATION_ID' (select)
+  $tmp=SQLSelect("SELECT ID, TITLE FROM locations ORDER BY TITLE");
+  $locations_total=count($tmp);
+  for($locations_i=0;$locations_i<$locations_total;$locations_i++) {
+   $location_id_opt[$tmp[$locations_i]['ID']]=$tmp[$locations_i]['TITLE'];
+  }
+  for($i=0;$i<count($tmp);$i++) {
+   if ($rec['LOCATION_ID']==$tmp[$i]['ID']) $tmp[$i]['SELECTED']=1;
+  }
+  $out['LOCATION_ID_OPTIONS']=$tmp;
+
+}
+
+     if ($this->view_mode=='update_device') {
+//$vm=$this->id;
+// echo "<script type='text/javascript'>";
+// echo "alert('$vm');";
+// echo "</script>";
+
+
+  $table_name='zigbee2mqtt_devices';
+  $rec=SQLSelectOne("SELECT * FROM $table_name WHERE ID='".$this->id."'");
+
+   global $dev_title;
+   $rec['TITLE']=$dev_title;
+   if ($rec['TITLE']=='') {
+    $out['ERR_TITLE']=1;
+    $ok=0;
+   }
+
+
+
+
+   global $dev_location_id;
+  $rec['LOCATION_ID']=$dev_location_id;
+   
+//$vm=$dev_location_id;
+// echo "<script type='text/javascript'>";
+// echo "alert('$vm');";
+// echo "</script>";
+
+
+
+  //UPDATING RECORD
+  
+    if ($rec['ID']) {
+     SQLUpdate($table_name, $rec); // update
+    } else {
+     $new_rec=1;
+     $rec['ID']=SQLInsert($table_name, $rec); // adding new record
+    }
+    
+
+ $this->redirect("?view_mode=view_mqtt&id=".$this->id."&tab=edit_device");
+}
+
+
+
 
 
 
@@ -597,7 +699,11 @@ $out['status']=$a;
  if ($this->data_source=='mqtt' || $this->data_source=='') {
 //  if ($this->view_mode=='' || $this->view_mode=='search_mqtt') {
    $this->search_mqtt($out);
-//  }
+  }
+
+
+
+
   if ($this->view_mode=='edit_mqtt') {
    $this->edit_mqtt($out, $this->id);
   }
@@ -616,8 +722,15 @@ $out['status']=$a;
      }
 
 
+
+
+
+
+
+
+
  }
-}
+
 
 function clear_trash() {
     $res=SQLSelect("SELECT ID FROM zigbee2mqtt WHERE LINKED_OBJECT='' AND LINKED_PROPERTY=''");
@@ -654,8 +767,9 @@ if ($key=='type') $res['TYPE']=$value;
 if ($key=='nwkAddr') $res['NWKADDR']=$value;
 if ($key=='manufId') $res['MANUFID']=$value;
 if ($key=='manufName') $res['MANUFNAME']=$value;
-if ($key=='PowerSource') $res['POWERSOURCE']=$value;
+if ($key=='powerSource') $res['POWERSOURCE']=$value;
 if ($key=='modelId') $res['MODEL']=$value;
+if ($key=='modelId') $res['MODELID']=$value;
 if ($key=='status') $res['STATUS']=$value;
 if ($key=='devId') $res['DID']=$value;
 if ($key=='_id') $res['D_ID']=$value;
