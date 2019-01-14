@@ -180,7 +180,12 @@ $vm=$this->id;
 //                        $file = date('Y-m-d') . '.log';
 
 //            $path = ROOT . 'cms/debmes';
-            $path = '/opt/zigbee2mqtt/data/log';
+
+$this->getConfig();
+$zigbee2mqttpath=$this->config['ZIGBEE2MQTTPATH'];
+
+            $path = $zigbee2mqttpath.'/data/log';
+
 
             if ($handle = opendir($path)) {
                 $files = array();
