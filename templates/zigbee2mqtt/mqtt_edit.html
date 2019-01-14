@@ -18,11 +18,36 @@
 
 <div class="form-group">
  <label class="control-label"[#if ERR_METRIKA#] style="color:red;font-weight:bold"[#endif#]>
+ ID:
+ (*)
+ </label>
+ <div class="controls"><input  type="text" name="id" value="[#ID#]" class="input form-control" disabled></div>
+</div>
+
+<div class="form-group">
+ <label class="control-label"[#if ERR_METRIKA#] style="color:red;font-weight:bold"[#endif#]>
+ DEV_ID:
+ (*)
+ </label>
+ <div class="controls"><input  type="text" name="dev_id" value="[#DEV_ID#]" class="input form-control" disabled></div>
+</div>
+
+<div class="form-group">
+ <label class="control-label"[#if ERR_METRIKA#] style="color:red;font-weight:bold"[#endif#]>
  Metrika:
  (*)
  </label>
  <div class="controls"><input  type="text" name="metrika" value="[#METRIKA#]" class="input form-control" disabled></div>
 </div>
+
+<div class="form-group">
+ <label class="control-label"[#if ERR_METRIKA#] style="color:red;font-weight:bold"[#endif#]>
+ PATH_WRITE:
+ (*)
+ </label>
+ <div class="controls"><input  type="text" name="path_write" value="[#PATH_WRITE#]" class="input form-control" disabled></div>
+</div>
+
 
 
 
@@ -126,7 +151,7 @@
  [#else ID#]
  <button type="submit" name="subm" value="<#LANG_ADD#>" class="btn btn-defaul btn-primary"><#LANG_ADD#></button>
  [#endif ID#]
- <a href="?" class="btn btn-default"><#LANG_CANCEL#></a>
+ <a href="?view_mode=view_mqtt&id=[#DEV_ID#]&tab=edit_data" class="btn btn-default"><#LANG_CANCEL#></a>
 
  [#if ID!=""#]
  &nbsp;&nbsp;&nbsp;
