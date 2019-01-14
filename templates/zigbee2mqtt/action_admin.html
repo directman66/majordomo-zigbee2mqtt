@@ -1,27 +1,42 @@
 VIEW_MODE: [#VIEW_MODE#]
 TAB: [#TAB#]
+TITLE: [#TITLE#]
+
 <!-- table zwave_devices search -->
 
 
 	 <ul class="nav nav-tabs">
-
-<li [#if TAB=="" || TAB=="indata" #] class="active" [#endif#]><a href="?data_source=<#DATA_SOURCE#>&view_mode=&id=<#ID#>&tab=devices">Zigbee2mqtt devices</a> </li>
-<li [#if TAB=="log" #] class="active" [#endif#]><a href="?data_source=<#DATA_SOURCE#>&view_mode=&id=<#ID#>&tab=log">Log</a> </li>
+ [#if VIEW_MODE=""||VIEW_MODE="update_log"#]
+<li [#if TAB=="" || TAB=="indata" #] class="active" [#endif#]><a href="?data_source=<#DATA_SOURCE#>&view_mode=&id=<#ID#>&tab=devices">Devices</a> </li>
 <li [#if TAB=="settings" #] class="active" [#endif#]><a href="?data_source=<#DATA_SOURCE#>&view_mode=&id=<#ID#>&tab=settings">Settings</a> </li>
+<li [#if TAB=="log" #] class="active" [#endif#]><a href="?data_source=<#DATA_SOURCE#>&view_mode=&id=<#ID#>&tab=log">Log</a> </li>
 <li [#if TAB=="service" #] class="active" [#endif#]><a href="?data_source=<#DATA_SOURCE#>&view_mode=&id=<#ID#>&tab=service">Service</a> </li>
 <li [#if TAB=="help" #] class="active" [#endif#]><a href="?view_mode=<#VIEW_MODE#>&tab=help">Help</a> </li>	
 </ul>
+ [#endif#] 
 
  <!-- action usual -->
  <!-- table mqtt search -->
  [#if TAB="" || TAB="devices"#]
- [#if VIEW_MODE="device" || VIEW_MODE=""#]
-  [#inc devices.html#]
- [#endif VIEW_MODE#]
+ [#if VIEW_MODE=""#] [#inc devices.html#] [#endif#]
+ [#endif#]
 
  [#if VIEW_MODE="view_mqtt"#]
+	 <ul class="nav nav-tabs">
+<li [#if TAB=="edit_device" #] class="active" [#endif#]><a href="?data_source=<#DATA_SOURCE#>&view_mode=view_mqtt&id=<#ID#>&tab=edit_devices">Edit device</a> </li>
+<li [#if TAB=="edit_data" #] class="active" [#endif#]><a href="?data_source=<#DATA_SOURCE#>&view_mode=view_mqtt&id=<#ID#>&tab=edit_data">Data</a> </li>
+</ul>
+ [#endif#]
+
+
+  [#if TAB="edit_device"#]
+  [#inc edit_device.html#]
+  [#endif#]
+
+  [#if TAB="edit_data"#]
   [#inc mqtt_search_admin.html#]
- [#endif VIEW_MODE#]
+  [#endif#]
+
 
  <!-- / table mqtt search -->
  <!-- table mqtt edit -->
