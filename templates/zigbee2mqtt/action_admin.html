@@ -24,7 +24,7 @@ TITLE: [#TITLE#]
 
  [#if VIEW_MODE="view_mqtt"#]
 	 <ul class="nav nav-tabs">
-<li [#if TAB=="edit_device" #] class="active" [#endif#]><a href="?data_source=<#DATA_SOURCE#>&view_mode=view_mqtt&id=<#ID#>&tab=edit_devices">Edit device</a> </li>
+<li [#if TAB=="edit_device" #] class="active" [#endif#]><a href="?data_source=<#DATA_SOURCE#>&view_mode=view_mqtt&id=<#ID#>&tab=edit_device">Edit device</a> </li>
 <li [#if TAB=="edit_data" #] class="active" [#endif#]><a href="?data_source=<#DATA_SOURCE#>&view_mode=view_mqtt&id=<#ID#>&tab=edit_data">Data</a> </li>
 </ul>
  [#endif#]
@@ -58,7 +58,6 @@ TITLE: [#TITLE#]
 [#if TAB="service"#] [#inc service.html#] [#endif#]
 [#if TAB="map"#] [#inc map.html#] [#endif#]
 [#if TAB="help"#] [#inc help.html#] [#endif#]
-
 
 
 
