@@ -56,7 +56,7 @@
 
 <tr>
  <th>
-ID
+
  </th>
 
  <th>
@@ -64,10 +64,12 @@ TITLE
  </th>
 
  <th>
-MANUFACTURE
+TYPE
  </th>
+
+
  <th>
-DEVICE NAME	
+MANUFACTURE
  </th>
  <th>
 MODEL
@@ -85,19 +87,31 @@ LOCATION
 [#begin DEVICES#]
 <tr>
 
- <td>[#ID#]</td>
+
+ <td>
+[#if model#]
+<img src="../templates/zigbee2mqtt/img/[#model#].jpg"  height="52" width="52" class="img-rounded">
+[#else#]
+
+[#endif#]
+</td>
  <td>
 
    <a href="?view_mode=view_mqtt&id=[#ID#]"  title="<#LANG_EDIT#>">[#TITLE#]</a>
 </td>
-
-
-
- <td>[#MANUFACTURE#]</td>
- <td>[#DEVICE_NAME#]</td>
- <td align=center> [#if MODEL!=""#] [#MODEL#] [#else#]   &nbsp;  [#endif#]
- <td >[#LOCATION_ID#]</td>
+ <td>[#vendor#]</td>
+ <td> [#model#] </td>
+ <td>[#description#]</td>
+ <td >[#STATUS#]</td>
  <td > [#if FIND!=""#][#FIND#][#else#] &nbsp; [#endif#]</td>
+
+
+
+
+ <td >[#LOCATION_ID#]</td>
+
+
+
 
 <td>
 
