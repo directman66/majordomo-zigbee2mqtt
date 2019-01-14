@@ -21,7 +21,8 @@
 //  $res=SQLSelect("SELECT * FROM zigbee2mqtt_devices WHERE $qry ORDER BY ".$sortby_mqtt);
 //if ($this->view_mode==''||$this->view_mode=='device')
 
-  $res=SQLSelect("SELECT * FROM zigbee2mqtt_devices ");
+  $res=SQLSelect("SELECT * FROM zigbee2mqtt_devices LEFT JOIN zigbee2mqtt_devices_list ON zigbee2mqtt_devices_list.zigbeeModel=zigbee2mqtt_devices.MODEL ");
+
   if ($res[0]['ID']) {
    if (!$out['TREE']) {
     paging($res, 50, $out); // search result paging
