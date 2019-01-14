@@ -178,12 +178,13 @@ function run() {
 * @access public
 */
  function setProperty($id, $value, $set_linked=0) {
-debmes('Нужно изменить значение '.id.' на '.$value, 'zigbee2mqtt');
+debmes('Нужно изменить значение id='.$id.' на '.$value, 'zigbee2mqtt');
 
-
+debmes("SELECT * FROM zigbee2mqtt WHERE ID='".$id."'", 'zigbee2mqtt');
   $rec=SQLSelectOne("SELECT * FROM zigbee2mqtt WHERE ID='".$id."'");
 
   if (!$rec['ID'] || !$rec['PATH']) {
+debmes('Не хватает данных', 'zigbee2mqtt');
    return 0;
   }
 
@@ -229,6 +230,7 @@ debmes('Нужно изменить значение '.id.' на '.$value, 'zigb
 
    if(!$mqtt_client->connect(true, NULL,$username,$password))
    {
+debmes('Ошибка подключения к mqtt', 'zigbee2mqtt');
     return 0;
    }
 
@@ -244,7 +246,7 @@ $jsonvalue=json_encode($json) ;
 $json=array( $rec['METRIKA']=> $value);
 $jsonvalue=json_encode($json) ;
 }
-debmes('Публикую zigbee2mqqtt '.$rec['PATH_WRITE'].":".$jsonvalue, 'zigbee2mqtt');
+debmes('Публикую zigbee2mqqtt '.$rec['PATH_WRITE'].'/set'.":".$jsonvalue, 'zigbee2mqtt');
 
 
    if ($rec['PATH_WRITE']) {
@@ -380,7 +382,9 @@ SQLInsert('zigbee2mqtt', $rec);
 if ($rec['CONVERTONOFF']=='1' && $value=='ON') $newvalue=1;
 if ($rec['CONVERTONOFF']=='1' && $value=='OFF') $newvalue=0;
 
-//       setGlobal($rec['LINKED_OBJECT'].'.'.$rec['LINKED_PROPERTY'], $newvalue, array($this->name=>'0'));
+
+//пишем в переменную
+       setGlobal($rec['LINKED_OBJECT'].'.'.$rec['LINKED_PROPERTY'], $newvalue, array($this->name=>'0'));
      }
      if ($rec['LINKED_OBJECT'] && $cmd_rec['LINKED_METHOD']) {
        callMethod($rec['LINKED_OBJECT'] . '.' . $rec['LINKED_METHOD'], $rec['VALUE']);
@@ -853,10 +857,15 @@ function usual(&$out) {
  }
 
  function propertySetHandle($object, $property, $value) {
-   $mqtt_properties=SQLSelect("SELECT ID FROM zigbee2mqtt WHERE LINKED_OBJECT LIKE '".DBSafe($object)."' AND LINKED_PROPERTY LIKE '".DBSafe($property)."'");
+
+
+   $mqtt_properties=SQLSelect("SELECT * FROM zigbee2mqtt WHERE LINKED_OBJECT LIKE '".DBSafe($object)."' AND LINKED_PROPERTY LIKE '".DBSafe($property)."'");
    $total=count($mqtt_properties);
+debmes($object.":". $property.":". $value. ' найдено результатов '. $total, 'zigbee2mqtt');
+
    if ($total) {
     for($i=0;$i<$total;$i++) {
+     debmes('Запускаем setProperty '. $mqtt_properties[$i]['ID'].":".$value, 'zigbee2mqtt');
      $this->setProperty($mqtt_properties[$i]['ID'], $value);
     }
    }  
@@ -869,9 +878,17 @@ function usual(&$out) {
 * @access public
 */
  function delete_mqtt($id) {
-  $rec=SQLSelectOne("SELECT * FROM zigbee2mqtt WHERE ID='$id'");
+
+//debmes("SELECT * FROM zigbee2mqtt WHERE DEV_ID='$id'",'zigbee2mqtt');
+//  $rec=SQLSelectOne("SELECT * FROM zigbee2mqtt WHERE DEV_ID='$id'");
   // some action for related tables
-  SQLExec("DELETE FROM zigbee2mqtt WHERE ID='".$rec['ID']."'");
+
+//debmes("DELETE FROM zigbee2mqtt WHERE DEV_ID='".$rec['DEV_ID']."'",'zigbee2mqtt');
+debmes("DELETE FROM zigbee2mqtt_devices WHERE DEV_ID='".$id."'", 'zigbee2mqtt');
+  SQLExec("DELETE FROM zigbee2mqtt_devices WHERE DEV_ID='".$id."'");
+debmes("DELETE FROM zigbee2mqtt_devices WHERE ID='".$id."'", 'zigbee2mqtt');
+  SQLExec("DELETE FROM zigbee2mqtt_devices WHERE ID='".$id."'");
+
  }
 /**
 * Install
