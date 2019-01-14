@@ -59,28 +59,18 @@
 
  </th>
 
- <th>
-TITLE
- </th>
+ <th>TITLE </th>
 
- <th>
-TYPE
- </th>
+ <th>VENDOR </th>
+ <th>MODEL </th>
+
+ <th> DESCRIPTION </th>
+ <th> STATUS </th>
+ <th>UPDATED </th>
+
+ <th>LOCATION </th>
 
 
- <th>
-MANUFACTURE
- </th>
- <th>
-MODEL
- </th>
- <th>
-LOCATION
- </th>
-
- <th>
- UPDATED
- </th>
 </tr>
 </thead>
 <tbody>
@@ -91,9 +81,12 @@ LOCATION
  <td>
 [#if model#]
 <img src="../templates/zigbee2mqtt/img/[#model#].jpg"  height="52" width="52" class="img-rounded">
-[#else#]
-
 [#endif#]
+
+[#if TITLE="bridge"#]
+<img src="../templates/zigbee2mqtt/img/cc2531.jpg"  height="52" width="52" class="img-rounded">
+[#endif#]
+
 </td>
  <td>
 
