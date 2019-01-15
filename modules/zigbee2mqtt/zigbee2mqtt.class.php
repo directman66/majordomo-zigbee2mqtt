@@ -384,7 +384,7 @@ if ($rec['CONVERTONOFF']=='1' && $value=='OFF') $newvalue=0;
 
 
 //пишем в переменную
-       setGlobal($rec['LINKED_OBJECT'].'.'.$rec['LINKED_PROPERTY'], $newvalue, array($this->name=>'0'));
+//       setGlobal($rec['LINKED_OBJECT'].'.'.$rec['LINKED_PROPERTY'], $newvalue, array($this->name=>'0'));
      }
      if ($rec['LINKED_OBJECT'] && $cmd_rec['LINKED_METHOD']) {
        callMethod($rec['LINKED_OBJECT'] . '.' . $rec['LINKED_METHOD'], $rec['VALUE']);
@@ -1297,6 +1297,200 @@ $par1['toZigbee'] = "";
 SQLInsert('zigbee2mqtt_devices_list', $par1);						
 
 //IKEA
+
+$par1['zigbeeModel'] = 'TRADFRI bulb E27 WS opal 980lm, TRADFRI bulb E26 WS opal 980lm,TRADFRI bulb E27 WS\uFFFDopal 980lm';
+$par1['model'] = "LED1545G12";		 
+$par1['vendor'] = "IKEA";		 
+$par1['description'] = "TRADFRI LED bulb E26/E27 980 lumen, dimmable, white spectrum, opal white";		 
+$par1['extend'] = "";		 
+$par1['supports'] = "generic.light_onoff_brightness_colortemp";		 
+$par1['fromZigbee'] = "";		 
+$par1['toZigbee'] = "";		 
+SQLInsert('zigbee2mqtt_devices_list', $par1);						
+
+$par1['zigbeeModel'] = 'TRADFRI bulb E27 WS clear 950lm, TRADFRI bulb E26 WS clear 950lm';
+$par1['model'] = "LED1546G12";		 
+$par1['vendor'] = "IKEA";		 
+$par1['description'] = "TRADFRI LED bulb E26/E27 950 lumen, dimmable, white spectrum, clear";		 
+$par1['extend'] = "";		 
+$par1['supports'] = "generic.light_onoff_brightness_colortemp";		 
+$par1['fromZigbee'] = "";		 
+$par1['toZigbee'] = "";		 
+SQLInsert('zigbee2mqtt_devices_list', $par1);						
+
+$par1['zigbeeModel'] = 'TRADFRI bulb E27 opal 1000lm, TRADFRI bulb E27 W opal 1000lm';
+$par1['model'] = "LED1623G12";		 
+$par1['vendor'] = "IKEA";		 
+$par1['description'] = "TRADFRI LED bulb E27 1000 lumen, dimmable, opal white";		 
+$par1['extend'] = "";		 
+$par1['supports'] = "generic.light_onoff_brightness,";		 
+$par1['fromZigbee'] = "";		 
+$par1['toZigbee'] = "";		 
+SQLInsert('zigbee2mqtt_devices_list', $par1);						
+
+$par1['zigbeeModel'] = 'TRADFRI bulb GU10 WS 400lm';
+$par1['model'] = "LED1537R6";		 
+$par1['vendor'] = "IKEA";		 
+$par1['description'] = "TRADFRI LED bulb GU10 400 lumen, dimmable, white spectrum";		 
+$par1['extend'] = "";		 
+$par1['supports'] = "generic.light_onoff_brightness_colortemp";		 
+$par1['fromZigbee'] = "";		 
+$par1['toZigbee'] = "";		 
+SQLInsert('zigbee2mqtt_devices_list', $par1);						
+
+$par1['zigbeeModel'] = 'TRADFRI bulb GU10 W 400lm';
+$par1['model'] = "LED1650R5";		 
+$par1['vendor'] = "IKEA";		 
+$par1['description'] = "TRADFRI LED bulb GU10 400 lumen, dimmable";		 
+$par1['extend'] = "";		 
+$par1['supports'] = "generic.light_onoff_brightness";		 
+$par1['fromZigbee'] = "";		 
+$par1['toZigbee'] = "";		 
+SQLInsert('zigbee2mqtt_devices_list', $par1);
+
+$par1['zigbeeModel'] = 'TRADFRI bulb E14 WS opal 400lm, TRADFRI bulb E12 WS opal 400lm';
+$par1['model'] = "LED1536G5";		 
+$par1['vendor'] = "IKEA";		 
+$par1['description'] = "TRADFRI LED bulb E12/E14 400 lumen, dimmable, white spectrum, opal white";		 
+$par1['extend'] = "";		 
+$par1['supports'] = "generic.light_onoff_brightness_colortemp";		 
+$par1['fromZigbee'] = "";		 
+$par1['toZigbee'] = "";		 
+SQLInsert('zigbee2mqtt_devices_list', $par1);
+
+$par1['zigbeeModel'] = 'TRADFRI bulb E26 opal 1000lm, TRADFRI bulb E26 W opal 1000lm';
+$par1['model'] = "LED1622G12";		 
+$par1['vendor'] = "IKEA";		 
+$par1['description'] = "TRADFRI LED bulb E26 1000 lumen, dimmable, opal white";		 
+$par1['extend'] = "";		 
+$par1['supports'] = "generic.light_onoff_brightness";		 
+$par1['fromZigbee'] = "";		 
+$par1['toZigbee'] = "";		 
+SQLInsert('zigbee2mqtt_devices_list', $par1);
+
+$par1['zigbeeModel'] = 'TRADFRI bulb E27 CWS opal 600lm, TRADFRI bulb E26 CWS opal 600lm';
+$par1['model'] = "LED1624G9";		 
+$par1['vendor'] = "IKEA";		 
+$par1['description'] = "TRADFRI LED bulb E27/E26 600 lumen, dimmable, color, opal white";		 
+$par1['extend'] = "";		 
+$par1['supports'] = "generic.light_onoff_brightness_colortemp_colorxy";		 
+$par1['fromZigbee'] = "";		 
+$par1['toZigbee'] = "";		 
+SQLInsert('zigbee2mqtt_devices_list', $par1);
+
+$par1['zigbeeModel'] = 'TRADFRI bulb E14 W op/ch 400lm', 'TRADFRI bulb E12 W op/ch 400lm,TRADFRI bulb E17 W op/ch 400lm';
+$par1['model'] = "LED1649C5";		 
+$par1['vendor'] = "IKEA";		 
+$par1['description'] = "TRADFRI LED bulb E12/E14/E17 400 lumen, dimmable warm white, chandelier opal";		 
+$par1['extend'] = "";		 
+$par1['supports'] = " generic.light_onoff_brightness";		 
+$par1['fromZigbee'] = "";		 
+$par1['toZigbee'] = "";		 
+SQLInsert('zigbee2mqtt_devices_list', $par1);
+
+$par1['zigbeeModel'] = 'TRADFRI wireless dimmer';
+$par1['model'] = "ICTC-G-1";		 
+$par1['vendor'] = "IKEA";		 
+$par1['description'] = "TRADFRI wireless dimmer";		 
+$par1['extend'] = "";		 
+$par1['supports'] = "brightness [0-255], quick rotate for instant 0/255";		 
+$par1['fromZigbee'] = "";		 
+$par1['toZigbee'] = "";		 
+SQLInsert('zigbee2mqtt_devices_list', $par1);
+
+$par1['zigbeeModel'] = 'TRADFRI transformer 10W';
+$par1['model'] = "ICPSHC24-10EU-IL-1";		 
+$par1['vendor'] = "IKEA";		 
+$par1['description'] = "TRADFRI driver for wireless control (10 watt)";		 
+$par1['extend'] = "";		 
+$par1['supports'] = " generic.light_onoff_brightness";		 
+$par1['fromZigbee'] = "";		 
+$par1['toZigbee'] = "";		 
+SQLInsert('zigbee2mqtt_devices_list', $par1);
+
+$par1['zigbeeModel'] = 'TRADFRI transformer 30W';
+$par1['model'] = "ICPSHC24-30EU-IL-1";		 
+$par1['vendor'] = "IKEA";		 
+$par1['description'] = "TRADFRI driver for wireless control (30 watt)";		 
+$par1['extend'] = "";		 
+$par1['supports'] = "generic.light_onoff_brightness";		 
+$par1['fromZigbee'] = "";		 
+$par1['toZigbee'] = "";		 
+SQLInsert('zigbee2mqtt_devices_list', $par1);
+
+$par1['zigbeeModel'] = 'FLOALT panel WS 30x30';
+$par1['model'] = "L1527";		 
+$par1['vendor'] = "IKEA";		 
+$par1['description'] = "FLOALT LED light panel, dimmable, white spectrum (30x30 cm)";		 
+$par1['extend'] = "";		 
+$par1['supports'] = "generic.light_onoff_brightness_colortemp";		 
+$par1['fromZigbee'] = "";		 
+$par1['toZigbee'] = "";		 
+SQLInsert('zigbee2mqtt_devices_list', $par1);
+
+$par1['zigbeeModel'] = 'FLOALT panel WS 60x60';
+$par1['model'] = "L1529";		 
+$par1['vendor'] = "IKEA";		 
+$par1['description'] = "FLOALT LED light panel, dimmable, white spectrum (60x60 cm)";		 
+$par1['extend'] = "";		 
+$par1['supports'] = "generic.light_onoff_brightness_colortemp";		 
+$par1['fromZigbee'] = "";		 
+$par1['toZigbee'] = "";		 
+SQLInsert('zigbee2mqtt_devices_list', $par1);
+
+
+$par1['zigbeeModel'] = 'FLOALT panel WS 30x90';
+$par1['model'] = "L1528";		 
+$par1['vendor'] = "IKEA";		 
+$par1['description'] = "FLOALT LED light panel, dimmable, white spectrum (30x90 cm)";		 
+$par1['extend'] = "";		 
+$par1['supports'] = "generic.light_onoff_brightness_colortemp";		 
+$par1['fromZigbee'] = "";		 
+$par1['toZigbee'] = "";		 
+SQLInsert('zigbee2mqtt_devices_list', $par1);
+
+$par1['zigbeeModel'] = 'SURTE door WS 38x64';
+$par1['model'] = "L1531";		 
+$par1['vendor'] = "IKEA";		 
+$par1['description'] = "SURTE door light panel, dimmable, white spectrum (38x64 cm)";		 
+$par1['extend'] = "";		 
+$par1['supports'] = "generic.light_onoff_brightness_colortemp";		 
+$par1['fromZigbee'] = "";		 
+$par1['toZigbee'] = "";		 
+SQLInsert('zigbee2mqtt_devices_list', $par1);
+
+$par1['zigbeeModel'] = 'TRADFRI control outlet';
+$par1['model'] = "E1603";		 
+$par1['vendor'] = "IKEA";		 
+$par1['description'] = "TRADFRI control outlet";		 
+$par1['extend'] = "";		 
+$par1['supports'] = "generic.light_onoff_brightness_colortemp";		 
+$par1['fromZigbee'] = "";		 
+$par1['toZigbee'] = "";		 
+SQLInsert('zigbee2mqtt_devices_list', $par1);
+
+$par1['zigbeeModel'] = 'TRADFRI control outlet';
+$par1['model'] = "E1603";		 
+$par1['vendor'] = "IKEA";		 
+$par1['description'] = "TRADFRI control outlet";		 
+$par1['extend'] = "";		 
+$par1['supports'] = "on/off";		 
+$par1['fromZigbee'] = "";		 
+$par1['toZigbee'] = "";		 
+SQLInsert('zigbee2mqtt_devices_list', $par1);
+
+$par1['zigbeeModel'] = 'TRADFRI remote control';
+$par1['model'] = "E1524";		 
+$par1['vendor'] = "IKEA";		 
+$par1['description'] = "TRADFRI remote control";		 
+$par1['extend'] = "";		 
+$par1['supports'] = "toggle, arrow left/right click/hold/release, brightness up/down click/hold/release";		 
+$par1['fromZigbee'] = "";		 
+$par1['toZigbee'] = "";		 
+SQLInsert('zigbee2mqtt_devices_list', $par1);
+
+
+
 
 
 
