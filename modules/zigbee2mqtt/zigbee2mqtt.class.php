@@ -1378,7 +1378,7 @@ $par1['fromZigbee'] = "";
 $par1['toZigbee'] = "";		 
 SQLInsert('zigbee2mqtt_devices_list', $par1);
 
-$par1['zigbeeModel'] = 'TRADFRI bulb E14 W op/ch 400lm', 'TRADFRI bulb E12 W op/ch 400lm,TRADFRI bulb E17 W op/ch 400lm';
+$par1['zigbeeModel'] = 'TRADFRI bulb E14 W op/ch 400lm, TRADFRI bulb E12 W op/ch 400lm,TRADFRI bulb E17 W op/ch 400lm';
 $par1['model'] = "LED1649C5";		 
 $par1['vendor'] = "IKEA";		 
 $par1['description'] = "TRADFRI LED bulb E12/E14/E17 400 lumen, dimmable warm white, chandelier opal";		 
