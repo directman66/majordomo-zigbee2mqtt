@@ -615,9 +615,8 @@ $out['status']=$a;
 }
 
  if ($this->tab=='map') {
-$maparray=SQLSelectOne ('select * from zigbee2mqtt where value like "digraph%"');
 
-$out['map_array']=$maparray['VALUE'];
+  require(DIR_MODULES.$this->name.'/map.inc.php');
 
 
 }
@@ -781,7 +780,7 @@ debmes($sql,'zigbee2mqtt');
     $res=SQLSelectOne($sql);
      if($res['ID']) { /* If path_write foud in db */
 {
-debmes($cdev.' пїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ','zigbee2mqtt');
+debmes($cdev.' в ситеме найден','zigbee2mqtt');
 
         foreach ($json as $key=> $value) {
 if ($key=='type') $res['TYPE']=$value;
@@ -949,7 +948,7 @@ debmes('Р—Р°РїСЂР°С€РёРІР°РµРј РєР°СЂС‚Сѓ ', 'zigbee2mqtt');
 
 
 
-   $mqtt_client->publish('zigbee2mqtt/bridge/networkmap','graphviz');
+//   $mqtt_client->publish('zigbee2mqtt/bridge/networkmap','graphviz');
    $mqtt_client->publish('zigbee2mqtt/bridge/networkmap','raw');
    //$mqtt_client->publish($rec['PATH_WRITE'].'/set',$jsonvalue, (int)$rec['QOS'], (int)$rec['RETAIN']);
 
@@ -1022,7 +1021,7 @@ mqtt - MQTT
  zigbee2mqtt: TITLE varchar(255) NOT NULL DEFAULT ''
  zigbee2mqtt: LOCATION_ID int(10) NOT NULL DEFAULT '0'
  zigbee2mqtt: UPDATED datetime
- zigbee2mqtt: VALUE varchar(255) NOT NULL DEFAULT ''
+ zigbee2mqtt: VALUE varchar(1000) NOT NULL DEFAULT ''
  zigbee2mqtt: PATH varchar(255) NOT NULL DEFAULT ''
  zigbee2mqtt: METRIKA varchar(255) NOT NULL DEFAULT ''
  zigbee2mqtt: PATH_WRITE varchar(255) NOT NULL DEFAULT ''
