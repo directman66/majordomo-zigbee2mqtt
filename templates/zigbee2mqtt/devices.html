@@ -44,7 +44,7 @@
 
 
   <div class="col-md-2">
-   <a href="?view_mode=clear_trash" class="btn btn-default" title="Delete not linked topics." onclick="return confirm('<#LANG_ARE_YOU_SURE#>');"><i class="glyphicon glyphicon-floppy-remove"></i> <#LANG_OPTIMIZE#></a>
+   <a href="?view_mode=clear_trash" class="btn btn-default" title="Delete not linked topics."><i class="glyphicon glyphicon-floppy-remove"></i> Счетчик</a>
   </div>
  </div>
 </form>
@@ -81,10 +81,11 @@
 [#if model#]
 <img src="../templates/zigbee2mqtt/img/[#model#].jpg"  height="62" width="62" class="img-rounded">
 [#endif#]
-
+<!--
 [#if TITLE="bridge"#]
 <img src="../templates/zigbee2mqtt/img/cc2531.jpg"  height="52" width="52" class="img-rounded">
 [#endif#]
+-->
 
 </td>
  <td>[#DEVID#]</td>
