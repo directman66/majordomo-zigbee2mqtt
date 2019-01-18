@@ -808,7 +808,7 @@ if ($key=='status') $res2['STATUS']=$value;
 if ($key=='devId') $res2['DID']=$value;
 if ($key=='_id') $res2['D_ID']=$value;
 }
-print_r($res2);
+//print_r($res2);
 SQLUPDATE('zigbee2mqtt_devices', $res2);
 }
         foreach ($json as $key=> $value) {if ($key=='ieeeAddr') $cdev=$value;	  }
@@ -834,7 +834,7 @@ if ($key=='_id') $res['D_ID']=$value;
 SQLUPDATE('zigbee2mqtt_devices', $res);
       }
 $this->updateparrent();
-debmes('123', 'zigbee2mqtt');
+//debmes('123', 'zigbee2mqtt');
 }
 
 }
@@ -851,11 +851,43 @@ $json1=json_decode($map);
     $total = count($json1);
 debmes($total, 'zigbee2mqtt');
 
-//    for ($ij=0;$ij<$total;$ij++) {
+    for ($ij=0;$ij<$total;$ij++) {
 //$str=$json1[$ij]['ieeeAddr'].":".$json1[$ij]['nwkAddr'];
-//$str=$json1['1'];
-//debmes($str, 'zigbee2mqtt');
-//}
+$str=$json1[$ij];
+
+$ieeeAddr=$str->{'ieeeAddr'};
+$parent=$str->{'parent'};
+$status=$str->{'status'};
+$nwkAddr=$str->{'nwkAddr'};
+$lqi=$str->{'lqi'};
+
+debmes($ieeeAddr.":".$parent, 'zigbee2mqtt');
+
+$defaultiee=SQLSelectOne ("select * from zigbee2mqtt_devices where TITLE='bridge'")['IEEEADDR'];
+
+debmes('default:'.$defaultiee, 'zigbee2mqtt');
+
+$rec3=SQLSelectOne ("select * from zigbee2mqtt_devices where IEEEADDR='$ieeeAddr'");
+if   ($rec3) 
+{
+if (strlen($parent)>3)  {$rec3['PARRENTIEEEADDR']=$parent;} else {   $rec3['PARRENTIEEEADDR']=$defaultiee; }
+$rec3['LQI']=$lqi;
+$rec3['STATUS']=$status;
+$rec3['NWKADDR']=$nwkAddr;
+SQLUpdate(  'zigbee2mqtt_devices',$rec3); 
+
+
+}
+
+//var_dump( $str);
+// $json3= json_decode  ($str,true);
+
+//foreach ( $json3 as $key=>$value)
+//{debmes($key.":".$value, 'zigbee2mqtt');}
+
+
+
+}
 
 
 }
@@ -1591,7 +1623,7 @@ SQLInsert('zigbee2mqtt_devices_list', $par1);
 
 $par1['zigbeeModel'] = 'cc2531';
 $par1['model'] = "cc2531";		 
-$par1['vendor'] = "IKEA";		 
+$par1['vendor'] = "Texas Instruments";		 
 $par1['type'] = "controller";		 	 
 $par1['description'] = "USB C2531 dongle";		 
 $par1['extend'] = "";		 
