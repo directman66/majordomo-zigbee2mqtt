@@ -1,64 +1,79 @@
-<?php          
-//$maparray=SQLSelectOne ('select * from zigbee2mqtt where value like "digraph%"');
-$maparray=SQLSelect('SELECT *  FROM (select zigbee2mqtt_devices.ID DEVID, zigbee2mqtt_devices.* from zigbee2mqtt_devices )zigbee2mqtt_devices LEFT JOIN zigbee2mqtt_devices_list ON zigbee2mqtt_devices_list.zigbeeModel=zigbee2mqtt_devices.MODEL ');
+<br>
+   <a href="?view_mode=get_map" class="btn btn-default" title="Get network map" ><i class="glyphicon glyphicon-dashboard"></i> Get network map</a>
+<br>
 
-//$out['map_array']=$maparray['VALUE'];
- $nodes="";
-$egdes="";
-    $total = count($maparray);
-    for ($i=0;$i<$total;$i++) {
-
-if (!$maparray[$i]['ID']) {$idd='0';} else {$idd=$maparray[$i]['ID'];}
-//   $nodes .= "{id: ".$idd.", font:{size:10}, size:40,   label: '".$maparray[$i]['description']."',  group: 0,  shape: 'circularImage', image: '/templates/zigbee2mqtt/img/".$maparray[$i]['model'].".jpg', shapeProperties:{borderDashes:[5,5]},},";
-   $nodes.= "{id: ".$idd.", font:{size:10}, size:40,   label: '".$maparray[$i]['description']."',  group: 0,  shape: 'circularImage', image: '/templates/zigbee2mqtt/img/".$maparray[$i]['model'].".jpg', },";
- if ($idd!="0")   $edges.= "{from: 0, to: ".$idd."},";
-}    
-
-//   $edges.= '{"id": "7","from": "7","to": "0},{"id": "9","from": "9","to": "0" },{"id": "4","from": "2","to": "0"},{"id": "5","from": "3","to": "0" },';
-//   $edges.= '{from: 0, to: 7},';
+[#map_array#]
+<br>
+[#EDGES#]
 
 
+<hr>
+<!doctype html>
+<html>
+<head>
+  <title>Network | Shapes</title>
 
-$out['map_array']=$nodes;
-//$out['EDGES']=$edges;
+  <style type="text/css">
+    #mynetwork {
+      width: 1000px;
+      height: 800px;
+      border: 1px solid lightgray;
+    }
+  </style>
+
+  <script type="text/javascript" src="/templates/zigbee2mqtt/vis-4.21.0/dist/vis.js"></script>
+  <link href="/templates/zigbee2mqtt/vis-network.min.css" rel="stylesheet" type="text/css" />
 
 
-//$nodess=json_decode($maparray['VALUE'],true);
 
-//debmes ($maparray['VALUE'],'zigbee2mqtt');
-//debmes ($nodess,'zigbee2mqtt');
+  <script type="text/javascript">
+    var nodes = null;
+    var edges = null;
+    var network = null;
 
-//        foreach($nodess as $k=>$v) { 
+    function draw() {
+      nodes = [
+        
+[#NODES#]
+//        {id: 1, font:{size:30},          label: 'circle',  shape: 'circle' , shapeProperties:{borderDashes:[5,5]}},
+//        {id: 2, font:{size:30},          label: 'ellipse', shape: 'ellipse', shapeProperties:{borderDashes:[5,5]}},
+//        {id: 3, font:{size:30},          label: 'database',shape: 'database', shapeProperties:{borderDashes:[5,5]}},
+//        {id: 4, font:{size:30},          label: 'box',     shape: 'box'    , shapeProperties:{borderDashes:[5,5]}},
+//        {id: 5, font:{size:30}, size:40, label: 'diamond', shape: 'diamond', shapeProperties:{borderDashes:[5,5]}},
+//        {id: 6, font:{size:30}, size:40, label: 'dot',     shape: 'dot', shapeProperties:{borderDashes:[5,5]}},
+//        {id: 7, font:{size:30}, size:40, label: 'square',  shape: 'square', shapeProperties:{borderDashes:[5,5]}},
+//        {id: 8, font:{size:30}, size:40, label: 'triangle',shape: 'triangle', shapeProperties:{borderDashes:[5,5]}},
+//        {id: 9, font:{size:30}, size:40, label: 'triangleDown', shape: 'triangleDown', shapeProperties:{borderDashes:[5,5]}},
+//        {id: 10, font:{size:30}, size:40, label: 'star',    shape: 'star', shapeProperties:{borderDashes:true}},
 //        {id: 11, font:{size:30}, size:40, label: 'coordinator', shape: 'circularImage', image: '/templates/zigbee2mqtt/img/cc2531.jpg', shapeProperties: {borderDashes:[15,5]}},	
-//	if (is_array($v))
-// 	        foreach($v as $kk=>$vv)
-//		{}
+      ];
 
-//echo $k.":".$v;
-// }
+      edges = [
+[#EDGES#]
 
-/*
-  $nodes = <<<EOD
-        {id: 1, font:{size:30},          label: 'circle',  shape: 'circle' , shapeProperties:{borderDashes:[5,5]}},
-        {id: 12, font:{size:30}, size:40, label: 'coordinator', shape: 'circularImage', image: '/templates/zigbee2mqtt/img/cc2531.jpg', shapeProperties: {borderDashes:[15,5]}},	
-EOD;
+      ];
 
-//        {id: 7, font:{size:30}, label: 'Aqara single key wired wall switch', shape: 'circle', image: '/templates/zigbee2mqtt/img/QBKG04LM.jpg', shapeProperties:{borderDashes:[5,5]},
-//        {id: 7, font:{size:30}, , size:40, label: 'Aqara single key wired wall switch', shape: 'circle', image: '/templates/zigbee2mqtt/img/QBKG04LM.jpg', shapeProperties:{borderDashes:[5,5]}},
-  $nodes = <<<EOD
-        {id: 7, font:{size:30},  size:40, label: 'Aqara single key wired wall switch', shape: 'circle', image: '/templates/zigbee2mqtt/img/QBKG04LM.jpg', shapeProperties:{borderDashes:[5,5]}},
-        {id: 1, font:{size:30}, size:40, label: 'coordinator', shape: 'circularImage', image: '/templates/zigbee2mqtt/img/cc2531.jpg', shapeProperties: {borderDashes:[15,5]}},	
-        {id: 12, font:{size:30}, size:40, label: 'coordinator', shape: 'circularImage', image: '/templates/zigbee2mqtt/img/cc2531.jpg', shapeProperties: {borderDashes:[15,5]}},	
-EOD;
-*/
-//$nodes="{id: 7, font:{size:10}, size:40, label: 'Aqara single key wired wall switch', shape: 'circle', image: '/templates/zigbee2mqtt/img/QBKG04LM.jpg', shapeProperties:{borderDashes:[5,5]}},";
-//$nodes="{id: 7, font:{size:10}, size:40, label: 'Aqara single key wired wall switch', shape: 'circularImage', image: '/templates/zigbee2mqtt/img/cc2531.jpg', shapeProperties:{borderDashes:[5,5]}},";
+      // create a network
+      var container = document.getElementById('mynetwork');
+      var data = {
+        nodes: nodes,
+        edges: edges
+      };
+      var options = {physics:{barnesHut:{gravitationalConstant:-4000}}};
+      network = new vis.Network(container, data, options);
+    }
+  </script>
+  
 
-$out['NODES']=$nodes;
-$out['EDGES']=$edges;
+<body onload="draw()">
 
+<div id="mynetwork"></div>
 
+<div id="info"></div>
+</body>
+</html>
 
 
-?>
+
+
 
