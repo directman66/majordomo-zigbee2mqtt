@@ -16,7 +16,7 @@ if (!$maparray[$i]['PARRENTIEEEADDR']) {$parrentieee=$defaultiee;} else {$parren
 //   $nodes .= "{id: ".$idd.", font:{size:10}, size:40,   label: '".$maparray[$i]['description']."',  group: 0,  shape: 'circularImage', image: '/templates/zigbee2mqtt/img/".$maparray[$i]['model'].".jpg', shapeProperties:{borderDashes:[5,5]},},";
    $nodes.= "{id: ".$idd.", font:{size:10}, size:40,   label: '".$maparray[$i]['description']."',  group: 0,  shape: 'circularImage', image: '/templates/zigbee2mqtt/img/".$maparray[$i]['model'].".jpg', },";
 // if ($idd!=$defaultiee)   $edges.= "{from: $defaultiee, to: ".$idd."},";
- if ($idd!=$defaultiee)   $edges.= "{from: $parrentieee, to: ".$idd."},";
+ if ($idd!=$defaultiee)   $edges.= "{from: $parrentieee, to: ".$idd.', label: "'.$maparray[$i]['LQI'].'"},';
 }    
 
 //   $edges.= '{"id": "7","from": "7","to": "0},{"id": "9","from": "9","to": "0" },{"id": "4","from": "2","to": "0"},{"id": "5","from": "3","to": "0" },';
