@@ -779,21 +779,21 @@ $settings = explode("\n", $a);
 if ($key=='type') {$type=$value;}}
 
 //}
-echo "<br>";
-echo "i:$i:$type:<br>".$settings[$i];
-echo "<br><br>";
+//echo "<br>";
+//echo "i:$i:$type:<br>".$settings[$i];
+//echo "<br><br>";
 
 if ($type=='Coordinator') 
 {
 
-echo 'ok<br>';
+//echo 'ok<br>';
 $sql="SELECT * FROM zigbee2mqtt_devices where TITLE='bridge'";
     $res2=SQLSelectOne($sql);
    foreach (json_decode($settings[$i]) as $key=> $value)
 {
 if ($key=='ieeeAddr') $res2['IEEEADDR']=$value;
 if ($key=='type') $res2['TYPE']=$value;
-if ($key=='MODEL') $res2['TYPE']='';
+$res2['MODEL']='cc2531';
 if ($key=='nwkAddr') $res2['NWKADDR']=$value;
 if ($key=='manufId') $res2['MANUFID']=$value;
 if ($key=='manufacturerName') $res2['MANUFNAME']=$value;
@@ -806,15 +806,15 @@ if ($key=='_id') $res2['D_ID']=$value;
 
 
 }
-print_r($res2);
+//print_r($res2);
 SQLUPDATE('zigbee2mqtt_devices', $res2);
 
 
 }
 
 
-echo "<br>";
-echo "<br>";
+//echo "<br>";
+//echo "<br>";
 
 
         foreach ($json as $key=> $value) {if ($key=='ieeeAddr') $cdev=$value;	  }
@@ -857,7 +857,32 @@ SQLUPDATE('zigbee2mqtt_devices', $res);
 }
 
 
-}}
+}
+
+$maparray=SQLSelectOne ('select * from zigbee2mqtt where TITLE="zigbee2mqtt/bridge/networkmap/raw"');
+$map=$maparray['VALUE'];
+debmes($map, 'zigbee2mqtt');
+
+$json1=json_decode($map);
+
+    $total = count($json1);
+debmes($total, 'zigbee2mqtt');
+
+    for ($ij=0;$ij<$total;$ij++) {
+//$str=$json1[$ij]['ieeeAddr'].":".$json1[$ij]['nwkAddr'];
+//$str=$json1->ij->'ieeeAddr';
+debmes($str, 'zigbee2mqtt');
+}
+
+
+
+
+
+
+
+
+
+}
 
 /**
 * FrontEnd
@@ -1046,6 +1071,7 @@ mqtt - MQTT
  zigbee2mqtt_devices: LASTPING varchar(100) NOT NULL DEFAULT ''
  zigbee2mqtt_devices: IEEEADDR varchar(100) NOT NULL DEFAULT ''
  zigbee2mqtt_devices: PARRENTIEEEADDR varchar(100) NOT NULL DEFAULT ''
+ zigbee2mqtt_devices: LQI varchar(100) NOT NULL DEFAULT ''
  zigbee2mqtt_devices: NWKADDR varchar(100) NOT NULL DEFAULT ''
  zigbee2mqtt_devices: MANUFID varchar(100) NOT NULL DEFAULT ''
  zigbee2mqtt_devices: MANUFNAME varchar(100) NOT NULL DEFAULT ''
