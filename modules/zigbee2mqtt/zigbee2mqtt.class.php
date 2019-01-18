@@ -304,6 +304,15 @@ debmes('╨а╤Я╨б╤У╨а┬▒╨а┬╗╨а╤С╨а╤Ф╨б╤У
 
    /* Search 'PATH' in database (db) */
 $dev_title=explode('/',$path)[1];
+
+if ($dev_title=='bridge')  {
+
+$arr=sqlselectone('select * from  zigbee2mqtt_devices where TITLE="bridge"');
+
+if ($arr['IEEEADDR']) {$dev_title=$arr['IEEEADDR'];} else  {$dev_title='bridge';}
+
+
+}
 //echo $path.":".$dev_title."<br>";
 
 //if (strpos($dev_title,"/set/")==0)
@@ -766,6 +775,8 @@ function refresh_db() {
  $this->getConfig();
 $zigbee2mqttpath=$this->config['ZIGBEE2MQTTPATH'];
 $filename=$zigbee2mqttpath.'/data/database.db';
+
+//echo 'hello';
 $a=file_get_contents ($filename);
 
 $settings = explode("\n", $a);
@@ -773,20 +784,10 @@ $settings = explode("\n", $a);
     $total = count($settings);
     for ($i=0;$i<$total;$i++) {
 	$json=json_decode($settings[$i]);
-
-        foreach ($json as $key=> $value) {
-
-if ($key=='type') {$type=$value;}}
-
-//}
-//echo "<br>";
-//echo "i:$i:$type:<br>".$settings[$i];
-//echo "<br><br>";
+        foreach ($json as $key=> $value) {if ($key=='type') {$type=$value;}}
 
 if ($type=='Coordinator') 
 {
-
-//echo 'ok<br>';
 $sql="SELECT * FROM zigbee2mqtt_devices where TITLE='bridge'";
     $res2=SQLSelectOne($sql);
    foreach (json_decode($settings[$i]) as $key=> $value)
@@ -794,6 +795,9 @@ $sql="SELECT * FROM zigbee2mqtt_devices where TITLE='bridge'";
 if ($key=='ieeeAddr') $res2['IEEEADDR']=$value;
 if ($key=='type') $res2['TYPE']=$value;
 $res2['MODEL']='cc2531';
+$res2['TYPE']='cc2531';
+$res2['MODELID']='cc2531';
+
 if ($key=='nwkAddr') $res2['NWKADDR']=$value;
 if ($key=='manufId') $res2['MANUFID']=$value;
 if ($key=='manufacturerName') $res2['MANUFNAME']=$value;
@@ -803,35 +807,17 @@ if ($key=='modelId') $res2['MODELID']=$value;
 if ($key=='status') $res2['STATUS']=$value;
 if ($key=='devId') $res2['DID']=$value;
 if ($key=='_id') $res2['D_ID']=$value;
-
-
 }
-//print_r($res2);
+print_r($res2);
 SQLUPDATE('zigbee2mqtt_devices', $res2);
-
-
 }
-
-
-//echo "<br>";
-//echo "<br>";
-
-
         foreach ($json as $key=> $value) {if ($key=='ieeeAddr') $cdev=$value;	  }
-
-
-
-
-
-
-
 //devices
 $sql="SELECT * FROM zigbee2mqtt_devices where IEEEADDR='$cdev'";
 debmes($sql,'zigbee2mqtt');
     $res=SQLSelectOne($sql);
-     if($res['ID']) { /* If path_write foud in db */
-{
-debmes($cdev.' ╨▓ ╤Б╨╕╤В╨╡╨╝╨╡ ╨╜╨░╨╣╨┤╨╡╨╜','zigbee2mqtt');
+     if($res['ID']) 
+{ /* If path_write foud in db */
 
         foreach ($json as $key=> $value) {
 if ($key=='type') $res['TYPE']=$value;
@@ -845,20 +831,17 @@ if ($key=='status') $res['STATUS']=$value;
 if ($key=='devId') $res['DID']=$value;
 if ($key=='_id') $res['D_ID']=$value;
 }
-
-//print_r($res);
-//echo "<br><br>";
-
 SQLUPDATE('zigbee2mqtt_devices', $res);
-
-       }
-
+      }
+$this->updateparrent();
+debmes('123', 'zigbee2mqtt');
+}
 
 }
 
 
-}
-
+function updateparrent()
+{
 $maparray=SQLSelectOne ('select * from zigbee2mqtt where TITLE="zigbee2mqtt/bridge/networkmap/raw"');
 $map=$maparray['VALUE'];
 debmes($map, 'zigbee2mqtt');
@@ -868,18 +851,11 @@ $json1=json_decode($map);
     $total = count($json1);
 debmes($total, 'zigbee2mqtt');
 
-    for ($ij=0;$ij<$total;$ij++) {
+//    for ($ij=0;$ij<$total;$ij++) {
 //$str=$json1[$ij]['ieeeAddr'].":".$json1[$ij]['nwkAddr'];
-//$str=$json1->ij->'ieeeAddr';
-debmes($str, 'zigbee2mqtt');
-}
-
-
-
-
-
-
-
+//$str=$json1['1'];
+//debmes($str, 'zigbee2mqtt');
+//}
 
 
 }
@@ -1611,6 +1587,20 @@ $par1['supports'] = "toggle, arrow left/right click/hold/release, brightness up/
 $par1['fromZigbee'] = "";		 
 $par1['toZigbee'] = "";		 
 SQLInsert('zigbee2mqtt_devices_list', $par1);
+
+
+$par1['zigbeeModel'] = 'cc2531';
+$par1['model'] = "cc2531";		 
+$par1['vendor'] = "IKEA";		 
+$par1['type'] = "controller";		 	 
+$par1['description'] = "USB C2531 dongle";		 
+$par1['extend'] = "";		 
+$par1['supports'] = "coordinator, router";		 
+$par1['fromZigbee'] = "";		 
+$par1['toZigbee'] = "";		 
+SQLInsert('zigbee2mqtt_devices_list', $par1);
+
+
 
 
 
