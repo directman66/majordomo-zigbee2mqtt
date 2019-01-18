@@ -178,13 +178,13 @@ function run() {
 * @access public
 */
  function setProperty($id, $value, $set_linked=0) {
-debmes('Нужно изменить значение id='.$id.' на '.$value, 'zigbee2mqtt');
+debmes('╨а╤Ь╨б╤У╨а┬╢╨а╨Е╨а╤Х ╨а╤С╨а┬╖╨а╤Ш╨а┬╡╨а╨Е╨а╤С╨бтАЪ╨б╨К ╨а┬╖╨а╨Е╨а┬░╨бтАб╨а┬╡╨а╨Е╨а╤С╨а┬╡ id='.$id.' ╨а╨Е╨а┬░ '.$value, 'zigbee2mqtt');
 
 debmes("SELECT * FROM zigbee2mqtt WHERE ID='".$id."'", 'zigbee2mqtt');
   $rec=SQLSelectOne("SELECT * FROM zigbee2mqtt WHERE ID='".$id."'");
 
   if (!$rec['ID'] || !$rec['PATH']) {
-debmes('Не хватает данных', 'zigbee2mqtt');
+debmes('╨а╤Ь╨а┬╡ ╨бтАж╨а╨Ж╨а┬░╨бтАЪ╨а┬░╨а┬╡╨бтАЪ ╨а╥С╨а┬░╨а╨Е╨а╨Е╨бтА╣╨бтАж', 'zigbee2mqtt');
    return 0;
   }
 
@@ -230,7 +230,7 @@ debmes('Не хватает данных', 'zigbee2mqtt');
 
    if(!$mqtt_client->connect(true, NULL,$username,$password))
    {
-debmes('Ошибка подключения к mqtt', 'zigbee2mqtt');
+debmes('╨а╤Ы╨бтВм╨а╤С╨а┬▒╨а╤Ф╨а┬░ ╨а╤Ч╨а╤Х╨а╥С╨а╤Ф╨а┬╗╨б╨Л╨бтАб╨а┬╡╨а╨Е╨а╤С╨б╨П ╨а╤Ф mqtt', 'zigbee2mqtt');
     return 0;
    }
 
@@ -246,7 +246,7 @@ $jsonvalue=json_encode($json) ;
 $json=array( $rec['METRIKA']=> $value);
 $jsonvalue=json_encode($json) ;
 }
-debmes('Публикую zigbee2mqqtt '.$rec['PATH_WRITE'].'/set'.":".$jsonvalue, 'zigbee2mqtt');
+debmes('╨а╤Я╨б╤У╨а┬▒╨а┬╗╨а╤С╨а╤Ф╨б╤У╨б╨Л zigbee2mqqtt '.$rec['PATH_WRITE'].'/set'.":".$jsonvalue, 'zigbee2mqtt');
 
 
    if ($rec['PATH_WRITE']) {
@@ -383,7 +383,7 @@ if ($rec['CONVERTONOFF']=='1' && $value=='ON') $newvalue=1;
 if ($rec['CONVERTONOFF']=='1' && $value=='OFF') $newvalue=0;
 
 
-//пишем в переменную
+//╨а╤Ч╨а╤С╨бтВм╨а┬╡╨а╤Ш ╨а╨Ж ╨а╤Ч╨а┬╡╨б╨В╨а┬╡╨а╤Ш╨а┬╡╨а╨Е╨а╨Е╨б╤У╨б╨Л
 //       setGlobal($rec['LINKED_OBJECT'].'.'.$rec['LINKED_PROPERTY'], $newvalue, array($this->name=>'0'));
      }
      if ($rec['LINKED_OBJECT'] && $cmd_rec['LINKED_METHOD']) {
@@ -771,16 +771,67 @@ $a=file_get_contents ($filename);
 $settings = explode("\n", $a);
 
     $total = count($settings);
-    for ($i=0;$i<$total-1;$i++) {
+    for ($i=0;$i<$total;$i++) {
 	$json=json_decode($settings[$i]);
+
+        foreach ($json as $key=> $value) {
+
+if ($key=='type') {$type=$value;}}
+
+//}
+echo "<br>";
+echo "i:$i:$type:<br>".$settings[$i];
+echo "<br><br>";
+
+if ($type=='Coordinator') 
+{
+
+echo 'ok<br>';
+$sql="SELECT * FROM zigbee2mqtt_devices where TITLE='bridge'";
+    $res2=SQLSelectOne($sql);
+   foreach (json_decode($settings[$i]) as $key=> $value)
+{
+if ($key=='ieeeAddr') $res2['IEEEADDR']=$value;
+if ($key=='type') $res2['TYPE']=$value;
+if ($key=='MODEL') $res2['TYPE']='';
+if ($key=='nwkAddr') $res2['NWKADDR']=$value;
+if ($key=='manufId') $res2['MANUFID']=$value;
+if ($key=='manufacturerName') $res2['MANUFNAME']=$value;
+if ($key=='powerSource') $res2['POWERSOURCE']=$value;
+if ($key=='modelId') $res2['MODEL']=$value;
+if ($key=='modelId') $res2['MODELID']=$value;
+if ($key=='status') $res2['STATUS']=$value;
+if ($key=='devId') $res2['DID']=$value;
+if ($key=='_id') $res2['D_ID']=$value;
+
+
+}
+print_r($res2);
+SQLUPDATE('zigbee2mqtt_devices', $res2);
+
+
+}
+
+
+echo "<br>";
+echo "<br>";
+
+
         foreach ($json as $key=> $value) {if ($key=='ieeeAddr') $cdev=$value;	  }
 
+
+
+
+
+
+
+//devices
 $sql="SELECT * FROM zigbee2mqtt_devices where IEEEADDR='$cdev'";
 debmes($sql,'zigbee2mqtt');
     $res=SQLSelectOne($sql);
      if($res['ID']) { /* If path_write foud in db */
 {
-debmes($cdev.' � ������ ������','zigbee2mqtt');
+debmes($cdev.' ╨▓ ╤Б╨╕╤В╨╡╨╝╨╡ ╨╜╨░╨╣╨┤╨╡╨╜','zigbee2mqtt');
 
         foreach ($json as $key=> $value) {
 if ($key=='type') $res['TYPE']=$value;
@@ -860,11 +911,11 @@ function usual(&$out) {
 
    $mqtt_properties=SQLSelect("SELECT * FROM zigbee2mqtt WHERE LINKED_OBJECT LIKE '".DBSafe($object)."' AND LINKED_PROPERTY LIKE '".DBSafe($property)."'");
    $total=count($mqtt_properties);
-debmes($object.":". $property.":". $value. ' найдено результатов '. $total, 'zigbee2mqtt');
+debmes($object.":". $property.":". $value. ' ╨а╨Е╨а┬░╨атДЦ╨а╥С╨а┬╡╨а╨Е╨а╤Х ╨б╨В╨а┬╡╨а┬╖╨б╤У╨а┬╗╨б╨К╨бтАЪ╨а┬░╨бтАЪ╨а╤Х╨а╨Ж '. $total, 'zigbee2mqtt');
 
    if ($total) {
     for($i=0;$i<$total;$i++) {
-     debmes('Запускаем setProperty '. $mqtt_properties[$i]['ID'].":".$value, 'zigbee2mqtt');
+     debmes('╨атАФ╨а┬░╨а╤Ч╨б╤У╨б╨Г╨а╤Ф╨а┬░╨а┬╡╨а╤Ш setProperty '. $mqtt_properties[$i]['ID'].":".$value, 'zigbee2mqtt');
      $this->setProperty($mqtt_properties[$i]['ID'], $value);
     }
    }  
@@ -943,7 +994,7 @@ function get_map(){
    }
 
 
-debmes('Запрашиваем карту ', 'zigbee2mqtt');
+debmes('╨атАФ╨а┬░╨а╤Ч╨б╨В╨а┬░╨бтВм╨а╤С╨а╨Ж╨а┬░╨а┬╡╨а╤Ш ╨а╤Ф╨а┬░╨б╨В╨бтАЪ╨б╤У ', 'zigbee2mqtt');
 
 
 
@@ -994,6 +1045,7 @@ mqtt - MQTT
  zigbee2mqtt_devices: TYPE varchar(100) NOT NULL DEFAULT ''
  zigbee2mqtt_devices: LASTPING varchar(100) NOT NULL DEFAULT ''
  zigbee2mqtt_devices: IEEEADDR varchar(100) NOT NULL DEFAULT ''
+ zigbee2mqtt_devices: PARRENTIEEEADDR varchar(100) NOT NULL DEFAULT ''
  zigbee2mqtt_devices: NWKADDR varchar(100) NOT NULL DEFAULT ''
  zigbee2mqtt_devices: MANUFID varchar(100) NOT NULL DEFAULT ''
  zigbee2mqtt_devices: MANUFNAME varchar(100) NOT NULL DEFAULT ''
@@ -1010,6 +1062,7 @@ mqtt - MQTT
  zigbee2mqtt_devices_list: zigbeeModel varchar(100) NOT NULL DEFAULT ''
  zigbee2mqtt_devices_list: model varchar(100) NOT NULL DEFAULT ''
  zigbee2mqtt_devices_list: vendor varchar(100) NOT NULL DEFAULT ''
+ zigbee2mqtt_devices_list: type varchar(100) NOT NULL DEFAULT ''
  zigbee2mqtt_devices_list: description varchar(300) NOT NULL DEFAULT ''
  zigbee2mqtt_devices_list: extend varchar(100) NOT NULL DEFAULT ''
  zigbee2mqtt_devices_list: supports varchar(100) NOT NULL DEFAULT ''
@@ -1045,6 +1098,7 @@ if (!$par1['ID']) {
 $par1['zigbeeModel'] = 'lumi.light.aqcn02';
 $par1['model'] = "ZNLDP12LM";		 
 $par1['vendor'] = "Xiaomi";		 
+$par1['type'] = "bulb";		 
 $par1['description'] = "Aqara smart LED bulb";		 
 $par1['extend'] = "generic.light_onoff_brightness_colortemp";		 
 $par1['supports'] = "";		 
@@ -1056,6 +1110,7 @@ SQLInsert('zigbee2mqtt_devices_list', $par1);
 $par1['zigbeeModel'] = 'lumi.sensor_switch';
 $par1['model'] = "WXKG01LM";		 
 $par1['vendor'] = "Xiaomi";		 
+$par1['type'] = "sensor";		 
 $par1['description'] = "MiJia wireless switch";		 
 $par1['extend'] = "";		 
 $par1['supports'] = "single, double, triple, quadruple, many, long, long_release click";		 
@@ -1066,6 +1121,7 @@ SQLInsert('zigbee2mqtt_devices_list', $par1);
 $par1['zigbeeModel'] = 'lumi.sensor_switch.aq2, lumi.remote.b1acn01\u0000\u0000\u0000\u0000\u0000\u0000';
 $par1['model'] = "WXKG11LM";		 
 $par1['vendor'] = "Xiaomi";		 
+$par1['type'] = "remote";		 
 $par1['description'] = "Aqara wireless switch";		 
 $par1['extend'] = "";		 
 $par1['supports'] = "single, double click (and triple, quadruple, hold, release depending on model)";		 
@@ -1076,6 +1132,7 @@ SQLInsert('zigbee2mqtt_devices_list', $par1);
 $par1['zigbeeModel'] = 'lumi.sensor_switch.aq3, lumi.sensor_swit';
 $par1['model'] = "WXKG12LM";		 
 $par1['vendor'] = "Xiaomi";		 
+$par1['type'] = "remote";		 
 $par1['description'] = "Aqara wireless switch (with gyroscope)";		 
 $par1['extend'] = "";		 
 $par1['supports'] = "single, double, shake, hold, release";		 
@@ -1086,6 +1143,7 @@ SQLInsert('zigbee2mqtt_devices_list', $par1);
 $par1['zigbeeModel'] = 'lumi.sensor_86sw1\u0000lu, lumi.remote.b186acn01\u0000\u0000\u0000';
 $par1['model'] = "WXKG03LM";		 
 $par1['vendor'] = "Xiaomi";		 
+$par1['type'] = "remote";		 
 $par1['description'] = "Aqara single key wireless wall switch";		 
 $par1['extend'] = "";		 
 $par1['supports'] = "single click";		 
@@ -1096,6 +1154,7 @@ SQLInsert('zigbee2mqtt_devices_list', $par1);
 $par1['zigbeeModel'] = 'lumi.sensor_86sw2\u0000Un, lumi.sensor_86sw2.es1, lumi.remote.b286acn01\u0000\u0000\u0000';
 $par1['model'] = "WXKG02LM";		 
 $par1['vendor'] = "Xiaomi";		 
+$par1['type'] = "remote";		 
 $par1['description'] = "Aqara double key wireless wall switch";		 
 $par1['extend'] = "";		 
 $par1['supports'] = "left, right and both click";		 
@@ -1107,6 +1166,7 @@ SQLInsert('zigbee2mqtt_devices_list', $par1);
 $par1['zigbeeModel'] = 'lumi.ctrl_neutral1';
 $par1['model'] = "QBKG04LM";		 
 $par1['vendor'] = "Xiaomi";		 
+$par1['type'] = "remote";		 
 $par1['description'] = "Aqara single key wired wall switch";		 
 $par1['extend'] = "";		 
 $par1['supports'] = "on/off";		 
@@ -1117,6 +1177,7 @@ SQLInsert('zigbee2mqtt_devices_list', $par1);
 $par1['zigbeeModel'] = 'lumi.ctrl_ln1.aq1, lumi.ctrl_ln1';
 $par1['model'] = "QBKG11LM";		 
 $par1['vendor'] = "Xiaomi";		 
+$par1['type'] = "remote";		 
 $par1['description'] = "Aqara single key wired wall switch";		 
 $par1['extend'] = "";		 
 $par1['supports'] = "on/off, power measurement";		 
@@ -1126,6 +1187,7 @@ SQLInsert('zigbee2mqtt_devices_list', $par1);
 
 $par1['zigbeeModel'] = 'lumi.ctrl_neutral2';
 $par1['model'] = "QBKG03LM";		 
+$par1['type'] = "remote";		 
 $par1['vendor'] = "Xiaomi";		 
 $par1['description'] = "Aqara double key wired wall switch";		 
 $par1['extend'] = "";		 
@@ -1136,7 +1198,8 @@ SQLInsert('zigbee2mqtt_devices_list', $par1);
 
 $par1['zigbeeModel'] = 'lumi.ctrl_ln2.aq1';
 $par1['model'] = "QBKG12LM";		 
-$par1['vendor'] = "Xiaomi";		 
+$par1['vendor'] = "Xiaomi";
+$par1['type'] = "remote";		 		 
 $par1['description'] = "Aqara double key wired wall switch";		 
 $par1['extend'] = "";		 
 $par1['supports'] = "on/off, power measurement";		 
@@ -1147,6 +1210,7 @@ SQLInsert('zigbee2mqtt_devices_list', $par1);
 $par1['zigbeeModel'] = 'lumi.sens';
 $par1['model'] = "WSDCGQ01LM";		 
 $par1['vendor'] = "Xiaomi";		 
+$par1['type'] = "sensor";		 
 $par1['description'] = "MiJia temperature & humidity sensor";		 
 $par1['extend'] = "";		 
 $par1['supports'] = "temperature and humidity";		 
@@ -1157,6 +1221,7 @@ SQLInsert('zigbee2mqtt_devices_list', $par1);
 $par1['zigbeeModel'] = 'lumi.weather';
 $par1['model'] = "WSDCGQ11LM";		 
 $par1['vendor'] = "Xiaomi";		 
+$par1['type'] = "sensor";		 
 $par1['description'] = "Aqara temperature, humidity and pressure sensor";		 
 $par1['extend'] = "";		 
 $par1['supports'] = "temperature, humidity and pressure";		 
@@ -1168,6 +1233,7 @@ SQLInsert('zigbee2mqtt_devices_list', $par1);
 $par1['zigbeeModel'] = 'lumi.sensor_motion';
 $par1['model'] = "RTCGQ01LM";		 
 $par1['vendor'] = "Xiaomi";		 
+$par1['type'] = "sensor";		 
 $par1['description'] = "MiJia human body movement sensor";		 
 $par1['extend'] = "";		 
 $par1['supports'] = "occupancy";		 
@@ -1178,6 +1244,7 @@ SQLInsert('zigbee2mqtt_devices_list', $par1);
 $par1['zigbeeModel'] = 'lumi.sensor_motion.aq2';
 $par1['model'] = "RTCGQ11LM";		 
 $par1['vendor'] = "Xiaomi";		 
+$par1['type'] = "sensor";		 
 $par1['description'] = "Aqara human body movement and illuminance sensor";		 
 $par1['extend'] = "";		 
 $par1['supports'] = "occupancy and illuminance";		 
@@ -1188,6 +1255,7 @@ SQLInsert('zigbee2mqtt_devices_list', $par1);
 $par1['zigbeeModel'] = 'lumi.sensor_magnet';
 $par1['model'] = "MCCGQ01LM";		 
 $par1['vendor'] = "Xiaomi";		 
+$par1['type'] = "sensor";		 
 $par1['description'] = "MiJia door & window contact sensor";		 
 $par1['extend'] = "";		 
 $par1['supports'] = "contact";		 
@@ -1197,6 +1265,7 @@ SQLInsert('zigbee2mqtt_devices_list', $par1);
 
 $par1['zigbeeModel'] = 'lumi.sensor_magnet.aq2';
 $par1['model'] = "MCCGQ11LM";		 
+$par1['type'] = "sensor";		 
 $par1['vendor'] = "Xiaomi";		 
 $par1['description'] = "Aqara door & window contact sensor";		 
 $par1['extend'] = "";		 
@@ -1208,6 +1277,7 @@ SQLInsert('zigbee2mqtt_devices_list', $par1);
 $par1['zigbeeModel'] = 'lumi.sensor_wleak.aq1';
 $par1['model'] = "SJCGQ11LM";		 
 $par1['vendor'] = "Xiaomi";		 
+$par1['type'] = "sensor";		 
 $par1['description'] = "Aqara water leak sensor";		 
 $par1['extend'] = "";		 
 $par1['supports'] = "water leak true/false";		 
@@ -1218,6 +1288,7 @@ SQLInsert('zigbee2mqtt_devices_list', $par1);
 $par1['zigbeeModel'] = 'lumi.sensor_cube, lumi.sensor_cube.aqgl01';
 $par1['model'] = "MFKZQ01LM";		 
 $par1['vendor'] = "Xiaomi";		 
+$par1['type'] = "sensor";		 
 $par1['description'] = "Mi/Aqara smart home cube";		 
 $par1['extend'] = "";		 
 $par1['supports'] = "shake, wakeup, fall, tap, slide, flip180, flip90, rotate_left and rotate_right";		 
@@ -1228,6 +1299,7 @@ SQLInsert('zigbee2mqtt_devices_list', $par1);
 $par1['zigbeeModel'] = 'lumi.plug';
 $par1['model'] = "ZNCZ02LM";		 
 $par1['vendor'] = "Xiaomi";		 
+$par1['type'] = "device";		 
 $par1['description'] = "Mi power plug ZigBee";		 
 $par1['extend'] = "";		 
 $par1['supports'] = "on/off, power measurement";		 
@@ -1238,6 +1310,7 @@ SQLInsert('zigbee2mqtt_devices_list', $par1);
 $par1['zigbeeModel'] = 'lumi.ctrl_86plug, lumi.ctrl_86plug.aq1';
 $par1['model'] = "QBCZ11LM";		 
 $par1['vendor'] = "Xiaomi";		 
+$par1['type'] = "device";		 
 $par1['description'] = "Aqara socket Zigbee";		 
 $par1['extend'] = "";		 
 $par1['supports'] = "on/off, power measurement";		 
@@ -1248,6 +1321,7 @@ SQLInsert('zigbee2mqtt_devices_list', $par1);
 $par1['zigbeeModel'] = 'lumi.sensor_smoke';
 $par1['model'] = "JTYJ-GD-01LM/BW";		 
 $par1['vendor'] = "Xiaomi";		 
+$par1['type'] = "sensor";		
 $par1['description'] = "MiJia Honeywell smoke detector";		 
 $par1['extend'] = "";		 
 $par1['supports'] = "smoke";		 
@@ -1258,6 +1332,7 @@ SQLInsert('zigbee2mqtt_devices_list', $par1);
 $par1['zigbeeModel'] = 'lumi.sensor_natgas';
 $par1['model'] = "JTQJ-BF-01LM/BW";		 
 $par1['vendor'] = "Xiaomi";		 
+$par1['type'] = "sensor";		
 $par1['description'] = "MiJia gas leak detector";		 
 $par1['extend'] = "";		 
 $par1['supports'] = "gas";		 
@@ -1268,6 +1343,7 @@ SQLInsert('zigbee2mqtt_devices_list', $par1);
 $par1['zigbeeModel'] = 'lumi.lock.v1';
 $par1['model'] = "A6121";		 
 $par1['vendor'] = "Xiaomi";		 
+$par1['type'] = "device";		 
 $par1['description'] = "Vima Smart Lock";		 
 $par1['extend'] = "";		 
 $par1['supports'] = "inserted, forgotten, key error";		 
@@ -1278,6 +1354,8 @@ SQLInsert('zigbee2mqtt_devices_list', $par1);
 $par1['zigbeeModel'] = 'lumi.vibration.aq1';
 $par1['model'] = "DJT11LM";		 
 $par1['vendor'] = "Xiaomi";		 
+$par1['type'] = "sensor";		
+
 $par1['description'] = "Aqara vibration sensor";		 
 $par1['extend'] = "";		 
 $par1['supports'] = "drop, tilt and touch";		 
@@ -1288,6 +1366,7 @@ SQLInsert('zigbee2mqtt_devices_list', $par1);
 $par1['zigbeeModel'] = 'lumi.curtain';
 $par1['model'] = "ZNCLDJ11LM";		 
 $par1['vendor'] = "Xiaomi";		 
+$par1['type'] = "device";		 
 $par1['description'] = "Aqara curtain motor";		 
 $par1['extend'] = "";		 
 $par1['supports'] = "open, close, stop, position";		 
@@ -1300,6 +1379,7 @@ SQLInsert('zigbee2mqtt_devices_list', $par1);
 $par1['zigbeeModel'] = 'TRADFRI bulb E27 WS opal 980lm, TRADFRI bulb E26 WS opal 980lm,TRADFRI bulb E27 WS\uFFFDopal 980lm';
 $par1['model'] = "LED1545G12";		 
 $par1['vendor'] = "IKEA";		 
+$par1['type'] = "bulb";		 
 $par1['description'] = "TRADFRI LED bulb E26/E27 980 lumen, dimmable, white spectrum, opal white";		 
 $par1['extend'] = "";		 
 $par1['supports'] = "generic.light_onoff_brightness_colortemp";		 
@@ -1309,7 +1389,8 @@ SQLInsert('zigbee2mqtt_devices_list', $par1);
 
 $par1['zigbeeModel'] = 'TRADFRI bulb E27 WS clear 950lm, TRADFRI bulb E26 WS clear 950lm';
 $par1['model'] = "LED1546G12";		 
-$par1['vendor'] = "IKEA";		 
+$par1['vendor'] = "IKEA";	
+$par1['type'] = "bulb";		 	 
 $par1['description'] = "TRADFRI LED bulb E26/E27 950 lumen, dimmable, white spectrum, clear";		 
 $par1['extend'] = "";		 
 $par1['supports'] = "generic.light_onoff_brightness_colortemp";		 
@@ -1320,6 +1401,7 @@ SQLInsert('zigbee2mqtt_devices_list', $par1);
 $par1['zigbeeModel'] = 'TRADFRI bulb E27 opal 1000lm, TRADFRI bulb E27 W opal 1000lm';
 $par1['model'] = "LED1623G12";		 
 $par1['vendor'] = "IKEA";		 
+$par1['type'] = "bulb";		 
 $par1['description'] = "TRADFRI LED bulb E27 1000 lumen, dimmable, opal white";		 
 $par1['extend'] = "";		 
 $par1['supports'] = "generic.light_onoff_brightness,";		 
@@ -1329,7 +1411,8 @@ SQLInsert('zigbee2mqtt_devices_list', $par1);
 
 $par1['zigbeeModel'] = 'TRADFRI bulb GU10 WS 400lm';
 $par1['model'] = "LED1537R6";		 
-$par1['vendor'] = "IKEA";		 
+$par1['vendor'] = "IKEA";	
+$par1['type'] = "bulb";		 	 
 $par1['description'] = "TRADFRI LED bulb GU10 400 lumen, dimmable, white spectrum";		 
 $par1['extend'] = "";		 
 $par1['supports'] = "generic.light_onoff_brightness_colortemp";		 
@@ -1339,7 +1422,8 @@ SQLInsert('zigbee2mqtt_devices_list', $par1);
 
 $par1['zigbeeModel'] = 'TRADFRI bulb GU10 W 400lm';
 $par1['model'] = "LED1650R5";		 
-$par1['vendor'] = "IKEA";		 
+$par1['vendor'] = "IKEA";	
+$par1['type'] = "bulb";		 	 
 $par1['description'] = "TRADFRI LED bulb GU10 400 lumen, dimmable";		 
 $par1['extend'] = "";		 
 $par1['supports'] = "generic.light_onoff_brightness";		 
@@ -1349,7 +1433,8 @@ SQLInsert('zigbee2mqtt_devices_list', $par1);
 
 $par1['zigbeeModel'] = 'TRADFRI bulb E14 WS opal 400lm, TRADFRI bulb E12 WS opal 400lm';
 $par1['model'] = "LED1536G5";		 
-$par1['vendor'] = "IKEA";		 
+$par1['vendor'] = "IKEA";	
+$par1['type'] = "bulb";		 	 
 $par1['description'] = "TRADFRI LED bulb E12/E14 400 lumen, dimmable, white spectrum, opal white";		 
 $par1['extend'] = "";		 
 $par1['supports'] = "generic.light_onoff_brightness_colortemp";		 
@@ -1359,7 +1444,8 @@ SQLInsert('zigbee2mqtt_devices_list', $par1);
 
 $par1['zigbeeModel'] = 'TRADFRI bulb E26 opal 1000lm, TRADFRI bulb E26 W opal 1000lm';
 $par1['model'] = "LED1622G12";		 
-$par1['vendor'] = "IKEA";		 
+$par1['vendor'] = "IKEA";	
+$par1['type'] = "bulb";		 	 
 $par1['description'] = "TRADFRI LED bulb E26 1000 lumen, dimmable, opal white";		 
 $par1['extend'] = "";		 
 $par1['supports'] = "generic.light_onoff_brightness";		 
@@ -1369,7 +1455,8 @@ SQLInsert('zigbee2mqtt_devices_list', $par1);
 
 $par1['zigbeeModel'] = 'TRADFRI bulb E27 CWS opal 600lm, TRADFRI bulb E26 CWS opal 600lm';
 $par1['model'] = "LED1624G9";		 
-$par1['vendor'] = "IKEA";		 
+$par1['vendor'] = "IKEA";	
+$par1['type'] = "bulb";		 	 
 $par1['description'] = "TRADFRI LED bulb E27/E26 600 lumen, dimmable, color, opal white";		 
 $par1['extend'] = "";		 
 $par1['supports'] = "generic.light_onoff_brightness_colortemp_colorxy";		 
@@ -1379,7 +1466,8 @@ SQLInsert('zigbee2mqtt_devices_list', $par1);
 
 $par1['zigbeeModel'] = 'TRADFRI bulb E14 W op/ch 400lm, TRADFRI bulb E12 W op/ch 400lm,TRADFRI bulb E17 W op/ch 400lm';
 $par1['model'] = "LED1649C5";		 
-$par1['vendor'] = "IKEA";		 
+$par1['vendor'] = "IKEA";	
+$par1['type'] = "bulb";		 	 
 $par1['description'] = "TRADFRI LED bulb E12/E14/E17 400 lumen, dimmable warm white, chandelier opal";		 
 $par1['extend'] = "";		 
 $par1['supports'] = " generic.light_onoff_brightness";		 
@@ -1389,7 +1477,8 @@ SQLInsert('zigbee2mqtt_devices_list', $par1);
 
 $par1['zigbeeModel'] = 'TRADFRI wireless dimmer';
 $par1['model'] = "ICTC-G-1";		 
-$par1['vendor'] = "IKEA";		 
+$par1['vendor'] = "IKEA";	
+$par1['type'] = "bulb";		 	 
 $par1['description'] = "TRADFRI wireless dimmer";		 
 $par1['extend'] = "";		 
 $par1['supports'] = "brightness [0-255], quick rotate for instant 0/255";		 
@@ -1399,7 +1488,8 @@ SQLInsert('zigbee2mqtt_devices_list', $par1);
 
 $par1['zigbeeModel'] = 'TRADFRI transformer 10W';
 $par1['model'] = "ICPSHC24-10EU-IL-1";		 
-$par1['vendor'] = "IKEA";		 
+$par1['vendor'] = "IKEA";	
+$par1['type'] = "remote";		 	 
 $par1['description'] = "TRADFRI driver for wireless control (10 watt)";		 
 $par1['extend'] = "";		 
 $par1['supports'] = " generic.light_onoff_brightness";		 
@@ -1410,6 +1500,7 @@ SQLInsert('zigbee2mqtt_devices_list', $par1);
 $par1['zigbeeModel'] = 'TRADFRI transformer 30W';
 $par1['model'] = "ICPSHC24-30EU-IL-1";		 
 $par1['vendor'] = "IKEA";		 
+$par1['type'] = "remote";		 	 
 $par1['description'] = "TRADFRI driver for wireless control (30 watt)";		 
 $par1['extend'] = "";		 
 $par1['supports'] = "generic.light_onoff_brightness";		 
@@ -1419,6 +1510,7 @@ SQLInsert('zigbee2mqtt_devices_list', $par1);
 
 $par1['zigbeeModel'] = 'FLOALT panel WS 30x30';
 $par1['model'] = "L1527";		 
+$par1['type'] = "bulb";		 	 
 $par1['vendor'] = "IKEA";		 
 $par1['description'] = "FLOALT LED light panel, dimmable, white spectrum (30x30 cm)";		 
 $par1['extend'] = "";		 
@@ -1430,6 +1522,7 @@ SQLInsert('zigbee2mqtt_devices_list', $par1);
 $par1['zigbeeModel'] = 'FLOALT panel WS 60x60';
 $par1['model'] = "L1529";		 
 $par1['vendor'] = "IKEA";		 
+$par1['type'] = "bulb";		 	 
 $par1['description'] = "FLOALT LED light panel, dimmable, white spectrum (60x60 cm)";		 
 $par1['extend'] = "";		 
 $par1['supports'] = "generic.light_onoff_brightness_colortemp";		 
@@ -1441,6 +1534,7 @@ SQLInsert('zigbee2mqtt_devices_list', $par1);
 $par1['zigbeeModel'] = 'FLOALT panel WS 30x90';
 $par1['model'] = "L1528";		 
 $par1['vendor'] = "IKEA";		 
+$par1['type'] = "bulb";		 	 
 $par1['description'] = "FLOALT LED light panel, dimmable, white spectrum (30x90 cm)";		 
 $par1['extend'] = "";		 
 $par1['supports'] = "generic.light_onoff_brightness_colortemp";		 
@@ -1450,6 +1544,7 @@ SQLInsert('zigbee2mqtt_devices_list', $par1);
 
 $par1['zigbeeModel'] = 'SURTE door WS 38x64';
 $par1['model'] = "L1531";		 
+$par1['type'] = "bulb";		 	 
 $par1['vendor'] = "IKEA";		 
 $par1['description'] = "SURTE door light panel, dimmable, white spectrum (38x64 cm)";		 
 $par1['extend'] = "";		 
@@ -1461,6 +1556,7 @@ SQLInsert('zigbee2mqtt_devices_list', $par1);
 $par1['zigbeeModel'] = 'TRADFRI control outlet';
 $par1['model'] = "E1603";		 
 $par1['vendor'] = "IKEA";		 
+$par1['type'] = "remote";		 	 
 $par1['description'] = "TRADFRI control outlet";		 
 $par1['extend'] = "";		 
 $par1['supports'] = "generic.light_onoff_brightness_colortemp";		 
@@ -1471,6 +1567,7 @@ SQLInsert('zigbee2mqtt_devices_list', $par1);
 $par1['zigbeeModel'] = 'TRADFRI control outlet';
 $par1['model'] = "E1603";		 
 $par1['vendor'] = "IKEA";		 
+$par1['type'] = "remote";		 	 
 $par1['description'] = "TRADFRI control outlet";		 
 $par1['extend'] = "";		 
 $par1['supports'] = "on/off";		 
@@ -1481,6 +1578,7 @@ SQLInsert('zigbee2mqtt_devices_list', $par1);
 $par1['zigbeeModel'] = 'TRADFRI remote control';
 $par1['model'] = "E1524";		 
 $par1['vendor'] = "IKEA";		 
+$par1['type'] = "remote";		 	 
 $par1['description'] = "TRADFRI remote control";		 
 $par1['extend'] = "";		 
 $par1['supports'] = "toggle, arrow left/right click/hold/release, brightness up/down click/hold/release";		 
