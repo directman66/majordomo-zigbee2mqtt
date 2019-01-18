@@ -5,13 +5,18 @@ $maparray=SQLSelect('SELECT *  FROM (select zigbee2mqtt_devices.ID DEVID, zigbee
 //$out['map_array']=$maparray['VALUE'];
  $nodes="";
 $egdes="";
+
+$defaultiee=SQLSelectOne ("select * from zigbee2mqtt_devices where TITLE='bridge'")['IEEEADDR'];
     $total = count($maparray);
     for ($i=0;$i<$total;$i++) {
 
-if (!$maparray[$i]['ID']) {$idd='0';} else {$idd=$maparray[$i]['ID'];}
+if (!$maparray[$i]['IEEEADDR']) {$idd=$defaultiee;} else {$idd=$maparray[$i]['IEEEADDR'];}
+if (!$maparray[$i]['PARRENTIEEEADDR']) {$parrentieee=$defaultiee;} else {$parrentieee=$maparray[$i]['PARRENTIEEEADDR'];}
+
 //   $nodes .= "{id: ".$idd.", font:{size:10}, size:40,   label: '".$maparray[$i]['description']."',  group: 0,  shape: 'circularImage', image: '/templates/zigbee2mqtt/img/".$maparray[$i]['model'].".jpg', shapeProperties:{borderDashes:[5,5]},},";
    $nodes.= "{id: ".$idd.", font:{size:10}, size:40,   label: '".$maparray[$i]['description']."',  group: 0,  shape: 'circularImage', image: '/templates/zigbee2mqtt/img/".$maparray[$i]['model'].".jpg', },";
- if ($idd!="0")   $edges.= "{from: 0, to: ".$idd."},";
+// if ($idd!=$defaultiee)   $edges.= "{from: $defaultiee, to: ".$idd."},";
+ if ($idd!=$defaultiee)   $edges.= "{from: $parrentieee, to: ".$idd."},";
 }    
 
 //   $edges.= '{"id": "7","from": "7","to": "0},{"id": "9","from": "9","to": "0" },{"id": "4","from": "2","to": "0"},{"id": "5","from": "3","to": "0" },';
