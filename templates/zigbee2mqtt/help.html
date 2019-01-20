@@ -5,7 +5,9 @@
 		<a data-toggle="collapse" data-parent="#accordion" href="#sms_help">Информация</a>
 		</div>
 		<div class="panel-body collapse" id="sms_help">
-		Модуль для работы с устройствами zigbee с использованием USB стика сc2531 и проетка zigbee2mqtt https://koenkk.github.io/zigbee2mqtt/
+		Модуль для работы с устройствами zigbee с использованием USB стика сc2531 и проекта 
+<a href="https://koenkk.github.io/zigbee2mqtt/" target="_blank">zigbee2mqtt</a><br>
+
 			
 			</br>     </br>
 
@@ -20,7 +22,7 @@
 		</div>
 		<div class="panel-body collapse" id="nach">
 		<p>
-Для работы c проектом нужен прошитый стик и компьютер на линукс (подойдет любой одноплатник типа малины)<br>
+Для работы c zigbee2mqtt нужен прошитый стик и компьютер на линукс (подойдет любой одноплатник типа малины)<br>
 Стики можно заказать тут (проверенный продавец) <br>
 
 <a href="https://ru.aliexpress.com/store/product/Wireless-Zigbee-CC2531-Sniffer-Bare-Board-Packet-Protocol-Analyzer-Module-USB-Interface-Dongle-Capture-Packet-Module/2182011_32852226435.html" target="_blank">
@@ -35,12 +37,7 @@
 <img src="../templates/zigbee2mqtt/img/downloader_cable.png"   class="img-rounded" height="150" width="150">
 </a><br>
 <br><br>
-
- 
- 
-
-
-Желательно все заказывать у одного продавца, тогда будет один трек на все товары. Я имел неосторожность заказать у разных продавцов, в итоге шнурок ждал около 3 месяцев без пробивания трека.
+Желательно все сразу заказать у одного продавца, тогда будет один трек на все товары. Я имел неосторожность заказать у разных продавцов, в итоге шнурок ждал около 3 месяцев без пробивания трека.
 
 
 
@@ -222,6 +219,84 @@ sudo systemctl start zigbee2mqtt<br>
 
 
 		</div> </div> </div>
+
+
+<div class="panel-group" id="accordion">
+	<div class="panel panel-info">
+		<div class="panel-heading">
+		<a data-toggle="collapse" data-parent="#accordion" href="#pair">Подключение устройств</a>
+		</div>
+		<div class="panel-body collapse" id="pair">
+
+zigbee2mqtt может автоматически добавлять устройства, которые посылают пакеты на сопряжение (pairing).<br>
+Для этого в конфигурационном файле configuration.yaml должна присутствовать строка<br>
+
+<code><b>
+permit_join: true<br>
+</code></b>
+
+		</div> </div> </div>
+
+
+
+
+<div class="panel-group" id="accordion">
+	<div class="panel panel-info">
+		<div class="panel-heading">
+		<a data-toggle="collapse" data-parent="#accordion" href="#dlist">Список поддерживаемых устройств</a>
+		</div>
+		<div class="panel-body collapse" id="dlist">
+<table   class="table table-stripped">
+<thead>
+<tr>
+<th>ID </th>
+<th>zigbeeModel </th>
+<th>model </th>
+<th>vendor</th>
+<th>type</th>
+<th>description</th>
+<th>supports</th>
+
+</tr>
+</thead>
+<tbody>
+[#begin DEVICE_LIST#]
+<tr>
+<td>[#ID#]</td>
+<td>
+
+<img src="../templates/zigbee2mqtt/img/[#model#].jpg"   class="img-rounded" height="60" width="60">
+
+</td>
+<td>[#zigbeeModel#]</td>
+
+<td>[#model#]</td>
+<td>[#vendor#]</td>
+<td>[#type#]</td>
+<td>[#description#]</td>
+<td>[#supports#]</td>
+
+</tr>
+[#end DEVICE_LIST#]
+</tbody>
+</table>
+
+		</div> </div> </div>
+
+
+<div class="panel-group" id="accordion">
+	<div class="panel panel-info">
+		<div class="panel-heading">
+		<a data-toggle="collapse" data-parent="#accordion" href="#remote">Управление устройствами</a>
+		</div>
+		<div class="panel-body collapse" id="remote">
+
+comming...
+
+		</div> </div> </div>
+
+
+
 
 
 
