@@ -1,0 +1,268 @@
+<br/>
+<div class="panel-group" id="accordion">
+	<div class="panel panel-info">
+		<div class="panel-heading">
+		<a data-toggle="collapse" data-parent="#accordion" href="#sms_help">Информация</a>
+		</div>
+		<div class="panel-body collapse" id="sms_help">
+		Модуль для работы с устройствами zigbee с использованием USB стика сc2531 и проетка zigbee2mqtt https://koenkk.github.io/zigbee2mqtt/
+			
+			</br>     </br>
+
+	
+		</div> </div> </div>
+
+
+<div class="panel-group" id="accordion">
+	<div class="panel panel-info">
+		<div class="panel-heading">
+		<a data-toggle="collapse" data-parent="#accordion" href="#nach">Покупка стика</a>
+		</div>
+		<div class="panel-body collapse" id="nach">
+		<p>
+Для работы c проектом нужен прошитый стик и компьютер на линукс (подойдет любой одноплатник типа малины)<br>
+Стики можно заказать тут (проверенный продавец) <br>
+
+<a href="https://ru.aliexpress.com/store/product/Wireless-Zigbee-CC2531-Sniffer-Bare-Board-Packet-Protocol-Analyzer-Module-USB-Interface-Dongle-Capture-Packet-Module/2182011_32852226435.html" target="_blank">
+стик:
+<img src="../templates/zigbee2mqtt/img/cc2531.jpg"   class="img-rounded" height="150" width="150">
+</a><br>
+<a href="https://ru.aliexpress.com/store/product/Smart-RF04E-Smart-RF04EB-CC1110-CC2530-CC2531-CC2540-ZigBee-Module-Target-Zigbee-Emulator-CC-Debugger-Bluetooth/2182011_32950422195.html" target="_blank">дебаггер:
+
+<img src="../templates/zigbee2mqtt/img/cc_debugger.jpg"   class="img-rounded" height="150" width="150">
+</a><br>
+<a href="https://ru.aliexpress.com/store/product/Downloader-Cable-Bluetooth-4-0-CC2540-zigbee-CC2531-Sniffer-USB-Programmer-Wire-Download-Programming-Connector-Board/2182011_32853531081.html" target="_blank">шнурок:
+<img src="../templates/zigbee2mqtt/img/downloader_cable.png"   class="img-rounded" height="150" width="150">
+</a><br>
+<br><br>
+
+ 
+ 
+
+
+Желательно все заказывать у одного продавца, тогда будет один трек на все товары. Я имел неосторожность заказать у разных продавцов, в итоге шнурок ждал около 3 месяцев без пробивания трека.
+
+
+
+		</div> </div> </div>
+
+<div class="panel-group" id="accordion">
+	<div class="panel panel-info">
+		<div class="panel-heading">
+		<a data-toggle="collapse" data-parent="#accordion" href="#vozm">Прошивка стика</a>
+		</div>
+		<div class="panel-body collapse" id="vozm">
+<a href="https://koenkk.github.io/zigbee2mqtt/getting_started/flashing_the_cc2531.html" target="_blank">Подробная инструкция на англ. языке с картинками
+</a><br>
+<br>
+<a href="https://yadi.sk/d/RxIVtu3YTCBDyw" target="_blank">Прошивальщик без регистрации можно скачать тут
+</a><br>
+<br>
+<a href="https://github.com/Koenkk/Z-Stack-firmware/tree/dev/coordinator/" target="_blank">Последние версии прошивок можно взять тут
+</a><br>
+
+		</div> </div> </div>
+
+
+
+<div class="panel-group" id="accordion">
+	<div class="panel panel-info">
+		<div class="panel-heading">
+		<a data-toggle="collapse" data-parent="#accordion" href="#vidget">Установка и обновление zigbee2mqtt</a>
+		</div>
+		<div class="panel-body collapse" id="vidget">
+<a href="https://koenkk.github.io/zigbee2mqtt/getting_started/running_zigbee2mqtt.html" target="_blank">Оригинальная инструкция по установке для linux
+</a><br><br>
+<b>
+Проверяем на каком порту у нас появился стик: <br>
+</b>
+<code><b>
+pi@raspberry:~ $ ls -l /dev/ttyACM0<br>
+crw-rw---- 1 root dialout 166, 0 May 16 19:15 /dev/ttyACM0  # <-- CC2531 on /dev/ttyACM0<br>
+</code></b><br>
+или<br><br>
+<code><b>
+pi@raspberry:/ $ ls -l /dev/serial/by-id<br>
+total 0<br>
+lrwxrwxrwx. 1 root root 13 Oct 19 19:26 usb-Texas_Instruments_TI_CC2531_USB_CDC___0X00124B0018ED3DDF-if00 -> ../../ttyACM0
+</code></b>
+<br>
+Убедились, что стик встал на порту /dev/ttyACM0, этот адрес потом понадобится при настройке конфигурации configuration.yaml<br><br>
+
+<b>Устанавливаем необходимые пакеты<br></b>
+<code><b>
+# Setup Node.js repository<br>
+sudo curl -sL https://deb.nodesource.com/setup_10.x | sudo -E bash -<br>
+
+# Install Node.js<br>
+sudo apt-get install -y nodejs git make g++ gcc<br>
+
+# Verify that the correct nodejs and npm (automatically installed with nodejs)<br>
+# version has been installed<br>
+node --version  # Should output v10.X<br>
+npm --version  # Should output 6.X<br>
+
+# Clone zigbee2mqtt repository<br>
+sudo git clone https://github.com/Koenkk/zigbee2mqtt.git /opt/zigbee2mqtt<br>
+sudo chown -R pi:pi /opt/zigbee2mqtt<br>
+
+# Install dependencies<br>
+cd /opt/zigbee2mqtt<br>
+npm install<br>
+</code></b>
+<br>
+по завершении установки мы должны получить на экране что-то подобное:<br>
+<code><b>
+node-pre-gyp info ok<br>
+added 383 packages in 111.613s
+</code></b>
+
+<br><b><br>
+Настраиваем файл конфигурации:<br></b>
+
+<code><b>
+nano /opt/zigbee2mqtt/data/configuration.yaml<br>
+</code></b>
+<br>
+Пример файла конфигурации:<br>
+<code><b>
+homeassistant: false<br>
+permit_join: true<br>
+advanced:<br>
+&nbsp;&nbsp;channel: 26<br>
+&nbsp;&nbsp;log_level: debug<br>
+mqtt:<br>
+&nbsp;&nbsp;base_topic: zigbee2mqtt<br>
+&nbsp;&nbsp; #   server: 'mqtt://192.168.178.32:1900'<br>
+&nbsp;&nbsp;&nbsp;server: 'mqtt://192.168.1.39'<br>
+serial:<br>
+  port: /dev/ttyACM1<br>
+</code></b><br>
+
+<b>Запуск сервиса <br></b>
+<code><b>
+cd /opt/zigbee2mqtt<br>
+npm start<br>
+</code></b>
+
+
+
+<code><b>
+2018-5-18 20:35:07 INFO Starting zigbee-shepherd<br>
+2018-5-18 20:35:09 INFO zigbee-shepherd started<br>
+2018-5-18 20:35:09 INFO Currently 0 devices are joined:<br>
+2018-5-18 20:35:09 INFO Connecting to MQTT server at mqtt://localhost<br>
+2018-5-18 20:35:09 INFO zigbee-shepherd ready<br>
+2018-5-18 20:35:09 INFO Connected to MQTT server<br>
+</code></b>
+остановить можно нажатием CTR-C<br>
+<br>
+
+<b>Запуск zigbee2mqtt как сервис<br></b>
+Создаем файл zigbee2mqtt.service<br>
+<code><b>
+sudo nano /etc/systemd/system/zigbee2mqtt.service<br>
+</code></b>
+c содержимым:<br>
+<code><b>
+[Unit]<br>
+Description=zigbee2mqtt<br>
+After=network.target<br>
+<br>
+[Service]<br>
+ExecStart=/usr/bin/npm start<br>
+WorkingDirectory=/opt/zigbee2mqtt<br>
+StandardOutput=inherit<br>
+StandardError=inherit<br>
+Restart=always<br>
+User=pi<br>
+<br>
+[Install]<br>
+WantedBy=multi-user.target<br>
+</code></b>
+для запуска zigbee2mqtt необходимо выполнить:<br>
+<code><b>
+sudo systemctl start zigbee2mqtt<br>
+</code></b><br>
+
+<code><b>
+systemctl status zigbee2mqtt.service<br>
+</code></b><br>
+
+автозапуск демона при старте системы:<br>
+<code><b><br>
+sudo systemctl enable zigbee2mqtt.service<br>
+</code></b><br>
+
+<b>обновление локального архива проекта zigbee2mqtt<br></b>
+<code><b>
+# Stop zigbee2mqtt and go to directory<br>
+sudo systemctl stop zigbee2mqtt<br>
+cd /opt/zigbee2mqtt<br>
+<br>
+# Backup configuration<br>
+cp -R data data-backup<br>
+<br>
+# Update<br>
+git checkout HEAD -- npm-shrinkwrap.json<br>
+git pull<br>
+rm -rf node_modules<br>
+npm install<br>
+<br>
+# Restore configuration<br>
+cp -R data-backup/* data<br>
+rm -rf data-backup<br>
+<br>
+# Start zigbee2mqtt<br>
+sudo systemctl start zigbee2mqtt<br>
+<br>
+</code></b>
+</code></b>
+
+
+
+		</div> </div> </div>
+
+
+
+<div class="panel-group" id="accordion">
+	<div class="panel panel-info">
+		<div class="panel-heading">
+		<a data-toggle="collapse" data-parent="#accordion" href="#cont">Полезные ссылки</a>
+		</div>
+		<div class="panel-body collapse" id="cont">
+		<p><b>
+
+
+<a href="https://koenkk.github.io/zigbee2mqtt/" target="_blank">Ссылка на проект zigbee2mqtt</a><br>
+
+<a href="https://koenkk.github.io/zigbee2mqtt/information/supported_devices.html" target="_blank">Список поддерживаемого оборудования</a><br>
+
+
+
+
+
+
+<a href="https://github.com/directman66/majordomo-zigbee2mqtt" target="_blank">Ссылка на репозиторий модуля</a><br>
+<a href="http://majordomo.smartliving.ru/forum/viewtopic.php?f=5&t=6011" target="_blank">Тема на форуме</a>.<br></b></br>
+		</div> </div> </div>
+
+<div class="panel-group" id="accordion">
+	<div class="panel panel-info">
+		<div class="panel-heading">
+		<a data-toggle="collapse" data-parent="#accordion" href="#bax">Поддержать разработку</a>
+		</div>
+		<div class="panel-body collapse" id="bax">
+
+[#inc rekv.html#]
+
+		</div> </div> </div>
+
+                                                                                                         
+	
+</div>
+
+
+	
+</div>
+
