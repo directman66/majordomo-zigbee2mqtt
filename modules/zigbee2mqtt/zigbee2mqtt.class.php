@@ -178,13 +178,13 @@ function run() {
 * @access public
 */
  function setProperty($id, $value, $set_linked=0) {
-debmes('╨а╤Ь╨б╤У╨а┬╢╨а╨Е╨а╤Х ╨а╤С╨а┬╖╨а╤Ш╨а┬╡╨а╨Е╨а╤С╨бтАЪ╨б╨К ╨а┬╖╨а╨Е╨а┬░╨бтАб╨а┬╡╨а╨Е╨а╤С╨а┬╡ id='.$id.' ╨а╨Е╨а┬░ '.$value, 'zigbee2mqtt');
+debmes('РќСѓР¶РЅРѕ РёР·РјРµРЅРёС‚СЊ Р·РЅР°С‡РµРЅРёРµ id='.$id.' РЅР° '.$value, 'zigbee2mqtt');
 
 debmes("SELECT * FROM zigbee2mqtt WHERE ID='".$id."'", 'zigbee2mqtt');
   $rec=SQLSelectOne("SELECT * FROM zigbee2mqtt WHERE ID='".$id."'");
 
   if (!$rec['ID'] || !$rec['PATH']) {
-debmes('╨а╤Ь╨а┬╡ ╨бтАж╨а╨Ж╨а┬░╨бтАЪ╨а┬░╨а┬╡╨бтАЪ ╨а╥С╨а┬░╨а╨Е╨а╨Е╨бтА╣╨бтАж', 'zigbee2mqtt');
+debmes('РќРµ С…РІР°С‚Р°РµС‚ РґР°РЅРЅС‹С…', 'zigbee2mqtt');
    return 0;
   }
 
@@ -230,7 +230,7 @@ debmes('╨а╤Ь╨а┬╡ ╨бтАж╨а╨Ж╨а┬░╨бтАЪ╨а�
 
    if(!$mqtt_client->connect(true, NULL,$username,$password))
    {
-debmes('╨а╤Ы╨бтВм╨а╤С╨а┬▒╨а╤Ф╨а┬░ ╨а╤Ч╨а╤Х╨а╥С╨а╤Ф╨а┬╗╨б╨Л╨бтАб╨а┬╡╨а╨Е╨а╤С╨б╨П ╨а╤Ф mqtt', 'zigbee2mqtt');
+debmes('РћС€РёР±РєР° РїРѕРґРєР»СЋС‡РµРЅРёСЏ Рє mqtt', 'zigbee2mqtt');
     return 0;
    }
 
@@ -246,7 +246,7 @@ $jsonvalue=json_encode($json) ;
 $json=array( $rec['METRIKA']=> $value);
 $jsonvalue=json_encode($json) ;
 }
-debmes('╨а╤Я╨б╤У╨а┬▒╨а┬╗╨а╤С╨а╤Ф╨б╤У╨б╨Л zigbee2mqqtt '.$rec['PATH_WRITE'].'/set'.":".$jsonvalue, 'zigbee2mqtt');
+debmes('РџСѓР±Р»РёРєСѓСЋ zigbee2mqqtt '.$rec['PATH_WRITE'].'/set'.":".$jsonvalue, 'zigbee2mqtt');
 
 
    if ($rec['PATH_WRITE']) {
@@ -392,7 +392,7 @@ if ($rec['CONVERTONOFF']=='1' && $value=='ON') $newvalue=1;
 if ($rec['CONVERTONOFF']=='1' && $value=='OFF') $newvalue=0;
 
 
-//╨а╤Ч╨а╤С╨бтВм╨а┬╡╨а╤Ш ╨а╨Ж ╨а╤Ч╨а┬╡╨б╨В╨а┬╡╨а╤Ш╨а┬╡╨а╨Е╨а╨Е╨б╤У╨б╨Л
+//РїРёС€РµРј РІ РїРµСЂРµРјРµРЅРЅСѓСЋ
 //       setGlobal($rec['LINKED_OBJECT'].'.'.$rec['LINKED_PROPERTY'], $newvalue, array($this->name=>'0'));
      }
      if ($rec['LINKED_OBJECT'] && $cmd_rec['LINKED_METHOD']) {
@@ -451,6 +451,13 @@ function admin(&$out) {
  $out['MQTT_USERNAME']=$this->config['MQTT_USERNAME'];
  $out['MQTT_PASSWORD']=$this->config['MQTT_PASSWORD'];
  $out['MQTT_AUTH']=$this->config['MQTT_AUTH'];
+
+
+     if ($this->tab=='help') {
+  $res=SQLSelect("SELECT * FROM zigbee2mqtt_devices_list ");
+$out['DEVICE_LIST']=$res;
+
+}
 
 
      if ($this->tab=='edit_device') {
@@ -944,11 +951,11 @@ function usual(&$out) {
 
    $mqtt_properties=SQLSelect("SELECT * FROM zigbee2mqtt WHERE LINKED_OBJECT LIKE '".DBSafe($object)."' AND LINKED_PROPERTY LIKE '".DBSafe($property)."'");
    $total=count($mqtt_properties);
-debmes($object.":". $property.":". $value. ' ╨а╨Е╨а┬░╨атДЦ╨а╥С╨а┬╡╨а╨Е╨а╤Х ╨б╨В╨а┬╡╨а┬╖╨б╤У╨а┬╗╨б╨К╨бтАЪ╨а┬░╨бтАЪ╨а╤Х╨а╨Ж '. $total, 'zigbee2mqtt');
+debmes($object.":". $property.":". $value. ' РЅР°Р№РґРµРЅРѕ СЂРµР·СѓР»СЊС‚Р°С‚РѕРІ '. $total, 'zigbee2mqtt');
 
    if ($total) {
     for($i=0;$i<$total;$i++) {
-     debmes('╨атАФ╨а┬░╨а╤Ч╨б╤У╨б╨Г╨а╤Ф╨а┬░╨а┬╡╨а╤Ш setProperty '. $mqtt_properties[$i]['ID'].":".$value, 'zigbee2mqtt');
+     debmes('Р—Р°РїСѓСЃРєР°РµРј setProperty '. $mqtt_properties[$i]['ID'].":".$value, 'zigbee2mqtt');
      $this->setProperty($mqtt_properties[$i]['ID'], $value);
     }
    }  
@@ -1027,7 +1034,7 @@ function get_map(){
    }
 
 
-debmes('╨атАФ╨а┬░╨а╤Ч╨б╨В╨а┬░╨бтВм╨а╤С╨а╨Ж╨а┬░╨а┬╡╨а╤Ш ╨а╤Ф╨а┬░╨б╨В╨бтАЪ╨б╤У ', 'zigbee2mqtt');
+debmes('Р—Р°РїСЂР°С€РёРІР°РµРј РєР°СЂС‚Сѓ ', 'zigbee2mqtt');
 
 
 
