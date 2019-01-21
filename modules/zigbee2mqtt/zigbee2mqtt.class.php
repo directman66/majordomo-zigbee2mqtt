@@ -2261,9 +2261,9 @@ $par1['toZigbee'] = "";
 SQLInsert('zigbee2mqtt_devices_list', $par1);
 
 
-
+//Innr
 $par1['zigbeeModel'] = "RB 185 C";
-$par1['model'] = "RB 185 C";
+$par1['model'] = "RB-185-C";
 $par1['vendor'] = "Innr";
 $par1['type'] = "bulb"  ;
 $par1['description'] = "E27 Bulb RGBW";
@@ -2271,7 +2271,7 @@ $par1['supports'] = "generic.light_onoff_brightness_colortemp_colorxy,";
 SQLInsert('zigbee2mqtt_devices_list', $par1);
 
 $par1['zigbeeModel'] = "BY 185 C";
-$par1['model'] = "BY 185 C";
+$par1['model'] = "BY-185-C";
 $par1['vendor'] = "Innr";
 $par1['type'] = "bulb" ; 
 $par1['description'] = "B22 Bulb RGBW";
@@ -2279,7 +2279,7 @@ $par1['supports'] = "generic.light_onoff_brightness_colortemp_colorxy,";
 SQLInsert('zigbee2mqtt_devices_list', $par1);
 
 $par1['zigbeeModel'] = "RB 285 C";
-$par1['model'] = "RB 285 C";
+$par1['model'] = "RB-285-C";
 $par1['vendor'] = "Innr";
 $par1['type'] = "bulb";  
 $par1['description'] = "E27 Bulb RGBW";
@@ -2287,7 +2287,7 @@ $par1['supports'] = "generic.light_onoff_brightness_colortemp_colorxy,";
 SQLInsert('zigbee2mqtt_devices_list', $par1);
 
 $par1['zigbeeModel'] = "RB 165";
-$par1['model'] = "RB 165";
+$par1['model'] = "RB-165";
 $par1['vendor'] = "Innr";
 $par1['type'] = "bulb" ; 
 $par1['description'] = "E27 Bulb";
@@ -2295,7 +2295,7 @@ $par1['supports'] = "generic.light_onoff_brightness,";
 SQLInsert('zigbee2mqtt_devices_list', $par1);
 
 $par1['zigbeeModel'] = "RB 175 W";
-$par1['model'] = "RB 175 W";
+$par1['model'] = "RB-175-W";
 $par1['vendor'] = "Innr";
 $par1['type'] = "bulb"  ;
 $par1['description'] = "E27 Bulb warm dimming";
@@ -2303,7 +2303,7 @@ $par1['supports'] = "generic.light_onoff_brightness,";
 SQLInsert('zigbee2mqtt_devices_list', $par1);
 
 $par1['zigbeeModel'] = "RB 178 T";
-$par1['model'] = "RB 178 T";
+$par1['model'] = "RB-178-T";
 $par1['vendor'] = "Innr";
 $par1['type'] = "bulb"   ;
 $par1['description'] = "Smart bulb tunable white E27";
@@ -2311,7 +2311,7 @@ $par1['supports'] = "generic.light_onoff_brightness_colortemp,";
 SQLInsert('zigbee2mqtt_devices_list', $par1);
 
 $par1['zigbeeModel'] = "RS 125";
-$par1['model'] = "RS 125";
+$par1['model'] = "RS-125";
 $par1['vendor'] = "Innr";
 $par1['type'] = "bulb"    ;
 $par1['description'] = "GU10 Spot";
@@ -2319,7 +2319,7 @@ $par1['supports'] = "generic.light_onoff_brightness,";
 SQLInsert('zigbee2mqtt_devices_list', $par1);
 
 $par1['zigbeeModel'] = "RS 128 T";
-$par1['model'] = "RS 128 T";
+$par1['model'] = "RS-128-T";
 $par1['vendor'] = "Innr";
 $par1['type'] = "bulb"     ;
 $par1['description'] = "GU10 Spot 350 lm, dimmable, white spectrum";
@@ -2327,7 +2327,7 @@ $par1['supports'] = "generic.light_onoff_brightness_colortemp,";
 SQLInsert('zigbee2mqtt_devices_list', $par1);
 
 $par1['zigbeeModel'] = "RB 145";
-$par1['model'] = "RB 145";
+$par1['model'] = "RB-145";
 $par1['vendor'] = "Innr";
 $par1['type'] = "bulb"      ;
 $par1['description'] = "E14 Candle";
@@ -2335,7 +2335,7 @@ $par1['supports'] = "generic.light_onoff_brightness,";
 SQLInsert('zigbee2mqtt_devices_list', $par1);
 
 $par1['zigbeeModel'] = "RB 248 T";
-$par1['model'] = "RB 248 T";
+$par1['model'] = "RB-248-T";
 $par1['vendor'] = "Innr";
 $par1['type'] = "bulb"       ;
 $par1['description'] = "E14 Candle with white spectrum";
@@ -2343,7 +2343,7 @@ $par1['supports'] = "generic.light_onoff_brightness_colortemp,";
 SQLInsert('zigbee2mqtt_devices_list', $par1);
 
 $par1['zigbeeModel'] = "BY 165, BY 265";
-$par1['model'] = "BY 165";
+$par1['model'] = "BY-165";
 $par1['vendor'] = "Innr";
 $par1['type'] = "bulb"        ;
 $par1['description'] = "B22 Bulb dimmable";
@@ -2351,7 +2351,7 @@ $par1['supports'] = "generic.light_onoff_brightness,";
 SQLInsert('zigbee2mqtt_devices_list', $par1);
 
 $par1['zigbeeModel'] = "PL 110";
-$par1['model'] = "PL 110";
+$par1['model'] = "PL-110";
 $par1['vendor'] = "Innr";
 $par1['type'] = "bulb"         ;
 $par1['description'] = "Puck Light";
@@ -2359,7 +2359,7 @@ $par1['supports'] = "generic.light_onoff_brightness,";
 SQLInsert('zigbee2mqtt_devices_list', $par1);
 
 $par1['zigbeeModel'] = "ST 110";
-$par1['model'] = "ST 110";
+$par1['model'] = "ST-110";
 $par1['vendor'] = "Innr";
 $par1['type'] = "bulb"  ;
 $par1['description'] = "Strip Light";
@@ -2367,7 +2367,7 @@ $par1['supports'] = "generic.light_onoff_brightness,";
 SQLInsert('zigbee2mqtt_devices_list', $par1);
 
 $par1['zigbeeModel'] = "UC 110";
-$par1['model'] = "UC 110";
+$par1['model'] = "UC-110";
 $par1['vendor'] = "Innr";
 $par1['type'] = "bulb"   ;
 $par1['description'] = "Under Cabinet Light";
@@ -2375,7 +2375,7 @@ $par1['supports'] = "generic.light_onoff_brightness,";
 SQLInsert('zigbee2mqtt_devices_list', $par1);
 
 $par1['zigbeeModel'] = "DL 110 N";
-$par1['model'] = "DL 110 N";
+$par1['model'] = "DL-110-N";
 $par1['vendor'] = "Innr";
 $par1['type'] = "bulb"    ;
 $par1['description'] = "Spot narrow";
@@ -2383,7 +2383,7 @@ $par1['supports'] = "generic.light_onoff_brightness,";
 SQLInsert('zigbee2mqtt_devices_list', $par1);
 
 $par1['zigbeeModel'] = "DL 110 W";
-$par1['model'] = "DL 110 W";
+$par1['model'] = "DL-110-W";
 $par1['vendor'] = "Innr";
 $par1['type'] = "bulb"     ;
 $par1['description'] = "Spot wide";
@@ -2391,7 +2391,7 @@ $par1['supports'] = "generic.light_onoff_brightness,";
 SQLInsert('zigbee2mqtt_devices_list', $par1);
 
 $par1['zigbeeModel'] = "SL 110 N";
-$par1['model'] = "SL 110 N";
+$par1['model'] = "SL-110-N";
 $par1['vendor'] = "Innr";
 $par1['type'] = "bulb"      ;
 $par1['description'] = "Spot Flex narrow";
@@ -2399,7 +2399,7 @@ $par1['supports'] = "generic.light_onoff_brightness,";
 SQLInsert('zigbee2mqtt_devices_list', $par1);
 
 $par1['zigbeeModel'] = "SL 110 M";
-$par1['model'] = "SL 110 M";
+$par1['model'] = "SL-110-M";
 $par1['vendor'] = "Innr";
 $par1['type'] = "bulb"  ;
 $par1['description'] = "Spot Flex medium";
@@ -2407,7 +2407,7 @@ $par1['supports'] = "generic.light_onoff_brightness,";
 SQLInsert('zigbee2mqtt_devices_list', $par1);
 
 $par1['zigbeeModel'] = "SL 110 W";
-$par1['model'] = "SL 110 W";
+$par1['model'] = "SL-110-W";
 $par1['vendor'] = "Innr";
 $par1['type'] = "bulb"   ;
 $par1['description'] = "Spot Flex wide";
@@ -2415,7 +2415,7 @@ $par1['supports'] = "generic.light_onoff_brightness,";
 SQLInsert('zigbee2mqtt_devices_list', $par1);
 
 $par1['zigbeeModel'] = "SP 120";
-$par1['model'] = "SP 120";
+$par1['model'] = "SP-120";
 $par1['vendor'] = "Innr";
 $par1['type'] = "bulb"    ;
 $par1['description'] = "Smart plug";
