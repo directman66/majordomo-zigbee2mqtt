@@ -634,7 +634,7 @@ $out['status']=$a;
 
   require(DIR_MODULES.$this->name.'/map.inc.php');
 
-
+///   $this->redirect("?data_source=&view_mode=&id=&tab=map");
 }
 
 
@@ -1109,6 +1109,27 @@ mqtt - MQTT
  zigbee2mqtt_devices_list: supports varchar(100) NOT NULL DEFAULT ''
  zigbee2mqtt_devices_list: fromZigbee varchar(300) NOT NULL DEFAULT ''
  zigbee2mqtt_devices_list: toZigbee varchar(300) NOT NULL DEFAULT ''
+
+ zigbee2mqtt_devices_command: ID int(10) unsigned NOT NULL auto_increment
+ zigbee2mqtt_devices_command: zigbeeModel varchar(100) NOT NULL DEFAULT ''
+ zigbee2mqtt_devices_command: state_topic varchar(300) NOT NULL DEFAULT ''
+ zigbee2mqtt_devices_command: availability_topic varchar(300) NOT NULL DEFAULT ''
+ zigbee2mqtt_devices_command: command_topic varchar(300) NOT NULL DEFAULT ''
+ zigbee2mqtt_devices_command: payload_on varchar(300) NOT NULL DEFAULT ''
+ zigbee2mqtt_devices_command: payload_off varchar(300) NOT NULL DEFAULT ''
+ zigbee2mqtt_devices_command: value_template varchar(300) NOT NULL DEFAULT ''
+ zigbee2mqtt_devices_command: json_attributes varchar(300) NOT NULL DEFAULT ''
+ zigbee2mqtt_devices_command: device_class varchar(300) NOT NULL DEFAULT ''
+ zigbee2mqtt_devices_command: unit_of_measurement varchar(300) NOT NULL DEFAULT ''
+
+
+
+
+
+
+ 
+
+
 
 
  zigbee2mqtt: ID int(10) unsigned NOT NULL auto_increment
@@ -2239,12 +2260,32 @@ $par1['fromZigbee'] = "";
 $par1['toZigbee'] = "";		 
 SQLInsert('zigbee2mqtt_devices_list', $par1);
 
+}
 
 
 
 
 
+//https://koenkk.github.io/zigbee2mqtt/integration/home_assistant.html
+$par2=SQLSelectOne ("select * from zigbee2mqtt_devices_command where ID=1");
 
+if (!$par2['ID']) {
+
+$par2['zigbeeModel'] = 'WXKG01LM';
+$par2['state_topic'] = "zigbee2mqtt/<FRIENDLY_NAME>";		 
+$par2['availability_topic'] = "zigbee2mqtt/bridge/state";		 
+$par2['command_topic'] = "";		 
+$par2['payload_on'] = "";
+$par2['payload_off'] = "";		 
+$par2['value_template'] = "{{ value_json.click }}";		 
+$par2['json_attributes'] = "linkquality;battery;voltage;action;duration";
+$par2['device_class'] = "";		 
+$par2['unit_of_measurement'] = "";		 
+SQLInsert('zigbee2mqtt_devices_command', $par2);
+
+
+}
+   
 
 }
 
@@ -2252,7 +2293,9 @@ SQLInsert('zigbee2mqtt_devices_list', $par1);
 
 
 
- }
+
+
+ 
 // --------------------------------------------------------------------
 }
 /*
