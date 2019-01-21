@@ -178,13 +178,13 @@ function run() {
 * @access public
 */
  function setProperty($id, $value, $set_linked=0) {
-debmes('╨а╤Ь╨б╤У╨а┬╢╨а╨Е╨а╤Х ╨а╤С╨а┬╖╨а╤Ш╨а┬╡╨а╨Е╨а╤С╨бтАЪ╨б╨К ╨а┬╖╨а╨Е╨а┬░╨бтАб╨а┬╡╨а╨Е╨а╤С╨а┬╡ id='.$id.' ╨а╨Е╨а┬░ '.$value, 'zigbee2mqtt');
+debmes('Р СњРЎС“Р В¶Р Р…Р С• Р С‘Р В·Р СР ВµР Р…Р С‘РЎвЂљРЎРЉ Р В·Р Р…Р В°РЎвЂЎР ВµР Р…Р С‘Р Вµ id='.$id.' Р Р…Р В° '.$value, 'zigbee2mqtt');
 
 debmes("SELECT * FROM zigbee2mqtt WHERE ID='".$id."'", 'zigbee2mqtt');
   $rec=SQLSelectOne("SELECT * FROM zigbee2mqtt WHERE ID='".$id."'");
 
   if (!$rec['ID'] || !$rec['PATH']) {
-debmes('╨а╤Ь╨а┬╡ ╨бтАж╨а╨Ж╨а┬░╨бтАЪ╨а┬░╨а┬╡╨бтАЪ ╨а╥С╨а┬░╨а╨Е╨а╨Е╨бтА╣╨бтАж', 'zigbee2mqtt');
+debmes('Р СњР Вµ РЎвЂ¦Р Р†Р В°РЎвЂљР В°Р ВµРЎвЂљ Р Т‘Р В°Р Р…Р Р…РЎвЂ№РЎвЂ¦', 'zigbee2mqtt');
    return 0;
   }
 
@@ -230,7 +230,7 @@ debmes('╨а╤Ь╨а┬╡ ╨бтАж╨а╨Ж╨а┬░╨бтАЪ╨а�
 
    if(!$mqtt_client->connect(true, NULL,$username,$password))
    {
-debmes('╨а╤Ы╨бтВм╨а╤С╨а┬▒╨а╤Ф╨а┬░ ╨а╤Ч╨а╤Х╨а╥С╨а╤Ф╨а┬╗╨б╨Л╨бтАб╨а┬╡╨а╨Е╨а╤С╨б╨П ╨а╤Ф mqtt', 'zigbee2mqtt');
+debmes('Р С›РЎв‚¬Р С‘Р В±Р С”Р В° Р С—Р С•Р Т‘Р С”Р В»РЎР‹РЎвЂЎР ВµР Р…Р С‘РЎРЏ Р С” mqtt', 'zigbee2mqtt');
     return 0;
    }
 
@@ -246,7 +246,7 @@ $jsonvalue=json_encode($json) ;
 $json=array( $rec['METRIKA']=> $value);
 $jsonvalue=json_encode($json) ;
 }
-debmes('╨а╤Я╨б╤У╨а┬▒╨а┬╗╨а╤С╨а╤Ф╨б╤У╨б╨Л zigbee2mqqtt '.$rec['PATH_WRITE'].'/set'.":".$jsonvalue, 'zigbee2mqtt');
+debmes('Р СџРЎС“Р В±Р В»Р С‘Р С”РЎС“РЎР‹ zigbee2mqqtt '.$rec['PATH_WRITE'].'/set'.":".$jsonvalue, 'zigbee2mqtt');
 
 
    if ($rec['PATH_WRITE']) {
@@ -392,7 +392,7 @@ if ($rec['CONVERTONOFF']=='1' && $value=='ON') $newvalue=1;
 if ($rec['CONVERTONOFF']=='1' && $value=='OFF') $newvalue=0;
 
 
-//╨а╤Ч╨а╤С╨бтВм╨а┬╡╨а╤Ш ╨а╨Ж ╨а╤Ч╨а┬╡╨б╨В╨а┬╡╨а╤Ш╨а┬╡╨а╨Е╨а╨Е╨б╤У╨б╨Л
+//Р С—Р С‘РЎв‚¬Р ВµР С Р Р† Р С—Р ВµРЎР‚Р ВµР СР ВµР Р…Р Р…РЎС“РЎР‹
 //       setGlobal($rec['LINKED_OBJECT'].'.'.$rec['LINKED_PROPERTY'], $newvalue, array($this->name=>'0'));
      }
      if ($rec['LINKED_OBJECT'] && $cmd_rec['LINKED_METHOD']) {
@@ -951,11 +951,11 @@ function usual(&$out) {
 
    $mqtt_properties=SQLSelect("SELECT * FROM zigbee2mqtt WHERE LINKED_OBJECT LIKE '".DBSafe($object)."' AND LINKED_PROPERTY LIKE '".DBSafe($property)."'");
    $total=count($mqtt_properties);
-debmes($object.":". $property.":". $value. ' ╨а╨Е╨а┬░╨атДЦ╨а╥С╨а┬╡╨а╨Е╨а╤Х ╨б╨В╨а┬╡╨а┬╖╨б╤У╨а┬╗╨б╨К╨бтАЪ╨а┬░╨бтАЪ╨а╤Х╨а╨Ж '. $total, 'zigbee2mqtt');
+debmes($object.":". $property.":". $value. ' Р Р…Р В°Р в„–Р Т‘Р ВµР Р…Р С• РЎР‚Р ВµР В·РЎС“Р В»РЎРЉРЎвЂљР В°РЎвЂљР С•Р Р† '. $total, 'zigbee2mqtt');
 
    if ($total) {
     for($i=0;$i<$total;$i++) {
-     debmes('╨атАФ╨а┬░╨а╤Ч╨б╤У╨б╨Г╨а╤Ф╨а┬░╨а┬╡╨а╤Ш setProperty '. $mqtt_properties[$i]['ID'].":".$value, 'zigbee2mqtt');
+     debmes('Р вЂ”Р В°Р С—РЎС“РЎРѓР С”Р В°Р ВµР С setProperty '. $mqtt_properties[$i]['ID'].":".$value, 'zigbee2mqtt');
      $this->setProperty($mqtt_properties[$i]['ID'], $value);
     }
    }  
@@ -1034,7 +1034,7 @@ function get_map(){
    }
 
 
-debmes('╨атАФ╨а┬░╨а╤Ч╨б╨В╨а┬░╨бтВм╨а╤С╨а╨Ж╨а┬░╨а┬╡╨а╤Ш ╨а╤Ф╨а┬░╨б╨В╨бтАЪ╨б╤У ', 'zigbee2mqtt');
+debmes('Р вЂ”Р В°Р С—РЎР‚Р В°РЎв‚¬Р С‘Р Р†Р В°Р ВµР С Р С”Р В°РЎР‚РЎвЂљРЎС“ ', 'zigbee2mqtt');
 
 
 
@@ -1172,7 +1172,7 @@ SQLInsert('zigbee2mqtt_devices_list', $par1);
 $par1['zigbeeModel'] = 'lumi.sensor_switch';
 $par1['model'] = "WXKG01LM";		 
 $par1['vendor'] = "Xiaomi";		 
-$par1['type'] = "sensor";		 
+$par1['type'] = "remote";		 
 $par1['description'] = "MiJia wireless switch";		 
 $par1['extend'] = "";		 
 $par1['supports'] = "single, double, triple, quadruple, many, long, long_release click";		 
@@ -1350,7 +1350,7 @@ SQLInsert('zigbee2mqtt_devices_list', $par1);
 $par1['zigbeeModel'] = 'lumi.sensor_cube, lumi.sensor_cube.aqgl01';
 $par1['model'] = "MFKZQ01LM";		 
 $par1['vendor'] = "Xiaomi";		 
-$par1['type'] = "sensor";		 
+$par1['type'] = "remote";		 
 $par1['description'] = "Mi/Aqara smart home cube";		 
 $par1['extend'] = "";		 
 $par1['supports'] = "shake, wakeup, fall, tap, slide, flip180, flip90, rotate_left and rotate_right";		 
@@ -1361,7 +1361,7 @@ SQLInsert('zigbee2mqtt_devices_list', $par1);
 $par1['zigbeeModel'] = 'lumi.plug';
 $par1['model'] = "ZNCZ02LM";		 
 $par1['vendor'] = "Xiaomi";		 
-$par1['type'] = "device";		 
+$par1['type'] = "plug";		 
 $par1['description'] = "Mi power plug ZigBee";		 
 $par1['extend'] = "";		 
 $par1['supports'] = "on/off, power measurement";		 
@@ -1372,7 +1372,7 @@ SQLInsert('zigbee2mqtt_devices_list', $par1);
 $par1['zigbeeModel'] = 'lumi.ctrl_86plug, lumi.ctrl_86plug.aq1';
 $par1['model'] = "QBCZ11LM";		 
 $par1['vendor'] = "Xiaomi";		 
-$par1['type'] = "device";		 
+$par1['type'] = "plug";		 
 $par1['description'] = "Aqara socket Zigbee";		 
 $par1['extend'] = "";		 
 $par1['supports'] = "on/off, power measurement";		 
@@ -1540,7 +1540,7 @@ SQLInsert('zigbee2mqtt_devices_list', $par1);
 $par1['zigbeeModel'] = 'TRADFRI wireless dimmer';
 $par1['model'] = "ICTC-G-1";		 
 $par1['vendor'] = "IKEA";	
-$par1['type'] = "bulb";		 	 
+$par1['type'] = "remote";		 	 
 $par1['description'] = "TRADFRI wireless dimmer";		 
 $par1['extend'] = "";		 
 $par1['supports'] = "brightness [0-255], quick rotate for instant 0/255";		 
@@ -1551,7 +1551,7 @@ SQLInsert('zigbee2mqtt_devices_list', $par1);
 $par1['zigbeeModel'] = 'TRADFRI transformer 10W';
 $par1['model'] = "ICPSHC24-10EU-IL-1";		 
 $par1['vendor'] = "IKEA";	
-$par1['type'] = "remote";		 	 
+$par1['type'] = "dimmer";		 	 
 $par1['description'] = "TRADFRI driver for wireless control (10 watt)";		 
 $par1['extend'] = "";		 
 $par1['supports'] = " generic.light_onoff_brightness";		 
@@ -1562,7 +1562,7 @@ SQLInsert('zigbee2mqtt_devices_list', $par1);
 $par1['zigbeeModel'] = 'TRADFRI transformer 30W';
 $par1['model'] = "ICPSHC24-30EU-IL-1";		 
 $par1['vendor'] = "IKEA";		 
-$par1['type'] = "remote";		 	 
+$par1['type'] = "dimmer";		 	 
 $par1['description'] = "TRADFRI driver for wireless control (30 watt)";		 
 $par1['extend'] = "";		 
 $par1['supports'] = "generic.light_onoff_brightness";		 
@@ -1618,7 +1618,7 @@ SQLInsert('zigbee2mqtt_devices_list', $par1);
 $par1['zigbeeModel'] = 'TRADFRI control outlet';
 $par1['model'] = "E1603";		 
 $par1['vendor'] = "IKEA";		 
-$par1['type'] = "remote";		 	 
+$par1['type'] = "plug";		 	 
 $par1['description'] = "TRADFRI control outlet";		 
 $par1['extend'] = "";		 
 $par1['supports'] = "generic.light_onoff_brightness_colortemp";		 
@@ -1626,16 +1626,6 @@ $par1['fromZigbee'] = "";
 $par1['toZigbee'] = "";		 
 SQLInsert('zigbee2mqtt_devices_list', $par1);
 
-$par1['zigbeeModel'] = 'TRADFRI control outlet';
-$par1['model'] = "E1603";		 
-$par1['vendor'] = "IKEA";		 
-$par1['type'] = "remote";		 	 
-$par1['description'] = "TRADFRI control outlet";		 
-$par1['extend'] = "";		 
-$par1['supports'] = "on/off";		 
-$par1['fromZigbee'] = "";		 
-$par1['toZigbee'] = "";		 
-SQLInsert('zigbee2mqtt_devices_list', $par1);
 
 $par1['zigbeeModel'] = 'TRADFRI remote control';
 $par1['model'] = "E1524";		 
@@ -1898,7 +1888,7 @@ SQLInsert('zigbee2mqtt_devices_list', $par1);
 $par1['zigbeeModel'] = 'RWL020, RWL021';
 $par1['model'] = "324131092621";		 
 $par1['vendor'] = "Philips";		 
-$par1['type'] = "controller";		 	 
+$par1['type'] = "dimmer";		 	 
 $par1['description'] = "Hue dimmer switch";		 
 $par1['extend'] = "";		 
 $par1['supports'] = "on/off";		 
@@ -2423,6 +2413,790 @@ $par1['supports'] = "on/off, power measurement";
 $par1['fromZigbee'] = "fz.ignore_electrical_change, fz.SP120_power, fz.generic_state, fz.ignore_onoff_change,";
 $par1['toZigbee'] =  "tz.on_off";
 SQLInsert('zigbee2mqtt_devices_list', $par1);
+
+
+// Sylvania;
+
+$par1['zigbeeModel'] = "LIGHTIFY RT Tunable White";
+$par1['model'] = "73742";
+$par1['vendor'] = "Sylvania";
+$par1['type'] = "bulb";  
+$par1['description'] = "LIGHTIFY LED adjustable white RT 5/6";
+$par1['supports'] = "generic.light_onoff_brightness_colortemp";
+$par1['extend'] = "";
+$par1['fromZigbee'] = "";
+$par1['toZigbee'] = "";
+SQLInsert('zigbee2mqtt_devices_list', $par1);
+
+$par1['zigbeeModel'] = "LIGHTIFY BR Tunable White";
+$par1['model'] = "73740";
+$par1['vendor'] = "Sylvania";
+$par1['type'] = "bulb";  
+$par1['description'] = "LIGHTIFY LED adjustable white BR30";
+$par1['supports'] = "generic.light_onoff_brightness_colortemp";
+$par1['extend'] = "";
+$par1['fromZigbee'] = "";
+$par1['toZigbee'] = "";
+SQLInsert('zigbee2mqtt_devices_list', $par1);
+
+$par1['zigbeeModel'] = "LIGHTIFY A19 RGBW";
+$par1['model'] = "73693";
+$par1['vendor'] = "Sylvania";
+$par1['type'] = "bulb";  
+$par1['description'] = "LIGHTIFY LED RGBW A19";
+$par1['supports'] = "generic.light_onoff_brightness_colortemp_colorxy";
+$par1['extend'] = "";
+$par1['fromZigbee'] = "";
+$par1['toZigbee'] = "";
+SQLInsert('zigbee2mqtt_devices_list', $par1);
+
+$par1['zigbeeModel'] = 'LIGHTIFY A19 ON/OFF/DIM" LIGHTIFY A19 ON/OFF/DIM 10 Year';
+$par1['model'] = "74283";
+$par1['vendor'] = "Sylvania";
+$par1['type'] = "bulb";  
+$par1['description'] = "LIGHTIFY LED soft white dimmable A19";
+$par1['supports'] = "generic.light_onoff_brightness";
+$par1['extend'] = "";
+$par1['fromZigbee'] = "";
+$par1['toZigbee'] = "";
+SQLInsert('zigbee2mqtt_devices_list', $par1);
+
+$par1['zigbeeModel'] = "A19 W 10 year";
+$par1['model'] = "74696";
+$par1['vendor'] = "Sylvania";
+$par1['type'] = "bulb";  
+$par1['description'] = "LIGHTIFY LED soft white dimmable A19";
+$par1['supports'] = "generic.light_onoff_brightness";
+$par1['extend'] = "";
+$par1['fromZigbee'] = "";
+$par1['toZigbee'] = "";
+SQLInsert('zigbee2mqtt_devices_list', $par1);
+
+$par1['zigbeeModel'] = "PLUG";
+$par1['model'] = "72922-A";
+$par1['vendor'] = "Sylvania";
+$par1['type'] = "plug";  
+$par1['description'] = "SMART+ Smart Plug";
+$par1['supports'] = "on/off";
+$par1['fromZigbee'] = "fz.ignore_onoff_change, fz.generic_state";
+$par1['toZigbee'] =  "tz.on_off";
+$par1['extend'] = "";
+SQLInsert('zigbee2mqtt_devices_list', $par1);
+
+$par1['zigbeeModel'] = "MR16 TW";
+$par1['model'] = "74282";
+$par1['vendor'] = "Sylvania";
+$par1['type'] = "bulb";  
+$par1['description'] = "Smart Home adjustable white MR16 LED bulb";
+$par1['supports'] = "generic.light_onoff_brightness_colortemp";
+$par1['extend'] = "";
+$par1['fromZigbee'] = "";
+$par1['toZigbee'] = "";
+SQLInsert('zigbee2mqtt_devices_list', $par1);
+
+$par1['zigbeeModel'] = "LIGHTIFY Gardenspot RGB";
+$par1['model'] = "LTFY004";
+$par1['vendor'] = "Sylvania";
+$par1['type'] = "bulb";  
+$par1['description'] = "LIGHTIFY LED gardenspot mini RGB";
+$par1['supports'] = "generic.light_onoff_brightness_colorxy";
+$par1['extend'] = "";
+$par1['fromZigbee'] = "";
+$par1['toZigbee'] = "";
+SQLInsert('zigbee2mqtt_devices_list', $par1);
+
+
+// GE;
+
+$par1['zigbeeModel'] = "ZLL Light";
+$par1['model'] = "22670";
+$par1['vendor'] = "GE";
+$par1['type'] = "bulb";  
+$par1['description'] = "Link smart LED light bulb, BR30 soft white (2700K)";
+$par1['supports'] = "generic.light_onoff_brightness";
+$par1['extend'] = "";
+$par1['fromZigbee'] = "";
+$par1['toZigbee'] = "";
+SQLInsert('zigbee2mqtt_devices_list', $par1);
+
+$par1['zigbeeModel'] = "45852";
+$par1['model'] = "45852GE";
+$par1['vendor'] = "GE";
+$par1['type'] = "dimmer";  
+$par1['description'] = "ZigBee plug-in smart dimmer";
+$par1['supports'] = "on/off, brightness";
+$par1['fromZigbee'] = "fz.light_brightness, fz.ignore_onoff_change, fz.generic_state";
+$par1['toZigbee'] =  "tz.on_off, tz.light_brightness, tz.ignore_transition";
+$par1['extend'] = "";
+SQLInsert('zigbee2mqtt_devices_list', $par1);
+
+$par1['zigbeeModel'] = "45856";
+$par1['model'] = "45856GE";
+$par1['vendor'] = "GE";
+$par1['type'] = "sensor";  
+$par1['description'] = "In-wall smart switch";
+$par1['supports'] = "on/off";
+$par1['fromZigbee'] = "fz.ignore_onoff_change, fz.generic_state";
+$par1['toZigbee'] =  "tz.on_off, tz.ignore_transition";
+$par1['extend'] = "";
+SQLInsert('zigbee2mqtt_devices_list', $par1);
+
+$par1['zigbeeModel'] = "45857";
+$par1['model'] = "45857GE";
+$par1['vendor'] = "GE";
+$par1['type'] = "remote";  
+$par1['description'] = "ZigBee in-wall smart dimmer";
+$par1['supports'] = "on/off, brightness";
+$par1['fromZigbee'] = "fz.light_brightness, fz.ignore_onoff_change, fz.generic_state";
+$par1['toZigbee'] =  "tz.on_off, tz.light_brightness, tz.ignore_transition";
+$par1['extend'] = "";
+SQLInsert('zigbee2mqtt_devices_list', $par1);
+
+// Sengled;
+
+$par1['zigbeeModel'] = "E11-G13";
+$par1['model'] = "E11-G13";
+$par1['vendor'] = "Sengled";
+$par1['type'] = "bulb";  
+$par1['description'] = "Element Classic (A19)";
+$par1['supports'] = "generic.light_onoff_brightness";
+$par1['extend'] = "";
+$par1['fromZigbee'] = "";
+$par1['toZigbee'] = "";
+SQLInsert('zigbee2mqtt_devices_list', $par1);
+
+$par1['zigbeeModel'] = 'E11-G23" E11-G33';
+$par1['model'] = "E11-G23/E11-G33";
+$par1['vendor'] = "Sengled";
+$par1['type'] = "bulb";  
+$par1['description'] = "Element Classic (A60)";
+$par1['supports'] = "generic.light_onoff_brightness";
+$par1['extend'] = "";
+$par1['fromZigbee'] = "";
+$par1['toZigbee'] = "";
+SQLInsert('zigbee2mqtt_devices_list', $par1);
+
+$par1['zigbeeModel'] = "Z01-CIA19NAE26";
+$par1['model'] = "Z01-CIA19NAE26";
+$par1['vendor'] = "Sengled";
+$par1['type'] = "bulb";  
+$par1['description'] = "Element Touch (A19)";
+$par1['supports'] = "generic.light_onoff_brightness";
+$par1['extend'] = "";
+$par1['fromZigbee'] = "";
+$par1['toZigbee'] = "";
+SQLInsert('zigbee2mqtt_devices_list', $par1);
+
+$par1['zigbeeModel'] = "Z01-A19NAE26";
+$par1['model'] = "Z01-A19NAE26";
+$par1['vendor'] = "Sengled";
+$par1['type'] = "bulb";  
+$par1['description'] = "Element Plus (A19)";
+$par1['supports'] = "generic.light_onoff_brightness_colortemp";
+$par1['extend'] = "";
+$par1['fromZigbee'] = "";
+$par1['toZigbee'] = "";
+SQLInsert('zigbee2mqtt_devices_list', $par1);
+
+$par1['zigbeeModel'] = "E11-N1EA";
+$par1['model'] = "E11-N1EA";
+$par1['vendor'] = "Sengled";
+$par1['type'] = "bulb";  
+$par1['description'] = "Element Plus Color (A19)";
+$par1['supports'] = "generic.light_onoff_brightness_colortemp_colorxy";
+$par1['extend'] = "";
+$par1['fromZigbee'] = "";
+$par1['toZigbee'] = "";
+SQLInsert('zigbee2mqtt_devices_list', $par1);
+
+$par1['zigbeeModel'] = "E12-N14";
+$par1['model'] = "E12-N14";
+$par1['vendor'] = "Sengled";
+$par1['type'] = "bulb";  
+$par1['description'] = "Element Classic (BR30)";
+$par1['supports'] = "generic.light_onoff_brightness";
+$par1['extend'] = "";
+$par1['fromZigbee'] = "";
+$par1['toZigbee'] = "";
+SQLInsert('zigbee2mqtt_devices_list', $par1);
+
+$par1['zigbeeModel'] = "E1A-AC2";
+$par1['model'] = "E1ACA4ABE38A";
+$par1['vendor'] = "Sengled";
+$par1['type'] = "bulb";  
+$par1['description'] = "Element downlight smart LED bulb";
+$par1['supports'] = "generic.light_onoff_brightness";
+$par1['extend'] = "";
+$par1['fromZigbee'] = "";
+$par1['toZigbee'] = "";
+SQLInsert('zigbee2mqtt_devices_list', $par1);
+
+// JIAWEN;
+
+$par1['zigbeeModel'] = "FB56-ZCW08KU1.1";
+$par1['model'] = "K2RGBW01";
+$par1['vendor'] = "JIAWEN";
+$par1['type'] = "bulb";  
+$par1['description'] = "Wireless Bulb E27 9W RGBW";
+$par1['supports'] = "generic.light_onoff_brightness_colortemp_colorxy";
+$par1['extend'] = "";
+$par1['fromZigbee'] = "";
+$par1['toZigbee'] = "";
+SQLInsert('zigbee2mqtt_devices_list', $par1);
+
+// Netvox;
+
+$par1['zigbeeModel'] = "Z809AE3R";
+$par1['model'] = "Z809A";
+$par1['vendor'] = "Netvox";
+$par1['type'] = "plug";  
+$par1['description'] = "Power socket with power consumption monitoring";
+$par1['supports'] = "on/off, power measurement";
+$par1['fromZigbee'] = "fz.generic_state, fz.ignore_onoff_change, fz.ignore_electrical_change, fz.Z809A_power";
+$par1['toZigbee'] =  "tz.on_off";
+$par1['extend'] = "";
+SQLInsert('zigbee2mqtt_devices_list', $par1);
+
+// Nanoleaf;
+
+$par1['zigbeeModel'] = "NL08-0800";
+$par1['model'] = "NL08-0800";
+$par1['vendor'] = "Nanoleaf";
+$par1['type'] = "bulb";  
+$par1['description'] = "Smart Ivy Bulb E27";
+$par1['supports'] = "generic.light_onoff_brightness";
+$par1['extend'] = "";
+$par1['fromZigbee'] = "";
+$par1['toZigbee'] = "";
+SQLInsert('zigbee2mqtt_devices_list', $par1);
+
+// Nue;
+
+$par1['zigbeeModel'] = "FB56+ZSW05HG1.2";
+$par1['model'] = "FB56+ZSW05HG1.2";
+$par1['vendor'] = "Nue";
+$par1['type'] = "remote";  
+$par1['description'] = "ZigBee one gang smart switch";
+$par1['supports'] = "on/off";
+$par1['fromZigbee'] = "z.generic_state";
+$par1['toZigbee'] =  "tz.on_off";
+$par1['extend'] = "";
+SQLInsert('zigbee2mqtt_devices_list', $par1);
+
+$par1['zigbeeModel'] = "FNB56-SKT1DHG1.4";
+$par1['model'] = "MG-AUWS01";
+$par1['vendor'] = "Nue";
+$par1['type'] = "switch";  
+$par1['description'] = "ZigBee Double GPO";
+$par1['supports'] = "on/off";
+$par1['fromZigbee'] = "fz.nue_power_state, fz.ignore_onoff_change";
+$par1['toZigbee'] =  "tz.on_off";
+$par1['extend'] = "";
+SQLInsert('zigbee2mqtt_devices_list', $par1);
+
+$par1['zigbeeModel'] = "FNB56-ZSW23HG1.1";
+$par1['model'] = "HGZB-01A";
+$par1['vendor'] = "Nue";
+$par1['type'] = "controller";  
+$par1['description'] = "ZigBee smart light controller";
+$par1['supports'] = "generic.light_onoff_brightness";
+$par1['extend'] = "";
+$par1['fromZigbee'] = "";
+$par1['toZigbee'] = "";
+SQLInsert('zigbee2mqtt_devices_list', $par1);
+
+// Gledopto;
+
+$par1['zigbeeModel'] = 'GLEDOPTO" GL-C-008" GL-C-007';
+$par1['model'] = "GL-C-008";
+$par1['vendor'] = "Gledopto";
+$par1['type'] = "dimmer";  
+$par1['description'] = "Zigbee LED controller RGB + CCT / RGBW / WWCW / Dimmer";
+$par1['supports'] = "generic.light_onoff_brightness_colortemp_colorxy";
+$par1['extend'] = "";
+$par1['fromZigbee'] = "";
+$par1['toZigbee'] = "";
+SQLInsert('zigbee2mqtt_devices_list', $par1);
+
+$par1['zigbeeModel'] = "GL-C-006";
+$par1['model'] = "GL-C-006";
+$par1['vendor'] = "Gledopto";
+$par1['type'] = "controller";  
+$par1['description'] = "Zigbee LED controller WW/CW Dimmer";
+$par1['supports'] = "generic.light_onoff_brightness_colortemp";
+$par1['extend'] = "";
+$par1['fromZigbee'] = "";
+$par1['toZigbee'] = "";
+SQLInsert('zigbee2mqtt_devices_list', $par1);
+
+$par1['zigbeeModel'] = "GL-S-007Z";
+$par1['model'] = "GL-S-007Z";
+$par1['vendor'] = "Gledopto";
+$par1['type'] = "bulb";  
+$par1['description'] = "Smart RGBW GU10";
+$par1['supports'] = "generic.light_onoff_brightness_colortemp_colorxy";
+$par1['extend'] = "";
+$par1['fromZigbee'] = "";
+$par1['toZigbee'] = "";
+SQLInsert('zigbee2mqtt_devices_list', $par1);
+
+$par1['zigbeeModel'] = "GL-B-008Z";
+$par1['model'] = "GL-B-008Z";
+$par1['vendor'] = "Gledopto";
+$par1['type'] = "bulb";  
+$par1['description'] = "Smart 12W E27 RGB / CW LED bulb";
+$par1['supports'] = "generic.light_onoff_brightness_colortemp_colorxy";
+$par1['extend'] = "";
+$par1['fromZigbee'] = "";
+$par1['toZigbee'] = "";
+SQLInsert('zigbee2mqtt_devices_list', $par1);
+
+$par1['zigbeeModel'] = "GL-D-003Z";
+$par1['model'] = "GL-D-003Z";
+$par1['vendor'] = "Gledopto";
+$par1['type'] = "controller";  
+$par1['description'] = "LED RGB + CCT downlight";
+$par1['supports'] = "generic.light_onoff_brightness_colortemp_colorxy";
+$par1['extend'] = "";
+$par1['fromZigbee'] = "";
+$par1['toZigbee'] = "";
+SQLInsert('zigbee2mqtt_devices_list', $par1);
+
+$par1['zigbeeModel'] = "HOMA2023";
+$par1['model'] = "GD-CZ-006";
+$par1['vendor'] = "Gledopto";
+$par1['type'] = "dimmer";  
+$par1['description'] = "Zigbee LED Driver";
+$par1['supports'] = "generic.light_onoff_brightness";
+$par1['extend'] = "";
+$par1['fromZigbee'] = "";
+$par1['toZigbee'] = "";
+SQLInsert('zigbee2mqtt_devices_list', $par1);
+
+// SmartThings;
+
+$par1['zigbeeModel'] = "PGC313";
+$par1['model'] = "STSS-MULT-001";
+$par1['vendor'] = "SmartThings";
+$par1['type'] = "sensor";  
+$par1['description'] = "Multipurpose sensor";
+$par1['supports'] = "contact";
+$par1['fromZigbee'] = "fz.smartthings_contact";
+$par1['toZigbee'] = "";
+$par1['extend'] = "";
+SQLInsert('zigbee2mqtt_devices_list', $par1);
+
+$par1['zigbeeModel'] = "tagv4";
+$par1['model'] = "STS-PRS-251";
+$par1['vendor'] = "SmartThings";
+$par1['type'] = "sensor";  
+$par1['description'] = "Arrival sensor";
+$par1['supports'] = "presence";
+$par1['fromZigbee'] = "fz.STS_PRS_251_presence, fz.generic_batteryvoltage_3000_2500, fz.ignore_power_change, fz.STS_PRS_251_beeping";
+$par1['toZigbee'] =  "tz.STS_PRS_251_beep";
+$par1['extend'] = "";
+SQLInsert('zigbee2mqtt_devices_list', $par1);
+
+$par1['zigbeeModel'] = "3325-S";
+$par1['model'] = "3325-S";
+$par1['vendor'] = "SmartThings";
+$par1['type'] = "sensor";  
+$par1['description'] = "Motion sensor (2015 model)";
+$par1['supports'] = "occupancy and temperature";
+$par1['fromZigbee'] = "fz.generic_temperature, fz.ignore_temperature_change, fz.ias_zone_motion_dev_change, fz.ias_zone_motion_status_change";
+$par1['toZigbee'] = "";
+$par1['extend'] = "";
+SQLInsert('zigbee2mqtt_devices_list', $par1);
+
+$par1['zigbeeModel'] = "3321-S";
+$par1['model'] = "3321-S";
+$par1['vendor'] = "SmartThings";
+$par1['type'] = "sensor";  
+$par1['description'] = "Multi Sensor (2015 model)";
+$par1['supports'] = "contact and temperature";
+$par1['fromZigbee'] = "fz.generic_temperature, fz.ignore_temperature_change, fz.smartsense_multi";
+$par1['toZigbee'] = "";
+$par1['extend'] = "";
+SQLInsert('zigbee2mqtt_devices_list', $par1);
+
+// Trust;
+
+$par1['zigbeeModel'] = "ZLL-DimmableLigh";
+$par1['model'] = "ZLED-2709";
+$par1['vendor'] = "Trust";
+$par1['type'] = "bulb"; 
+$par1['description'] = "Smart Dimmable LED Bulb";
+$par1['supports'] = "generic.light_onoff_brightness";
+$par1['extend'] = "";
+$par1['fromZigbee'] = "";
+$par1['toZigbee'] = "";
+SQLInsert('zigbee2mqtt_devices_list', $par1);
+
+$par1['zigbeeModel'] = "VMS_ADUROLIGHT";
+$par1['model'] = "ZPIR-8000";
+$par1['vendor'] = "Trust";
+$par1['type'] = "sensor";  
+$par1['description'] = "Motion Sensor";
+$par1['supports'] = "occupancy";
+$par1['fromZigbee'] = "fz.ias_zone_motion_dev_change, fz.ias_zone_motion_status_change";
+$par1['toZigbee'] = "";
+$par1['extend'] = "";
+SQLInsert('zigbee2mqtt_devices_list', $par1);
+
+$par1['zigbeeModel'] = "CSW_ADUROLIGHT";
+$par1['model'] = "ZCTS-808";
+$par1['vendor'] = "Trust";
+$par1['type'] = "sensor";
+$par1['description'] = "Wireless contact sensor";
+$par1['supports'] = "contact";
+$par1['fromZigbee'] = "fz.ias_contact_dev_change, fz.ias_contact_status_change";
+$par1['toZigbee'] = "";
+$par1['extend'] = "";
+SQLInsert('zigbee2mqtt_devices_list', $par1);
+
+// Paulmann;
+
+$par1['zigbeeModel'] = "Dimmablelight ";
+$par1['model'] = "50045";
+$par1['vendor'] = "Paulmann";
+$par1['type'] = "controller"; 
+$par1['description'] = "SmartHome Zigbee LED-stripe";
+$par1['supports'] = "generic.light_onoff_brightness";
+$par1['extend'] = "";
+$par1['fromZigbee'] = "";
+$par1['toZigbee'] = "";
+SQLInsert('zigbee2mqtt_devices_list', $par1);
+
+$par1['zigbeeModel'] = "RGBW light";
+$par1['model'] = "50049";
+$par1['vendor'] = "Paulmann";
+$par1['type'] = "controller";
+$par1['description'] = "SmartHome Yourled RGB Controller";
+$par1['supports'] = "generic.light_onoff_brightness_colorxy";
+$par1['extend'] = "";
+$par1['fromZigbee'] = "";
+$par1['toZigbee'] = "";
+SQLInsert('zigbee2mqtt_devices_list', $par1);
+
+// Bitron;
+
+$par1['zigbeeModel'] = "902010/22";
+$par1['model'] = "AV2010/22";
+$par1['vendor'] = "Bitron";
+$par1['type'] = "sensor";
+$par1['description'] = "Wireless motion detector";
+$par1['supports'] = "occupancy";
+$par1['fromZigbee'] = "fz.bitron_occupancy";
+$par1['extend'] = "";
+$par1['toZigbee'] = "";
+SQLInsert('zigbee2mqtt_devices_list', $par1);
+
+$par1['zigbeeModel'] = "902010/25";
+$par1['model'] = "AV2010/25";
+$par1['vendor'] = "Bitron";
+$par1['type'] = "plug";
+$par1['description'] = "Video wireless socket";
+$par1['supports'] = "on/off power measurement";
+$par1['fromZigbee'] = "fz.generic_state, fz.ignore_onoff_change, fz.ignore_metering_change, fz.bitron_power";
+$par1['toZigbee'] = "tz.on_off";
+$par1['extend'] = "";
+SQLInsert('zigbee2mqtt_devices_list', $par1);
+
+$par1['zigbeeModel'] = "902010/32";
+$par1['model'] = "AV2010/32";
+$par1['vendor'] = "Bitron";
+$par1['type'] = "thermostat";
+$par1['description'] = "Wireless wall thermostat with relay";
+$par1['supports'] = "temperature heating/cooling system control";
+$par1['fromZigbee'] = "fz.ignore_basic_change, fz.bitron_thermostat_att_report, fz.bitron_thermostat_dev_change, fz.bitron_battery";
+$par1['toZigbee'] =  "tz.thermostat_occupied_heating_setpoint, tz.thermostat_local_temperature_calibration, tz.thermostat_local_temperature, tz.thermostat_running_state, tz.thermostat_temperature_display_mode";
+$par1['extend'] = "";
+SQLInsert('zigbee2mqtt_devices_list', $par1);
+
+// Iris;
+
+$par1['zigbeeModel'] = "3210-L";
+$par1['model'] = "3210-L";
+$par1['vendor'] = "Iris";
+$par1['description'] = "Smart plug";
+$par1['type'] = "plug";
+$par1['supports'] = "on/off";
+$par1['fromZigbee'] = "fz.ignore_onoff_change, fz.ignore_electrical_change, fz.generic_state, fz.iris_3210L_power";
+$par1['toZigbee'] =  "tz.on_off";
+$par1['extend'] = "";
+SQLInsert('zigbee2mqtt_devices_list', $par1);
+
+$par1['zigbeeModel'] = "3326-L";
+$par1['model'] = "3326-L";
+$par1['vendor'] = "Iris";
+$par1['type'] = "sensor";
+$par1['description'] = "Motion and temperature sensor";
+$par1['supports'] = "occupancy and temperature";
+$par1['fromZigbee'] = "fz.generic_temperature, fz.ignore_temperature_change, fz.ias_zone_motion_dev_change, fz.ias_zone_motion_status_change";
+$par1['toZigbee'] = "";
+$par1['extend'] = "";
+SQLInsert('zigbee2mqtt_devices_list', $par1);
+
+$par1['zigbeeModel'] = "3320-L";
+$par1['model'] = "3320-L";
+$par1['vendor'] = "Iris";
+$par1['type'] = "sensor";
+$par1['description'] = "Contact sensor";
+$par1['supports'] = "contact";
+$par1['fromZigbee'] = "fz.iris_3320L_contact";
+$par1['toZigbee'] = "";
+$par1['extend'] = "";
+SQLInsert('zigbee2mqtt_devices_list', $par1);
+
+// ksentry;
+
+$par1['zigbeeModel'] = "Lamp_01";
+$par1['model'] = "KS-SM001";
+$par1['vendor'] = "Ksentry Electronics";
+$par1['type'] = "controller";
+$par1['description'] = "[Zigbee OnOff Controller](http://ksentry.manufacturer.globalsources.com/si/6008837134660/pdtl/ZigBee-module/1162731630/zigbee-on-off-controller-modules.htm)";
+$par1['supports'] = "on/off";
+$par1['fromZigbee'] = "fz.generic_state_change";
+$par1['toZigbee'] =  "tz.on_off";
+$par1['extend'] = "";
+SQLInsert('zigbee2mqtt_devices_list', $par1);
+
+// Commercial Electric;
+
+$par1['zigbeeModel'] = "Zigbee CCT Downlight";
+$par1['model'] = "53170161";
+$par1['vendor'] = "Commercial Electric";
+$par1['type'] = "controller";
+$par1['description'] = "Matte White Recessed Retrofit Smart Led Downlight - 4 Inch";
+$par1['supports'] = "generic.light_onoff_brightness_colortemp";
+$par1['extend'] = "";
+$par1['fromZigbee'] = "";
+$par1['toZigbee'] = "";
+SQLInsert('zigbee2mqtt_devices_list', $par1);
+
+// ilux;
+
+$par1['zigbeeModel'] = "LEColorLight";
+$par1['model'] = "900008-WW";
+$par1['vendor'] = "ilux";
+$par1['type'] = "bulb";
+$par1['description'] = "Dimmable A60 E27 LED Bulb";
+$par1['supports'] = "generic.light_onoff_brightness";
+$par1['extend'] = "";
+$par1['fromZigbee'] = "";
+$par1['toZigbee'] = "";
+SQLInsert('zigbee2mqtt_devices_list', $par1);
+
+// Dresden Elektronik;
+
+$par1['zigbeeModel'] = "FLS-PP3\u0000";
+$par1['model'] = "Mega23M12";
+$par1['vendor'] = "Dresden Elektronik";
+$par1['type'] = "dimmer";
+$par1['description'] = "ZigBee Light Link wireless electronic ballast";
+$par1['supports'] = "generic.light_onoff_brightness_colortemp_colorxy";
+$par1['extend'] = "";
+$par1['fromZigbee'] = "";
+$par1['toZigbee'] = "";
+SQLInsert('zigbee2mqtt_devices_list', $par1);
+
+// Centralite Swiss Plug;
+
+$par1['zigbeeModel'] = "4256251-RZHAC, 4257050-RZHAC";
+$par1['model'] = "4256251-RZHAC";
+$par1['vendor'] = "Centralite";
+$par1['type'] = "plug";
+$par1['description'] = "White Swiss power outlet switch with power meter";
+$par1['supports'] = "switch and power meter";
+$par1['fromZigbee'] = "fz.ignore_onoff_change, fz.generic_state, fz.ignore_electrical_change, fz.RZHAC_4256251_power";
+$par1['toZigbee'] = "tz.on_off";
+$par1['extend'] = "";
+SQLInsert('zigbee2mqtt_devices_list', $par1);
+
+// Climax;
+
+$par1['zigbeeModel'] = "PSS_00.00.00.15TC";
+$par1['model'] = "PSS-23ZBS";
+$par1['vendor'] = "Climax";
+$par1['type'] = "plug";
+$par1['description'] = "Power plug";
+$par1['supports'] = "on/off";
+$par1['fromZigbee'] = "fz.generic_state_change";
+$par1['toZigbee'] =  "tz.on_off";
+$par1['extend'] = "";
+SQLInsert('zigbee2mqtt_devices_list', $par1);
+
+// HEIMAN;
+
+$par1['zigbeeModel'] = 'SMOK_V16" b5db59bfd81e4f1f95dc57fdbba17931" SMOK_YDLV10';
+$par1['model'] = "HS1SA";
+$par1['vendor'] = "HEIMAN";
+$par1['type'] = "sensor";
+$par1['description'] = "Smoke detector";
+$par1['supports'] = "smoke";
+$par1['fromZigbee'] = "fz.heiman_smoke";
+$par1['toZigbee'] = "";
+$par1['extend'] = "";
+SQLInsert('zigbee2mqtt_devices_list', $par1);
+
+$par1['zigbeeModel'] = "SmokeSensor-N";
+$par1['model'] = "HS3SA";
+$par1['vendor'] = "HEIMAN";
+$par1['type'] = "sensor";
+$par1['description'] = "Smoke detector";
+$par1['supports'] = "smoke";
+$par1['fromZigbee'] = "fz.heiman_smoke";
+$par1['toZigbee'] = "";
+$par1['extend'] = "";
+SQLInsert('zigbee2mqtt_devices_list', $par1);
+
+$par1['zigbeeModel'] = "DoorSensor-N";
+$par1['model'] = "HS1DS";
+$par1['vendor'] = "HEIMAN";
+$par1['type'] = "sensor";
+$par1['description'] = "Door sensor";
+$par1['supports'] = "contact";
+$par1['fromZigbee'] = "fz.heiman_contact";
+$par1['toZigbee'] = "";
+$par1['extend'] = "";
+SQLInsert('zigbee2mqtt_devices_list', $par1);
+
+$par1['zigbeeModel'] = "WaterSensor-N";
+$par1['model'] = "HS1WL";
+$par1['vendor'] = "HEIMAN";
+$par1['type'] = "sensor";
+$par1['description'] = "Water leakage sensor";
+$par1['supports'] = "water leak";
+$par1['fromZigbee'] = "fz.heiman_water_leak";
+$par1['toZigbee'] = "";
+$par1['extend'] = "";
+SQLInsert('zigbee2mqtt_devices_list', $par1);
+
+// Calex;
+
+$par1['zigbeeModel'] = "EC-Z3.0-CCT ";
+$par1['model'] = "421786";
+$par1['vendor'] = "Calex";
+$par1['type'] = "bulb";
+$par1['description'] = "LED A60 Zigbee GLS-lamp";
+$par1['supports'] = "generic.light_onoff_brightness";
+$par1['extend'] = "";
+$par1['fromZigbee'] = "";
+$par1['toZigbee'] = "";
+SQLInsert('zigbee2mqtt_devices_list', $par1);
+
+// EcoSmart;
+
+$par1['zigbeeModel'] = "zhaRGBW";
+$par1['model'] = "D1821";
+$par1['vendor'] = "EcoSmart";
+$par1['type'] = "bulb";
+$par1['description'] = "A19 RGB bulb";
+$par1['supports'] = "generic.light_onoff_brightness_colortemp_colorxy";
+$par1['extend'] = "";
+$par1['fromZigbee'] = "";
+$par1['toZigbee'] = "";
+SQLInsert('zigbee2mqtt_devices_list', $par1);
+
+// eslint-disable-next-line;
+$par1['zigbeeModel'] = "\u0000\u0002\u0000\u0004\u0000\f^I\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u000e";
+$par1['model'] = "D1531";
+$par1['vendor'] = "EcoSmart";
+$par1['type'] = "bulb";
+$par1['description'] = "A19 bright white bulb";
+$par1['supports'] = "generic.light_onoff_brightness";
+$par1['extend'] = "";
+$par1['fromZigbee'] = "";
+$par1['toZigbee'] = "";
+SQLInsert('zigbee2mqtt_devices_list', $par1);
+
+// eslint-disable-next-line;
+$par1['zigbeeModel'] = "\u0000\u0002\u0000\u0004\u0012 ?P\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u000e";
+$par1['model'] = "D1532";
+$par1['vendor'] = "EcoSmart";
+$par1['type'] = "bulb";
+$par1['description'] = "A19 soft white bulb";
+$par1['supports'] = "generic.light_onoff_brightness";
+$par1['extend'] = "";
+$par1['fromZigbee'] = "";
+$par1['toZigbee'] = "";
+SQLInsert('zigbee2mqtt_devices_list', $par1);
+
+// Airam;
+
+$par1['zigbeeModel'] = "ZBT-DimmableLight";
+$par1['model'] = "4713407";
+$par1['vendor'] = "Airam";
+$par1['type'] = "bulb";
+$par1['description'] = "LED OP A60 ZB 9W/827 E27";
+$par1['supports'] = "generic.light_onoff_brightness";
+$par1['fromZigbee'] = "fz.light_state, fz.light_brightness_report, fz.light_brightness, fz.generic_state";
+$par1['extend'] = "";
+$par1['toZigbee'] = "";
+SQLInsert('zigbee2mqtt_devices_list', $par1);
+
+$par1['zigbeeModel'] = "ZBT-Remote-EU-DIMV1A2";
+$par1['model'] = "AIRAM-CTR.U";
+$par1['vendor'] = "Airam";
+$par1['type'] = "remote";
+$par1['description'] = "CTR.U remote (can only be used to control the Airam 4713407 bulb)";
+$par1['supports'] = "on/off";
+$par1['fromZigbee'] = "";
+$par1['toZigbee'] = "";
+$par1['extend'] = "";
+SQLInsert('zigbee2mqtt_devices_list', $par1);
+
+// Smart Home Pty;
+
+$par1['zigbeeModel'] = "FB56-ZCW11HG1.2";
+$par1['model'] = "HGZB-07A";
+$par1['vendor'] = "Smart Home Pty";
+$par1['type'] = "bulb";
+$par1['description'] = "RGBW Downlight";
+$par1['supports'] = "generic.light_onoff_brightness_colortemp_colorxy";
+$par1['extend'] = "";
+$par1['fromZigbee'] = "";
+$par1['toZigbee'] = "";
+SQLInsert('zigbee2mqtt_devices_list', $par1);
+
+$par1['zigbeeModel'] = "FNB56-SKT1EHG1.2";
+$par1['model'] = "HGZB-20-DE";
+$par1['vendor'] = "Smart Home Pty";
+$par1['type'] = "plug";
+$par1['description'] = "Power plug";
+$par1['supports'] = "on/off";
+$par1['fromZigbee'] = "fz.generic_state_change";
+$par1['toZigbee'] =  "tz.on_off";
+$par1['extend'] = "";
+SQLInsert('zigbee2mqtt_devices_list', $par1);
+
+// Paul Neuhaus;
+
+$par1['zigbeeModel'] = "NLG-CCT light ";
+$par1['model'] = "100.424.11";
+$par1['vendor'] = "Paul Neuhaus";
+$par1['type'] = "bulb";
+$par1['description'] = "Q-INIGO LED ceiling light";
+$par1['supports'] = "generic.light_onoff_brightness_colortemp";
+$par1['extend'] = "";
+$par1['fromZigbee'] = "";
+$par1['toZigbee'] = "";
+SQLInsert('zigbee2mqtt_devices_list', $par1);
+
+// iCasa;
+
+$par1['zigbeeModel'] = "ICZB-IW11D";
+$par1['model'] = "ICZB-IW11D";
+$par1['vendor'] = "iCasa";
+$par1['type'] = "dimmer";
+$par1['description'] = "Zigbee 3.0 Dimmer";
+$par1['supports'] = "generic.light_onoff_brightness";
+$par1['extend'] = "";
+$par1['fromZigbee'] = "";
+$par1['toZigbee'] = "";
+SQLInsert('zigbee2mqtt_devices_list', $par1);
+
+
 
 
 
