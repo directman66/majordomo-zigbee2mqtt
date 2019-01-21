@@ -167,7 +167,49 @@ $res[$i]['LINKED']=$lnk;
 // echo "</script>";
 
 
-if ($this->view_mode=='view_mqtt'){
+if ($this->tab=='edit_parametrs'){
+
+$vm=$this->id;
+// echo "<script type='text/javascript'>";
+// echo "alert('$vm');";
+// echo "</script>";
+  $out['ID']=$this->id;
+
+
+
+//$zm=SQLSelect("SELECT * FROM zigbee2mqtt_devices_command WHERE zigbeeModel=".$this->id);
+
+$sql0='SELECT *  FROM (select zigbee2mqtt_devices.ID DEVID, zigbee2mqtt_devices.* from zigbee2mqtt_devices where ID="'.$vm.'" ) zigbee2mqtt_devices LEFT JOIN zigbee2mqtt_devices_list ON zigbee2mqtt_devices_list.zigbeeModel like CONCAT("%",zigbee2mqtt_devices.MODEL,"%")  ';
+
+debmes($sql0,'zigbee2mqtt');
+
+$zm=SQLSelectOne($sql0)['model'];
+$sql="SELECT * FROM zigbee2mqtt_devices_command WHERE zigbeeModel='".$zm."'";
+
+debmes($sql,'zigbee2mqtt');
+
+ $res=SQLSelect($sql);
+
+  if ($res[0]['ID']) {
+
+   $total=count($res);
+   for($i=0;$i<$total;$i++) {
+
+//    $res[$i]['VALUE']=str_replace('":','": ',$res[$i]['VALUE']);
+
+//    if ($res[$i]['TITLE']==$res[$i]['PATH'] && !$out['TREE']) $res[$i]['PATH']='';   }
+   $out['RESULT']=$res;
+
+//   if ($out['TREE']) {    $out['RESULT']=$this->pathToTree($res);   }
+
+  }
+
+}}
+
+
+
+
+if ($this->view_mode=='view_mqtt'&&$this->tab=='edit_data'){
 
 $vm=$this->id;
 // echo "<script type='text/javascript'>";
