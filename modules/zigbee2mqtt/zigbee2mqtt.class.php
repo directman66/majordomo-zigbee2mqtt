@@ -1983,10 +1983,261 @@ $par1['fromZigbee'] = "";
 $par1['toZigbee'] = "";		 
 SQLInsert('zigbee2mqtt_devices_list', $par1);
 
+   // eCozy
+$par1['zigbeeModel'] = 'Thermostat';
+$par1['model'] = "1TST-EU";		 
+$par1['vendor'] = "Smart heating thermostat";		 
+$par1['type'] = "thermostat";
+$par1['description'] = "temperature, occupancy, un-/occupied heating, schedule";		 
+$par1['extend'] = "";		 
+$par1['supports'] = "hold/release, on/off";		 
+$par1['fromZigbee'] = "";		 
+$par1['toZigbee'] = "";		 
+SQLInsert('zigbee2mqtt_devices_list', $par1);
+
+//OSRAM
+
+$par1['zigbeeModel'] = 'Outdoor Lantern W RGBW OSRAM';
+$par1['model'] = "4058075816718";		 
+$par1['vendor'] = "OSRAM";		 
+$par1['type'] = "bulb";		 	 
+$par1['description'] = "SMART+ outdoor wall lantern RGBW";		 
+$par1['extend'] = "";		 
+$par1['supports'] = " generic.light_onoff_brightness_colortemp_colorxy";		 
+$par1['fromZigbee'] = "";		 
+$par1['toZigbee'] = "";		 
+SQLInsert('zigbee2mqtt_devices_list', $par1);
+
+$par1['zigbeeModel'] = 'Outdoor Lantern W RGBW OSRAM';
+$par1['model'] = "AA69697";		 
+$par1['vendor'] = "OSRAM";		 
+$par1['type'] = "bulb";		 	 
+$par1['description'] = "Classic A60 RGBW";		 
+$par1['extend'] = "";		 
+$par1['supports'] = " generic.light_onoff_brightness_colortemp_colorxy";		 
+$par1['fromZigbee'] = "";		 
+$par1['toZigbee'] = "";		 
+SQLInsert('zigbee2mqtt_devices_list', $par1);
+
+$par1['zigbeeModel'] = 'CLA60 RGBW OSRAM';
+$par1['model'] = "AC03645";		 
+$par1['vendor'] = "OSRAM";		 
+$par1['type'] = "bulb";		 	 
+$par1['description'] = "Classic A60 RGBW";		 
+$par1['extend'] = "";		 
+$par1['supports'] = "LIGHTIFY LED CLA60 E27 RGBW";		 
+$par1['fromZigbee'] = "";		 
+$par1['toZigbee'] = "";		 
+SQLInsert('zigbee2mqtt_devices_list', $par1);
+
+
+$par1['zigbeeModel'] = 'CLA60 TW OSRAM';
+$par1['model'] = "AC03642";		 
+$par1['vendor'] = "OSRAM";		 
+$par1['type'] = "bulb";		 	 
+$par1['description'] = "SMART+ CLASSIC A 60 TW";		 
+$par1['extend'] = "";		 
+$par1['supports'] = " generic.light_onoff_brightness_colortemp_colorxy";		 
+$par1['fromZigbee'] = "";		 
+$par1['toZigbee'] = "";		 
+SQLInsert('zigbee2mqtt_devices_list', $par1);
+
+
+$par1['zigbeeModel'] = 'LIGHTIFY A19 Tunable White, Classic A60 TW';
+$par1['model'] = "AA70155";		 
+$par1['vendor'] = "OSRAM";		 
+$par1['type'] = "bulb";		 	 
+$par1['description'] = "LIGHTIFY LED A19 tunable white / Classic A60 TW";		 
+$par1['extend'] = "";		 
+$par1['supports'] = " generic.light_onoff_brightness_colortemp_colorxy";		 
+$par1['fromZigbee'] = "";		 
+$par1['toZigbee'] = "";		 
+SQLInsert('zigbee2mqtt_devices_list', $par1);
+
+
+$par1['zigbeeModel'] = 'PAR16 50 TW';
+$par1['model'] = "AA68199";		 
+$par1['vendor'] = "OSRAM";		 
+$par1['type'] = "bulb";		 	 
+$par1['description'] = "LIGHTIFY LED PAR16 50 GU10 tunable white";		 
+$par1['extend'] = "";		 
+$par1['supports'] = "generic.light_onoff_brightness_colortemp,";		 
+$par1['fromZigbee'] = "";		 
+$par1['toZigbee'] = "";		 
+SQLInsert('zigbee2mqtt_devices_list', $par1);
+
+
+$par1['zigbeeModel'] = 'Classic B40 TW - LIGHTIFY';
+$par1['model'] = "AB32840";		 
+$par1['vendor'] = "OSRAM";		 
+$par1['type'] = "bulb";		 	 
+$par1['description'] = "LIGHTIFY LED Classic B40 tunable white";		 
+$par1['extend'] = "";		 
+$par1['supports'] = "generic.light_onoff_brightness_colortemp";		 
+$par1['fromZigbee'] = "";		 
+$par1['toZigbee'] = "";		 
+SQLInsert('zigbee2mqtt_devices_list', $par1);
+
+
+$par1['zigbeeModel'] = 'Ceiling TW OSRAM';
+$par1['model'] = "4058075816794";		 
+$par1['vendor'] = "OSRAM";		 
+$par1['type'] = "bulb";		 	 
+$par1['description'] = "Smart+ Ceiling TW";		 
+$par1['extend'] = "";		 
+$par1['supports'] = "generic.light_onoff_brightness_colortemp,";		 
+$par1['fromZigbee'] = "";		 
+$par1['toZigbee'] = "";		 
+SQLInsert('zigbee2mqtt_devices_list', $par1);
+
+
+$par1['zigbeeModel'] = 'Classic A60 W clear - LIGHTIFY';
+$par1['model'] = "AC03641";		 
+$par1['vendor'] = "OSRAM";		 
+$par1['type'] = "bulb";		 	 
+$par1['description'] = "LIGHTIFY LED Classic A60 clear";		 
+$par1['extend'] = "";		 
+$par1['supports'] = "generic.light_onoff_brightness";		 
+$par1['fromZigbee'] = "";		 
+$par1['toZigbee'] = "";		 
+SQLInsert('zigbee2mqtt_devices_list', $par1);
+
+
+$par1['zigbeeModel'] = 'Surface Light W ?C LIGHTIFY';
+$par1['model'] = "4052899926158";		 
+$par1['vendor'] = "OSRAM";		 
+$par1['type'] = "bulb";		 	 
+$par1['description'] = "LIGHTIFY Surface Light TW";		 
+$par1['extend'] = "";		 
+$par1['supports'] = "generic.light_onoff_brightness";		 
+$par1['fromZigbee'] = "";		 
+$par1['toZigbee'] = "";		 
+SQLInsert('zigbee2mqtt_devices_list', $par1);
 
 
 
+$par1['zigbeeModel'] = 'Plug 01';
+$par1['model'] = "AB3257001NJ";		 
+$par1['vendor'] = "OSRAM";		 
+$par1['type'] = "plug";		 	 
+$par1['description'] = "Smart+ plug";		 
+$par1['extend'] = "";		 
+$par1['supports'] = "";		 
+$par1['fromZigbee'] = "";		 
+$par1['toZigbee'] = "";		 
+SQLInsert('zigbee2mqtt_devices_list', $par1);
 
+
+
+$par1['zigbeeModel'] = 'Flex RGBW, LIGHTIFY Indoor Flex RGBW';
+$par1['model'] = "4052899926110";		 
+$par1['vendor'] = "OSRAM";		 
+$par1['type'] = "bulb";		 	 
+$par1['description'] = "Flex RGBW";		 
+$par1['extend'] = "";		 
+$par1['supports'] = "generic.light_onoff_brightness_colortemp_colorxy,";		 
+$par1['fromZigbee'] = "";		 
+$par1['toZigbee'] = "";		 
+SQLInsert('zigbee2mqtt_devices_list', $par1);
+
+
+
+$par1['zigbeeModel'] = 'LIGHTIFY Outdoor Flex RGBW';
+$par1['model'] = "4058075036185";		 
+$par1['vendor'] = "OSRAM";		 
+$par1['type'] = "bulb";		 	 
+$par1['description'] = "Outdoor Flex RGBW";		 
+$par1['extend'] = "";		 
+$par1['supports'] = " generic.light_onoff_brightness_colortemp_colorxy,";		 
+$par1['fromZigbee'] = "";		 
+$par1['toZigbee'] = "";		 
+SQLInsert('zigbee2mqtt_devices_list', $par1);
+
+
+
+$par1['zigbeeModel'] = 'Gardenpole RGBW-Lightify';
+$par1['model'] = "4058075036147";		 
+$par1['vendor'] = "OSRAM";		 
+$par1['type'] = "bulb";		 	 
+$par1['description'] = "Smart+ Gardenpole RGBW";		 
+$par1['extend'] = "";		 
+$par1['supports'] = "generic.light_onoff_brightness";		 
+$par1['fromZigbee'] = "";		 
+$par1['toZigbee'] = "";		 
+SQLInsert('zigbee2mqtt_devices_list', $par1);
+
+
+
+$par1['zigbeeModel'] = 'PAR 16 50 RGBW - LIGHTIFY';
+$par1['model'] = "AB35996";		 
+$par1['vendor'] = "OSRAM";		 
+$par1['type'] = "bulb";		 	 
+$par1['description'] = "Smart+ Spot GU10 Multicolor";		 
+$par1['extend'] = "";		 
+$par1['supports'] = "generic.light_onoff_brightness_colortemp_colorxy,";		 
+$par1['fromZigbee'] = "";		 
+$par1['toZigbee'] = "";		 
+SQLInsert('zigbee2mqtt_devices_list', $par1);
+
+
+$par1['zigbeeModel'] = 'B40 DIM Z3';
+$par1['model'] = "AC08562";		 
+$par1['vendor'] = "OSRAM";		 
+$par1['type'] = "bulb";		 	 
+$par1['description'] = "SMART+ Candle E14 Dimmable White";		 
+$par1['extend'] = "";		 
+$par1['supports'] = "generic.light_onoff_brightness,";		 
+$par1['fromZigbee'] = "";		 
+$par1['toZigbee'] = "";		 
+SQLInsert('zigbee2mqtt_devices_list', $par1);
+
+
+$par1['zigbeeModel'] = 'Motion Sensor-A';
+$par1['model'] = "AC01353010G";		 
+$par1['vendor'] = "OSRAM";		 
+$par1['type'] = "sensor";		 	 
+$par1['description'] = "occupancy and temperature";		 
+$par1['extend'] = "";		 
+$par1['supports'] = "";		 
+$par1['fromZigbee'] = "";		 
+$par1['toZigbee'] = "";		 
+SQLInsert('zigbee2mqtt_devices_list', $par1);
+
+
+$par1['zigbeeModel'] = 'Lightify Switch Mini,Lightify Switch Mini\u0000';
+$par1['model'] = "AC0251100NJ";		 
+$par1['vendor'] = "OSRAM";		 
+$par1['type'] = "bulb";		 	 
+$par1['description'] = "Smart+ switch mini";		 
+$par1['extend'] = "";		 
+$par1['supports'] = ",";		 
+$par1['fromZigbee'] = "";		 
+$par1['toZigbee'] = "";		 
+SQLInsert('zigbee2mqtt_devices_list', $par1);
+
+
+//Hive
+$par1['zigbeeModel'] = 'FWBulb01';
+$par1['model'] = "HALIGHTDIMWWE27";		 
+$par1['vendor'] = "Hive";		 
+$par1['type'] = "bulb";		 	 
+$par1['description'] = "Active smart bulb white LED (E27)";		 
+$par1['extend'] = "";		 
+$par1['supports'] = "generic.light_onoff_brightness,";		 
+$par1['fromZigbee'] = "";		 
+$par1['toZigbee'] = "";		 
+SQLInsert('zigbee2mqtt_devices_list', $par1);
+
+$par1['zigbeeModel'] = 'FWBulb02UK';
+$par1['model'] = "HALIGHTDIMWWB22";		 
+$par1['vendor'] = "Hive";		 
+$par1['type'] = "bulb";		 	 
+$par1['description'] = "Active smart bulb white LED (B22)";		 
+$par1['extend'] = "";		 
+$par1['supports'] = "generic.light_onoff_brightness,";		 
+$par1['fromZigbee'] = "";		 
+$par1['toZigbee'] = "";		 
+SQLInsert('zigbee2mqtt_devices_list', $par1);
 
 
 
