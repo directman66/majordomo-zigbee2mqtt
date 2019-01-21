@@ -25,6 +25,8 @@ TITLE: [#TITLE#]
  [#if VIEW_MODE="view_mqtt"#]
 	 <ul class="nav nav-tabs">
 <li [#if TAB=="edit_device" #] class="active" [#endif#]><a href="?data_source=<#DATA_SOURCE#>&view_mode=view_mqtt&id=<#ID#>&tab=edit_device">Edit device</a> </li>
+<li [#if TAB=="view_det" #] class="active" [#endif#]><a href="?data_source=<#DATA_SOURCE#>&view_mode=view_mqtt&id=<#ID#>&tab=view_det">Detail</a> </li>
+<li [#if TAB=="edit_parametrs" #] class="active" [#endif#]><a href="?data_source=<#DATA_SOURCE#>&view_mode=view_mqtt&id=<#ID#>&tab=edit_parametrs">Parameters</a> </li>
 <li [#if TAB=="edit_data" #] class="active" [#endif#]><a href="?data_source=<#DATA_SOURCE#>&view_mode=view_mqtt&id=<#ID#>&tab=edit_data">Data</a> </li>
 </ul>
  [#endif#]
@@ -33,6 +35,17 @@ TITLE: [#TITLE#]
   [#if TAB="edit_device"#]
   [#inc edit_device.html#]
   [#endif#]
+
+
+  [#if TAB="view_det"#]
+  [#inc view_det.html#]
+  [#endif#]
+
+  [#if TAB="edit_parametrs"#]
+  [#inc edit_parametrs.html#]
+  [#endif#]
+
+
 
   [#if TAB="edit_data"#]
   [#inc mqtt_search_admin.html#]
