@@ -1053,6 +1053,8 @@ debmes('Р—Р°РїСЂР°С€РёРІР°РµРј РєР°СЂС‚Сѓ ', 
  function uninstall() {
   SQLExec('DROP TABLE IF EXISTS zigbee2mqtt');
   SQLExec('DROP TABLE IF EXISTS zigbee2mqtt_devices');
+  SQLExec('DROP TABLE IF EXISTS zigbee2mqtt_devices_list');
+  SQLExec('DROP TABLE IF EXISTS zigbee2mqtt_devices_command');
    
   parent::uninstall();
  }
