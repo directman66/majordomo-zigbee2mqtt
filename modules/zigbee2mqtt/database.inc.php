@@ -3433,8 +3433,8 @@ $par2['json_attributes'] = "linkquality,battery,voltage";
 $par2['command_topic'] = "";
 $par2['payload_on'] = "";
 $par2['payload_off'] = "";
-$par2[''] = "";
-$par2['cobrightnesslor_temp'] = "";
+$par2['brightness'] = "";
+$par2['color_temp'] = "";
 $par2['xy'] = "";
 SQLInsert('zigbee2mqtt_devices_command', $par2);
 
