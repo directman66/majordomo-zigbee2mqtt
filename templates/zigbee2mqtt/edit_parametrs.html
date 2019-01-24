@@ -53,8 +53,14 @@ DEVICE_ID: [#ID#]
  [#if SORTBY="TITLE DESC"#](-)[#endif#]</nobr>
  </th>
  <th>
- <#LANG_UPDATED#>
+ <#LANG_VALUE#>
  </th>
+
+ <th>
+ <#LANG_UPDATED#>
+
+ </th>
+
  <th>
  <#LANG_VALUE#>
  </th>
@@ -66,22 +72,38 @@ DEVICE_ID: [#ID#]
 <tr>
  <td>
   <b>
-   [#METRIKA#]
-  </b>[#if PATH!=""#]<br>[#PATH#][#endif#]
-  [#if LINKED_OBJECT!=""#]<br/><i>[#LINKED_OBJECT#].[#LINKED_PROPERTY#]</i>[#endif LINKED_OBJECT#]
+
+[#if !type=""#][#type#] :&nbsp
+[#endif#]
+[#if !value_template=""#]
+[#value_template#]  [#if !payload_on=""#]([#payload_on#],[#payload_off#]) [#endif#]
+
+[#else#]
+</b>
+[#METRIKA#]
+
+[#endif#]
+
+
+<br>
+<small><small></b>
+[#if !command_topic=""#]command_topic:    &nbsp&nbsp&nbsp [#command_topic#] <br>[#endif#]
+
+
+[#if !state_topic=""#]state_topic:    &nbsp&nbsp&nbsp [#state_topic#] [#endif#]
+</small></small>
+
  </td>
- <td
-   >
+
+ <td >
+  <span id="mqtt[#ID#]" class="mqtt_value">[#VALUE#]</span>
+  [#if LINKED_OBJECT!=""#]([#LINKED_OBJECT#].[#LINKED_PROPERTY#])[#endif LINKED_OBJECT#]
+ </td> <td>
   [#if UPDATED!=""#]
    [#UPDATED#]
   [#else#]
    &nbsp;
   [#endif#]
- </td>
- <td
- >
-  <span id="mqtt[#ID#]" class="mqtt_value">[#VALUE#]</span>
-  [#if LINKED_OBJECT!=""#]([#LINKED_OBJECT#].[#LINKED_PROPERTY#])[#endif LINKED_OBJECT#]
  </td>
  <td width="1%" nowrap>
   
