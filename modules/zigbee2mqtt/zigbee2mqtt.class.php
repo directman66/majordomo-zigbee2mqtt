@@ -1,287 +1,586 @@
 <?php
-/*
-* @version 0.1 (wizard)
+/**
+* MQTT 
+*
+* Mqtt
+*
+* @package project
+* @author Serge J. <jey@tut.by>
+* @copyright http://www.atmatic.eu/ (c)
+* @version 0.1 (wizard, 13:07:08 [Jul 19, 2013])
 */
-
-
+//
+//
+class zigbee2mqtt extends module {
+/**
+* mqtt
+*
+* Module class constructor
+*
+* @access private
+*/
+function zigbee2mqtt() {
+  $this->name="zigbee2mqtt";
+  $this->title="zigbee2mqtt";
+  $this->module_category="<#LANG_SECTION_DEVICES#>";
+  $this->checkInstalled();
+}
+/**
+* saveParams
+*
+* Saving module parameters
+*
+* @access public
+*/
+function saveParams($data=0) {
+ $p=array();
+ if (IsSet($this->id)) {
+  $p["id"]=$this->id;
+ }
+ if (IsSet($this->view_mode)) {
+  $p["view_mode"]=$this->view_mode;
+ }
+ if (IsSet($this->edit_mode)) {
+  $p["edit_mode"]=$this->edit_mode;
+ }
+ if (IsSet($this->tab)) {
+  $p["tab"]=$this->tab;
+ }
+ return parent::saveParams($p);
+}
+/**
+* getParams
+*
+* Getting module parameters from query string
+*
+* @access public
+*/
+function getParams() {
+  global $id;
+  global $mode;
+  global $view_mode;
+  global $edit_mode;
+  global $tab;
+  if (isset($id)) {
+   $this->id=$id;
+  }
+  if (isset($mode)) {
+   $this->mode=$mode;
+  }
+  if (isset($view_mode)) {
+   $this->view_mode=$view_mode;
+  }
+  if (isset($edit_mode)) {
+   $this->edit_mode=$edit_mode;
+  }
+  if (isset($tab)) {
+   $this->tab=$tab;
+  }
+}
+/**
+* Run
+*
+* Description
+*
+* @access public
+*/
+function run() {
  global $session;
-  if ($this->owner->name=='panel') {
-   $out['CONTROLPANEL']=1;
+  $out=array();
+  if ($this->action=='admin') {
+   $this->admin($out);
+  } else {
+   $this->usual($out);
   }
-  $qry="1";
-  // search filters
-  //searching 'TITLE' (varchar)
-  global $title;
-  if ($title!='') {
-   $qry.=" AND (TITLE LIKE '%".DBSafe($title)."%' OR VALUE LIKE '%".DBSafe($title)."%' OR PATH LIKE '%".DBSafe($title)."%')";
-   $out['TITLE']=$title;
+  if (IsSet($this->owner->action)) {
+   $out['PARENT_ACTION']=$this->owner->action;
   }
-
-
-
-
-
-
-
-
-
-
-
-   //deviles
-//  $res=SQLSelect("SELECT * FROM zigbee2mqtt_devices WHERE $qry ORDER BY ".$sortby_mqtt);
-//if ($this->view_mode==''||$this->view_mode=='device')
-
-//  $res=SQLSelect("SELECT *  FROM (select zigbee2mqtt_devices.ID DEVID, zigbee2mqtt_devices.* from zigbee2mqtt_devices )zigbee2mqtt_devices LEFT JOIN zigbee2mqtt_devices_list ON zigbee2mqtt_devices_list.zigbeeModel like '%'||zigbee2mqtt_devices.MODEL||'%' ");
-  $res=SQLSelect('SELECT *  FROM (select zigbee2mqtt_devices.ID DEVID, zigbee2mqtt_devices.* from zigbee2mqtt_devices )zigbee2mqtt_devices LEFT JOIN zigbee2mqtt_devices_list ON zigbee2mqtt_devices_list.zigbeeModel like CONCAT("%",zigbee2mqtt_devices.MODEL,"%") ');
-
-  if ($res[0]['ID']) {
-   if (!$out['TREE']) {
-    paging($res, 50, $out); // search result paging
-   }
-   $total=count($res);
-   for($i=0;$i<$total;$i++) {
-    // some action for every record if required
-    //$tmp=explode(' ', $res[$i]['UPDATED']);
-    //$res[$i]['UPDATED']=fromDBDate($tmp[0])." ".$tmp[1];
-//    $res[$i]['VALUE']=str_replace('":','": ',$res[$i]['VALUE']);
-$lnk="";
-//    if ($res[$i]['TITLE']==$res[$i]['PATH'] && !$out['TREE']) $res[$i]['PATH']='';
-
-$sql="SELECT *  FROM  zigbee2mqtt where LENGTH(LINKED_OBJECT)>2  and DEV_ID='".$res[$i]['DEVID']."'";
-
-  $res2=SQLSelect($sql);
-   $total2=count($res2);
-
-//debmes($sql.'count : '.$total2,'zigbee2mqtt');
- for($j=0;$j<$total2;$j++) {
-$lnk.=$res2[$j]['LINKED_OBJECT'].'.'.$res2[$j]['LINKED_PROPERTY'].":".$res2[$j]['VALUE'].';  ';
-}
-
-if (strlen($lnk) >2) $lnk='('. substr($lnk, 0, -3).')';
-$res[$i]['LINKED']=$lnk;
-
-   }
-//debmes('devid:'.$res[$i]['DEVID'].'count:'.$total2."::::".$lnk,'zigbee2mqtt');
-
-//print_r($res);
-//echo "<br>";
-//echo "<br>";
-   $out['DEVICES']=$res;
-
-
+  if (IsSet($this->owner->name)) {
+   $out['PARENT_NAME']=$this->owner->name;
   }
-
-//$vm=$res;
-// echo "<script type='text/javascript'>";
-// echo "alert('$vm');";
-// echo "</script>";
-
-
-
-
-  $out['LOCATIONS']=SQLSelect("SELECT * FROM locations ORDER BY TITLE");
-  $out['ZIGBEE2MQTTDEV']=SQLSelect("SELECT @rownum := @rownum + 1 AS ID,t.* FROM (SELECT distinct SPLIT_STRING(TITLE, '/', 2) TITLE FROM zigbee2mqtt) t, (SELECT @rownum := 0) r");
-
-
-
-  global $dev_id;
-
-// echo "<script type='text/javascript'>";
-// echo "alert('$dev_id');";
-// echo "</script>";
-
-
-
-  if ($dev_id!='') {
-   $qry.=" AND (TITLE LIKE '%".DBSafe($dev_id)."%' OR VALUE LIKE '%".DBSafe($dev_id)."%' OR PATH LIKE '%".DBSafe($dev_id)."%')";
-   $out['ZIGBEE2MQTTDEV']=$dev_id;
-  }
-
-
-
-  global $location_id;
-  if ($location_id) {
-   $qry.=" AND LOCATION_ID='".(int)$location_id."'";
-   $out['LOCATION_ID']=(int)$location_id;
-  }
-
+  $out['VIEW_MODE']=$this->view_mode;
+  $out['EDIT_MODE']=$this->edit_mode;
+  $out['MODE']=$this->mode;
+  $out['ACTION']=$this->action;
+  $out['TAB']=$this->tab;
   if (IsSet($this->location_id)) {
-   $location_id=$this->location_id;
-   $qry.=" AND LOCATION_ID='".$this->location_id."'";
-  } else {
-   global $location_id;
+   $out['IS_SET_LOCATION_ID']=1;
   }
-  // QUERY READY
-  global $save_qry;
-  if ($save_qry) {
-   $qry=$session->data['mqtt_qry'];
-  } else {
-   $session->data['mqtt_qry']=$qry;
+  if ($this->single_rec) {
+   $out['SINGLE_REC']=1;
   }
-  if (!$qry) $qry="1";
-  // FIELDS ORDER
-  global $sortby_mqtt;
-  if (!$sortby_mqtt) {
-   $sortby_mqtt=$session->data['mqtt_sort'];
-  } else {
-   if ($session->data['mqtt_sort']==$sortby_mqtt) {
-    if (Is_Integer(strpos($sortby_mqtt, ' DESC'))) {
-     $sortby_mqtt=str_replace(' DESC', '', $sortby_mqtt);
-    } else {
-     $sortby_mqtt=$sortby_mqtt." DESC";
+  $this->data=$out;
+  $p=new parser(DIR_TEMPLATES.$this->name."/".$this->name.".html", $this->data, $this);
+  $this->result=$p->result;
+}
+
+  function prepareQueueTable() {
+   //SQLExec ("DROP TABLE IF EXISTS `mqtt_queue`;");
+   $sqlQuery = "CREATE TABLE IF NOT EXISTS `zigbee2mqtt_queue`
+               (`ID`  int(10) unsigned NOT NULL auto_increment,
+                `PATH` varchar(255) NOT NULL,
+                `VALUE` varchar(255) NOT NULL,
+                 PRIMARY KEY (`ID`)
+               ) ENGINE = MEMORY DEFAULT CHARSET=utf8;";
+    SQLExec ( $sqlQuery );   
+  }
+
+    function pathToTree($array){
+        $tree = array();
+        foreach($array AS $item) {
+            $pathIds = explode("/", ltrim($item["PATH"], "/") .'/'. $item["ID"]);
+            $current = &$tree;
+            $cp='';
+            foreach($pathIds AS $id) {
+                if(!isset($current["CHILDS"][$id])) {
+                    $current["CHILDS"][$id] = array('CP'=>$cp);
+                }
+                $current = &$current["CHILDS"][$id];
+                if($id == $item["ID"]) {
+                    $current = $item;
+                }
+            }
+        }
+        return ($this->childsToArray($tree['CHILDS']));
     }
-   }
-   $session->data['mqtt_sort']=$sortby_mqtt;
-  }
-  //if (!$sortby_mqtt) $sortby_mqtt="ID DESC";
-  $sortby_mqtt="UPDATED DESC";
-  $out['SORTBY']=$sortby_mqtt;
 
-  global $tree;
-  if (!isset($tree)) {
-   $tree=(int)$session->data['MQTT_TREE_VIEW'];
+    function childsToArray($items,$prev_path='') {
+        $res=array();
+        foreach($items as $k=>$v) {  
+            if (!$v['PATH']) {
+                $v['TITLE']=$k.' '.$v['CP'];
+                $pp = $k; 
+            }
+            else {
+                $v['TITLE'] = '';
+                $pp = '';
+            }
+            if (isset($v['CHILDS'])) {
+                $items=$this->childsToArray($v['CHILDS'],$prev_path!='' ? $prev_path.'/'.$pp : $pp);
+                if (count($items)==1) {
+                    $v=$items[0];     
+                    $v['TITLE'] = $pp.($v['TITLE']!='' ? '/'.$v['TITLE'] : '');
+                } else {
+                    $v['RESULT']=$items;
+                }
+                unset($v['CHILDS']);
+            }
+            $res[]=$v;
+        }
+        return $res;
+    }
+
+/**
+* Title
+*
+* Description
+*
+* @access public
+*/
+ function setProperty($id, $value, $set_linked=0) {
+debmes('РќСѓР¶РЅРѕ РёР·РјРµРЅРёС‚СЊ Р·РЅР°С‡РµРЅРёРµ id='.$id.' РЅР° '.$value, 'zigbee2mqtt');
+
+debmes("SELECT * FROM zigbee2mqtt WHERE ID='".$id."'", 'zigbee2mqtt');
+  $rec=SQLSelectOne("SELECT * FROM zigbee2mqtt WHERE ID='".$id."'");
+
+  if (!$rec['ID'] || !$rec['PATH']) {
+debmes('РќРµ С…РІР°С‚Р°РµС‚ РґР°РЅРЅС‹С…', 'zigbee2mqtt');
+   return 0;
+  }
+
+
+     if ($rec['REPLACE_LIST']!='') {
+         $list=explode(',',$rec['REPLACE_LIST']);
+         foreach($list as $pair) {
+             $pair=trim($pair);
+             list($new,$old)=explode('=',$pair);
+             if ($value==$old) {
+                 $value=$new;
+                 break;
+             }
+         }
+     }
+  //if ($new_connection) {
+
+  include_once("./lib/mqtt/phpMQTT.php");
+
+   $this->getConfig();
+   if ($mqtt->config['MQTT_CLIENT']) {
+    $client_name=$mqtt->config['MQTT_CLIENT'];
+   } else {
+    $client_name="MajorDoMo MQTT";
+   }
+
+   if ($this->config['MQTT_AUTH']) {
+    $username=$this->config['MQTT_USERNAME'];
+    $password=$this->config['MQTT_PASSWORD'];
+   }
+   if ($this->config['MQTT_HOST']) {
+    $host=$this->config['MQTT_HOST'];
+   } else {
+    $host='localhost';
+   }
+   if ($this->config['MQTT_PORT']) {
+    $port=$this->config['MQTT_PORT'];
+   } else {
+    $port=1883;
+   }
+
+   $mqtt_client = new phpMQTT($host, $port, $client_name.' Client');
+
+   if(!$mqtt_client->connect(true, NULL,$username,$password))
+   {
+debmes('РћС€РёР±РєР° РїРѕРґРєР»СЋС‡РµРЅРёСЏ Рє mqtt', 'zigbee2mqtt');
+    return 0;
+   }
+
+
+if ($rec['CONVERTONOFF']=='1') {
+if ($value=='1')  $json=array( $rec['METRIKA']=> 'ON');
+if ($value=='0')  $json=array( $rec['METRIKA']=> 'OFF');
+$jsonvalue=json_encode($json) ;
+
+
+} else 
+{
+$json=array( $rec['METRIKA']=> $value);
+$jsonvalue=json_encode($json) ;
+}
+debmes('РџСѓР±Р»РёРєСѓСЋ zigbee2mqqtt '.$rec['PATH_WRITE'].'/set'.":".$jsonvalue, 'zigbee2mqtt');
+
+
+   if ($rec['PATH_WRITE']) {
+
+   $mqtt_client->publish($rec['PATH_WRITE'].'/set',$jsonvalue, (int)$rec['QOS'], (int)$rec['RETAIN']);
+       
+   }
+
+// else {    $mqtt_client->publish($rec['PATH'],$jsonvalue, (int)$rec['QOS'], (int)$rec['RETAIN']);   }
+   $mqtt_client->close();
+
+  /*
   } else {
-   $session->data['MQTT_TREE_VIEW']=$tree;
-  }
 
-  if (isset($_GET['tree'])) {
-   $tree=(int)$_GET['tree'];
-   $this->config['TREE_VIEW']=$tree;
-   $this->saveConfig();
-  } else {
-   $tree = $this->config['TREE_VIEW'];
-  }
-
-  if ($tree) {
-   $out['TREE']=1;
-  }
-
-  // SEARCH RESULTS
-  if ($out['TREE']) {
-   $sortby_mqtt='PATH';
-  }
-//echo $this->view_mode;
-//$vm=$this->view_mode;
-// echo "<script type='text/javascript'>";
-// echo "alert('$vm');";
-// echo "</script>";
-
-
-if ($this->tab=='edit_parametrs'){
-
-$vm=$this->id;
-// echo "<script type='text/javascript'>";
-// echo "alert('$vm');";
-// echo "</script>";
-  $out['ID']=$this->id;
-
-
-
-//$zm=SQLSelect("SELECT * FROM zigbee2mqtt_devices_command WHERE zigbeeModel=".$this->id);
-
-//$sql0='SELECT *  FROM (select zigbee2mqtt_devices.ID DEVID, zigbee2mqtt_devices.* from zigbee2mqtt_devices where ID="'.$vm.'" ) zigbee2mqtt_devices LEFT JOIN zigbee2mqtt_devices_list ON zigbee2mqtt_devices_list.zigbeeModel like CONCAT("%",zigbee2mqtt_devices.MODEL,"%")  ';
-
-  $sql0='SELECT *  FROM (select zigbee2mqtt_devices.ID DEVID, zigbee2mqtt_devices.* from zigbee2mqtt_devices where ID="'.$vm.'" ) zigbee2mqtt_devices LEFT JOIN zigbee2mqtt_devices_list ON zigbee2mqtt_devices_list.zigbeeModel like CONCAT("%",zigbee2mqtt_devices.MODEL,"%") ';
-
-debmes($sql0,'zigbee2mqtt');
-
-$ssql=SQLSelectOne($sql0);
-
-$zm=$ssql['model'];
-//$sql="SELECT * FROM (select * from zigbee2mqtt_devices_command  WHERE zigbeeModel='".$zm."') zigbee2mqtt_devices_command  LEFT JOIN zigbee2mqtt ON zigbee2mqtt.PATH like CONCAT('%','".$ssql['IEEEADDR']."','%')" ;
-
-//$sql="SELECT * FROM (select * from zigbee2mqtt_devices_command WHERE zigbeeModel='".$zm."') zigbee2mqtt_devices_command LEFT JOIN (select * from zigbee2mqtt where PATH like CONCAT('%','".$ssql['IEEEADDR']."','%') ) zigbee2mqtt ON zigbee2mqtt.METRIKA=zigbee2mqtt_devices_command.value_template  ";
-
-
-$sql="select * from (select * from zigbee2mqtt where PATH like CONCAT('%','".$ssql['IEEEADDR']."','%')  )zigbee2mqtt left join (select * from zigbee2mqtt_devices_command WHERE zigbeeModel='".$zm."') zigbee2mqtt_devices_command ON zigbee2mqtt.METRIKA=zigbee2mqtt_devices_command.value_template ";
-
-debmes($sql,'zigbee2mqtt');
-
- $res=SQLSelect($sql);
-
-  if ($res[0]['ID']) {
-
-   $total=count($res);
-   for($i=0;$i<$total;$i++) {
-
-//    $res[$i]['VALUE']=str_replace('":','": ',$res[$i]['VALUE']);
-
-$res[$i]['state_topic']=str_replace('<FRIENDLY_NAME>',$ssql['IEEEADDR'],$res[$i]['state_topic']);
-//$res[$i]['state_topic']=str_replace('<FRIENDLY_NAME>',"123",$res[$i]['state_topic']);
-//$res[$i]['state_topic']="123";
-$res[$i]['availability_topic']=str_replace('<FRIENDLY_NAME>',$ssql['IEEEADDR'],$res[$i]['availability_topic']);
-$res[$i]['command_topic']=str_replace('<FRIENDLY_NAME>',$ssql['IEEEADDR'],$res[$i]['command_topic']);
-
-
-
-//$res[$i]['value']="123";
-
-
-
-
-
-//    if ($res[$i]['TITLE']==$res[$i]['PATH'] && !$out['TREE']) $res[$i]['PATH']='';   }
-   $out['RESULT']=$res;
-
-//   if ($out['TREE']) {    $out['RESULT']=$this->pathToTree($res);   }
+   $this->prepareQueueTable();
+   $data=array();
+   $data['PATH']=$rec['PATH'];
+   $data['VALUE']=$value;
+   SQLInsert('mqtt_queue', $data);
 
   }
+  */
 
-}}
+  $rec['VALUE']=$value.'';
+  $rec['UPDATED']=date('Y-m-d H:i:s');
+  SQLUpdate('zigbee2mqtt', $rec);
 
 
+  if ($set_linked && $rec['LINKED_OBJECT'] && $rec['LINKED_PROPERTY']) {
+   setGlobal($rec['LINKED_OBJECT'].'.'.$rec['LINKED_PROPERTY'], $value, array($this->name=>'0'));
+  }
 
+ }
 
-if ($this->view_mode=='view_mqtt'&&$this->tab=='edit_data'){
-
-$vm=$this->id;
-// echo "<script type='text/javascript'>";
-// echo "alert('$vm');";
-// echo "</script>";
-  $out['ID']=$this->id;
-  $res=SQLSelect("SELECT * FROM zigbee2mqtt WHERE dev_id=".$this->id);
-  if ($res[0]['ID']) {
-   if (!$out['TREE']) {
-    paging($res, 50, $out); // search result paging
-   }
-   $total=count($res);
-   for($i=0;$i<$total;$i++) {
-    // some action for every record if required
-    //$tmp=explode(' ', $res[$i]['UPDATED']);
-    //$res[$i]['UPDATED']=fromDBDate($tmp[0])." ".$tmp[1];
-    $res[$i]['VALUE']=str_replace('":','": ',$res[$i]['VALUE']);
-
-    if ($res[$i]['TITLE']==$res[$i]['PATH'] && !$out['TREE']) $res[$i]['PATH']='';
-   }
-   $out['RESULT']=$res;
-
-   if ($out['TREE']) {
-    $out['RESULT']=$this->pathToTree($res);
+/**
+* Title
+*
+* Description
+*
+* @access public
+*/
+ function processMessage($path, $value) {
+   if (preg_match('/\#$/', $path)) {
+    return 0;
    }
 
-  }
+   if (preg_match('/^{/',$value)) {
+       $ar=json_decode($value,true);
+       foreach($ar as $k=>$v) {
+           if (is_array($v))
+               $v = json_encode($v);
+           $this->processMessage($path.'/'.$k,$v);
+       }
+   }
+
+   /* Search 'PATH' in database (db) */
+$dev_title=explode('/',$path)[1];
+
+if ($dev_title=='bridge')  {
+
+$arr=sqlselectone('select * from  zigbee2mqtt_devices where TITLE="bridge"');
+
+if ($arr['IEEEADDR']) {$dev_title=$arr['IEEEADDR'];} else  {$dev_title='bridge';}
+
+
+}
+//echo $path.":".$dev_title."<br>";
+
+//if (strpos($dev_title,"/set/")==0)
+if (strpos($path,"set")===false)
+{
+     $rec=SQLSelectOne("SELECT * FROM zigbee2mqtt_devices WHERE IEEEADDR LIKE '%".DBSafe($dev_title)."%'");
+     
+     if(!$rec['ID']) { /* If path_write foud in db */
+     $rec['TITLE']=$dev_title;
+     $rec['IEEEADDR']=$dev_title;
+
+     $rec['FIND']=date('Y-m-d H:i:s');
+SQLInsert('zigbee2mqtt_devices', $rec);
+     $this->refresh_db();
+
+       }
+else 
+{
+     $rec['IEEEADDR']=$dev_title;
+     $rec['FIND']=date('Y-m-d H:i:s');
+SQLUPDATE('zigbee2mqtt_devices', $rec);
+
+}
+       $dev_id=SQLSelectOne("SELECT * FROM zigbee2mqtt_devices WHERE TITLE LIKE '%".DBSafe($dev_title)."%'")['ID'];
+
+
+
+
+
+   $rec=SQLSelectOne("SELECT * FROM zigbee2mqtt WHERE PATH LIKE '".DBSafe($path)."'");
+   
+   if(!$rec['ID']){ /* If 'PATH' not found in db */
+     /* New query to search 'PATH_WRITE' record in db */
+     $rec=SQLSelectOne("SELECT * FROM zigbee2mqtt WHERE PATH LIKE '".DBSafe($path)."'");
+     
+     if($rec['ID']) { /* If path_write foud in db */
+       if($rec['DISP_FLAG']!="0"){ /* check disp_flag */
+         return 0; /* ignore message if flag checked */
+       }
+     }
+     /* Insert new record in db */
+     $rec['PATH']=$path;
+     $rec['METRIKA']=substr($path,strrpos($path,'/')+1); 
+     $rec['PATH_WRITE']=substr($path,0,strrpos($path,'/')); 
+//     $rec['METRIKA']="1"; 
+     $rec['DEV_ID']=$dev_id;
+     $rec['TITLE']=$path;
+     $rec['VALUE']=$value.'';
+     $rec['UPDATED']=date('Y-m-d H:i:s');
+     $rec['ID']=null;
+SQLInsert('zigbee2mqtt', $rec);
+   }else{
+     /* Update values in db */
+     $rec['VALUE']=$value.'';
+     $rec['DEV_ID']=$dev_id;
+     $rec['UPDATED']=date('Y-m-d H:i:s');
+
+     SQLUpdate('zigbee2mqtt', $rec);
+     /* Update property in linked object if it exist */
+     if($rec['LINKED_OBJECT'] && $rec['LINKED_PROPERTY']) {
+
+         $value=$rec['VALUE'];
+         if ($rec['REPLACE_LIST']!='') {
+             $list=explode(',',$rec['REPLACE_LIST']);
+             foreach($list as $pair) {
+                 $pair=trim($pair);
+                 list($new,$old)=explode('=',$pair);
+                 if ($value==$new) {
+                     $value=$old;
+                     break;
+                 }
+             }
+         }
+
+
+if ($rec['CONVERTONOFF']=='1' && $value=='ON') $newvalue=1;
+if ($rec['CONVERTONOFF']=='1' && $value=='OFF') $newvalue=0;
+
+
+//РїРёС€РµРј РІ РїРµСЂРµРјРµРЅРЅСѓСЋ
+//       setGlobal($rec['LINKED_OBJECT'].'.'.$rec['LINKED_PROPERTY'], $newvalue, array($this->name=>'0'));
+     }
+     if ($rec['LINKED_OBJECT'] && $cmd_rec['LINKED_METHOD']) {
+       callMethod($rec['LINKED_OBJECT'] . '.' . $rec['LINKED_METHOD'], $rec['VALUE']);
+     }
+
+   }
 }
 
 
 
-                if ($this->tab == 'log'||$this->view_mode == 'update_log') {
 
-                    global $limit;
-                    if (!$limit) {
-                        $limit = 50;
-                    }
+ }
 
-                    global $file;
-                    if (!$file  ) {
-//                        $file = date('Y-m-d') . '.log';
+/**
+* BackEnd
+*
+* Module backend
+*
+* @access public
+*/
+function admin(&$out) {
+ if (isset($this->data_source) && !$_GET['data_source'] && !$_POST['data_source']) {
+  $out['SET_DATASOURCE']=1;
+ }
 
-//            $path = ROOT . 'cms/debmes';
+ $this->getConfig();
+ $out['MQTT_CLIENT']=$this->config['MQTT_CLIENT'];
+ $out['MQTT_HOST']=$this->config['MQTT_HOST'];
+ $out['MQTT_PORT']=$this->config['MQTT_PORT'];
+ $out['ZIGBEE2MQTTPATH']=$this->config['ZIGBEE2MQTTPATH'];
+ $out['MQTT_QUERY']=$this->config['MQTT_QUERY'];
 
-$this->getConfig();
+ if (!$out['MQTT_HOST']) {
+  $out['MQTT_HOST']='localhost';
+ }
+
+
+ if (!$out['MQTT_CLIENT']) {
+  $out['MQTT_CLIENT']='md_zigbee2mqtt';
+ }
+
+
+ if (!$out['ZIGBEE2MQTTPATH']) {
+  $out['ZIGBEE2MQTTPATH']='/opt/zigbee2mqtt/';
+ }
+
+
+ if (!$out['MQTT_PORT']) {
+  $out['MQTT_PORT']='1883';
+ }
+ if (!$out['MQTT_QUERY']) {
+  $out['MQTT_QUERY']='zigbee2mqtt/#';
+ }
+
+ $out['MQTT_USERNAME']=$this->config['MQTT_USERNAME'];
+ $out['MQTT_PASSWORD']=$this->config['MQTT_PASSWORD'];
+ $out['MQTT_AUTH']=$this->config['MQTT_AUTH'];
+
+
+     if ($this->tab=='help') {
+  $res=SQLSelect("SELECT * FROM zigbee2mqtt_devices_list ");
+$out['DEVICE_LIST']=$res;
+
+}
+
+
+     if ($this->tab=='edit_device'||$this->tab=='view_det') {
+
+//if ( $this->TAB=='edit_device') {
+//$vm=$this->VIEW_MODE;
+// echo "<script type='text/javascript'>";
+// echo "alert('$vm');";
+// echo "</script>";
+
+
+//echo '123';
+
+  $res=SQLSelectOne("SELECT * FROM zigbee2mqtt_devices where ID=".$this->id);
+
+
+
+$out['ID']=$res['ID'];
+$out['TITLE']=$res['TITLE'];
+$out['MODEL']=$res['MODEL'];
+$out['TYPE']=$res['TYPE'];
+$out['IEEADDR']=$res['IEEADDR'];
+$out['NWKADDR']=$res['NWKADDR'];
+$out['MANIFID']=$res['MANIFID'];
+$out['MANUFNAME']=$res['MANUFNAME'];
+$out['PARRENTIEEEADDR']=$res['PARRENTIEEEADDR'];
+$out['LQI']=$res['LQI'];
+$out['POWEDSOURCE']=$res['POWEDSOURCE'];
+$out['MODELID']=$res['MODELID'];
+$out['STATUS']=$res['STATUS'];
+$out['DID']=$res['DID'];
+$out['D_ID']=$res['D_ID'];
+$out['FIND']=$res['FIND'];
+$out['LOCATION_ID']=$res['LOCATION_ID'];
+
+$res1=SQLSelectOne("SELECT * FROM zigbee2mqtt_devices_list where zigbeeModel='".$res['MODEL']."'");
+$out['MODELNAME']=$res1['model'];
+$out['VENDOR']=$res1['vendor'];
+$out['DESCRIPTION']=$res1['description'];
+$out['EXTEND']=$res1['extend'];
+$out['SUPPORTS']=$res1['supports'];
+$out['FROMZIGBEE']=$res1['fromZigbee'];
+$out['TOZIGBEE']=$res1['toZigbee'];
+
+  //options for 'LOCATION_ID' (select)
+  $tmp=SQLSelect("SELECT ID, TITLE FROM locations ORDER BY TITLE");
+  $locations_total=count($tmp);
+  for($locations_i=0;$locations_i<$locations_total;$locations_i++) {
+   $location_id_opt[$tmp[$locations_i]['ID']]=$tmp[$locations_i]['TITLE'];
+  }
+  for($i=0;$i<count($tmp);$i++) {
+   if ($rec['LOCATION_ID']==$tmp[$i]['ID']) $tmp[$i]['SELECTED']=1;
+  }
+  $out['LOCATION_ID_OPTIONS']=$tmp;
+
+}
+
+     if ($this->view_mode=='update_device') {
+//$vm=$this->id;
+// echo "<script type='text/javascript'>";
+// echo "alert('$vm');";
+// echo "</script>";
+
+
+  $table_name='zigbee2mqtt_devices';
+  $rec=SQLSelectOne("SELECT * FROM $table_name WHERE ID='".$this->id."'");
+
+   global $dev_title;
+   $rec['TITLE']=$dev_title;
+   if ($rec['TITLE']=='') {
+    $out['ERR_TITLE']=1;
+    $ok=0;
+   }
+
+
+
+
+   global $dev_location_id;
+  $rec['LOCATION_ID']=$dev_location_id;
+   
+//$vm=$dev_location_id;
+// echo "<script type='text/javascript'>";
+// echo "alert('$vm');";
+// echo "</script>";
+
+
+
+  //UPDATING RECORD
+  
+    if ($rec['ID']) {
+     SQLUpdate($table_name, $rec); // update
+    } else {
+     $new_rec=1;
+     $rec['ID']=SQLInsert($table_name, $rec); // adding new record
+    }
+    
+
+ $this->redirect("?view_mode=view_mqtt&id=".$this->id."&tab=edit_device");
+}
+
+
+
+
+
+
+ if ($this->view_mode=='update_log') {
+
+// if ($this->update_log=='update_log') {
+ $this->getConfig();
+
+global $file;
+global $limit;
 $zigbee2mqttpath=$this->config['ZIGBEE2MQTTPATH'];
+$filename=$zigbee2mqttpath.'/data/log/'.$file.'/log.txt';
+$out['FN']=$filename;
+//$out['FN']="1234";
+
+$a=file_get_contents ($filename);
+$a =  str_replace( array("\r\n","\r","\n") , '<br>' , $a);
+$out['LOG']=$a;
+
 
             $path = $zigbee2mqttpath.'/data/log';
-
 
             if ($handle = opendir($path)) {
                 $files = array();
@@ -298,18 +597,582 @@ $zigbee2mqttpath=$this->config['ZIGBEE2MQTTPATH'];
 
             $out['FILES'] = $files;
 
-
-
-                    }
-
+//$this->search_mqtt($out);
 
 
 
 
 
-                }
+                    
+
+//$vm1=$filename;
+// echo "<script type='text/javascript'>";
+// echo "alert('$vm1');";
+// echo "</script>";
+
+// $this->redirect("?tab=log");
+
+}
 
 
 
+
+//$vm1=$this->view_mode;
+// echo "<script type='text/javascript'>";
+// echo "alert('$vm1');";
+// echo "</script>";
+
+
+ if ($this->tab=='service') {
+
+$a=shell_exec("sudo systemctl status zigbee2mqtt");
+$a =  str_replace( array("\r\n","\r","\n") , '<br>' , $a);
+$out['status']=$a;
+
+
+}
+
+ if ($this->tab=='map') {
+
+  require(DIR_MODULES.$this->name.'/map.inc.php');
+
+///   $this->redirect("?data_source=&view_mode=&id=&tab=map");
+}
+
+
+
+ if ($this->view_mode=='srv_start') {
+$a=shell_exec("sudo systemctl start zigbee2mqtt");
+$a=shell_exec("sudo systemctl status zigbee2mqtt");
+$a =  str_replace( array("\r\n","\r","\n") , '<br>' , $a);
+$out['status']=$a;
+   $this->redirect("?tab=service");
+
+}
+
+ if ($this->view_mode=='srv_stop') {
+$a=shell_exec("sudo systemctl stop zigbee2mqtt");
+$a=shell_exec("sudo systemctl status zigbee2mqtt");
+$a =  str_replace( array("\r\n","\r","\n") , '<br>' , $a);
+$out['status']=$a;
+   $this->redirect("?tab=service");
+
+}
+
+ if ($this->view_mode=='srv_restart') {
+$a=shell_exec("sudo systemctl restart zigbee2mqtt");
+$a=shell_exec("sudo systemctl status zigbee2mqtt");
+$a =  str_replace( array("\r\n","\r","\n") , '<br>' , $a);
+$out['status']=$a;
+
+
+   $this->redirect("?tab=service");
+}
+
+
+ if ($this->view_mode=='get_map') {
+
+   $this->get_map();
+   $this->redirect("?tab=map");
+}
+
+
+
+
+
+ if ($this->view_mode=='update_settings') {
+
+//$vm1=$this->view_mode;
+// echo "<script type='text/javascript'>";
+// echo "alert('$vm1');";
+// echo "</script>";
+
+
+   global $mqtt_client;
+   global $mqtt_host;
+   global $mqtt_username;
+   global $mqtt_password;
+   global $mqtt_auth;
+   global $mqtt_port;
+   global $mqtt_query;
+   global $zigbee2mqttpath;
+//echo $zigbee2mqttpath;
+
+   $this->config['MQTT_CLIENT']=trim($mqtt_client);
+   $this->config['ZIGBEE2MQTTPATH']=trim($zigbee2mqttpath);
+   $this->config['MQTT_HOST']=trim($mqtt_host);
+   $this->config['MQTT_USERNAME']=trim($mqtt_username);
+   $this->config['MQTT_PASSWORD']=trim($mqtt_password);
+   $this->config['MQTT_AUTH']=(int)$mqtt_auth;
+   $this->config['MQTT_PORT']=(int)$mqtt_port;
+   $this->config['MQTT_QUERY']=trim($mqtt_query);
+   $this->saveConfig();
+
+   setGlobal('cycle_zigbee2mqttControl', 'restart');
+
+   $this->redirect("?tab=settings");
+ }
+
+ if (!$this->config['MQTT_HOST']) {
+  $this->config['MQTT_HOST']='localhost';
+  $this->saveConfig();
+ }
+ if (!$this->config['MQTT_PORT']) {
+  $this->config['MQTT_PORT']='1883';
+  $this->saveConfig();
+ }
+
+ if (!$this->config['ZIGBEE2MQTTPATCH']) {
+  $this->config['ZIGBEE2MQTTPATCH']='/opt/zigbee2mqtt/';
+  $this->saveConfig();
+ }
+
+
+ if (!$this->config['MQTT_QUERY']) {
+  $this->config['MQTT_QUERY']='zigbee2mqtt/#';
+  $this->saveConfig();
+ }
+
+
+ if ($this->data_source=='mqtt' || $this->data_source=='') {
+//  if ($this->view_mode=='' || $this->view_mode=='search_mqtt') {
+   $this->search_mqtt($out);
+  }
+
+
+
+
+  if ($this->view_mode=='edit_mqtt') {
+   $this->edit_mqtt($out, $this->id);
+  }
+  if ($this->view_mode=='delete_mqtt') {
+   $this->delete_mqtt($this->id);
+   $this->redirect("?");
+  }
+     if ($this->view_mode=='clear_trash') {
+         $this->clear_trash();
+         $this->redirect("?");
+     }
+
+     if ($this->view_mode=='refresh_db') {
+         $this->refresh_db();
+         $this->redirect("?");
+     }
+
+
+
+
+
+
+
+
+
+ }
+
+
+function clear_trash() {
+    $res=SQLSelect("SELECT ID FROM zigbee2mqtt WHERE LINKED_OBJECT='' AND LINKED_PROPERTY=''");
+//    $res=SQLSelect("SELECT ID FROM zigbee2mqtt_devices WHERE LINKED_OBJECT='' AND LINKED_PROPERTY=''");
+    $total = count($res);
+    for ($i=0;$i<$total;$i++) {
+        $this->delete_mqtt($res[$i]['ID']);
+    }
+}
+
+
+function refresh_db() {
+ $this->getConfig();
+$zigbee2mqttpath=$this->config['ZIGBEE2MQTTPATH'];
+$filename=$zigbee2mqttpath.'/data/database.db';
+
+//echo 'hello';
+$a=file_get_contents ($filename);
+
+$settings = explode("\n", $a);
+
+    $total = count($settings);
+    for ($i=0;$i<$total;$i++) {
+	$json=json_decode($settings[$i]);
+        foreach ($json as $key=> $value) {if ($key=='type') {$type=$value;}}
+
+if ($type=='Coordinator') 
+{
+$sql="SELECT * FROM zigbee2mqtt_devices where TITLE='bridge'";
+    $res2=SQLSelectOne($sql);
+   foreach (json_decode($settings[$i]) as $key=> $value)
+{
+if ($key=='ieeeAddr') $res2['IEEEADDR']=$value;
+if ($key=='type') $res2['TYPE']=$value;
+$res2['MODEL']='cc2531';
+$res2['TYPE']='cc2531';
+$res2['MODELID']='cc2531';
+
+if ($key=='nwkAddr') $res2['NWKADDR']=$value;
+if ($key=='manufId') $res2['MANUFID']=$value;
+if ($key=='manufacturerName') $res2['MANUFNAME']=$value;
+if ($key=='powerSource') $res2['POWERSOURCE']=$value;
+if ($key=='modelId') $res2['MODEL']=$value;
+if ($key=='modelId') $res2['MODELID']=$value;
+if ($key=='status') $res2['STATUS']=$value;
+if ($key=='devId') $res2['DID']=$value;
+if ($key=='_id') $res2['D_ID']=$value;
+}
+//print_r($res2);
+SQLUPDATE('zigbee2mqtt_devices', $res2);
+}
+        foreach ($json as $key=> $value) {if ($key=='ieeeAddr') $cdev=$value;	  }
+//devices
+$sql="SELECT * FROM zigbee2mqtt_devices where IEEEADDR='$cdev'";
+debmes($sql,'zigbee2mqtt');
+    $res=SQLSelectOne($sql);
+     if($res['ID']) 
+{ /* If path_write foud in db */
+
+        foreach ($json as $key=> $value) {
+if ($key=='type') $res['TYPE']=$value;
+if ($key=='nwkAddr') $res['NWKADDR']=$value;
+if ($key=='manufId') $res['MANUFID']=$value;
+if ($key=='manufName') $res['MANUFNAME']=$value;
+if ($key=='powerSource') $res['POWERSOURCE']=$value;
+if ($key=='modelId') $res['MODEL']=$value;
+if ($key=='modelId') $res['MODELID']=$value;
+if ($key=='status') $res['STATUS']=$value;
+if ($key=='devId') $res['DID']=$value;
+if ($key=='_id') $res['D_ID']=$value;
+}
+SQLUPDATE('zigbee2mqtt_devices', $res);
+      }
+$this->updateparrent();
+//debmes('123', 'zigbee2mqtt');
+}
+
+}
+
+
+function updateparrent()
+{
+$maparray=SQLSelectOne ('select * from zigbee2mqtt where TITLE="zigbee2mqtt/bridge/networkmap/raw"');
+$map=$maparray['VALUE'];
+debmes($map, 'zigbee2mqtt');
+
+$json1=json_decode($map);
+
+    $total = count($json1);
+debmes($total, 'zigbee2mqtt');
+
+    for ($ij=0;$ij<$total;$ij++) {
+//$str=$json1[$ij]['ieeeAddr'].":".$json1[$ij]['nwkAddr'];
+$str=$json1[$ij];
+
+$ieeeAddr=$str->{'ieeeAddr'};
+$parent=$str->{'parent'};
+$status=$str->{'status'};
+$nwkAddr=$str->{'nwkAddr'};
+$lqi=$str->{'lqi'};
+
+debmes($ieeeAddr.":".$parent, 'zigbee2mqtt');
+
+$defaultiee=SQLSelectOne ("select * from zigbee2mqtt_devices where TITLE='bridge'")['IEEEADDR'];
+
+debmes('default:'.$defaultiee, 'zigbee2mqtt');
+
+$rec3=SQLSelectOne ("select * from zigbee2mqtt_devices where IEEEADDR='$ieeeAddr'");
+if   ($rec3) 
+{
+if (strlen($parent)>3)  {$rec3['PARRENTIEEEADDR']=$parent;} else {   $rec3['PARRENTIEEEADDR']=$defaultiee; }
+$rec3['LQI']=$lqi;
+$rec3['STATUS']=$status;
+$rec3['NWKADDR']=$nwkAddr;
+SQLUpdate(  'zigbee2mqtt_devices',$rec3); 
+
+
+}
+
+//var_dump( $str);
+// $json3= json_decode  ($str,true);
+
+//foreach ( $json3 as $key=>$value)
+//{debmes($key.":".$value, 'zigbee2mqtt');}
+
+
+
+}
+
+
+}
+
+/**
+* FrontEnd
+*
+* Module frontend
+*
+* @access public
+*/
+function usual(&$out) {
+    if ($this->ajax) {
+        global $op;
+        $result=array();
+        if ($op=='getvalues') {
+            global $ids;
+            if (!is_array($ids)) {
+                $ids=array(0);
+            } else {
+                $ids[]=0;
+            }
+            $data=SQLSelect("SELECT ID,VALUE FROM zigbee2mqtt WHERE ID IN (".implode(',',$ids).")");
+            $total = count($data);
+            for($i=0;$i<$total;$i++) {
+                $data[$i]['VALUE']=str_replace('":','": ',$data[$i]['VALUE']);
+            }
+            $result['DATA']=$data;
+        }
+        echo json_encode($result);
+        exit;
+    }
+ $this->admin($out);
+}
+/**
+* mqtt search
+*
+* @access public
+*/
+ function search_mqtt(&$out) {
+  require(DIR_MODULES.$this->name.'/mqtt_search.inc.php');
+ }
+/**
+* mqtt edit/add
+*
+* @access public
+*/
+ function edit_mqtt(&$out, $id) {
+  require(DIR_MODULES.$this->name.'/mqtt_edit.inc.php');
+ }
+
+ function propertySetHandle($object, $property, $value) {
+
+
+   $mqtt_properties=SQLSelect("SELECT * FROM zigbee2mqtt WHERE LINKED_OBJECT LIKE '".DBSafe($object)."' AND LINKED_PROPERTY LIKE '".DBSafe($property)."'");
+   $total=count($mqtt_properties);
+debmes($object.":". $property.":". $value. ' РЅР°Р№РґРµРЅРѕ СЂРµР·СѓР»СЊС‚Р°С‚РѕРІ '. $total, 'zigbee2mqtt');
+
+   if ($total) {
+    for($i=0;$i<$total;$i++) {
+     debmes('Р—Р°РїСѓСЃРєР°РµРј setProperty '. $mqtt_properties[$i]['ID'].":".$value, 'zigbee2mqtt');
+     $this->setProperty($mqtt_properties[$i]['ID'], $value);
+    }
+   }  
+ }
+    
+
+/**
+* mqtt delete record
+*
+* @access public
+*/
+ function delete_mqtt($id) {
+
+//debmes("SELECT * FROM zigbee2mqtt WHERE DEV_ID='$id'",'zigbee2mqtt');
+//  $rec=SQLSelectOne("SELECT * FROM zigbee2mqtt WHERE DEV_ID='$id'");
+  // some action for related tables
+
+//debmes("DELETE FROM zigbee2mqtt WHERE DEV_ID='".$rec['DEV_ID']."'",'zigbee2mqtt');
+debmes("DELETE FROM zigbee2mqtt_devices WHERE DEV_ID='".$id."'", 'zigbee2mqtt');
+  SQLExec("DELETE FROM zigbee2mqtt_devices WHERE DEV_ID='".$id."'");
+debmes("DELETE FROM zigbee2mqtt_devices WHERE ID='".$id."'", 'zigbee2mqtt');
+  SQLExec("DELETE FROM zigbee2mqtt_devices WHERE ID='".$id."'");
+
+ }
+/**
+* Install
+*
+* Module installation routine
+*
+* @access private
+*/
+ function install($data='') {
+  parent::install();
+ }
+/**
+* Uninstall
+*
+* Module uninstall routine
+*
+* @access public
+*/
+
+
+
+
+function get_map(){
+  include_once("./lib/mqtt/phpMQTT.php");
+
+   $this->getConfig();
+   if ($mqtt->config['MQTT_CLIENT']) {
+    $client_name=$mqtt->config['MQTT_CLIENT'];
+   } else {
+    $client_name="MajorDoMo MQTT";
+   }
+
+   if ($this->config['MQTT_AUTH']) {
+    $username=$this->config['MQTT_USERNAME'];
+    $password=$this->config['MQTT_PASSWORD'];
+   }
+   if ($this->config['MQTT_HOST']) {
+    $host=$this->config['MQTT_HOST'];
+   } else {
+    $host='localhost';
+   }
+   if ($this->config['MQTT_PORT']) {
+    $port=$this->config['MQTT_PORT'];
+   } else {
+    $port=1883;
+   }
+
+   $mqtt_client = new phpMQTT($host, $port, $client_name.' Client');
+
+   if(!$mqtt_client->connect(true, NULL,$username,$password))
+   {
+    return 0;
+   }
+
+
+debmes('Р—Р°РїСЂР°С€РёРІР°РµРј РєР°СЂС‚Сѓ ', 'zigbee2mqtt');
+
+
+
+
+//   $mqtt_client->publish('zigbee2mqtt/bridge/networkmap','graphviz');
+   $mqtt_client->publish('zigbee2mqtt/bridge/networkmap','raw');
+   //$mqtt_client->publish($rec['PATH_WRITE'].'/set',$jsonvalue, (int)$rec['QOS'], (int)$rec['RETAIN']);
+
+
+   $mqtt_client->close();
+}
+
+
+ function uninstall() {
+  SQLExec('DROP TABLE IF EXISTS zigbee2mqtt');
+  SQLExec('DROP TABLE IF EXISTS zigbee2mqtt_devices');
+  SQLExec('DROP TABLE IF EXISTS zigbee2mqtt_devices_list');
+  SQLExec('DROP TABLE IF EXISTS zigbee2mqtt_devices_command');
+   
+  parent::uninstall();
+ }
+/**
+* dbInstall
+*
+* Database installation routine
+*
+* @access private
+*/
+ function dbInstall($data) {
+/*
+mqtt - MQTT
+*/
+
+
+
+ SQLExec("DROP PROCEDURE IF EXISTS SPLIT_STRING") ;
+ SQLExec("CREATE FUNCTION IF NOT EXISTS  SPLIT_STRING(str VARCHAR(255), delim VARCHAR(12), pos INT) RETURNS VARCHAR(255) RETURN REPLACE(SUBSTRING(SUBSTRING_INDEX(str, delim, pos),        LENGTH(SUBSTRING_INDEX(str, delim, pos-1)) + 1),        delim, '');");
+
+
+
+  $data = <<<EOD
+
+ zigbee2mqtt_devices: ID int(10) unsigned NOT NULL auto_increment
+ zigbee2mqtt_devices: TITLE varchar(100) NOT NULL DEFAULT ''
+
+ zigbee2mqtt_devices: ONLINE varchar(100) NOT NULL DEFAULT ''
+ zigbee2mqtt_devices: MANUFACTURE varchar(100) NOT NULL DEFAULT ''
+ zigbee2mqtt_devices: DEVICE_NAME varchar(100) NOT NULL DEFAULT ''
+ zigbee2mqtt_devices: MODEL varchar(100) NOT NULL DEFAULT ''
+ zigbee2mqtt_devices: TYPE varchar(100) NOT NULL DEFAULT ''
+ zigbee2mqtt_devices: LASTPING varchar(100) NOT NULL DEFAULT ''
+ zigbee2mqtt_devices: IEEEADDR varchar(100) NOT NULL DEFAULT ''
+ zigbee2mqtt_devices: PARRENTIEEEADDR varchar(100) NOT NULL DEFAULT ''
+ zigbee2mqtt_devices: LQI varchar(100) NOT NULL DEFAULT ''
+ zigbee2mqtt_devices: NWKADDR varchar(100) NOT NULL DEFAULT ''
+ zigbee2mqtt_devices: MANUFID varchar(100) NOT NULL DEFAULT ''
+ zigbee2mqtt_devices: MANUFNAME varchar(100) NOT NULL DEFAULT ''
+ zigbee2mqtt_devices: POWERSOURCE varchar(100) NOT NULL DEFAULT ''
+ zigbee2mqtt_devices: MODELID varchar(100) NOT NULL DEFAULT ''
+ zigbee2mqtt_devices: STATUS varchar(100) NOT NULL DEFAULT ''
+ zigbee2mqtt_devices: JOINTIME varchar(100) NOT NULL DEFAULT ''
+ zigbee2mqtt_devices: DID varchar(100) NOT NULL DEFAULT ''
+ zigbee2mqtt_devices: D_ID varchar(100) NOT NULL DEFAULT ''
+ zigbee2mqtt_devices: FIND datetime
+ zigbee2mqtt_devices: LOCATION_ID int(10) NOT NULL DEFAULT '0'
+
+ zigbee2mqtt_devices_list: ID int(10) unsigned NOT NULL auto_increment
+ zigbee2mqtt_devices_list: zigbeeModel varchar(100) NOT NULL DEFAULT ''
+ zigbee2mqtt_devices_list: model varchar(100) NOT NULL DEFAULT ''
+ zigbee2mqtt_devices_list: vendor varchar(100) NOT NULL DEFAULT ''
+ zigbee2mqtt_devices_list: type varchar(100) NOT NULL DEFAULT ''
+ zigbee2mqtt_devices_list: description varchar(300) NOT NULL DEFAULT ''
+ zigbee2mqtt_devices_list: extend varchar(100) NOT NULL DEFAULT ''
+ zigbee2mqtt_devices_list: supports varchar(100) NOT NULL DEFAULT ''
+ zigbee2mqtt_devices_list: fromZigbee varchar(300) NOT NULL DEFAULT ''
+ zigbee2mqtt_devices_list: toZigbee varchar(300) NOT NULL DEFAULT ''
+
+ zigbee2mqtt_devices_command: ID int(10) unsigned NOT NULL auto_increment
+ zigbee2mqtt_devices_command: zigbeeModel varchar(100) NOT NULL DEFAULT ''
+ zigbee2mqtt_devices_command: type varchar(100) NOT NULL DEFAULT ''
+ zigbee2mqtt_devices_command: device_class varchar(100) NOT NULL DEFAULT ''
+ zigbee2mqtt_devices_command: value_template varchar(300) NOT NULL DEFAULT ''
+ zigbee2mqtt_devices_command: json_attributes varchar(300) NOT NULL DEFAULT ''
+ zigbee2mqtt_devices_command: state_topic varchar(300) NOT NULL DEFAULT ''
+ zigbee2mqtt_devices_command: availability_topic varchar(300) NOT NULL DEFAULT ''
+ zigbee2mqtt_devices_command: command_topic varchar(300) NOT NULL DEFAULT ''
+ zigbee2mqtt_devices_command: payload_on varchar(300) NOT NULL DEFAULT ''
+ zigbee2mqtt_devices_command: payload_off varchar(300) NOT NULL DEFAULT ''
+ zigbee2mqtt_devices_command: force_update varchar(100) NOT NULL DEFAULT ''
+ zigbee2mqtt_devices_command: brightness varchar(100) NOT NULL DEFAULT ''
+ zigbee2mqtt_devices_command: color_temp varchar(100) NOT NULL DEFAULT ''
+ zigbee2mqtt_devices_command: xy varchar(100) NOT NULL DEFAULT ''
+ zigbee2mqtt_devices_command: unit_of_measurement varchar(300) NOT NULL DEFAULT ''
+
+
+
+ zigbee2mqtt: ID int(10) unsigned NOT NULL auto_increment
+ zigbee2mqtt: TITLE varchar(255) NOT NULL DEFAULT ''
+ zigbee2mqtt: LOCATION_ID int(10) NOT NULL DEFAULT '0'
+ zigbee2mqtt: UPDATED datetime
+ zigbee2mqtt: VALUE varchar(1000) NOT NULL DEFAULT ''
+ zigbee2mqtt: PATH varchar(255) NOT NULL DEFAULT ''
+ zigbee2mqtt: METRIKA varchar(255) NOT NULL DEFAULT ''
+ zigbee2mqtt: PATH_WRITE varchar(255) NOT NULL DEFAULT ''
+ zigbee2mqtt: REPLACE_LIST varchar(255) NOT NULL DEFAULT ''
+ zigbee2mqtt: LINKED_OBJECT varchar(255) NOT NULL DEFAULT ''
+ zigbee2mqtt: LINKED_PROPERTY varchar(255) NOT NULL DEFAULT ''
+ zigbee2mqtt: LINKED_METHOD varchar(255) NOT NULL DEFAULT ''
+ zigbee2mqtt: QOS int(3) NOT NULL DEFAULT '0'
+ zigbee2mqtt: RETAIN int(3) NOT NULL DEFAULT '0'
+ zigbee2mqtt: CONVERTONOFF int(3) NOT NULL DEFAULT '0'
+ zigbee2mqtt: DEV_ID int(5) NOT NULL DEFAULT '0'
+ zigbee2mqtt: DISP_FLAG int(3) NOT NULL DEFAULT '0'
+EOD;
+  parent::dbInstall($data);
+
+  require(DIR_MODULES.$this->name.'/database1.inc.php');
+  require(DIR_MODULES.$this->name.'/database2.inc.php');
+
+
+   
+
+}
+
+
+
+
+
+
+
+ 
+// --------------------------------------------------------------------
+}
+/*
+*
+* TW9kdWxlIGNyZWF0ZWQgSnVsIDE5LCAyMDEzIHVzaW5nIFNlcmdlIEouIHdpemFyZCAoQWN0aXZlVW5pdCBJbmMgd3d3LmFjdGl2ZXVuaXQuY29tKQ==
+*
+*/
 ?>
-
