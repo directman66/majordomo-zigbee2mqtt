@@ -460,7 +460,7 @@ $out['DEVICE_LIST']=$res;
 }
 
 
-     if ($this->tab=='edit_device'||$this->tab=='view_det') {
+     if ($this->tab=='edit_device'||$this->tab=='view_det'||$this->tab=='edit_parametrs') {
 
 //if ( $this->TAB=='edit_device') {
 //$vm=$this->VIEW_MODE;
