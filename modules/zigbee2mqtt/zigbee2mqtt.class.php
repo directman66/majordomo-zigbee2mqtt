@@ -1153,7 +1153,8 @@ mqtt - MQTT
 EOD;
   parent::dbInstall($data);
 
-  require(DIR_MODULES.$this->name.'/database.inc.php');
+  require(DIR_MODULES.$this->name.'/database1.inc.php');
+  require(DIR_MODULES.$this->name.'/database2.inc.php');
 
 
    
