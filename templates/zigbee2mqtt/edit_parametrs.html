@@ -102,7 +102,7 @@
 [#if !command_topic=""#]command_topic:    &nbsp&nbsp&nbsp [#command_topic#] <br>[#endif#]
 
 
-[#if !state_topic=""#]state_topic:    &nbsp&nbsp&nbsp [#state_topic#] [#endif#]
+[#if !state_topic=""#]state_topic:    &nbsp&nbsp&nbsp [#state_topic#]/[#METRIKA#] [#endif#]
 </small></small>
 
  </td>
@@ -120,7 +120,7 @@
  <td width="1%" nowrap>
   
   [#if "<#ACTION#>"=="admin"#]
-   <a href="?view_mode=edit_mqtt&id=[#ID#]" class="btn btn-default btn-sm" title="<#LANG_EDIT#>"><i class="glyphicon glyphicon-pencil"></i></a>
+   <a href="?view_mode=edit_mqtt&id=[#zmID#]" class="btn btn-default btn-sm" title="<#LANG_EDIT#>"><i class="glyphicon glyphicon-pencil"></i></a>
     <a href="?view_mode=delete_mqtt&id=[#ID#]" onClick="return confirm('<#ARE_YOU_SURE#>')" class="btn btn-default btn-sm" title="<#LANG_DELETE#>"><i class="glyphicon glyphicon-remove"></i></a>
   [#endif ACTION#]
   
