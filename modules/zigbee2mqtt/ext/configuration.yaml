@@ -1,0 +1,15 @@
+homeassistant: false
+permit_join: true
+advanced:
+  channel: 26
+  log_level: debug
+  soft_reset_timeout: 3600
+mqtt:
+  base_topic: zigbee2mqtt
+  server: 'mqtt://192.168.1.39'
+serial:
+  port: /dev/ttyACM1
+devices:
+  '0x00158d0002c65d56':
+    friendly_name: '0x00158d0002c65d56'
+    retain: false
