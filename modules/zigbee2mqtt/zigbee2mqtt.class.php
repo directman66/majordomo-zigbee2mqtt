@@ -178,13 +178,13 @@ function run() {
 * @access public
 */
  function setProperty($id, $value, $set_linked=0) {
-debmes('РќСѓР¶РЅРѕ РёР·РјРµРЅРёС‚СЊ Р·РЅР°С‡РµРЅРёРµ id='.$id.' РЅР° '.$value, 'zigbee2mqtt');
+debmes('Нужно изменить значение id='.$id.' на '.$value, 'zigbee2mqtt');
 
 debmes("SELECT * FROM zigbee2mqtt WHERE ID='".$id."'", 'zigbee2mqtt');
   $rec=SQLSelectOne("SELECT * FROM zigbee2mqtt WHERE ID='".$id."'");
 
   if (!$rec['ID'] || !$rec['PATH']) {
-debmes('РќРµ С…РІР°С‚Р°РµС‚ РґР°РЅРЅС‹С…', 'zigbee2mqtt');
+debmes('Не хватает данных', 'zigbee2mqtt');
    return 0;
   }
 
@@ -230,7 +230,7 @@ debmes('РќРµ С…РІР°С‚Р°РµС‚ РґР°РЅРЅС‹С…', 'z
 
    if(!$mqtt_client->connect(true, NULL,$username,$password))
    {
-debmes('РћС€РёР±РєР° РїРѕРґРєР»СЋС‡РµРЅРёСЏ Рє mqtt', 'zigbee2mqtt');
+debmes('Ошибка подключения к mqtt', 'zigbee2mqtt');
     return 0;
    }
 
@@ -246,7 +246,7 @@ $jsonvalue=json_encode($json) ;
 $json=array( $rec['METRIKA']=> $value);
 $jsonvalue=json_encode($json) ;
 }
-debmes('РџСѓР±Р»РёРєСѓСЋ zigbee2mqqtt '.$rec['PATH_WRITE'].'/set'.":".$jsonvalue, 'zigbee2mqtt');
+debmes('Публикую zigbee2mqqtt '.$rec['PATH_WRITE'].'/set'.":".$jsonvalue, 'zigbee2mqtt');
 
 
    if ($rec['PATH_WRITE']) {
@@ -356,7 +356,7 @@ SQLUPDATE('zigbee2mqtt_devices', $rec);
      /* Insert new record in db */
      $rec['PATH']=$path;
      $rec['METRIKA']=substr($path,strrpos($path,'/')+1); 
-     $rec['PATH_WRITE']=substr($path,0,strrpos($path,'/')); 
+//     $rec['PATH_WRITE']=substr($path,0,strrpos($path,'/')); 
 //     $rec['METRIKA']="1"; 
      $rec['DEV_ID']=$dev_id;
      $rec['TITLE']=$path;
@@ -392,7 +392,7 @@ if ($rec['CONVERTONOFF']=='1' && $value=='ON') $newvalue=1;
 if ($rec['CONVERTONOFF']=='1' && $value=='OFF') $newvalue=0;
 
 
-//РїРёС€РµРј РІ РїРµСЂРµРјРµРЅРЅСѓСЋ
+//пишем в переменную
 //       setGlobal($rec['LINKED_OBJECT'].'.'.$rec['LINKED_PROPERTY'], $newvalue, array($this->name=>'0'));
      }
      if ($rec['LINKED_OBJECT'] && $cmd_rec['LINKED_METHOD']) {
@@ -563,7 +563,8 @@ $out['TOZIGBEE']=$res1['toZigbee'];
 
 
 
- if ($this->view_mode=='update_log') {
+// if (($this->view_mode=='update_log')&&($this->tab=='log')) {
+ if ($this->tab=='log') {
 
 // if ($this->update_log=='update_log') {
  $this->getConfig();
@@ -571,7 +572,39 @@ $out['TOZIGBEE']=$res1['toZigbee'];
 global $file;
 global $limit;
 $zigbee2mqttpath=$this->config['ZIGBEE2MQTTPATH'];
-$filename=$zigbee2mqttpath.'/data/log/'.$file.'/log.txt';
+if ($this->view_mode=='update_log') {$filename=$zigbee2mqttpath.'/data/log/'.$file.'/log.txt';} 
+else 
+
+{
+
+$zigbee2mqttpath=$this->config['ZIGBEE2MQTTPATH'];
+
+            $path = $zigbee2mqttpath.'/data/log';
+
+
+            if ($handle = opendir($path)) {
+                $files = array();
+
+                while (false !== ($entry = readdir($handle))) {
+                    if ($entry == '.' || $entry == '..')
+                        continue;
+
+                    $files[] = array('TITLE' => $entry);
+                }
+
+                sort($files);
+            }
+$cnt=count($files);
+
+//debmes($cnt,'zigbee2mqtt');
+debmes($files[$cnt-1]['TITLE'],'zigbee2mqtt');
+
+$lastfile=$files[$cnt-1]['TITLE'];
+$filename=$zigbee2mqttpath.'/data/log/'.$lastfile.'/log.txt';
+
+
+} 
+
 $out['FN']=$filename;
 //$out['FN']="1234";
 
@@ -953,11 +986,11 @@ function usual(&$out) {
 
    $mqtt_properties=SQLSelect("SELECT * FROM zigbee2mqtt WHERE LINKED_OBJECT LIKE '".DBSafe($object)."' AND LINKED_PROPERTY LIKE '".DBSafe($property)."'");
    $total=count($mqtt_properties);
-debmes($object.":". $property.":". $value. ' РЅР°Р№РґРµРЅРѕ СЂРµР·СѓР»СЊС‚Р°С‚РѕРІ '. $total, 'zigbee2mqtt');
+debmes($object.":". $property.":". $value. ' найдено результатов '. $total, 'zigbee2mqtt');
 
    if ($total) {
     for($i=0;$i<$total;$i++) {
-     debmes('Р—Р°РїСѓСЃРєР°РµРј setProperty '. $mqtt_properties[$i]['ID'].":".$value, 'zigbee2mqtt');
+     debmes('Запускаем setProperty '. $mqtt_properties[$i]['ID'].":".$value, 'zigbee2mqtt');
      $this->setProperty($mqtt_properties[$i]['ID'], $value);
     }
    }  
@@ -1036,7 +1069,7 @@ function get_map(){
    }
 
 
-debmes('Р—Р°РїСЂР°С€РёРІР°РµРј РєР°СЂС‚Сѓ ', 'zigbee2mqtt');
+debmes('Запрашиваем карту ', 'zigbee2mqtt');
 
 
 
