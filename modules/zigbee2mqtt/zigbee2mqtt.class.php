@@ -234,11 +234,26 @@ debmes('Ошибка подключения к mqtt', 'zigbee2mqtt');
     return 0;
    }
 
-
+/*
 if ($rec['CONVERTONOFF']=='1') {
 if ($value=='1')  $json=array( $rec['METRIKA']=> 'ON');
 if ($value=='0')  $json=array( $rec['METRIKA']=> 'OFF');
 $jsonvalue=json_encode($json) ;
+
+**/
+
+
+if (($rec['PAYLOAD_ON'])||$rec['PAYLOAD_ON']) {
+debmes('Подменяем '.$value. " на ". $rec['PAYLOAD_ON']."/".$rec['PAYLOAD_OFF'], 'zigbee2mqtt');
+
+//if (($rec['PAYLOAD_ON'])&& ($value=="1"))  $json=array( $rec['METRIKA']=> $rec['PAYLOAD_ON']);
+//if (($rec['PAYLOAD_OFF'])&& ($value=="0"))  $json=array( $rec['METRIKA']=> $rec['PAYLOAD_OFF']);
+
+if  ($value=="1") $json=array( $rec['METRIKA']=> $rec['PAYLOAD_ON']);
+if ($value=="0")  $json=array( $rec['METRIKA']=> $rec['PAYLOAD_OFF']);
+$jsonvalue=json_encode($json) ;
+
+debmes('Заменили  '.$value. "  на ". $jsonvalue, 'zigbee2mqtt');
 
 
 } else 
@@ -246,16 +261,16 @@ $jsonvalue=json_encode($json) ;
 $json=array( $rec['METRIKA']=> $value);
 $jsonvalue=json_encode($json) ;
 }
-debmes('Публикую zigbee2mqqtt '.$rec['PATH_WRITE'].'/set'.":".$jsonvalue, 'zigbee2mqtt');
+debmes('Публикую zigbee2mqqtt '.$rec['PATH_WRITE'].":".$jsonvalue, 'zigbee2mqtt');
 
 
    if ($rec['PATH_WRITE']) {
 
-   $mqtt_client->publish($rec['PATH_WRITE'].'/set',$jsonvalue, (int)$rec['QOS'], (int)$rec['RETAIN']);
+   $mqtt_client->publish($rec['PATH_WRITE'],$jsonvalue, (int)$rec['QOS'], (int)$rec['RETAIN']);
        
    }
 
-// else {    $mqtt_client->publish($rec['PATH'],$jsonvalue, (int)$rec['QOS'], (int)$rec['RETAIN']);   }
+// else {    $mqtt_client->publish($rec['PATH']."/",$jsonvalue, (int)$rec['QOS'], (int)$rec['RETAIN']);   }
    $mqtt_client->close();
 
   /*
@@ -993,8 +1008,12 @@ function usual(&$out) {
 
  function propertySetHandle($object, $property, $value) {
 
+debmes('Сработал propertySetHandle object:'.$object." property:". $property." value:". $value,  'zigbee2mqtt');
+$sql="SELECT * FROM zigbee2mqtt WHERE LINKED_OBJECT LIKE '".DBSafe($object)."' AND LINKED_PROPERTY LIKE '".DBSafe($property)."'";
+debmes($sql, 'zigbee2mqtt');
 
-   $mqtt_properties=SQLSelect("SELECT * FROM zigbee2mqtt WHERE LINKED_OBJECT LIKE '".DBSafe($object)."' AND LINKED_PROPERTY LIKE '".DBSafe($property)."'");
+
+   $mqtt_properties=SQLSelect($sql);
    $total=count($mqtt_properties);
 debmes($object.":". $property.":". $value. ' найдено результатов '. $total, 'zigbee2mqtt');
 
@@ -1193,6 +1212,13 @@ mqtt - MQTT
  zigbee2mqtt: CONVERTONOFF int(3) NOT NULL DEFAULT '0'
  zigbee2mqtt: DEV_ID int(5) NOT NULL DEFAULT '0'
  zigbee2mqtt: DISP_FLAG int(3) NOT NULL DEFAULT '0'
+ zigbee2mqtt: PAYLOAD_ON varchar(255) NOT NULL DEFAULT ''
+ zigbee2mqtt: PAYLOAD_OFF varchar(255) NOT NULL DEFAULT ''
+ zigbee2mqtt: PAYLOAD_TRUE varchar(255) NOT NULL DEFAULT ''
+ zigbee2mqtt: PAYLOAD_FALSE varchar(255) NOT NULL DEFAULT ''
+
+
+
 EOD;
   parent::dbInstall($data);
 
