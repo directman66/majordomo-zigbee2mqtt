@@ -608,7 +608,17 @@ $filename=$zigbee2mqttpath.'/data/log/'.$lastfile.'/log.txt';
 $out['FN']=$filename;
 //$out['FN']="1234";
 
-$a=file_get_contents ($filename);
+//$a=file_get_contents ($filename, null,null,1000);
+
+
+$tmp=file($filename); 
+$newtmp=array_reverse($tmp); 
+$a="";
+foreach ($newtmp as $value) 
+{ 
+$a.= $value; 
+} 
+
 $a =  str_replace( array("\r\n","\r","\n") , '<br>' , $a);
 $out['LOG']=$a;
 
