@@ -69,7 +69,7 @@ debmes($sql,'zigbee2mqtt');
    $rec['LINKED_METHOD']=$linked_method;
 
 
- debmes('Начинаем добавлять подписку ', 'zigbee2mqtt');
+ debmes('РќР°С‡РёРЅР°РµРј РґРѕР±Р°РІР»СЏС‚СЊ РїРѕРґРїРёСЃРєСѓ ', 'zigbee2mqtt');
   //UPDATING RECORD
    if ($ok) {
 
@@ -92,7 +92,7 @@ debmes($sql,'zigbee2mqtt');
 // echo "</script>";
 
 
-     debmes('Добавляем подписку '.$rec['LINKED_OBJECT'].$rec['LINKED_PROPERTY'].":". $this->name, 'zigbee2mqtt');
+     debmes('Р”РѕР±Р°РІР»СЏРµРј РїРѕРґРїРёСЃРєСѓ '.$rec['LINKED_OBJECT'].$rec['LINKED_PROPERTY'].":". $this->name, 'zigbee2mqtt');
      addLinkedProperty($rec['LINKED_OBJECT'], $rec['LINKED_PROPERTY'], $this->name);
     }
     if ($old_linked_object && $old_linked_object!=$rec['LINKED_OBJECT'] && $old_linked_property && $old_linked_property!=$rec['LINKED_PROPERTY']) {
