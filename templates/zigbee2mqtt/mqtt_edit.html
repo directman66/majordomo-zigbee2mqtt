@@ -48,6 +48,48 @@
  <div class="controls"><input  type="text" name="path_write" value="[#PATH_WRITE#]" class="input form-control" disabled></div>
 </div>
 
+[#if PAYLOAD_ON#]
+<div class="form-group">
+ <label class="control-label">
+ PAYLOAD_ON:
+ (*)
+ </label>
+ <div class="controls"><input  type="text" name="payload_on" value="[#PAYLOAD_ON#]" class="input form-control" disabled></div>
+</div>
+[#endif#]
+
+[#if PAYLOAD_OFF#]
+<div class="form-group">
+ <label class="control-label">
+ PAYLOAD_OFF:
+ (*)
+ </label>
+ <div class="controls"><input  type="text" name="payload_off" value="[#PAYLOAD_OFF#]" class="input form-control" disabled></div>
+</div>
+[#endif#]
+
+[#if PAYLOAD_TRUE#]
+<div class="form-group">
+ <label class="control-label">
+ PAYLOAD_TRUE:
+ (*)
+ </label>
+ <div class="controls"><input  type="text" name="payload_true" value="[#PAYLOAD_TRUE#]" class="input form-control" disabled></div>
+</div>
+[#endif#]
+
+[#if PAYLOAD_FALSE#]
+<div class="form-group">
+ <label class="control-label">
+ PAYLOAD_FALSE:
+ (*)
+ </label>
+ <div class="controls"><input  type="text" name="payload_false" value="[#PAYLOAD_FALSE#]" class="input form-control" disabled></div>
+</div>
+[#endif#]
+
+
+
 
 
 
@@ -84,6 +126,10 @@
  <input type="radio" name="convertonoff" value="1"[#if CONVERTONOFF="1"#] checked[#endif#]> <#LANG_YES#>
  </div>
 </div>
+
+
+
+
 
 
 <div class="form-group">
@@ -151,7 +197,7 @@
  [#else ID#]
  <button type="submit" name="subm" value="<#LANG_ADD#>" class="btn btn-defaul btn-primary"><#LANG_ADD#></button>
  [#endif ID#]
- <a href="?view_mode=view_mqtt&id=[#DEV_ID#]&tab=edit_data" class="btn btn-default"><#LANG_CANCEL#></a>
+ <a href="?view_mode=view_mqtt&id=[#DEV_ID#]&tab=edit_parametrs" class="btn btn-default"><#LANG_CANCEL#></a>
 
  [#if ID!=""#]
  &nbsp;&nbsp;&nbsp;
