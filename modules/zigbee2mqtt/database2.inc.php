@@ -506,7 +506,7 @@ $par2['unit_of_measurement'] = "";
 $par2['brightness'] = "";
 $par2['color_temp'] = "";
 $par2['xy'] = "";
-$par2['command_value'] = "";
+$par2['command_value'] = "state";
 SQLInsert('zigbee2mqtt_devices_command', $par2);
 
 
@@ -531,7 +531,7 @@ $par2['unit_of_measurement'] = "";
 $par2['brightness'] = "";
 $par2['color_temp'] = "";
 $par2['xy'] = "";
-$par2['command_value'] = "";
+$par2['command_value'] = "state";
 SQLInsert('zigbee2mqtt_devices_command', $par2);
 
 
@@ -699,7 +699,7 @@ $par2['unit_of_measurement'] = "";
 $par2['brightness'] = "";
 $par2['color_temp'] = "";
 $par2['xy'] = "";
-$par2['command_value'] = "";
+$par2['command_value'] = "state";
 SQLInsert('zigbee2mqtt_devices_command', $par2);
 
 
@@ -717,7 +717,7 @@ $par2['unit_of_measurement'] = "";
 $par2['brightness'] = "";
 $par2['color_temp'] = "";
 $par2['xy'] = "";
-$par2['command_value'] = "";
+$par2['command_value'] = "state";
 SQLInsert('zigbee2mqtt_devices_command', $par2);
 
 //QBKG03LM;
@@ -774,7 +774,7 @@ $par2['unit_of_measurement'] = "";
 $par2['brightness'] = "";
 $par2['color_temp'] = "";
 $par2['xy'] = "";
-$par2['command_value'] = "";
+$par2['command_value'] = "state";
 SQLInsert('zigbee2mqtt_devices_command', $par2);
 
 
@@ -793,7 +793,7 @@ $par2['unit_of_measurement'] = "";
 $par2['brightness'] = "";
 $par2['color_temp'] = "";
 $par2['xy'] = "";
-$par2['command_value'] = "";
+$par2['command_value'] = "state";
 SQLInsert('zigbee2mqtt_devices_command', $par2);
 
 
@@ -1993,7 +1993,7 @@ $par2['unit_of_measurement'] = "";
 $par2['brightness'] = "";
 $par2['color_temp'] = "";
 $par2['xy'] = "";
-$par2['command_value'] = "";
+$par2['command_value'] = "state";
 SQLInsert('zigbee2mqtt_devices_command', $par2);
 
 
@@ -2146,7 +2146,7 @@ $par2['unit_of_measurement'] = "";
 $par2['brightness'] = "";
 $par2['color_temp'] = "";
 $par2['xy'] = "";
-$par2['command_value'] = "";
+$par2['command_value'] = "state";
 SQLInsert('zigbee2mqtt_devices_command', $par2);
 
 
@@ -3165,7 +3165,7 @@ $par2['unit_of_measurement'] = "";
 $par2['brightness'] = "";
 $par2['color_temp'] = "";
 $par2['xy'] = "";
-$par2['command_value'] = "";
+$par2['command_value'] = "state";
 SQLInsert('zigbee2mqtt_devices_command', $par2);
 
 
@@ -4001,7 +4001,7 @@ $par2['unit_of_measurement'] = "";
 $par2['brightness'] = "";
 $par2['color_temp'] = "";
 $par2['xy'] = "";
-$par2['command_value'] = "";
+$par2['command_value'] = "state";
 SQLInsert('zigbee2mqtt_devices_command', $par2);
 
 
@@ -4246,7 +4246,7 @@ $par2['unit_of_measurement'] = "";
 $par2['brightness'] = "";
 $par2['color_temp'] = "";
 $par2['xy'] = "";
-$par2['command_value'] = "";
+$par2['command_value'] = "state";
 SQLInsert('zigbee2mqtt_devices_command', $par2);
 
 
@@ -4269,7 +4269,7 @@ $par2['unit_of_measurement'] = "";
 $par2['brightness'] = "";
 $par2['color_temp'] = "";
 $par2['xy'] = "";
-$par2['command_value'] = "";
+$par2['command_value'] = "state";
 SQLInsert('zigbee2mqtt_devices_command', $par2);
 
 
@@ -4288,7 +4288,7 @@ $par2['unit_of_measurement'] = "";
 $par2['brightness'] = "";
 $par2['color_temp'] = "";
 $par2['xy'] = "";
-$par2['command_value'] = "";
+$par2['command_value'] = "state";
 SQLInsert('zigbee2mqtt_devices_command', $par2);
 
 //DNCKATSW002;
@@ -4371,7 +4371,7 @@ $par2['unit_of_measurement'] = "";
 $par2['brightness'] = "";
 $par2['color_temp'] = "";
 $par2['xy'] = "";
-$par2['command_value'] = "";
+$par2['command_value'] = "state";
 SQLInsert('zigbee2mqtt_devices_command', $par2);
 
 
@@ -4390,7 +4390,7 @@ $par2['unit_of_measurement'] = "";
 $par2['brightness'] = "";
 $par2['color_temp'] = "";
 $par2['xy'] = "";
-$par2['command_value'] = "";
+$par2['command_value'] = "state";
 SQLInsert('zigbee2mqtt_devices_command', $par2);
 
 
@@ -4409,7 +4409,7 @@ $par2['unit_of_measurement'] = "";
 $par2['brightness'] = "";
 $par2['color_temp'] = "";
 $par2['xy'] = "";
-$par2['command_value'] = "";
+$par2['command_value'] = "state";
 SQLInsert('zigbee2mqtt_devices_command', $par2);
 
 //DNCKATSW003;
@@ -4507,7 +4507,7 @@ $par2['unit_of_measurement'] = "";
 $par2['brightness'] = "";
 $par2['color_temp'] = "";
 $par2['xy'] = "";
-$par2['command_value'] = "";
+$par2['command_value'] = "state";
 SQLInsert('zigbee2mqtt_devices_command', $par2);
 
 
@@ -4526,7 +4526,7 @@ $par2['unit_of_measurement'] = "";
 $par2['brightness'] = "";
 $par2['color_temp'] = "";
 $par2['xy'] = "";
-$par2['command_value'] = "";
+$par2['command_value'] = "state";
 SQLInsert('zigbee2mqtt_devices_command', $par2);
 
 
@@ -4545,7 +4545,7 @@ $par2['unit_of_measurement'] = "";
 $par2['brightness'] = "";
 $par2['color_temp'] = "";
 $par2['xy'] = "";
-$par2['command_value'] = "";
+$par2['command_value'] = "state";
 SQLInsert('zigbee2mqtt_devices_command', $par2);
 
 
@@ -4564,7 +4564,7 @@ $par2['unit_of_measurement'] = "";
 $par2['brightness'] = "";
 $par2['color_temp'] = "";
 $par2['xy'] = "";
-$par2['command_value'] = "";
+$par2['command_value'] = "state";
 SQLInsert('zigbee2mqtt_devices_command', $par2);
 
 //DNCKATSW004;
@@ -4955,7 +4955,7 @@ $par2['unit_of_measurement'] = "";
 $par2['brightness'] = "";
 $par2['color_temp'] = "";
 $par2['xy'] = "";
-$par2['command_value'] = "";
+$par2['command_value'] = "state";
 SQLInsert('zigbee2mqtt_devices_command', $par2);
 
 
@@ -5672,7 +5672,7 @@ $par2['unit_of_measurement'] = "";
 $par2['brightness'] = "";
 $par2['color_temp'] = "";
 $par2['xy'] = "";
-$par2['command_value'] = "";
+$par2['command_value'] = "state";
 SQLInsert('zigbee2mqtt_devices_command', $par2);
 
 
@@ -5953,7 +5953,7 @@ $par2['unit_of_measurement'] = "";
 $par2['brightness'] = "";
 $par2['color_temp'] = "";
 $par2['xy'] = "";
-$par2['command_value'] = "";
+$par2['command_value'] = "state";
 SQLInsert('zigbee2mqtt_devices_command', $par2);
 
 
@@ -6233,7 +6233,7 @@ $par2['unit_of_measurement'] = "";
 $par2['brightness'] = "";
 $par2['color_temp'] = "";
 $par2['xy'] = "";
-$par2['command_value'] = "";
+$par2['command_value'] = "state";
 SQLInsert('zigbee2mqtt_devices_command', $par2);
 
 
@@ -6410,7 +6410,7 @@ $par2['unit_of_measurement'] = "";
 $par2['brightness'] = "";
 $par2['color_temp'] = "";
 $par2['xy'] = "";
-$par2['command_value'] = "";
+$par2['command_value'] = "state";
 SQLInsert('zigbee2mqtt_devices_command', $par2);
 
 
@@ -6435,7 +6435,7 @@ $par2['unit_of_measurement'] = "";
 $par2['brightness'] = "";
 $par2['color_temp'] = "";
 $par2['xy'] = "";
-$par2['command_value'] = "";
+$par2['command_value'] = "state";
 SQLInsert('zigbee2mqtt_devices_command', $par2);
 
 
@@ -6454,7 +6454,7 @@ $par2['unit_of_measurement'] = "";
 $par2['brightness'] = "";
 $par2['color_temp'] = "";
 $par2['xy'] = "";
-$par2['command_value'] = "";
+$par2['command_value'] = "state";
 SQLInsert('zigbee2mqtt_devices_command', $par2);
 
 
@@ -6474,7 +6474,7 @@ $par2['unit_of_measurement'] = "";
 $par2['brightness'] = "";
 $par2['color_temp'] = "";
 $par2['xy'] = "";
-$par2['command_value'] = "";
+$par2['command_value'] = "state";
 SQLInsert('zigbee2mqtt_devices_command', $par2);
 
 
@@ -6494,7 +6494,7 @@ $par2['unit_of_measurement'] = "";
 $par2['brightness'] = "";
 $par2['color_temp'] = "";
 $par2['xy'] = "";
-$par2['command_value'] = "";
+$par2['command_value'] = "state";
 SQLInsert('zigbee2mqtt_devices_command', $par2);
 
 //MG-AUWS01;
@@ -6512,7 +6512,7 @@ $par2['unit_of_measurement'] = "";
 $par2['brightness'] = "";
 $par2['color_temp'] = "";
 $par2['xy'] = "";
-$par2['command_value'] = "";
+$par2['command_value'] = "state";
 SQLInsert('zigbee2mqtt_devices_command', $par2);
 
 
@@ -6995,7 +6995,7 @@ $par2['unit_of_measurement'] = "";
 $par2['brightness'] = "";
 $par2['color_temp'] = "";
 $par2['xy'] = "";
-$par2['command_value'] = "";
+$par2['command_value'] = "state";
 SQLInsert('zigbee2mqtt_devices_command', $par2);
 
 
@@ -7150,7 +7150,7 @@ $par2['unit_of_measurement'] = "";
 $par2['brightness'] = "";
 $par2['color_temp'] = "";
 $par2['xy'] = "";
-$par2['command_value'] = "";
+$par2['command_value'] = "state";
 SQLInsert('zigbee2mqtt_devices_command', $par2);
 
 
@@ -7245,7 +7245,7 @@ $par2['unit_of_measurement'] = "";
 $par2['brightness'] = ""; 
 $par2['color_temp'] = "";
 $par2['xy'] = ""; 
-$par2['command_value'] = "";
+$par2['command_value'] = "state";
 SQLInsert('zigbee2mqtt_devices_command', $par2);
 
 
@@ -7410,7 +7410,7 @@ $par2['unit_of_measurement'] = "";
 $par2['brightness'] = "";
 $par2['color_temp'] = "";
 $par2['xy'] = "";
-$par2['command_value'] = "";
+$par2['command_value'] = "state";
 SQLInsert('zigbee2mqtt_devices_command', $par2);
 
 
@@ -7561,7 +7561,7 @@ $par2['device_class'] = "";
 $par2['unit_of_measurement'] = "";
 $par2['color_temp'] = "";
 $par2['xy'] = "";
-$par2['command_value'] = "";
+$par2['command_value'] = "state";
 SQLInsert('zigbee2mqtt_devices_command', $par2);
 
 //ZNLDP12LM ;
