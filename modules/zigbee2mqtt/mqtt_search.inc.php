@@ -213,6 +213,32 @@ $res[$i]['availability_topic']=str_replace('<FRIENDLY_NAME>',$ssql['IEEEADDR'],$
 $res[$i]['command_topic']=str_replace('<FRIENDLY_NAME>',$ssql['IEEEADDR'],$res[$i]['command_topic']);
 
 
+//if (($res[$i]['command_topic'])&& (!$res[$i]['PATH_WRITE'])) 
+{
+//$sql="update zigbee2mqtt set PATH_WRITE='".$res[$i]['command_topic']."/".$res[$i]['value_template']."' where ID='".$res[$i]['zmID']."'";
+$sql="update zigbee2mqtt set PATH_WRITE='".$res[$i]['command_topic']."' where ID='".$res[$i]['zmID']."'";
+debmes($sql, 'zigbee2mqtt');
+SQLExec ($sql);
+}
+
+
+if (($res[$i]['payload_on'])&& (!$res[$i]['PAYLOAD_ON'])) 
+{
+//$sql="update zigbee2mqtt set PATH_WRITE='".$res[$i]['command_topic']."/".$res[$i]['value_template']."' where ID='".$res[$i]['zmID']."'";
+$sql="update zigbee2mqtt set PAYLOAD_ON='".$res[$i]['payload_on']."' where ID='".$res[$i]['zmID']."'";
+debmes($sql, 'zigbee2mqtt');
+SQLExec ($sql);
+}
+
+if (($res[$i]['payload_off'])&& (!$res[$i]['PAYLOAD_OFF'])) 
+{
+//$sql="update zigbee2mqtt set PATH_WRITE='".$res[$i]['command_topic']."/".$res[$i]['value_template']."' where ID='".$res[$i]['zmID']."'";
+$sql="update zigbee2mqtt set PAYLOAD_OFF='".$res[$i]['payload_off']."' where ID='".$res[$i]['zmID']."'";
+debmes($sql, 'zigbee2mqtt');
+SQLExec ($sql);
+}
+
+
 
 //$res[$i]['value']="123";
 
@@ -312,5 +338,4 @@ $zigbee2mqttpath=$this->config['ZIGBEE2MQTTPATH'];
 
 
 ?>
-
 
