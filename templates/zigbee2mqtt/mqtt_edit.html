@@ -41,12 +41,22 @@
 </div>
 
 <div class="form-group">
- <label class="control-label"[#if ERR_METRIKA#] style="color:red;font-weight:bold"[#endif#]>
+ <label class="control-label">
  PATH_WRITE:
  (*)
  </label>
  <div class="controls"><input  type="text" name="path_write" value="[#PATH_WRITE#]" class="input form-control" disabled></div>
 </div>
+
+<div class="form-group">
+ <label class="control-label">
+ COMMAND_VALUE:
+ (*)
+ </label>
+ <div class="controls"><input  type="text" name="command_value" value="[#COMMAND_VALUE#]" class="input form-control" disabled></div>
+</div>
+
+
 
 [#if PAYLOAD_ON#]
 <div class="form-group">
