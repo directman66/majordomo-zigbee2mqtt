@@ -239,6 +239,16 @@ SQLExec ($sql);
 }
 
 
+if ($res[$i]['command_value']) 
+{
+//$sql="update zigbee2mqtt set PATH_WRITE='".$res[$i]['command_topic']."/".$res[$i]['value_template']."' where ID='".$res[$i]['zmID']."'";
+$sql="update zigbee2mqtt set COMMAND_VALUE='".$res[$i]['command_value']."' where ID='".$res[$i]['zmID']."'";
+debmes($sql, 'zigbee2mqtt');
+SQLExec ($sql);
+}
+
+
+
 
 //$res[$i]['value']="123";
 
