@@ -249,8 +249,8 @@ debmes('Подменяем '.$value. " на ". $rec['PAYLOAD_ON']."/".$rec['PAYL
 //if (($rec['PAYLOAD_ON'])&& ($value=="1"))  $json=array( $rec['METRIKA']=> $rec['PAYLOAD_ON']);
 //if (($rec['PAYLOAD_OFF'])&& ($value=="0"))  $json=array( $rec['METRIKA']=> $rec['PAYLOAD_OFF']);
 
-if  ($value=="1") $json=array( $rec['METRIKA']=> $rec['PAYLOAD_ON']);
-if ($value=="0")  $json=array( $rec['METRIKA']=> $rec['PAYLOAD_OFF']);
+if  ($value=="1") $json=array( $rec['COMMAND_VALUE']=> $rec['PAYLOAD_ON']);
+if ($value=="0")  $json=array( $rec['COMMAND_VALUE']=> $rec['PAYLOAD_OFF']);
 $jsonvalue=json_encode($json) ;
 
 debmes('Заменили  '.$value. "  на ". $jsonvalue, 'zigbee2mqtt');
@@ -258,7 +258,7 @@ debmes('Заменили  '.$value. "  на ". $jsonvalue, 'zigbee2mqtt');
 
 } else 
 {
-$json=array( $rec['METRIKA']=> $value);
+$json=array( $rec['COMMAND_VALUE']=> $value);
 $jsonvalue=json_encode($json) ;
 }
 debmes('Публикую zigbee2mqqtt '.$rec['PATH_WRITE'].":".$jsonvalue, 'zigbee2mqtt');
@@ -1210,6 +1210,7 @@ mqtt - MQTT
  zigbee2mqtt: PATH varchar(255) NOT NULL DEFAULT ''
  zigbee2mqtt: METRIKA varchar(255) NOT NULL DEFAULT ''
  zigbee2mqtt: PATH_WRITE varchar(255) NOT NULL DEFAULT ''
+ zigbee2mqtt: COMMAND_VALUE varchar(255) NOT NULL DEFAULT ''
  zigbee2mqtt: REPLACE_LIST varchar(255) NOT NULL DEFAULT ''
  zigbee2mqtt: LINKED_OBJECT varchar(255) NOT NULL DEFAULT ''
  zigbee2mqtt: LINKED_PROPERTY varchar(255) NOT NULL DEFAULT ''
