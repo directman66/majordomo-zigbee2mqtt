@@ -243,7 +243,7 @@ $jsonvalue=json_encode($json) ;
 **/
 
 
-if (($rec['PAYLOAD_ON'])||$rec['PAYLOAD_ON']) {
+if (($rec['PAYLOAD_ON'])||$rec['PAYLOAD_OFF']) {
 debmes('Подменяем '.$value. " на ". $rec['PAYLOAD_ON']."/".$rec['PAYLOAD_OFF'], 'zigbee2mqtt');
 
 //if (($rec['PAYLOAD_ON'])&& ($value=="1"))  $json=array( $rec['METRIKA']=> $rec['PAYLOAD_ON']);
@@ -290,9 +290,9 @@ debmes('Публикую zigbee2mqqtt '.$rec['PATH_WRITE'].":".$jsonvalue, 'zigb
   SQLUpdate('zigbee2mqtt', $rec);
 
 
-  if ($set_linked && $rec['LINKED_OBJECT'] && $rec['LINKED_PROPERTY']) {
-   setGlobal($rec['LINKED_OBJECT'].'.'.$rec['LINKED_PROPERTY'], $value, array($this->name=>'0'));
-  }
+//  if ($set_linked && $rec['LINKED_OBJECT'] && $rec['LINKED_PROPERTY']) {
+//   setGlobal($rec['LINKED_OBJECT'].'.'.$rec['LINKED_PROPERTY'], $value, array($this->name=>'0'));
+//  }
 
  }
 
@@ -304,6 +304,8 @@ debmes('Публикую zigbee2mqqtt '.$rec['PATH_WRITE'].":".$jsonvalue, 'zigb
 * @access public
 */
  function processMessage($path, $value) {
+
+debmes('Сработал processMessage :'.$path." value:". $value,'zigbee2mqtt');
    if (preg_match('/\#$/', $path)) {
     return 0;
    }
@@ -402,13 +404,17 @@ SQLInsert('zigbee2mqtt', $rec);
              }
          }
 
-
-if ($rec['CONVERTONOFF']=='1' && $value=='ON') $newvalue=1;
-if ($rec['CONVERTONOFF']=='1' && $value=='OFF') $newvalue=0;
-
+if (($rec['PAYLOAD_ON'])||$rec['PAYLOAD_OFF']) {
+if ($value==$rec['PAYLOAD_ON'])  $newvalue=1;
+if ($value==$rec['PAYLOAD_OFF'])  $newvalue=0;
+debmes('Заменили  '.$value. "  на ". $newvalue, 'zigbee2mqtt');
+} 
 
 //пишем в переменную
 //       setGlobal($rec['LINKED_OBJECT'].'.'.$rec['LINKED_PROPERTY'], $newvalue, array($this->name=>'0'));
+
+debmes('Вызываю setglobal: value:'.$rec['LINKED_OBJECT'].'.'.$rec['LINKED_PROPERTY'].' value:'. $newvalue,'zigbee2mqtt');
+       setGlobal($rec['LINKED_OBJECT'].'.'.$rec['LINKED_PROPERTY'], $newvalue, array('zigbee2mqtt'=>'0'));
      }
      if ($rec['LINKED_OBJECT'] && $cmd_rec['LINKED_METHOD']) {
        callMethod($rec['LINKED_OBJECT'] . '.' . $rec['LINKED_METHOD'], $rec['VALUE']);
@@ -1181,6 +1187,7 @@ mqtt - MQTT
  zigbee2mqtt_devices_command: type varchar(100) NOT NULL DEFAULT ''
  zigbee2mqtt_devices_command: device_class varchar(100) NOT NULL DEFAULT ''
  zigbee2mqtt_devices_command: value_template varchar(300) NOT NULL DEFAULT ''
+ zigbee2mqtt_devices_command: command_value varchar(300) NOT NULL DEFAULT ''
  zigbee2mqtt_devices_command: json_attributes varchar(300) NOT NULL DEFAULT ''
  zigbee2mqtt_devices_command: state_topic varchar(300) NOT NULL DEFAULT ''
  zigbee2mqtt_devices_command: availability_topic varchar(300) NOT NULL DEFAULT ''
