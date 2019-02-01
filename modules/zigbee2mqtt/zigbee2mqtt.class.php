@@ -11,6 +11,8 @@
 */
 //
 //
+ini_set ('display_errors', 'off');
+
 class zigbee2mqtt extends module {
 /**
 * mqtt
@@ -328,11 +330,12 @@ $arr=sqlselectone('select * from  zigbee2mqtt_devices where TITLE="bridge"');
 
 if ($arr['IEEEADDR']) {$dev_title=$arr['IEEEADDR'];} else  {$dev_title='bridge';}
 
-
 }
 //echo $path.":".$dev_title."<br>";
 
 //if (strpos($dev_title,"/set/")==0)
+
+//если нет в пути параметра set, управляющие свои значения нам не нужны
 if (strpos($path,"set")===false)
 {
      $rec=SQLSelectOne("SELECT * FROM zigbee2mqtt_devices WHERE IEEEADDR LIKE '%".DBSafe($dev_title)."%'");
@@ -352,24 +355,30 @@ else
      $rec['FIND']=date('Y-m-d H:i:s');
 SQLUPDATE('zigbee2mqtt_devices', $rec);
 
+} }
+else 
+{
+debmes('путь содержит set, его мы записывать не будем', 'zigbee2mqtt');
 }
-       $dev_id=SQLSelectOne("SELECT * FROM zigbee2mqtt_devices WHERE TITLE LIKE '%".DBSafe($dev_title)."%'")['ID'];
 
 
-
+   $dev_id=SQLSelectOne("SELECT * FROM zigbee2mqtt_devices WHERE TITLE LIKE '%".DBSafe($dev_title)."%'")['ID'];
 
 
    $rec=SQLSelectOne("SELECT * FROM zigbee2mqtt WHERE PATH LIKE '".DBSafe($path)."'");
+
    
    if(!$rec['ID']){ /* If 'PATH' not found in db */
-     /* New query to search 'PATH_WRITE' record in db */
+     /* New query to search 'PATH_WRITE' record in db *//*
      $rec=SQLSelectOne("SELECT * FROM zigbee2mqtt WHERE PATH LIKE '".DBSafe($path)."'");
      
-     if($rec['ID']) { /* If path_write foud in db */
-       if($rec['DISP_FLAG']!="0"){ /* check disp_flag */
-         return 0; /* ignore message if flag checked */
+     if($rec['ID']) { /* If path_write foud in db */      /*
+       if($rec['DISP_FLAG']!="0"){ /* check disp_flag */    /*
+         return 0; /* ignore message if flag checked */       /*
        }
      }
+
+*/
      /* Insert new record in db */
      $rec['PATH']=$path;
      $rec['METRIKA']=substr($path,strrpos($path,'/')+1); 
@@ -408,7 +417,8 @@ if (($rec['PAYLOAD_ON'])||$rec['PAYLOAD_OFF']) {
 if ($value==$rec['PAYLOAD_ON'])  $newvalue=1;
 if ($value==$rec['PAYLOAD_OFF'])  $newvalue=0;
 debmes('Заменили  '.$value. "  на ". $newvalue, 'zigbee2mqtt');
-} 
+}  else 
+{$newvalue=$value;}
 
 //пишем в переменную
 //       setGlobal($rec['LINKED_OBJECT'].'.'.$rec['LINKED_PROPERTY'], $newvalue, array($this->name=>'0'));
@@ -426,7 +436,7 @@ debmes('Вызываю setglobal: value:'.$rec['LINKED_OBJECT'].'.'.$rec['LINKED
 
 
 
- }
+// }
 
 /**
 * BackEnd
@@ -439,6 +449,12 @@ function admin(&$out) {
  if (isset($this->data_source) && !$_GET['data_source'] && !$_POST['data_source']) {
   $out['SET_DATASOURCE']=1;
  }
+
+        if ((time() - gg('cycle_zigbee2mqttRun')) < 360*2 ) {
+			$out['CYCLERUN'] = 1;
+		} else {
+			$out['CYCLERUN'] = 0;
+		}
 
  $this->getConfig();
  $out['MQTT_CLIENT']=$this->config['MQTT_CLIENT'];
@@ -699,8 +715,18 @@ $out['status']=$a;
  if ($this->tab=='map') {
 
   require(DIR_MODULES.$this->name.'/map.inc.php');
+//   $this-redirect("?tab=map");
+//   $this->redirect("?tab=map");
 
-///   $this->redirect("?data_source=&view_mode=&id=&tab=map");
+//   $this->redirect("?data_source=&view_mode=&id=&tab=map");
+}
+
+
+// if ($this-tab=='map') {
+//global $tab;
+ if (tab=='map') {
+
+   $this->redirect("?tab=map");
 }
 
 
@@ -739,6 +765,7 @@ $out['status']=$a;
    $this->get_map();
    $this->redirect("?tab=map");
 }
+
 
 
 
