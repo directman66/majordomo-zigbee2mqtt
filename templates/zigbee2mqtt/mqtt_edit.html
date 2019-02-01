@@ -1,188 +1,224 @@
 
-
-
-
-[#if MODELNAME#]
-
-   <a href="https://koenkk.github.io/zigbee2mqtt/integration/home_assistant.html#[#MODELNAME#]" target="_blank">
-
-
-<img src="../templates/zigbee2mqtt/img/[#MODELNAME#].jpg"   class="img-rounded" height="70" width="70" title="[#DESCRIPTION#]">
-</a>
-[#endif#]
-
-
-[#MODELNAME#] ([#TITLE#])
-
-
-&nbsp;
-
-
-&nbsp;
-
-<!-- results -->
-[#if RESULT#]
-<!-- paging -->
-[#if PAGES#]
-<center>
-<ul class="pagination">
-  [#begin PREVPAGE#]<li><a href="?view_mode=<#VIEW_MODE#>&mode=<#MODE#>&save_qry=1&page=[#NUM#]">&laquo;</a></li>[#end PREVPAGE#]
-  [#begin PAGES#]
-  <li [#if SELECTED#]class="active"[#endif#]><a href="?view_mode=<#VIEW_MODE#>&mode=<#MODE#>&save_qry=1&page=[#NUM#]">[#NUM#]</a></li>
- [#end PAGES#]
-  [#begin NEXTPAGE#]<li><a href="?view_mode=<#VIEW_MODE#>&mode=<#MODE#>&save_qry=1&page=[#NUM#]">&raquo;</a></li>[#end NEXTPAGE#]
-</ul>
-</center>
-[#endif PAGES#]
-<!-- / paging -->
-<!-- search results (list) -->
-[#if TREE="1"#]
-<ul>
- [#begin RESULT#]
- <li style="list-style-type: none">
-
-
-
-[#type#]
-
-
-
- <span id="mqtt[#ID#]" class="mqtt_value">[#VALUE#]</span>
-
-  [#if LINKED_OBJECT!=""#]
-<i>
-([#LINKED_OBJECT#].[#LINKED_PROPERTY#])</i>[#endif LINKED_OBJECT#]
-  [#else#]<b>&bull;&nbsp;[#TITLE#]</b>[#endif#]
-  [#if RESULT#]<ul>[#tree RESULT#]</ul>[#endif RESULT#]
- </li>
- [#end RESULT#]
-</ul>
-[#else TREE#]
-<table   class="table table-stripped">
-<thead>
-<tr>
- <th>
- <a href="?sortby_mqtt=TITLE&save_qry=1"><#LANG_TITLE#></a><nobr>
- [#if SORTBY="TITLE"#](+)[#endif#]
- [#if SORTBY="TITLE DESC"#](-)[#endif#]</nobr>
- </th>
- <th>
- <#LANG_VALUE#>
- </th>
-
- <th>
- <#LANG_UPDATED#>
-
- </th>
-
- <th>
- <#LANG_VALUE#>
- </th>
-<th>&nbsp;</th>
-</tr>
-</thead>
-<tbody>
-[#begin RESULT#]
-<tr>
- <td>
-  <b>
-
-[#if !type=""#][#type#] :&nbsp
-[#endif#]
-[#if !value_template=""#]
-[#value_template#]  [#if !payload_on=""#]([#payload_on#],[#payload_off#]) [#endif#]
-
-[#else#]
-</b>
-[#METRIKA#]
-
-[#endif#]
-
-
-<br>
-<small><small></b>
-[#if !command_topic=""#]command_topic:    &nbsp&nbsp&nbsp [#command_topic#] <br>[#endif#]
-
-[#if !command_value=""#]command_value:    &nbsp&nbsp&nbsp [#command_value#] <br>[#endif#]
-
-
-
-[#if !state_topic=""#]state_topic:    &nbsp&nbsp&nbsp [#state_topic#]/[#METRIKA#] [#endif#]
-</small></small>
-
- </td>
-
- <td >
-  <span id="mqtt[#ID#]" class="mqtt_value">[#VALUE#]</span>
-  [#if LINKED_OBJECT!=""#]([#LINKED_OBJECT#].[#LINKED_PROPERTY#])[#endif LINKED_OBJECT#]
- </td> <td>
-  [#if UPDATED!=""#]
-   [#UPDATED#]
-  [#else#]
-   &nbsp;
-  [#endif#]
- </td>
- <td width="1%" nowrap>
-  
-  [#if "<#ACTION#>"=="admin"#]
-   <a href="?view_mode=edit_mqtt&id=[#zmID#]" class="btn btn-default btn-sm" title="<#LANG_EDIT#>"><i class="glyphicon glyphicon-pencil"></i></a>
-    <a href="?view_mode=delete_mqtt&id=[#ID#]" onClick="return confirm('<#ARE_YOU_SURE#>')" class="btn btn-default btn-sm" title="<#LANG_DELETE#>"><i class="glyphicon glyphicon-remove"></i></a>
-  [#endif ACTION#]
-  
- </td>
-</tr>
-[#end RESULT#]
-</tbody>
-</table>
-[#endif TREE#]
-<!-- / search results (list) -->
-<!-- paging -->
-[#if PAGES#]
-<center>
-<ul class="pagination">
-  [#begin PREVPAGE#]<li><a href="?view_mode=<#VIEW_MODE#>&mode=<#MODE#>&save_qry=1&page=[#NUM#]">&laquo;</a></li>[#end PREVPAGE#]
-  [#begin PAGES#]
-  <li [#if SELECTED#]class="active"[#endif#]><a href="?view_mode=<#VIEW_MODE#>&mode=<#MODE#>&save_qry=1&page=[#NUM#]">[#NUM#]</a></li>
- [#end PAGES#]
-  [#begin NEXTPAGE#]<li><a href="?view_mode=<#VIEW_MODE#>&mode=<#MODE#>&save_qry=1&page=[#NUM#]">&raquo;</a></li>[#end NEXTPAGE#]
-</ul>
-</center>
-[#endif PAGES#]
-<!-- / paging -->
-[#else RESULT#]
-<p>
-<div class="alert alert-danger"><#LANG_NO_RECORDS_FOUND#></div>
+<!-- Table 'mqtt' edit -->
+<p align=center>
+ <a href="?">&lt;&lt;&lt; <#LANG_BACK#></a>
 </p>
-[#endif RESULT#]
-<!-- / results -->
-<script type="text/javascript">
- var valuesUpdateTimeout=0;
- function getLatestValues() {
-  clearTimeout(valuesUpdateTimeout);
-  var ids='';
-  $('.mqtt_value').each(function () {
-   ids+='ids[]='+this.id.replace('mqtt','')+'&';
-  });
-  var url='/ajax/mqtt.html?op=getvalues&'+ids;
-  $.ajax({
-   url: url
-  }).done(function(data) {
-   var obj=jQuery.parseJSON(data);
-   if (obj.DATA.length>0) {
-    for(var i=0;i<obj.DATA.length;i++) {
-     var item_id=obj.DATA[i].ID;
-     var value = obj.DATA[i].VALUE;
-     var oldValue=$('#mqtt'+item_id).html();
-     $('#mqtt'+item_id).html(value);
-     if (value!=oldValue) {
-      $("#mqtt"+item_id).fadeTo(100, 0.1).fadeTo(200, 1.0);
-     }
-    }
-   }
-   valuesUpdateTimeout = setTimeout('getLatestValues()',2000);
-  });
- }
- valuesUpdateTimeout = setTimeout('getLatestValues()',2000);
-</script>
+<form action="?" method="post" enctype="multipart/form-data" name="frmEdit" class="form-horizontal">
+[#if OK#]
+<div class="alert alert-success"><#LANG_DATA_SAVED#></div>
+[#endif OK#]
+[#if ERR#]
+<div class="alert alert-error"><#LANG_FILLOUT_REQURED#></div>
+[#endif ERR#]
+<fieldset>
+[#if ID=""#]
+<legend><#LANG_NEW_RECORD#></legend>
+[#endif ID#]
+<!-- TITLE (varchar) -->
 
- <a href="?" class="btn btn-default"><#LANG_CANCEL#></a>
+<div class="form-group">
+ <label class="control-label"[#if ERR_METRIKA#] style="color:red;font-weight:bold"[#endif#]>
+ ID:
+ (*)
+ </label>
+ <div class="controls"><input  type="text" name="id" value="[#ID#]" class="input form-control" disabled></div>
+</div>
+
+<div class="form-group">
+ <label class="control-label"[#if ERR_METRIKA#] style="color:red;font-weight:bold"[#endif#]>
+ DEV_ID:
+ (*)
+ </label>
+ <div class="controls"><input  type="text" name="dev_id" value="[#DEV_ID#]" class="input form-control" disabled></div>
+</div>
+
+<div class="form-group">
+ <label class="control-label"[#if ERR_METRIKA#] style="color:red;font-weight:bold"[#endif#]>
+ Metrika:
+ (*)
+ </label>
+ <div class="controls"><input  type="text" name="metrika" value="[#METRIKA#]" class="input form-control" disabled></div>
+</div>
+
+<div class="form-group">
+ <label class="control-label">
+ PATH_WRITE:
+ (*)
+ </label>
+ <div class="controls"><input  type="text" name="path_write" value="[#PATH_WRITE#]" class="input form-control" disabled></div>
+</div>
+
+<div class="form-group">
+ <label class="control-label">
+ COMMAND_VALUE:
+ (*)
+ </label>
+ <div class="controls"><input  type="text" name="command_value" value="[#COMMAND_VALUE#]" class="input form-control" disabled></div>
+</div>
+
+
+
+[#if PAYLOAD_ON<>""#]
+<div class="form-group">
+ <label class="control-label">
+ PAYLOAD_ON:
+ (*)
+ </label>
+ <div class="controls"><input  type="text" name="payload_on" value="[#PAYLOAD_ON#]" class="input form-control" disabled></div>
+</div>
+[#endif#]
+
+[#if PAYLOAD_OFF<>""#]
+<div class="form-group">
+ <label class="control-label">
+ PAYLOAD_OFF:
+ (*)
+ </label>
+ <div class="controls"><input  type="text" name="payload_off" value="[#PAYLOAD_OFF#]" class="input form-control" disabled></div>
+</div>
+[#endif#]
+
+[#if PAYLOAD_TRUE<>""#]
+<div class="form-group">
+ <label class="control-label">
+ PAYLOAD_TRUE:
+ (*)
+ </label>
+ <div class="controls"><input  type="text" name="payload_true" value="[#PAYLOAD_TRUE#]" class="input form-control" disabled></div>
+</div>
+[#endif#]
+
+[#if PAYLOAD_FALSE<>""#]
+<div class="form-group">
+ <label class="control-label">
+ PAYLOAD_FALSE:
+ (*)
+ </label>
+ <div class="controls"><input  type="text" name="payload_false" value="[#PAYLOAD_FALSE#]" class="input form-control" disabled></div>
+</div>
+[#endif#]
+
+
+
+
+
+
+<div class="form-group">
+ <label class="control-label">
+ QoS:
+ (<#LANG_OPTIONAL#>)
+ </label>
+ <div class="controls">
+ <input type="radio" name="qos" value="0"[#if QOS="0"#] checked[#endif#]> 0
+ <input type="radio" name="qos" value="1"[#if QOS="1"#] checked[#endif#]> 1
+ <input type="radio" name="qos" value="2"[#if QOS="2"#] checked[#endif#]> 2
+ </div>
+</div>
+
+<div class="form-group">
+ <label class="control-label">
+ Retain:
+ (<#LANG_OPTIONAL#>)
+ </label>
+ <div class="controls">
+ <input type="radio" name="retain" value="0"[#if RETAIN!="1"#] checked[#endif#]> <#LANG_NO#>
+ <input type="radio" name="retain" value="1"[#if RETAIN="1"#] checked[#endif#]> <#LANG_YES#>
+ </div>
+</div>
+
+<div class="form-group">
+ <label class="control-label">
+ Convert ON/OFF to 1/0:
+
+ </label>
+ <div class="controls">
+ <input type="radio" name="convertonoff" value="0"[#if CONVERTONOFF!="1"#] checked[#endif#]> <#LANG_NO#>
+ <input type="radio" name="convertonoff" value="1"[#if CONVERTONOFF="1"#] checked[#endif#]> <#LANG_YES#>
+ </div>
+</div>
+
+
+
+
+
+
+<div class="form-group">
+ <label class="control-label"[#if ERR_VALUE#] style="color:red;font-weight:bold"[#endif#]>
+ <#LANG_VALUE#>:
+ </label>
+ <div class="controls">
+ [#VALUE#]
+ </div>
+</div>
+
+<div class="form-group">
+ <label class="control-label"[#if ERR_VALUE#] style="color:red;font-weight:bold"[#endif#]>
+ <#LANG_SET#>:
+ </label>
+ <div class="controls">
+  <input type="checkbox" name="set_new_value" value="1" style="float: left;">
+  <span style="overflow:hidden; display:block; padding-left:10px;">
+   <input type="text" name="new_value" value="" class="input form-control">
+  </span>
+ </div>
+</div>
+
+
+<!-- DEVICE -->
+<div class="form-group">
+ <label class="control-label">
+ <#LANG_DEVICE#>:
+ </label>
+ <div class="controls">[#module name="devices" action="link" type="unknow" prefix="mqtt" source_table="mqtt" source_table_id="<#ID#>" linked_object="<#LINKED_OBJECT#>"#]</div>
+</div>
+<!-- LINKED_OBJECT (varchar) -->
+<div class="form-group">
+ <label class="control-label"[#if ERR_LINKED_OBJECT#] style="color:red;font-weight:bold"[#endif#]>
+ <#LANG_LINKED_OBJECT#>:
+ </label>
+ <div class="controls"><input type="text" name="linked_object" id="linked_object" value="[#LINKED_OBJECT#]" class="input form-control"></div>
+</div>
+<!-- LINKED_PROPERTY (varchar) -->
+<div class="form-group">
+ <label class="control-label"[#if ERR_LINKED_PROPERTY#] style="color:red;font-weight:bold"[#endif#]>
+ <#LANG_PROPERTY#>:
+ </label>
+ <div class="controls"><input type="text" name="linked_property" id="linked_property" value="[#LINKED_PROPERTY#]" class="input form-control"></div>
+</div>
+<!-- LINKED_METHOD (varchar) -->
+<div class="form-group">
+ <label class="control-label"[#if ERR_LINKED_METHOD#] style="color:red;font-weight:bold"[#endif#]>
+ <#LANG_METHOD#>:
+ </label>
+ <div class="controls"><input type="text" name="linked_property" id="linked_method" value="[#LINKED_METHOD#]" class="input form-control"></div>
+</div>
+[#module name="linkedobject" object_field="linked_object" property_field="linked_property" method_field="linked_method" width="200"#]
+ <div class="form-group">
+  <label class="control-label">
+   Replace list:
+   <#LANG_HCB#>replacelist<#LANG_HCE#>
+  </label>
+  <div class="controls"><input type="text" name="replace_list" id="replace_list" value="[#REPLACE_LIST#]" class="input form-control"></div>
+ </div>
+
+<div class="form-actions">
+ [#if ID!=""#]
+ <button type="submit" name="subm" value="<#LANG_SUBMIT#>" class="btn btn-defaul btn-primary"><#LANG_SUBMIT#></button>
+ [#else ID#]
+ <button type="submit" name="subm" value="<#LANG_ADD#>" class="btn btn-defaul btn-primary"><#LANG_ADD#></button>
+ [#endif ID#]
+ <a href="?view_mode=view_mqtt&id=[#DEV_ID#]&tab=edit_parametrs" class="btn btn-default"><#LANG_CANCEL#></a>
+
+ [#if ID!=""#]
+ &nbsp;&nbsp;&nbsp;
+ <a href="?view_mode=delete_mqtt&id=[#ID#]" onClick="return confirm('<#ARE_YOU_SURE#>')" class="btn btn-default" title="<#LANG_DELETE#>"><i class="glyphicon glyphicon-remove"></i> <#LANG_DELETE#></a>
+ [#endif#]
+
+<input type="hidden" name="id" value="<#ID#>">
+<input type="hidden" name="view_mode" value="<#VIEW_MODE#>">
+<input type="hidden" name="edit_mode" value="<#EDIT_MODE#>">
+<input type="hidden" name="mode" value="update">
+</div>
+</fieldset>
+</form>
+
