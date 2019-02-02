@@ -32,7 +32,8 @@
 //if ($this->view_mode==''||$this->view_mode=='device')
 
 //  $res=SQLSelect("SELECT *  FROM (select zigbee2mqtt_devices.ID DEVID, zigbee2mqtt_devices.* from zigbee2mqtt_devices )zigbee2mqtt_devices LEFT JOIN zigbee2mqtt_devices_list ON zigbee2mqtt_devices_list.zigbeeModel like '%'||zigbee2mqtt_devices.MODEL||'%' ");
-  $res=SQLSelect('SELECT *  FROM (select zigbee2mqtt_devices.ID DEVID, zigbee2mqtt_devices.* from zigbee2mqtt_devices  WHERE MODEL<>"" )zigbee2mqtt_devices LEFT JOIN zigbee2mqtt_devices_list ON zigbee2mqtt_devices_list.zigbeeModel like CONCAT("%",zigbee2mqtt_devices.MODEL,"%") ');
+//  $res=SQLSelect('SELECT *  FROM (select zigbee2mqtt_devices.ID DEVID, zigbee2mqtt_devices.* from zigbee2mqtt_devices  WHERE MODEL<>"" )zigbee2mqtt_devices LEFT JOIN zigbee2mqtt_devices_list ON zigbee2mqtt_devices_list.zigbeeModel like CONCAT("%",zigbee2mqtt_devices.MODEL,"%") ');
+  $res=SQLSelect('SELECT *  FROM (select zigbee2mqtt_devices.ID DEVID, zigbee2mqtt_devices.* from zigbee2mqtt_devices  WHERE MODEL<>"" )zigbee2mqtt_devices LEFT JOIN zigbee2mqtt_devices_list ON zigbee2mqtt_devices_list.zigbeeModel=zigbee2mqtt_devices.MODEL ');
 
   if ($res[0]['ID']) {
    if (!$out['TREE']) {
@@ -45,6 +46,7 @@
     //$res[$i]['UPDATED']=fromDBDate($tmp[0])." ".$tmp[1];
 //    $res[$i]['VALUE']=str_replace('":','": ',$res[$i]['VALUE']);
 $lnk="";
+$bat="";
 //    if ($res[$i]['TITLE']==$res[$i]['PATH'] && !$out['TREE']) $res[$i]['PATH']='';
 
 $sql="SELECT *  FROM  zigbee2mqtt where LENGTH(LINKED_OBJECT)>2  and DEV_ID='".$res[$i]['DEVID']."'";
@@ -55,10 +57,30 @@ $sql="SELECT *  FROM  zigbee2mqtt where LENGTH(LINKED_OBJECT)>2  and DEV_ID='".$
 //debmes($sql.'count : '.$total2,'zigbee2mqtt');
  for($j=0;$j<$total2;$j++) {
 $lnk.=$res2[$j]['LINKED_OBJECT'].'.'.$res2[$j]['LINKED_PROPERTY'].":".$res2[$j]['VALUE'].';  ';
+
+if  ($res2[$j]['METRIKA']=='battery')   $bat= $res2[$j]['VALUE'];
+
 }
 
 if (strlen($lnk) >2) $lnk='('. substr($lnk, 0, -3).')';
 $res[$i]['LINKED']=$lnk;
+
+
+
+
+
+ if ($res[$i]['POWERSOURCE']=='Battery')
+{
+
+ $bat=SQLSelectOne($sql="SELECT *  FROM  zigbee2mqtt where METRIKA='battery'  and DEV_ID='".$res[$i]['DEVID']."'")['VALUE'];
+
+                  $res[$i]['POWER_WARNING'] = 'success';
+               if ($bat<= 40)
+                  $res[$i]['POWER_WARNING'] = 'warning';
+               if ($bat<= 20)
+                  $res[$i]['POWER_WARNING'] = 'danger';
+
+$res[$i]['BATTERY']=$bat;}
 
    }
 //debmes('devid:'.$res[$i]['DEVID'].'count:'.$total2."::::".$lnk,'zigbee2mqtt');
@@ -348,5 +370,4 @@ $zigbee2mqttpath=$this->config['ZIGBEE2MQTTPATH'];
 
 
 ?>
-
 
