@@ -530,7 +530,7 @@ $out['D_ID']=$res['D_ID'];
 $out['FIND']=$res['FIND'];
 $out['LOCATION_ID']=$res['LOCATION_ID'];
 
-$res1=SQLSelectOne("SELECT * FROM zigbee2mqtt_devices_list where zigbeeModel='".$res['MODEL']."'");
+$res1=SQLSelectOne("SELECT * FROM zigbee2mqtt_devices_list where zigbeeModel='".$res['MODELID']."'");
 $out['MODELNAME']=$res1['model'];
 $out['VENDOR']=$res1['vendor'];
 $out['DESCRIPTION']=$res1['description'];
@@ -1071,10 +1071,10 @@ debmes($object.":". $property.":". $value. ' найдено результато
   // some action for related tables
 
 //debmes("DELETE FROM zigbee2mqtt WHERE DEV_ID='".$rec['DEV_ID']."'",'zigbee2mqtt');
-debmes("DELETE FROM zigbee2mqtt_devices WHERE DEV_ID='".$id."'", 'zigbee2mqtt');
-  SQLExec("DELETE FROM zigbee2mqtt_devices WHERE DEV_ID='".$id."'");
-debmes("DELETE FROM zigbee2mqtt_devices WHERE ID='".$id."'", 'zigbee2mqtt');
+
   SQLExec("DELETE FROM zigbee2mqtt_devices WHERE ID='".$id."'");
+
+  SQLExec("DELETE FROM zigbee2mqtt WHERE DEV_ID='".$id."'");
 
  }
 /**
