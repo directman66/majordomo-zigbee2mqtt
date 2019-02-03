@@ -33,7 +33,9 @@
 
 //  $res=SQLSelect("SELECT *  FROM (select zigbee2mqtt_devices.ID DEVID, zigbee2mqtt_devices.* from zigbee2mqtt_devices )zigbee2mqtt_devices LEFT JOIN zigbee2mqtt_devices_list ON zigbee2mqtt_devices_list.zigbeeModel like '%'||zigbee2mqtt_devices.MODEL||'%' ");
 //  $res=SQLSelect('SELECT *  FROM (select zigbee2mqtt_devices.ID DEVID, zigbee2mqtt_devices.* from zigbee2mqtt_devices  WHERE MODEL<>"" )zigbee2mqtt_devices LEFT JOIN zigbee2mqtt_devices_list ON zigbee2mqtt_devices_list.zigbeeModel like CONCAT("%",zigbee2mqtt_devices.MODEL,"%") ');
-  $res=SQLSelect('SELECT *  FROM (select zigbee2mqtt_devices.ID DEVID, zigbee2mqtt_devices.* from zigbee2mqtt_devices  WHERE MODEL<>"" )zigbee2mqtt_devices LEFT JOIN zigbee2mqtt_devices_list ON zigbee2mqtt_devices_list.zigbeeModel=zigbee2mqtt_devices.MODEL ');
+//  $res=SQLSelect('SELECT *  FROM (select zigbee2mqtt_devices.ID DEVID, zigbee2mqtt_devices.* from zigbee2mqtt_devices  WHERE MODEL<>"" )zigbee2mqtt_devices LEFT JOIN zigbee2mqtt_devices_list ON zigbee2mqtt_devices_list.zigbeeModel=zigbee2mqtt_devices.MODEL ');
+//  $res=SQLSelect('SELECT *  FROM (select zigbee2mqtt_devices.ID DEVID, zigbee2mqtt_devices.* from zigbee2mqtt_devices  WHERE MODEL<>"" )zigbee2mqtt_devices LEFT JOIN zigbee2mqtt_devices_list ON zigbee2mqtt_devices_list.zigbeeModel like CONCAT(zigbee2mqtt_devices.MODEL,"%") ');
+  $res=SQLSelect('SELECT *  FROM (select zigbee2mqtt_devices.ID DEVID, zigbee2mqtt_devices.* from zigbee2mqtt_devices  WHERE MODEL<>"" )zigbee2mqtt_devices LEFT JOIN zigbee2mqtt_devices_list ON zigbee2mqtt_devices_list.zigbeeModel=zigbee2mqtt_devices.MODELID');
 
   if ($res[0]['ID']) {
    if (!$out['TREE']) {
@@ -203,7 +205,8 @@ $vm=$this->id;
 
 //$sql0='SELECT *  FROM (select zigbee2mqtt_devices.ID DEVID, zigbee2mqtt_devices.* from zigbee2mqtt_devices where ID="'.$vm.'" ) zigbee2mqtt_devices LEFT JOIN zigbee2mqtt_devices_list ON zigbee2mqtt_devices_list.zigbeeModel like CONCAT("%",zigbee2mqtt_devices.MODEL,"%")  ';
 
-  $sql0='SELECT *  FROM (select zigbee2mqtt_devices.ID DEVID, zigbee2mqtt_devices.* from zigbee2mqtt_devices where ID="'.$vm.'" ) zigbee2mqtt_devices LEFT JOIN zigbee2mqtt_devices_list ON zigbee2mqtt_devices_list.zigbeeModel like CONCAT("%",zigbee2mqtt_devices.MODEL,"%") ';
+//  $sql0='SELECT *  FROM (select zigbee2mqtt_devices.ID DEVID, zigbee2mqtt_devices.* from zigbee2mqtt_devices where ID="'.$vm.'" ) zigbee2mqtt_devices LEFT JOIN zigbee2mqtt_devices_list ON zigbee2mqtt_devices_list.zigbeeModel like CONCAT("%",zigbee2mqtt_devices.MODEL,"%") ';
+  $sql0='SELECT *  FROM (select zigbee2mqtt_devices.ID DEVID, zigbee2mqtt_devices.* from zigbee2mqtt_devices where ID="'.$vm.'" ) zigbee2mqtt_devices LEFT JOIN zigbee2mqtt_devices_list ON zigbee2mqtt_devices_list.zigbeeModel like CONCAT("%",zigbee2mqtt_devices.MODELID,"%") ';
 
 debmes($sql0,'zigbee2mqtt');
 
@@ -215,7 +218,12 @@ $zm=$ssql['model'];
 //$sql="SELECT * FROM (select * from zigbee2mqtt_devices_command WHERE zigbeeModel='".$zm."') zigbee2mqtt_devices_command LEFT JOIN (select * from zigbee2mqtt where PATH like CONCAT('%','".$ssql['IEEEADDR']."','%') ) zigbee2mqtt ON zigbee2mqtt.METRIKA=zigbee2mqtt_devices_command.value_template  ";
 
 
-$sql="select * from (select *,zigbee2mqtt.ID zmID  from zigbee2mqtt where PATH like CONCAT('%','".$ssql['IEEEADDR']."','%')  )zigbee2mqtt left join (select * from zigbee2mqtt_devices_command WHERE zigbeeModel='".$zm."') zigbee2mqtt_devices_command ON zigbee2mqtt.METRIKA=zigbee2mqtt_devices_command.value_template ";
+//$sql="select * from (select *,zigbee2mqtt.ID zmID  from zigbee2mqtt where PATH like CONCAT('%','".$ssql['IEEEADDR']."','%')  )zigbee2mqtt left join (select * from zigbee2mqtt_devices_command WHERE zigbeeModel='".$zm."') zigbee2mqtt_devices_command ON zigbee2mqtt.METRIKA=zigbee2mqtt_devices_command.value_template ";
+$sql="select  zigbee2mqtt.*, zigbee2mqtt_devices_command.*  from (select *,zigbee2mqtt.ID zmID  from zigbee2mqtt where PATH like CONCAT('%','".$ssql['IEEEADDR']."','%')  )zigbee2mqtt left join (select * from zigbee2mqtt_devices_command WHERE zigbeeModel='".$zm."') zigbee2mqtt_devices_command ON zigbee2mqtt.METRIKA=zigbee2mqtt_devices_command.value_template 
+union
+select  zigbee2mqtt.*, zigbee2mqtt_devices_command.*  from (select * from zigbee2mqtt_devices_command WHERE zigbeeModel='".$zm."') zigbee2mqtt_devices_command left join (select *,zigbee2mqtt.ID zmID  from zigbee2mqtt where PATH like CONCAT('%','".$ssql['IEEEADDR']."','%')  )zigbee2mqtt ON zigbee2mqtt.METRIKA=zigbee2mqtt_devices_command.value_template
+";
+
 
 debmes($sql,'zigbee2mqtt');
 
@@ -234,8 +242,8 @@ $res[$i]['state_topic']=str_replace('<FRIENDLY_NAME>',$ssql['IEEEADDR'],$res[$i]
 $res[$i]['availability_topic']=str_replace('<FRIENDLY_NAME>',$ssql['IEEEADDR'],$res[$i]['availability_topic']);
 $res[$i]['command_topic']=str_replace('<FRIENDLY_NAME>',$ssql['IEEEADDR'],$res[$i]['command_topic']);
 
-
 //if (($res[$i]['command_topic'])&& (!$res[$i]['PATH_WRITE'])) 
+if ($res[$i]['command_topic']) 
 {
 //$sql="update zigbee2mqtt set PATH_WRITE='".$res[$i]['command_topic']."/".$res[$i]['value_template']."' where ID='".$res[$i]['zmID']."'";
 $sql="update zigbee2mqtt set PATH_WRITE='".$res[$i]['command_topic']."' where ID='".$res[$i]['zmID']."'";
