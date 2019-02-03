@@ -142,4 +142,3 @@ debmes($sql,'zigbee2mqtt');
   outHash($rec, $out);
 ?>
 
-
