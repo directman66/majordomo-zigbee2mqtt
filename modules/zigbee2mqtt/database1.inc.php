@@ -112,6 +112,18 @@ $par1['fromZigbee'] = "";
 $par1['toZigbee'] = "";		 
 SQLInsert('zigbee2mqtt_devices_list', $par1);						
 
+$par1['zigbeeModel'] = 'lumi.sensor_86sw2Un';
+$par1['model'] = "WXKG02LM";		 
+$par1['vendor'] = "Xiaomi";		 
+$par1['type'] = "remote";		 
+$par1['description'] = "Aqara double key wireless wall switch";		 
+$par1['extend'] = "";		 
+$par1['supports'] = "left, right and both click";		 
+$par1['fromZigbee'] = "";		 
+$par1['toZigbee'] = "";		 
+SQLInsert('zigbee2mqtt_devices_list', $par1);						
+
+
 
 $par1['zigbeeModel'] = 'lumi.sensor_86sw2\u0000Un';
 $par1['model'] = "WXKG02LM";		 
