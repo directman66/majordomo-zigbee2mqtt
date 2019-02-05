@@ -52,43 +52,21 @@
 <div class="col-md-6 input-group">
 
 
-<!--
-
-	<select name="device_type2" class="selectpicker show-tick form-control">
-					<!-- шаблон для нового устройства
-					<option data-content="<img src='../templates/xiaomimiio/img/small/NEW_DEV.png' width='20' height='20'> NEW_DEV_NAME" value="NEW_DEV" [#if DEVICE_TYPE="NEW_DEV"#] selected[#endif#]></option>
-					-->
-<!--
-					<option value=""></option>
-					<optgroup label="Aqara">
-					<option data-content="<img src='../templates/xiaomimiio/img/small/lumi.acpartner.v3.png' width='20' height='20'> Aqara AC Companion Gateway" value="lumi.acpartner.v3" [#if DEVICE_TYPE="lumi.acpartner.v3"#] selected[#endif#]></option>
-					<option data-content="<img src='../templates/xiaomimiio/img/small/lumi.camera.aq1.png' width='20' height='20'> Aqara Smart Camera Gateway" value="lumi.camera.aq1" [#if DEVICE_TYPE="lumi.camera.aq1"#] selected[#endif#]></option>
-					</optgroup>
-
--->				</select>
 
  <select name="selecttype"  class="selectpicker show-tick form-control">
-  <option value="">
-<!--
-<optgroup label="Aqara">
-<option data-content="<img src='../templates/xiaomimiio/img/small/zhimi.humidifier.v1.png' width='20' height='20'> Mi Air Humidifier" value="zhimi.humidifier.v1" [#if DEVICE_TYPE="zhimi.humidifier.v1"#] selected[#endif#]></option>
-</optgroup>
-			-->
-
-
+[#if SELECTTYPE=""#]
+<option ></option > [#else#]
+<option data-content="<img src='../templates/zigbee2mqtt/img/[#SELECTTYPE#].jpg' width='40' height='40'> [#VENDOR#]: [#SELECTTYPE#]" value="[#SELECTTYPE#]" ></option>
+<optgroup label="Zigbee">
+[#endif#]
 
   [#begin SELECTTYPEARRAY#]
-<!-- <option value="[#model#]"[#if SELECTED#] selected[#endif#]>[#model#]
 
-<option data-content="<img src='../templates/xiaomimiio/img/small/zhimi.humidifier.v1.png' width='20' height='20'> Mi Air Humidifier" value="zhimi.humidifier.v1" [#if DEVICE_TYPE="zhimi.humidifier.v1"#] selected[#endif#]></option>
-
-/templates/zigbee2mqtt/img/[#model#].jpg
--->
-
-<!--<option data-content="<img src='../templates/zigbee2mqtt/img/[#model#].jpg'                width='20' height='20'>[#vendor#]: [#model#]" value="[#model#]" [#if DEVICE_TYPE="model"#] selected[#endif#]></option> -->
-<option data-content="<img src='../templates/zigbee2mqtt/img/[#model#].jpg' width='40' height='40'> [#vendor#]: [#model#]" value="zhimi.humidifier.v1" [#if DEVICE_TYPE="<#model#>"#] selected[#endif#]></option>
+<!--<option data-content="<img src='../templates/zigbee2mqtt/img/[#model#].jpg' width='40' height='40'> [#vendor#]: [#model#]" value="[#model#]" [#if DEVICE_TYPE="<#SELECTTYPE#>"#] selected[#endif#]></option>-->
+<option data-content="<img src='../templates/zigbee2mqtt/img/[#model#].jpg' width='40' height='40'> [#vendor#]: [#model#]" value="[#model#]" ></option>
 
  [#end SELECTTYPEARRAY#] 
+</optgroup>
  </select>
 
 </div>
