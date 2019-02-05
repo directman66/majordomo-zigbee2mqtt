@@ -529,9 +529,18 @@ $out['DID']=$res['DID'];
 $out['D_ID']=$res['D_ID'];
 $out['FIND']=$res['FIND'];
 $out['LOCATION_ID']=$res['LOCATION_ID'];
+$out['SELECTTYPE']=$res['SELECTTYPE'];
 
 $res1=SQLSelectOne("SELECT * FROM zigbee2mqtt_devices_list where zigbeeModel='".$res['MODELID']."'");
 $out['MODELNAME']=$res1['model'];
+
+
+if (strlen($out['SELECTTYPE'])=="0") {
+echo "123";
+$out['SELECTTYPE']=$res1['model'];
+//debmes("SELECTTYPE:".strlen($out['SELECTTYPE']).":".$out['SELECTTYPE'], 'zigbee2mqtt');
+}
+
 $out['VENDOR']=$res1['vendor'];
 $out['DESCRIPTION']=$res1['description'];
 $out['EXTEND']=$res1['extend'];
@@ -539,9 +548,11 @@ $out['SUPPORTS']=$res1['supports'];
 $out['FROMZIGBEE']=$res1['fromZigbee'];
 $out['TOZIGBEE']=$res1['toZigbee'];
 
+
+
 $tmp=SQLSelect("SELECT * FROM zigbee2mqtt_devices_list order by vendor, zigbeeModel");
 $out['SELECTTYPEARRAY']=$tmp;
-debmes($tmp, 'zigbee2mqtt');
+//debmes($tmp, 'zigbee2mqtt');
 
 
   //options for 'LOCATION_ID' (select)
@@ -573,6 +584,14 @@ debmes($tmp, 'zigbee2mqtt');
     $out['ERR_TITLE']=1;
     $ok=0;
    }
+
+   global $selecttype;
+   $rec['SELECTTYPE']=$selecttype;
+   if ($rec['SELECTTYPE']=='') {
+    $out['ERR_SELECTTYPE']=1;
+    $ok=0;
+   }
+
 
 
 
