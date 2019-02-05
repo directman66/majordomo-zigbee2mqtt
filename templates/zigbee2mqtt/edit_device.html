@@ -1,3 +1,4 @@
+<link rel="stylesheet" href="../templates/zigbee2mqtt/css/bootstrap-select.min.css">
 
 <!-- Table 'mqtt' edit -->
 <p align=center>
@@ -41,6 +42,58 @@
      <div class="input-group-btn">
      </div> </div> </div>
 
+<div class="form-group">
+ <label class="control-label"[#if ERR_LOCATION_ID#] style="color:red;font-weight:bold"[#endif#]>
+ SELECTTYPE:
+ </label>
+
+
+
+<div class="col-md-6 input-group">
+
+
+<!--
+
+	<select name="device_type2" class="selectpicker show-tick form-control">
+					<!-- шаблон для нового устройства
+					<option data-content="<img src='../templates/xiaomimiio/img/small/NEW_DEV.png' width='20' height='20'> NEW_DEV_NAME" value="NEW_DEV" [#if DEVICE_TYPE="NEW_DEV"#] selected[#endif#]></option>
+					-->
+<!--
+					<option value=""></option>
+					<optgroup label="Aqara">
+					<option data-content="<img src='../templates/xiaomimiio/img/small/lumi.acpartner.v3.png' width='20' height='20'> Aqara AC Companion Gateway" value="lumi.acpartner.v3" [#if DEVICE_TYPE="lumi.acpartner.v3"#] selected[#endif#]></option>
+					<option data-content="<img src='../templates/xiaomimiio/img/small/lumi.camera.aq1.png' width='20' height='20'> Aqara Smart Camera Gateway" value="lumi.camera.aq1" [#if DEVICE_TYPE="lumi.camera.aq1"#] selected[#endif#]></option>
+					</optgroup>
+
+-->				</select>
+
+ <select name="selecttype"  class="selectpicker show-tick form-control">
+  <option value="">
+<!--
+<optgroup label="Aqara">
+<option data-content="<img src='../templates/xiaomimiio/img/small/zhimi.humidifier.v1.png' width='20' height='20'> Mi Air Humidifier" value="zhimi.humidifier.v1" [#if DEVICE_TYPE="zhimi.humidifier.v1"#] selected[#endif#]></option>
+</optgroup>
+			-->
+
+
+
+  [#begin SELECTTYPEARRAY#]
+<!-- <option value="[#model#]"[#if SELECTED#] selected[#endif#]>[#model#]
+
+<option data-content="<img src='../templates/xiaomimiio/img/small/zhimi.humidifier.v1.png' width='20' height='20'> Mi Air Humidifier" value="zhimi.humidifier.v1" [#if DEVICE_TYPE="zhimi.humidifier.v1"#] selected[#endif#]></option>
+
+/templates/zigbee2mqtt/img/[#model#].jpg
+-->
+
+<!--<option data-content="<img src='../templates/zigbee2mqtt/img/[#model#].jpg'                width='20' height='20'>[#vendor#]: [#model#]" value="[#model#]" [#if DEVICE_TYPE="model"#] selected[#endif#]></option> -->
+<option data-content="<img src='../templates/zigbee2mqtt/img/[#model#].jpg' width='40' height='40'> [#vendor#]: [#model#]" value="zhimi.humidifier.v1" [#if DEVICE_TYPE="<#model#>"#] selected[#endif#]></option>
+
+ [#end SELECTTYPEARRAY#] 
+ </select>
+
+</div>
+</div>
+
 
 
 
@@ -70,7 +123,7 @@
 
 
 
-<div class="controls">
+<div class="col-md-6 input-group">
  <select name="dev_location_id"  class="form-control input">
   <option value="">select
   [#begin LOCATION_ID_OPTIONS#]<option value="[#ID#]"[#if SELECTED#] selected[#endif#]>[#TITLE#]
@@ -89,7 +142,7 @@
  <label class="control-label">
  LOCATION_ID:
  </label>
- <div class="controls"><input  type="text" name="d_id" value="[#LOCATION_ID#]" class="form-control input"></div>
+ <div class="col-md-6 input-group"><input  type="text" name="d_id" value="[#LOCATION_ID#]" class="form-control input"></div>
 </div>
 
 
@@ -126,3 +179,15 @@
 </fieldset>
 </form>
 
+<script>
+
+var script = document.createElement('script');
+script.src = "../templates/xiaomimiio/css/bootstrap-select.min.js"
+document.body.appendChild(script);
+
+script.onload = function() {
+	// после подгрузки js-файла перерисуем элемент select
+	$('.selectpicker').selectpicker('render');
+}
+
+</script>
