@@ -491,7 +491,7 @@ function admin(&$out) {
 
 
      if ($this->tab=='help') {
-  $res=SQLSelect("SELECT * FROM zigbee2mqtt_devices_list ");
+$res=SQLSelect("SELECT * FROM zigbee2mqtt_devices_list ");
 $out['DEVICE_LIST']=$res;
 
 }
@@ -538,6 +538,11 @@ $out['EXTEND']=$res1['extend'];
 $out['SUPPORTS']=$res1['supports'];
 $out['FROMZIGBEE']=$res1['fromZigbee'];
 $out['TOZIGBEE']=$res1['toZigbee'];
+
+$tmp=SQLSelect("SELECT * FROM zigbee2mqtt_devices_list order by vendor, zigbeeModel");
+$out['SELECTTYPEARRAY']=$tmp;
+debmes($tmp, 'zigbee2mqtt');
+
 
   //options for 'LOCATION_ID' (select)
   $tmp=SQLSelect("SELECT ID, TITLE FROM locations ORDER BY TITLE");
@@ -766,6 +771,13 @@ $out['status']=$a;
    $this->redirect("?tab=map");
 }
 
+ if ($this->view_mode=='updatedb') {
+
+   $this->updatedb();
+   $this->redirect("?tab=service");
+}
+
+
 
 
 
@@ -868,6 +880,14 @@ function clear_trash() {
     for ($i=0;$i<$total;$i++) {
         $this->delete_mqtt($res[$i]['ID']);
     }
+}
+
+function updatedb() {
+  SQLExec('DROP TABLE IF EXISTS zigbee2mqtt_devices_list');
+  SQLExec('DROP TABLE IF EXISTS zigbee2mqtt_devices_command');
+$this->createdb();
+
+
 }
 
 
@@ -1167,21 +1187,31 @@ mqtt - MQTT
 
 
 
+
+
+$this->createdb();
+
+}
+
+
+function createdb()
+{
+
+
  SQLExec("DROP PROCEDURE IF EXISTS SPLIT_STRING") ;
  SQLExec("CREATE FUNCTION IF NOT EXISTS  SPLIT_STRING(str VARCHAR(255), delim VARCHAR(12), pos INT) RETURNS VARCHAR(255) RETURN REPLACE(SUBSTRING(SUBSTRING_INDEX(str, delim, pos),        LENGTH(SUBSTRING_INDEX(str, delim, pos-1)) + 1),        delim, '');");
 
 
 
   $data = <<<EOD
-
  zigbee2mqtt_devices: ID int(10) unsigned NOT NULL auto_increment
  zigbee2mqtt_devices: TITLE varchar(100) NOT NULL DEFAULT ''
-
  zigbee2mqtt_devices: ONLINE varchar(100) NOT NULL DEFAULT ''
  zigbee2mqtt_devices: MANUFACTURE varchar(100) NOT NULL DEFAULT ''
  zigbee2mqtt_devices: DEVICE_NAME varchar(100) NOT NULL DEFAULT ''
  zigbee2mqtt_devices: MODEL varchar(100) NOT NULL DEFAULT ''
  zigbee2mqtt_devices: TYPE varchar(100) NOT NULL DEFAULT ''
+ zigbee2mqtt_devices: SELECTTYPE varchar(100) NOT NULL DEFAULT ''
  zigbee2mqtt_devices: LASTPING varchar(100) NOT NULL DEFAULT ''
  zigbee2mqtt_devices: IEEEADDR varchar(100) NOT NULL DEFAULT ''
  zigbee2mqtt_devices: PARRENTIEEEADDR varchar(100) NOT NULL DEFAULT ''
@@ -1259,9 +1289,6 @@ EOD;
 
   require(DIR_MODULES.$this->name.'/database1.inc.php');
   require(DIR_MODULES.$this->name.'/database2.inc.php');
-
-
-   
 
 }
 
