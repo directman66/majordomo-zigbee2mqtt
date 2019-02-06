@@ -307,7 +307,8 @@ debmes('Публикую zigbee2mqqtt '.$rec['PATH_WRITE'].":".$jsonvalue, 'zigb
 */
  function processMessage($path, $value) {
 
-debmes('Сработал processMessage :'.$path." value:". $value,'zigbee2mqtt');
+debmes('Сработал processMessage :'.$path." value:". $value.' strpos:'. strpos($path,"set"),'zigbee2mqtt');
+//debmes('Сработал processMessage :'.$path." value:". $value,'zigbee2mqtt');
    if (preg_match('/\#$/', $path)) {
     return 0;
    }
@@ -336,7 +337,14 @@ if ($arr['IEEEADDR']) {$dev_title=$arr['IEEEADDR'];} else  {$dev_title='bridge';
 //if (strpos($dev_title,"/set/")==0)
 
 //если нет в пути параметра set, управляющие свои значения нам не нужны
-if (strpos($path,"set")===false)
+//if (strpos($path,"set")===false)
+
+//debmes($path.' strpos:'. strpos($path,"set"), 'zigbee2mqtt');
+if (strpos($path,"set")>0)
+{
+debmes('путь содержит set, его мы записывать не будем', 'zigbee2mqtt');
+}
+else 
 {
      $rec=SQLSelectOne("SELECT * FROM zigbee2mqtt_devices WHERE IEEEADDR LIKE '%".DBSafe($dev_title)."%'");
      
@@ -355,14 +363,12 @@ else
      $rec['FIND']=date('Y-m-d H:i:s');
 SQLUPDATE('zigbee2mqtt_devices', $rec);
 
-} }
-else 
-{
-debmes('путь содержит set, его мы записывать не будем', 'zigbee2mqtt');
-}
+} 
 
-
-   $dev_id=SQLSelectOne("SELECT * FROM zigbee2mqtt_devices WHERE TITLE LIKE '%".DBSafe($dev_title)."%'")['ID'];
+//   $dev_id=SQLSelectOne("SELECT * FROM zigbee2mqtt_devices WHERE TITLE LIKE '%".DBSafe($dev_title)."%'")['ID'];
+$sql="SELECT * FROM zigbee2mqtt_devices WHERE IEEEADDR LIKE '%".DBSafe($dev_title)."%'";
+debmes($sql, 'zigbee2mqtt');
+   $dev_id=SQLSelectOne($sql)['ID'];
 
 
    $rec=SQLSelectOne("SELECT * FROM zigbee2mqtt WHERE PATH LIKE '".DBSafe($path)."'");
@@ -431,6 +437,12 @@ debmes('Вызываю setglobal: value:'.$rec['LINKED_OBJECT'].'.'.$rec['LINKED
      }
 
    }
+
+}
+
+
+
+
 }
 
 
@@ -532,6 +544,7 @@ $out['LOCATION_ID']=$res['LOCATION_ID'];
 $out['SELECTTYPE']=$res['SELECTTYPE'];
 $out['SELECTVENDOR']=$res['SELECTVENDOR'];
 $out['NEEDSAVE']="0";
+$out['IEEEADDR']=$res['IEEEADDR'];
 
 
 $res1=SQLSelectOne("SELECT * FROM zigbee2mqtt_devices_list where zigbeeModel='".$res['MODELID']."'");
@@ -897,10 +910,19 @@ $out['status']=$a;
   if ($this->view_mode=='edit_mqtt') {
    $this->edit_mqtt($out, $this->id);
   }
-  if ($this->view_mode=='delete_mqtt') {
-   $this->delete_mqtt($this->id);
+  if ($this->view_mode=='delete_dev') {
+   $this->delete_dev($this->id);
    $this->redirect("?");
   }
+
+  if ($this->view_mode=='delete_mqtt') {
+   $this->delete_mqtt($this->id);
+//   $this->redirect("?");
+
+   $this->redirect("?tab=edit_parametrs&view_mode=view_mqtt&id=".$_REQUEST['redirectid']);
+  }
+
+
      if ($this->view_mode=='clear_trash') {
          $this->clear_trash();
          $this->redirect("?");
@@ -1133,7 +1155,7 @@ debmes($object.":". $property.":". $value. ' найдено результато
 *
 * @access public
 */
- function delete_mqtt($id) {
+ function delete_dev($id) {
 
 //debmes("SELECT * FROM zigbee2mqtt WHERE DEV_ID='$id'",'zigbee2mqtt');
 //  $rec=SQLSelectOne("SELECT * FROM zigbee2mqtt WHERE DEV_ID='$id'");
@@ -1146,6 +1168,22 @@ debmes($object.":". $property.":". $value. ' найдено результато
   SQLExec("DELETE FROM zigbee2mqtt WHERE DEV_ID='".$id."'");
 
  }
+
+
+ function delete_mqtt($id) {
+
+//debmes("SELECT * FROM zigbee2mqtt WHERE DEV_ID='$id'",'zigbee2mqtt');
+//  $rec=SQLSelectOne("SELECT * FROM zigbee2mqtt WHERE DEV_ID='$id'");
+  // some action for related tables
+
+//debmes("DELETE FROM zigbee2mqtt WHERE DEV_ID='".$rec['DEV_ID']."'",'zigbee2mqtt');
+
+
+  SQLExec("DELETE FROM zigbee2mqtt WHERE ID='".$id."'");
+
+ }
+
+
 /**
 * Install
 *
