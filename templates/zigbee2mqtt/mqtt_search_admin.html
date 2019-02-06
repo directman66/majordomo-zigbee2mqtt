@@ -60,6 +60,14 @@ DEVICE_ID: [#ID#]
 [#begin RESULT#]
 <tr>
  <td>
+
+   [#ID#]
+
+ </td>
+
+
+
+ <td>
   <b>
    [#METRIKA#]
   </b>[#if PATH!=""#]<br>[#PATH#][#endif#]
@@ -82,7 +90,7 @@ DEVICE_ID: [#ID#]
   
   [#if "<#ACTION#>"=="admin"#]
    <a href="?view_mode=edit_mqtt&id=[#ID#]" class="btn btn-default btn-sm" title="<#LANG_EDIT#>"><i class="glyphicon glyphicon-pencil"></i></a>
-    <a href="?view_mode=delete_mqtt&id=[#ID#]" onClick="return confirm('<#ARE_YOU_SURE#>')" class="btn btn-default btn-sm" title="<#LANG_DELETE#>"><i class="glyphicon glyphicon-remove"></i></a>
+    <a href="?view_mode=delete_mqtt&id=[#ID#]&redirectid=" onClick="return confirm('<#ARE_YOU_SURE#>')" class="btn btn-default btn-sm" title="<#LANG_DELETE#>"><i class="glyphicon glyphicon-remove"></i></a>
   [#endif ACTION#]
   
  </td>
