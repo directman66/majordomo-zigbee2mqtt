@@ -530,16 +530,29 @@ $out['D_ID']=$res['D_ID'];
 $out['FIND']=$res['FIND'];
 $out['LOCATION_ID']=$res['LOCATION_ID'];
 $out['SELECTTYPE']=$res['SELECTTYPE'];
+$out['SELECTVENDOR']=$res['SELECTVENDOR'];
+$out['NEEDSAVE']="0";
+
 
 $res1=SQLSelectOne("SELECT * FROM zigbee2mqtt_devices_list where zigbeeModel='".$res['MODELID']."'");
 $out['MODELNAME']=$res1['model'];
 
+//$out['SELECTVENDOR']=$res1['vendor'];
 
-if (strlen($out['SELECTTYPE'])=="0") {
-echo "123";
-$out['SELECTTYPE']=$res1['model'];
+if (strlen($out['SELECTVENDOR'])=="0") {
+//echo "123";
+//$out['SELECTVEDNOR']=$res1['vendor'];
+$out['NEEDSAVEVENDOR']="1";
 //debmes("SELECTTYPE:".strlen($out['SELECTTYPE']).":".$out['SELECTTYPE'], 'zigbee2mqtt');
 }
+
+if (strlen($out['SELECTTYPE'])=="0") {
+//echo "123";
+$out['SELECTTYPE']=$res1['model'];
+$out['NEEDSAVETYPE']="1";
+//debmes("SELECTTYPE:".strlen($out['SELECTTYPE']).":".$out['SELECTTYPE'], 'zigbee2mqtt');
+}
+
 
 $out['VENDOR']=$res1['vendor'];
 $out['DESCRIPTION']=$res1['description'];
@@ -549,8 +562,18 @@ $out['FROMZIGBEE']=$res1['fromZigbee'];
 $out['TOZIGBEE']=$res1['toZigbee'];
 
 
+$tmp=SQLSelect("SELECT distinct vendor FROM zigbee2mqtt_devices_list ");
+$out['SELECTVENDORARRAY']=$tmp;
 
-$tmp=SQLSelect("SELECT * FROM zigbee2mqtt_devices_list order by vendor, zigbeeModel");
+
+if ($out['SELECTVENDOR']) {
+
+$tmp=SQLSelect("SELECT * FROM zigbee2mqtt_devices_list where vendor='".$out['SELECTVENDOR']."' order by vendor, zigbeeModel");
+} else 
+
+{
+$tmp=SQLSelect("SELECT * FROM zigbee2mqtt_devices_list   order by vendor, zigbeeModel");
+}
 $out['SELECTTYPEARRAY']=$tmp;
 //debmes($tmp, 'zigbee2mqtt');
 
@@ -589,6 +612,13 @@ $out['SELECTTYPEARRAY']=$tmp;
    $rec['SELECTTYPE']=$selecttype;
    if ($rec['SELECTTYPE']=='') {
     $out['ERR_SELECTTYPE']=1;
+    $ok=0;
+   }
+
+   global $selectvendor;
+   $rec['SELECTVENDOR']=$selectvendor;
+   if ($rec['SELECTVENDOR']=='') {
+    $out['ERR_SELECTVENDOR']=1;
     $ok=0;
    }
 
@@ -1231,6 +1261,7 @@ function createdb()
  zigbee2mqtt_devices: MODEL varchar(100) NOT NULL DEFAULT ''
  zigbee2mqtt_devices: TYPE varchar(100) NOT NULL DEFAULT ''
  zigbee2mqtt_devices: SELECTTYPE varchar(100) NOT NULL DEFAULT ''
+ zigbee2mqtt_devices: SELECTVENDOR varchar(100) NOT NULL DEFAULT ''
  zigbee2mqtt_devices: LASTPING varchar(100) NOT NULL DEFAULT ''
  zigbee2mqtt_devices: IEEEADDR varchar(100) NOT NULL DEFAULT ''
  zigbee2mqtt_devices: PARRENTIEEEADDR varchar(100) NOT NULL DEFAULT ''
