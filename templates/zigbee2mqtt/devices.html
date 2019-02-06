@@ -64,6 +64,7 @@
  </th>
  <th>ID </th>
  <th>TITLE </th>
+ <th>BATTERY </th>
 
  <th>VENDOR </th>
  <th>TYPE </th>
@@ -82,8 +83,8 @@
 
 
  <td>
-[#if model#]
-<img src="../templates/zigbee2mqtt/img/[#model#].jpg"  height="62" width="62" class="img-rounded">
+[#if SELECTTYPE#]
+<img src="../templates/zigbee2mqtt/img/[#SELECTTYPE#].jpg"  height="62" width="62" class="img-rounded">
 [#endif#]
 <!--
 [#if TITLE="bridge"#]
@@ -96,18 +97,44 @@
  <td>
 
    <a href="?view_mode=view_mqtt&id=[#DEVID#]&tab=edit_device"  title="<#LANG_EDIT#>">
-<b>
-[#TITLE#]
+<b>[#TITLE#]
 </b>
 </a>
+
+<!--
+<table border =0 width=100%><tr><td>
+[#TITLE#]</td>
+<td align="left">
+[#if POWER_WARNING<>""#]
+<span class="label label-[#POWER_WARNING#]"><i class="glyphicon glyphicon-flash"></i> [#BATTERY#]%</span>
+[#endif#]
+</td></tr></table>
+
+
+
+</b>
+</a>
+-->
+
+
 <br>
-<small>  [#LINKED#]</small>
+<left><small>  [#LINKED#]</small></left>
+
+
+
 
 </td>
 
- <td>[#vendor#]</td>
- <td>[#MODEL#]</td>
- <td> [#model#] </td>
+<td>
+[#if POWER_WARNING<>""#]
+<span class="label label-[#POWER_WARNING#]"><i class="glyphicon glyphicon-flash"></i> [#BATTERY#]%</span>
+[#endif#]
+
+</td>
+
+ <td>[#SELECTVENDOR#]</td>
+ <td>[#SELECTTYPE#]</td>
+ <td> [#MODEL#] </td>
  <td>[#description#]</td>
 
  <td > [#if FIND!=""#][#FIND#][#else#] &nbsp; [#endif#]</td>
