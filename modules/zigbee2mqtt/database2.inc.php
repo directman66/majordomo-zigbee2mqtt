@@ -7883,7 +7883,7 @@ $par2['command_value'] = "";
 SQLInsert('zigbee2mqtt_devices_command', $par2);
 
 //livolo ;
-$par2['zigbeeModel'] = 'TI0001';
+$par2['zigbeeModel'] = 'VL-C701Z-11';
 $par2['type'] = "light";
 $par2['state_topic'] =  "zigbee2mqtt/<FRIENDLY_NAME>";
 $par2['availability_topic'] = "zigbee2mqtt/bridge/state";
@@ -7902,7 +7902,7 @@ SQLInsert('zigbee2mqtt_devices_command', $par2);
 
 
 //livolo ;
-$par2['zigbeeModel'] = 'TI0001';
+$par2['zigbeeModel'] = 'VL-C701Z-11';
 $par2['type'] = "light";
 $par2['state_topic'] =  "zigbee2mqtt/<FRIENDLY_NAME>";
 $par2['availability_topic'] = "zigbee2mqtt/bridge/state";
@@ -7920,7 +7920,7 @@ $par2['command_value'] = "state_left";
 SQLInsert('zigbee2mqtt_devices_command', $par2);
 
 //livolo ;
-$par2['zigbeeModel'] = 'TI0001';
+$par2['zigbeeModel'] = 'VL-C701Z-11';
 $par2['type'] = "light";
 $par2['state_topic'] =  "zigbee2mqtt/<FRIENDLY_NAME>";
 $par2['availability_topic'] = "zigbee2mqtt/bridge/state";
