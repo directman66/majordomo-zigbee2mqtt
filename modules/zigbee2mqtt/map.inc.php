@@ -1,7 +1,8 @@
 <?php          
 //$maparray=SQLSelectOne ('select * from zigbee2mqtt where value like "digraph%"');
 //$maparray=SQLSelect('SELECT *  FROM (select zigbee2mqtt_devices.ID DEVID, zigbee2mqtt_devices.* from zigbee2mqtt_devices )zigbee2mqtt_devices LEFT JOIN zigbee2mqtt_devices_list ON zigbee2mqtt_devices_list.zigbeeModel=zigbee2mqtt_devices.MODEL ');
-$maparray=SQLSelect("SELECT * FROM (select zigbee2mqtt_devices.ID DEVID, zigbee2mqtt_devices.* from zigbee2mqtt_devices )zigbee2mqtt_devices LEFT JOIN zigbee2mqtt_devices_list ON zigbee2mqtt_devices_list.zigbeeModel like concat('%',zigbee2mqtt_devices.MODEL,'%') ");
+//$maparray=SQLSelect("SELECT * FROM (select zigbee2mqtt_devices.ID DEVID, zigbee2mqtt_devices.* from zigbee2mqtt_devices )zigbee2mqtt_devices LEFT JOIN zigbee2mqtt_devices_list ON zigbee2mqtt_devices_list.zigbeeModel like concat('%',zigbee2mqtt_devices.MODEL,'%') ");
+$maparray=SQLSelect("select * from zigbee2mqtt_devices   ");
 
 
 
@@ -17,7 +18,7 @@ if (!$maparray[$i]['IEEEADDR']) {$idd=$defaultiee;} else {$idd=$maparray[$i]['IE
 if (!$maparray[$i]['PARRENTIEEEADDR']) {$parrentieee=$defaultiee;} else {$parrentieee=$maparray[$i]['PARRENTIEEEADDR'];}
 
 //   $nodes.= "{id: ".$idd.", font:{size:10}, size:40,   label: '".$maparray[$i]['description']."',  group: 0,  shape: 'circularImage', image: '/templates/zigbee2mqtt/img/".$maparray[$i]['model'].".jpg', },";
-   $nodes.= "{id: ".$idd.",  size:60, color:'white', font:{color:'black', size:10},  label: '".$maparray[$i]['description']."',  group: 0,  shape: 'image', image: '/templates/zigbee2mqtt/img/".$maparray[$i]['model'].".jpg', },";
+   $nodes.= "{id: ".$idd.",  size:60, color:'white', font:{color:'black', size:10},  label: '".$maparray[$i]['TITLE']."',  group: 0,  shape: 'image', image: '/templates/zigbee2mqtt/img/".$maparray[$i]['SELECTTYPE'].".jpg', },";
 
 
 
