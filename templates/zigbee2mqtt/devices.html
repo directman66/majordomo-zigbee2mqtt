@@ -5,13 +5,13 @@
  <div class="row">
 
 
-
+<!--
   <div class="col-md-3">
   <select class="form-control" name="dev_id">
 
 
    [#begin ZIGBEE2MQTTDEV#]
-<!--   <option value="[#ID#]"[#if ID="<#LOCATION_ID#>"#] selected[#endif#]>[#TITLE#] -->
+
    <option value="[#TITLE#]"[#if ID="<#LOCATION_ID#>"#] selected[#endif#]>[#TITLE#]
    [#end ZIGBEE2MQTTDEV#]
   </select>
@@ -27,11 +27,11 @@
    [#end LOCATIONS#]
   </select>
   </div>
-
+-->
 <!--  <div class="col-md-3" size="2">
 <input type="text"  name="title" value="<#TITLE#>" class="form-control" placeholder="<#LANG_SEARCH#>">
   </div>
--->
+
 
   <div class="col-md-2">
     <input type="submit" name="submit" value="<#LANG_SEARCH#>" class="btn btn-default">
@@ -41,7 +41,7 @@
   <div class="col-md-2">
    <a href="?view_mode=refresh_db" class="btn btn-default" title="Refresh config" ><i class="glyphicon glyphicon-refresh"></i> </a>
   </div>
-
+-->
 <!--
   <div class="col-md-2">
    <a href="?view_mode=clear_trash" class="btn btn-default" title="Delete not linked topics."><i class="glyphicon glyphicon-floppy-remove"></i></a>
