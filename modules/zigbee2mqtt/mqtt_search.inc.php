@@ -96,7 +96,7 @@ $res[$i]['BATTERY']=$bat;}
 }
 
 
-echo time().":".strtotime($res[$i]['FIND'])."=".time()-strtotime($res[$i]['FIND'])."<br>";
+//echo time().":".strtotime($res[$i]['FIND'])."=".time()-strtotime($res[$i]['FIND'])."<br>";
 
  if (time()-strtotime($res[$i]['FIND'])>3000) {
   $res[$i]['LOST']='1';
