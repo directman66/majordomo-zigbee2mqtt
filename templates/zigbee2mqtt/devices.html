@@ -82,6 +82,7 @@
 <tr>
 
 
+
  <td>
 [#if SELECTTYPE#]
 <img src="../templates/zigbee2mqtt/img/[#SELECTTYPE#].jpg"  height="62" width="62" class="img-rounded">
@@ -93,8 +94,12 @@
 -->
 
 </td>
- <td>[#DEVID#]</td>
- <td>
+ <td
+[#if LOST#] style="color:lightgray;font-weight:bold"[#endif#]
+>[#DEVID#]</td>
+ <td
+[#if LOST#] style="color:lightgray;font-weight:bold"[#endif#]
+>
 
    <a href="?view_mode=view_mqtt&id=[#DEVID#]&tab=edit_device"  title="<#LANG_EDIT#>">
 <b>[#TITLE#]
@@ -135,19 +140,36 @@
 
 </td>
 
-<td>
+<td
+[#if LOST#] style="color:lightgray;font-weight:bold"[#endif#]
+>
 [#if POWER_WARNING<>""#]
 <span class="label label-[#POWER_WARNING#]"><i class="glyphicon glyphicon-flash"></i> [#BATTERY#]%</span>
 [#endif#]
 
 </td>
 
- <td>[#SELECTVENDOR#]</td>
- <td>[#SELECTTYPE#]</td>
- <td> [#MODEL#] </td>
- <td>[#description#]</td>
+ <td
+[#if LOST#] style="color:lightgray;font-weight:bold"[#endif#]
+>[#SELECTVENDOR#]</td>
+ <td
+[#if LOST#] style="color:lightgray;font-weight:bold"[#endif#]
+>[#SELECTTYPE#]</td>
+ <td
+[#if LOST#] style="color:lightgray;font-weight:bold"[#endif#]
+> [#MODEL#] </td>
+ <td
+[#if LOST#] style="color:lightgray;font-weight:bold"[#endif#]
+>[#description#]</td>
 
- <td > [#if FIND!=""#][#FIND#][#else#] &nbsp; [#endif#]</td>
+ <td 
+[#if LOST#] style="color:lightgray;font-weight:bold"[#endif#]
+> [#if FIND!=""#]
+
+
+[#FIND#]
+
+[#else#] &nbsp; [#endif#]</td>
 
 
 
