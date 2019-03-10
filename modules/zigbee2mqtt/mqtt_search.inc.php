@@ -19,14 +19,6 @@
 
 
 
-
-
-
-
-
-
-
-
    //deviles
 //  $res=SQLSelect("SELECT * FROM zigbee2mqtt_devices WHERE $qry ORDER BY ".$sortby_mqtt);
 //if ($this->view_mode==''||$this->view_mode=='device')
@@ -87,7 +79,33 @@ $res[$i]['LINKED']=$lnk;
 
 $res[$i]['BATTERY']=$bat;}
 
+ if (
+(($res[$i]['type']=='bulb')||
+($res[$i]['type']=='remote')||
+($res[$i]['type']=='switch')
+)
+&&
+($res[$i]['model']!='MFKZQ01LM')
+	
+
+)
+
+{
+
+  $res[$i]['CHANGEABLE']='1';
+}
+
    }
+
+
+
+
+// $bat=SQLSelectOne($sql="SELECT *  FROM  zigbee2mqtt_device_command  where METRIKA='battery'  and DEV_ID='".$res[$i]['DEVID']."'")['VALUE'];
+
+
+
+   
+
 //debmes('devid:'.$res[$i]['DEVID'].'count:'.$total2."::::".$lnk,'zigbee2mqtt');
 
 //print_r($res);
