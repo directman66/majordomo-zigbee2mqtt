@@ -117,8 +117,18 @@
 -->
 
 
+[#if LINKED!=""#]
+<left><small><br>  [#LINKED#]</small></left>
+[#endif#]
+
+[#if CHANGEABLE="1"#]
 <br>
-<left><small>  [#LINKED#]</small></left>
+<left><small> 
+   <a href="?view_mode=device_on&id=[#DEVID#]&tab="  title="<#LANG_EDIT#>"> ON </a>
+   <a href="?view_mode=device_off&id=[#DEVID#]&tab="  title="<#LANG_EDIT#>"> OFF </a>
+
+</small></left>
+[#endif#]
 
 
 
