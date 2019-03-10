@@ -298,6 +298,128 @@ debmes('Публикую zigbee2mqqtt '.$rec['PATH_WRITE'].":".$jsonvalue, 'zigb
 
  }
 
+
+ function setPropertyDevice($id, $value, $set_linked=0) {
+debmes('Нужно изменить значение id='.$id.' на '.$value, 'zigbee2mqtt');
+
+debmes("SELECT * FROM zigbee2mqtt WHERE DEV_ID='".$id."'", 'zigbee2mqtt');
+  $rec=SQLSelectOne("SELECT * FROM zigbee2mqtt WHERE DEV_ID='".$id."'");
+
+  if (!$rec['ID'] || !$rec['PATH']) {
+debmes('Не хватает данных', 'zigbee2mqtt');
+   return 0;
+  }
+
+
+     if ($rec['REPLACE_LIST']!='') {
+         $list=explode(',',$rec['REPLACE_LIST']);
+         foreach($list as $pair) {
+             $pair=trim($pair);
+             list($new,$old)=explode('=',$pair);
+             if ($value==$old) {
+                 $value=$new;
+                 break;
+             }
+         }
+     }
+  //if ($new_connection) {
+
+  include_once("./lib/mqtt/phpMQTT.php");
+
+   $this->getConfig();
+   if ($mqtt->config['MQTT_CLIENT']) {
+    $client_name=$mqtt->config['MQTT_CLIENT'];
+   } else {
+    $client_name="MajorDoMo MQTT";
+   }
+
+   if ($this->config['MQTT_AUTH']) {
+    $username=$this->config['MQTT_USERNAME'];
+    $password=$this->config['MQTT_PASSWORD'];
+   }
+   if ($this->config['MQTT_HOST']) {
+    $host=$this->config['MQTT_HOST'];
+   } else {
+    $host='localhost';
+   }
+   if ($this->config['MQTT_PORT']) {
+    $port=$this->config['MQTT_PORT'];
+   } else {
+    $port=1883;
+   }
+
+   $mqtt_client = new phpMQTT($host, $port, $client_name.' Client');
+
+   if(!$mqtt_client->connect(true, NULL,$username,$password))
+   {
+debmes('Ошибка подключения к mqtt', 'zigbee2mqtt');
+    return 0;
+   }
+
+/*
+if ($rec['CONVERTONOFF']=='1') {
+if ($value=='1')  $json=array( $rec['METRIKA']=> 'ON');
+if ($value=='0')  $json=array( $rec['METRIKA']=> 'OFF');
+$jsonvalue=json_encode($json) ;
+
+**/
+
+
+if (($rec['PAYLOAD_ON'])||$rec['PAYLOAD_OFF']) {
+debmes('Подменяем '.$value. " на ". $rec['PAYLOAD_ON']."/".$rec['PAYLOAD_OFF'], 'zigbee2mqtt');
+
+//if (($rec['PAYLOAD_ON'])&& ($value=="1"))  $json=array( $rec['METRIKA']=> $rec['PAYLOAD_ON']);
+//if (($rec['PAYLOAD_OFF'])&& ($value=="0"))  $json=array( $rec['METRIKA']=> $rec['PAYLOAD_OFF']);
+
+if  ($value=="1") $json=array( $rec['COMMAND_VALUE']=> $rec['PAYLOAD_ON']);
+if ($value=="0")  $json=array( $rec['COMMAND_VALUE']=> $rec['PAYLOAD_OFF']);
+$jsonvalue=json_encode($json) ;
+
+debmes('Заменили  '.$value. "  на ". $jsonvalue, 'zigbee2mqtt');
+
+
+} else 
+{
+$json=array( $rec['COMMAND_VALUE']=> $value);
+$jsonvalue=json_encode($json) ;
+}
+debmes('Публикую zigbee2mqqtt '.$rec['PATH_WRITE'].":".$jsonvalue, 'zigbee2mqtt');
+
+
+   if ($rec['PATH_WRITE']) {
+
+   $mqtt_client->publish($rec['PATH_WRITE'],$jsonvalue, (int)$rec['QOS'], (int)$rec['RETAIN']);
+       
+   }
+
+// else {    $mqtt_client->publish($rec['PATH']."/",$jsonvalue, (int)$rec['QOS'], (int)$rec['RETAIN']);   }
+   $mqtt_client->close();
+
+  /*
+  } else {
+
+   $this->prepareQueueTable();
+   $data=array();
+   $data['PATH']=$rec['PATH'];
+   $data['VALUE']=$value;
+   SQLInsert('mqtt_queue', $data);
+
+  }
+  */
+
+  $rec['VALUE']=$value.'';
+  $rec['UPDATED']=date('Y-m-d H:i:s');
+  SQLUpdate('zigbee2mqtt', $rec);
+
+
+//  if ($set_linked && $rec['LINKED_OBJECT'] && $rec['LINKED_PROPERTY']) {
+//   setGlobal($rec['LINKED_OBJECT'].'.'.$rec['LINKED_PROPERTY'], $value, array($this->name=>'0'));
+//  }
+
+ }
+
+
+
 /**
 * Title
 *
@@ -807,6 +929,38 @@ $out['status']=$a;
 
 }
 
+
+ if ($this->view_mode=='device_on') {
+	$id=$this->id;
+//	$this->setProperty($mqtt_properties[$i]['ID'], $value);
+debmes('!!!!!!!device_on','zigbee2mqtt');
+	$this->setPropertyDevice($id, 1);
+   $this->redirect("?");
+}
+
+ if ($this->view_mode=='device_off') {
+	$id=$this->id;
+debmes('!!!!!!!device_off','zigbee2mqtt');
+//	$this->setProperty($mqtt_properties[$i]['ID'], $value);
+	$this->setPropertyDevice($id, 0);
+   $this->redirect("?");
+}
+
+
+  if ($this->view_mode=='startpairing') {
+  $this->sendcommand('zigbee2mqtt/bridge/config/permit_join', 'true');
+  $this->redirect("?tab=service");
+}
+
+  if ($this->view_mode=='stoppairing') {
+  $this->sendcommand('zigbee2mqtt/bridge/config/permit_join', 'false');
+  $this->redirect("?tab=service");
+}
+
+
+
+
+
  if ($this->view_mode=='srv_stop') {
 $a=shell_exec("sudo systemctl stop zigbee2mqtt");
 $a=shell_exec("sudo systemctl status zigbee2mqtt");
@@ -1248,6 +1402,46 @@ debmes('Запрашиваем карту ', 'zigbee2mqtt');
    //$mqtt_client->publish($rec['PATH_WRITE'].'/set',$jsonvalue, (int)$rec['QOS'], (int)$rec['RETAIN']);
 
 
+   $mqtt_client->close();
+}
+
+
+
+function sendcommand($topic, $command){
+  include_once("./lib/mqtt/phpMQTT.php");
+
+   $this->getConfig();
+   if ($mqtt->config['MQTT_CLIENT']) {
+    $client_name=$mqtt->config['MQTT_CLIENT'];
+   } else {
+    $client_name="MajorDoMo MQTT";
+   }
+
+   if ($this->config['MQTT_AUTH']) {
+    $username=$this->config['MQTT_USERNAME'];
+    $password=$this->config['MQTT_PASSWORD'];
+   }
+   if ($this->config['MQTT_HOST']) {
+    $host=$this->config['MQTT_HOST'];
+   } else {
+    $host='localhost';
+   }
+   if ($this->config['MQTT_PORT']) {
+    $port=$this->config['MQTT_PORT'];
+   } else {
+    $port=1883;
+   }
+
+   $mqtt_client = new phpMQTT($host, $port, $client_name.' Client');
+
+   if(!$mqtt_client->connect(true, NULL,$username,$password))
+   {
+    return 0;
+   }
+
+
+debmes('Запрашиваем '.$topic.' '.$command, 'zigbee2mqtt');
+   $mqtt_client->publish($topic,$command);
    $mqtt_client->close();
 }
 
