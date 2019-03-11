@@ -4,7 +4,7 @@
 
 [#if MODELNAME#]
 
-   <a href="https://koenkk.github.io/zigbee2mqtt/integration/home_assistant.html#[#MODELNAME#]" target="_blank">
+   <a href="https://www.zigbee2mqtt.io/integration/home_assistant.html#[#MODELNAME#]" target="_blank">
 
 
 <img src="../templates/zigbee2mqtt/img/[#MODELNAME#].jpg"   class="img-rounded" height="70" width="70" title="[#DESCRIPTION#]">
@@ -126,7 +126,7 @@
   
   [#if "<#ACTION#>"=="admin"#]
    <a href="?view_mode=edit_mqtt&id=[#zmID#]" class="btn btn-default btn-sm" title="<#LANG_EDIT#>"><i class="glyphicon glyphicon-pencil"></i></a>
-    <a href="?view_mode=delete_mqtt&id=[#ID#]" onClick="return confirm('<#ARE_YOU_SURE#>')" class="btn btn-default btn-sm" title="<#LANG_DELETE#>"><i class="glyphicon glyphicon-remove"></i></a>
+    <a href="?view_mode=delete_mqtt&id=[#zmID#]&redirectid=<#ID#>" onClick="return confirm('<#ARE_YOU_SURE#>')" class="btn btn-default btn-sm" title="<#LANG_DELETE#>"><i class="glyphicon glyphicon-remove"></i></a>
   [#endif ACTION#]
   
  </td>
