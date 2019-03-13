@@ -451,7 +451,7 @@ if ($dev_title=='bridge')  {
 
 $arr=sqlselectone('select * from  zigbee2mqtt_devices where TITLE="bridge"');
 
-if ($arr['IEEEADDR']) {$dev_title=$arr['IEEEADDR'];} else  {$dev_title='bridge';}
+//if ($arr['IEEEADDR']) {$dev_title=$arr['IEEEADDR'];} else  {$dev_title='bridge';}
 
 }
 //echo $path.":".$dev_title."<br>";
@@ -476,7 +476,9 @@ else
 
      $rec['FIND']=date('Y-m-d H:i:s');
 SQLInsert('zigbee2mqtt_devices', $rec);
-     $this->refresh_db();
+//     $this->refresh_db();
+     $this->refreshdb_mqtt();
+
 
        }
 else 
@@ -1094,18 +1096,32 @@ $out['status']=$a;
 
      if ($this->view_mode=='refresh_db') {
          $this->refresh_db();
+
+         $this->redirect("?");
+     }
+
+
+     if ($this->view_mode=='refresh_mqtt') {
+//         $this->refresh_db();
+//  $this->sendcommand('zigbee2mqtt/bridge/log', 'zigbee2mqtt/bridge/config/devices');
+  $this->sendcommand('zigbee2mqtt/bridge/config/devices', '');
+
+
+$cmd='
+include_once(DIR_MODULES . "zigbee2mqtt/zigbee2mqtt.class.php");
+$z2m= new zigbee2mqtt();
+$z2m->refreshdb_mqtt(); 
+
+';
+ SetTimeOut('z2m_refresh_mqtt',$cmd, '10'); 
+
          $this->redirect("?");
      }
 
 
 
-
-
-
-
-
-
  }
+
 
 
 function clear_trash() {
@@ -1120,7 +1136,7 @@ function clear_trash() {
 function updatedb() {
   SQLExec('DROP TABLE IF EXISTS zigbee2mqtt_devices_list');
   SQLExec('DROP TABLE IF EXISTS zigbee2mqtt_devices_command');
-$this->createdb();
+   $this->createdb();
 
 
 }
@@ -1191,6 +1207,110 @@ SQLUPDATE('zigbee2mqtt_devices', $res);
 $this->updateparrent();
 //debmes('123', 'zigbee2mqtt');
 }
+
+}
+
+
+function refreshdb_mqtt() {
+
+$log=SQLSelectOne ('select * from zigbee2mqtt where TITLE="zigbee2mqtt/bridge/log"');
+$log1=$log['VALUE'];
+debmes('log: '.$log1, 'zigbee2mqtt');
+$json2=json_decode($log1);
+
+//debmes($json, 'zigbee2mqtt');
+
+
+$json=$json2->{'message'};
+//debmes($json, 'zigbee2mqtt');
+
+/*
+foreach ( $json as $v)
+{
+debmes('****************', 'zigbee2mqtt');
+debmes('ieeeAddr:'.$v, 'zigbee2mqtt');
+}
+*/
+
+
+    $total = count($json);
+//   debmes('total:'.$total, 'zigbee2mqtt');
+    for ($i=0;$i<$total;$i++) {
+
+$cdev=$json[$i]->{'ieeeAddr'};
+
+if ($cdev){
+debmes('cdev:'.$cdev, 'zigbee2mqtt');
+$sql="SELECT * FROM zigbee2mqtt_devices where IEEEADDR='".$cdev."'";
+debmes($sql, 'zigbee2mqtt');
+$res2=SQLSelectOne($sql);
+
+
+$temp=sqlselectone ("SELECT * FROM zigbee2mqtt_devices_list where model='".$json[$i]->{'model'}."'");
+
+if ($res2['TITLE']=='bridge') {
+$res2['MODEL']='cc2531';
+$res2['TYPE']='cc2531';
+$res2['MODELID']='cc2531';
+$res2['MANUFACTURE']='TI';
+$res2['SELECTVENDOR']='TI';
+$res2['MODELID']='cc2531';
+}
+
+
+$res2['SELECTTYPE']=    $json[$i]->{'model'};
+
+
+$res2['SELECTVENDOR']=$temp['vendor'];
+$res2['MANUFACTURE']=$temp['vendor'];
+$res2['MODEL']=$json[$i]->{'model'};
+$res2['DEVICE_NAME']=$temp['zigbeeModel'];
+$res2['TYPE']=   	$json[$i]->{'type'};
+
+//$res2['TYPE']=$temp['zigbeeModel'];
+//$res2['MODEL']=$json[$i]->{'type'};
+
+
+$res2['IEEEADDR']=      $json[$i]->{'ieeeAddr'};
+
+     if ($res2['ID']) 
+{
+debmes('update', 'zigbee2mqtt');
+debmes($res2, 'zigbee2mqtt');
+SQLUPDATE('zigbee2mqtt_devices', $res2);
+}
+else 
+{
+debmes('insert', 'zigbee2mqtt');
+if ($json[$i]->{'model'}) $res2['SELECTTYPE']=    $json[$i]->{'model'};
+debmes($res2, 'zigbee2mqtt');
+if ($res2['TITLE']) SQLInsert('zigbee2mqtt_devices', $res2);
+}}
+
+
+
+}
+/*
+debmes($sql, 'zigbee2mqtt');
+$res2=SQLSelectOne($sql);
+
+     if($res['ID']) 
+{
+$res2['TYPE']=   	$json[$i]->{'type'};
+$res2['SELECTTYPE']=    $json[$i]->{'model'};
+SQLUPDATE('zigbee2mqtt_devices', $res2);
+}
+else 
+{
+$res2['TITLE']=     $json[$i]->{'ieeeAddr'};
+$res2['IEEEADDR']=   $json[$i]->{'ieeeAddr'};
+$res2['TYPE']=   	$json[$i]->{'type'};
+$res2['SELECTTYPE']=    $json[$i]->{'model'};
+SQLIsert('zigbee2mqtt_devices', $res2);
+}
+}
+//$this->updateparrent();
+*/
 
 }
 
