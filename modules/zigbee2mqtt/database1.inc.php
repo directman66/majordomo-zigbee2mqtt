@@ -2429,7 +2429,7 @@ SQLInsert('zigbee2mqtt_devices_list', $par1);
 //LIVOLO
 
 $par1['zigbeeModel'] = "TI0001";
-$par1['model'] = "VL-C701Z-11";
+$par1['model'] = "TI0001";
 $par1['vendor'] = "Livolo";
 $par1['type'] = "switch";
 $par1['description'] = "LIVOLO Smart Switch";
