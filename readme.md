@@ -1,4 +1,4 @@
-# Модуль для интеграции устройств zigbee в систему [MAJORDOMO](https://mjdm.ru/) c использованием zigbee2mqtt 
+# Модуль для интеграции устройств zigbee в систему [MAJORDOMO](https://mjdm.ru/) c использованием [zigbee2mqtt](https://www.zigbee2mqtt.io)
 
 
 
