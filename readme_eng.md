@@ -1,4 +1,5 @@
-# Module for integrating zigbee devices into the MAJORDOMO system using zigbee2mqtt
+# Module for integrating zigbee devices into the [MAJORDOMO] system (https://mjdm.ru/) using [zigbee2mqtt] (https://www.zigbee2mqtt.io)
+
 
 
 
@@ -90,10 +91,15 @@ serial:
 Channel 26 is selected for the livolo switch (only work on channel 26 https://github.com/Koenkk/zigbee2mqtt/issues/592). If there are no switches, you can delete this line.
 
 If you configure the system under windows, the port must be specified in the following format:
-`` bash
+``` bash
 serial:
   port: COM4 [/ code]
-`` `
+```
+
+
+# Updating local zigbee2mqtt to the current version:
+
+
 
 Run the command sudo systemctl start zigbee2mqtt
 
@@ -108,4 +114,67 @@ cd / opt / zigbee2mqtt
 cp -R data data-backup
 
 # Update
-git checkout HEAD - npm-shrinkwr
+git checkout HEAD - npm-shrinkwrap.json
+git pull
+rm -rf node_modules
+npm install
+
+# Restore configuration
+cp -R data-backup / * data
+rm -rf data-backup
+
+# Start zigbee2mqtt
+sudo systemctl start zigbee2mqtt
+
+
+`` `
+
+
+To start the service automatically, do not forget after step 5 (Optional) Running as a daemon with systemctl
+`` bash
+sudo systemctl enable zigbee2mqtt
+`` `
+(the service will start automatically when the system starts)
+
+# List of supported hardware:
+https://www.zigbee2mqtt.io/information/supported_devices.html
+
+# Current module status: betta
+
+# Implemented:
+1) Subscribe to the channel zigbee2mqtt / #
+2) automatic device creation;
+3) automatic filling of device metrics;
+4) binding of metrics to objects.
+5) view logs zigbee2mqtt;
+6) conversion of the attached variables to the standard for major format (instead of 1/0 in zigbee2mqtt ON / OFF is used);
+7) device management;
+8) create a map of devices.
+9) Added management and viewing pairing modes.
+10) Added control (ON OFF) of devices from the main window of the module.
+11) Lost gray devices are highlighted.
+
+
+
+
+# What is planned:
+
+1) Working with groups https://www.zigbee2mqtt.io/information/groups.html
+2) Establishment of missing metrics so that events not described can be linked)
+3) Debug work. There are conflicting data, someone does not display drop-down lists with pictures and so on.
+4) Debug work when majordomo and zigbee2mqtt are on different devices. Requested information to unbind from configs https://github.com/Koenkk/zigbee2mqtt/issues/1236
+5) Configure direct device control
+
+
+Link to an interesting subject channel in telegrams: https://t.me/zigbeer
+Link to the repository of the zigbee2mqtt module: http://github.com/directman66/majordomo-zigbee2mqtt/
+Topics for device management via mqtt https://www.zigbee2mqtt.io/integration/home_assistant.html
+Topics for managing the gateway via mqtt https://www.zigbee2mqtt.io/information/mqtt_topics_and_message_structure.html#zigbee2mqttbridgelog
+
+
+Drivers for smartRF04EB begin with swrc * are in the repository of Ilya Kiraova https://github.com/kirovilya/files
+Many thanks to Ilya @ goofyk for help in mastering the material)
+
+The latest firmware versions can be found here https://github.com/Koenkk/Z-Stack-firmware/tree/dev/coordinator/
+
+Discussion of smart lamps http://majordomo.smartliving.ru/forum/viewtopic.php?f=8&t=6016&p=95733#p95733
