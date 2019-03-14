@@ -4,12 +4,13 @@
 
 
 стик https://ru.aliexpress.com/store/product/Wireless-Zigbee-CC2531-Sniffer-Bare-Board-Packet-Protocol-Analyzer-Module-USB-Interface-Dongle-Capture-Packet-Module/2182011_32852226435.html
+
 дебаггер https://ru.aliexpress.com/store/product/Smart-RF04E-Smart-RF04EB-CC1110-CC2530-CC2531-CC2540-ZigBee-Module-Target-Zigbee-Emulator-CC-Debugger-Bluetooth/2182011_32950422195.html
+
 шнурок https://ru.aliexpress.com/store/product/Downloader-Cable-Bluetooth-4-0-CC2540-zigbee-CC2531-Sniffer-USB-Programmer-Wire-Download-Programming-Connector-Board/2182011_32853531081.html
 
 
 Желательно все заказывать у одного продавца, тогда будет один трек на все товары. Я имел неосторожность заказать у разных продавцов, в итоге шнурок ждал около 3 месяцев без пробивания трека. 
-
 
 Прошитый стик можно заказать у спрута https://sprut.ai/client/projects/105 (нажать кнопку помочь проекту, выбрать прошитый стик и указать  цену 1000 руб.) 
 
@@ -32,19 +33,20 @@ https://www.zigbee2mqtt.io/getting_started/running_zigbee2mqtt.html
 
 Если вам нужна поддержка разрабатываемого в данный момент железа, можно установить девелоперскую ветку. Тогда вместо 
 
-'''
+```bash
 sudo git clone https://github.com/Koenkk/zigbee2mqtt.git /opt/zigbee2mqtt 
 sudo chown -R pi:pi /opt/zigbee2mqtt
 cd /opt/zigbee2mqtt
 npm install
-'''
+```
 
 нужно выполнить 
-[code]sudo git clone --single-branch --branch dev  https://github.com/Koenkk/zigbee2mqtt/   /opt/zigbee2mqtt
+```bash
+sudo git clone --single-branch --branch dev  https://github.com/Koenkk/zigbee2mqtt/   /opt/zigbee2mqtt
 sudo chown -R pi:pi /opt/zigbee2mqtt
 cd /opt/zigbee2mqtt
 npm install
-[/code]
+```
 
 # Установка zigbee2mqtt для windows 
 1) Устанавливаем брокер mqtt, если у вас его еще нет по инструкции http://www.steves-internet-guide.com/install-mosquitto-broker/
@@ -63,7 +65,8 @@ https://nodejs.org/en/download/
 
 # Настраиваем конфигурационный файл /opt/zigbee2mqtt/data/configuration.yaml
 пример вариантов настроек конфигурационного файла https://www.zigbee2mqtt.io/configuration/configuration.html
-[spoiler][code]homeassistant: false
+```bash
+homeassistant: false
 permit_join: true
 advanced:
   channel: 26
@@ -74,8 +77,8 @@ mqtt:
    server: 'mqtt://192.168.1.39'
   
 serial:
-  port: /dev/ttyACM1[/code]
-[/spoiler]
+  port: /dev/ttyACM1
+  ```
 
 26 канал выбран для livolo выключателя (работают только на 26 канале https://github.com/Koenkk/zigbee2mqtt/issues/592). При отсутствии ливоло выключателей,  можно удалить эту строку.
 
