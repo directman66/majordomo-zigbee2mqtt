@@ -23,7 +23,8 @@ https://github.com/kirovilya/ioBroker.zigbee/wiki/%D0%9F%D1%80%D0%BE%D1%88%D0%B8
 В модуле mqtt от @SergeJey доступно только чтение параметров, поэтому для управления устройствами начал писать новый модуль zigbee2mqtt
 
 # Инструкция по перепрошивке стика:
-Мне понадобился драйвер для дебагера https://github.com/kirovilya/files/blob/master/swrc212a.zip
+
+Понадобился драйвер для дебагера https://github.com/kirovilya/files/blob/master/swrc212a.zip
 Прошивал по этой инструкции: https://www.zigbee2mqtt.io/getting_started/flashing_the_cc2531.html
 Еще инструкция https://github.com/kirovilya/ioBroker.zigbee/wiki/%D0%9F%D1%80%D0%BE%D1%88%D0%B8%D0%B2%D0%BA%D0%B0
 Прошивальщик https://yadi.sk/d/RxIVtu3YTCBDyw
@@ -85,16 +86,16 @@ serial:
 26 канал выбран для livolo выключателя (работают только на 26 канале https://github.com/Koenkk/zigbee2mqtt/issues/592). При отсутствии ливоло выключателей,  можно удалить эту строку.
 
 Если вы настраиваете систему под windows,  порт необходимо указать в следующем формате:
-[spoiler]
-[code]serial:
+```bash
+serial:
   port: COM4[/code]
-[/spoiler]
+```
 
 Запускаем командой sudo systemctl start zigbee2mqtt
 
-[b]Обновление локального zigbee2mqtt до актуальной версии:[/b]
-[code]
+#Обновление локального zigbee2mqtt до актуальной версии:
 
+```bash
 # Stop zigbee2mqtt and go to directory
 sudo systemctl stop zigbee2mqtt
 cd /opt/zigbee2mqtt
@@ -116,18 +117,21 @@ rm -rf data-backup
 sudo systemctl start zigbee2mqtt
 
 
-[/code]
+```
 
 
 Чтобы сервис стартовал автоматически, не забудьте после  п. 5  (Optional) Running as a daemon with systemctl выполнить 
-[code]sudo systemctl enable zigbee2mqtt[/code]
+```bash
+sudo systemctl enable zigbee2mqtt
+```
 (сервис будет запускаться автоматически при старте системы)
 
-[b]Список поддерживаемого оборудования:[/b]
+#Список поддерживаемого оборудования:
 https://www.zigbee2mqtt.io/information/supported_devices.html
 
-[b]Текущий статус модуля: бетта[/b]
-Реализовано:
+# Текущий статус модуля: бетта
+
+# Реализовано:
 1) подписка на канал zigbee2mqtt/#
 2) автоматическое создание устройств;
 3) автоматическое заполнение метрик устройств;
@@ -143,44 +147,13 @@ https://www.zigbee2mqtt.io/information/supported_devices.html
 
 
 
-Что планируется:
+# Что планируется:
 
 1) Работа с группами https://www.zigbee2mqtt.io/information/groups.html
 2) Заведение отсутствующих метрик, чтобы можно было привязать не описанные события)
 3) Отладить работу. Поступают противоречивые данные, у кого-то не отображаются выпадающие списки с картинками и тд.
 4) Отладить работу, когда мажордомо и zigbee2mqtt находятся на разных устройствах. Запросил информацию для отвязки от конфигов https://github.com/Koenkk/zigbee2mqtt/issues/1236
 5) Настройка прямого управления устройствами 
-[spoiler]
-Xiaomi Aqara wired wall switch (QBKG03LM and QBKG04LM)
-Decoupled mode allows to turn wired switch into wireless button with separately controlled relay. This might be useful to assign some custom actions to buttons and control relay remotely. This command also allows to redefine which button controls which relay for double switch.
-
-Special topics should be used:
-
-zigbee2mqtt/[DEVICE_ID]/system/set to modify operation mode.
-
-Payload:
-
-{
-  "operation_mode": {
-    "button": "single"|"left"|"right",
-    "state": "VALUE"
-  }
-}
-Values	Description
-control_relay	Button directly controls relay (for single switch)
-control_left_relay	Button directly controls left relay (for double switch)
-control_right_relay	Button directly controls right relay (for double switch)
-decoupled	Button doesn’t control any relay
-zigbee2mqtt/[DEVICE_ID]/system/get to read current mode.
-
-Payload:
-
-{
-  "operation_mode": {
-    "button": "single"|"left"|"right"
-  }
-}
-[/spoiler]
 
 
 Ссылка на интересный тематический канал в телеграм: https://t.me/zigbeer
