@@ -1,14 +1,14 @@
 Давно известно, что с zigbee устройствами можно работать не только через шлюз MiHome. Имеется множество других решений, через которые можно получать данные и управлять устройствами (deconz, athom hommey, samsung smartthings, philips hue, Smart home Hommyn Zigbee Хаб (HU-20-Z) etc). По моему мнению,  самым интересным и бюджетным вариантом является проект zigbee2mqtt https://github.com/Koenkk/zigbee2mqtt. 
 [b]Для работы c проектом  нужен прошитый стик и компьютер на линукс[/b] (подойдет любой одноплатник типа малины)
 
-[spoiler]
+
 стик https://ru.aliexpress.com/store/product/Wireless-Zigbee-CC2531-Sniffer-Bare-Board-Packet-Protocol-Analyzer-Module-USB-Interface-Dongle-Capture-Packet-Module/2182011_32852226435.html
 дебаггер https://ru.aliexpress.com/store/product/Smart-RF04E-Smart-RF04EB-CC1110-CC2530-CC2531-CC2540-ZigBee-Module-Target-Zigbee-Emulator-CC-Debugger-Bluetooth/2182011_32950422195.html
 шнурок https://ru.aliexpress.com/store/product/Downloader-Cable-Bluetooth-4-0-CC2540-zigbee-CC2531-Sniffer-USB-Programmer-Wire-Download-Programming-Connector-Board/2182011_32853531081.html
 
 
 Желательно все заказывать у одного продавца, тогда будет один трек на все товары. Я имел неосторожность заказать у разных продавцов, в итоге шнурок ждал около 3 месяцев без пробивания трека. 
-[/spoiler]
+
 
 Прошитый стик можно заказать у спрута https://sprut.ai/client/projects/105 (нажать кнопку помочь проекту, выбрать прошитый стик и указать  цену 1000 руб.) 
 
@@ -30,12 +30,15 @@
 https://www.zigbee2mqtt.io/getting_started/running_zigbee2mqtt.html
 
 Если вам нужна поддержка разрабатываемого в данный момент железа, можно установить девелоперскую ветку. Тогда вместо 
-[code]
+
+'''
 sudo git clone https://github.com/Koenkk/zigbee2mqtt.git /opt/zigbee2mqtt 
 sudo chown -R pi:pi /opt/zigbee2mqtt
 cd /opt/zigbee2mqtt
 npm install
-[/code]нужно выполнить 
+'''
+
+нужно выполнить 
 [code]sudo git clone --single-branch --branch dev  https://github.com/Koenkk/zigbee2mqtt/   /opt/zigbee2mqtt
 sudo chown -R pi:pi /opt/zigbee2mqtt
 cd /opt/zigbee2mqtt
