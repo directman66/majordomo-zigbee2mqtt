@@ -73,7 +73,7 @@ So far, it is not clear how to manage and restart the service under Windows.
 
 # Set up the configuration file /opt/zigbee2mqtt/data/configuration.yaml
 example configuration options for the https://www.zigbee2mqtt.io/configuration/configuration.html configuration file
-`` bash
+``` bash
 homeassistant: false
 permit_join: true
 advanced:
@@ -86,7 +86,7 @@ mqtt:
   
 serial:
   port: / dev / ttyACM1
-  `` `
+```
 
 Channel 26 is selected for the livolo switch (only work on channel 26 https://github.com/Koenkk/zigbee2mqtt/issues/592). If there are no switches, you can delete this line.
 
@@ -124,15 +124,13 @@ rm -rf data-backup
 
 # Start zigbee2mqtt
 sudo systemctl start zigbee2mqtt
-
-
-`` `
+```
 
 
 To start the service automatically, do not forget after step 5 (Optional) Running as a daemon with systemctl
-`` bash
+``` bash
 sudo systemctl enable zigbee2mqtt
-`` `
+```
 (the service will start automatically when the system starts)
 
 # List of supported hardware:
