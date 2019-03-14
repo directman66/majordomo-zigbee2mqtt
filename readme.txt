@@ -1,5 +1,6 @@
 Давно известно, что с zigbee устройствами можно работать не только через шлюз MiHome. Имеется множество других решений, через которые можно получать данные и управлять устройствами (deconz, athom hommey, samsung smartthings, philips hue, Smart home Hommyn Zigbee Хаб (HU-20-Z) etc). По моему мнению,  самым интересным и бюджетным вариантом является проект zigbee2mqtt https://github.com/Koenkk/zigbee2mqtt. 
-[b]Для работы c проектом  нужен прошитый стик и компьютер на линукс[/b] (подойдет любой одноплатник типа малины)
+
+<b>Для работы c проектом  нужен прошитый стик и компьютер на линукс </b>(подойдет любой одноплатник типа малины)
 
 
 стик https://ru.aliexpress.com/store/product/Wireless-Zigbee-CC2531-Sniffer-Bare-Board-Packet-Protocol-Analyzer-Module-USB-Interface-Dongle-Capture-Packet-Module/2182011_32852226435.html
