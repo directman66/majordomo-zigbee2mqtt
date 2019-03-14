@@ -1,6 +1,6 @@
 Давно известно, что с zigbee устройствами можно работать не только через шлюз MiHome. Имеется множество других решений, через которые можно получать данные и управлять устройствами (deconz, athom hommey, samsung smartthings, philips hue, Smart home Hommyn Zigbee Хаб (HU-20-Z) etc). По моему мнению,  самым интересным и бюджетным вариантом является проект zigbee2mqtt https://github.com/Koenkk/zigbee2mqtt. 
 
-<b>Для работы c проектом  нужен прошитый стик и компьютер на линукс </b>(подойдет любой одноплатник типа малины)
+# Для работы c проектом  нужен прошитый стик и компьютер на линукс (подойдет любой одноплатник типа малины)
 
 
 стик https://ru.aliexpress.com/store/product/Wireless-Zigbee-CC2531-Sniffer-Bare-Board-Packet-Protocol-Analyzer-Module-USB-Interface-Dongle-Capture-Packet-Module/2182011_32852226435.html
@@ -13,13 +13,13 @@
 
 Прошитый стик можно заказать у спрута https://sprut.ai/client/projects/105 (нажать кнопку помочь проекту, выбрать прошитый стик и указать  цену 1000 руб.) 
 
-Есть возможность прошить стик через ардуино https://github.com/kirovilya/ioBroker.zigbee/wiki/%D0%9F%D1%80%D0%BE%D1%88%D0%B8%D0%B2%D0%BA%D0%B0-%D1%87%D0%B5%D1%80%D0%B5%D0%B7-Arduino, но это очень геморный процесс и занимает около 5 часов. К тому-же очень сложно прошивать, не имея кабель-шнурок. От этого варианта прошивания я отказался.
+# Есть возможность прошить стик через ардуино https://github.com/kirovilya/ioBroker.zigbee/wiki/%D0%9F%D1%80%D0%BE%D1%88%D0%B8%D0%B2%D0%BA%D0%B0-%D1%87%D0%B5%D1%80%D0%B5%D0%B7-Arduino, но это очень геморный процесс и занимает около 5 часов. К тому-же очень сложно прошивать, не имея кабель-шнурок. От этого варианта прошивания я отказался.
 
 Также стик можно прошить у коллег в  вашем городе, например в Екате я могу прошить стик за символическую плату в размере 500 руб )
 
 В модуле mqtt от @SergeJey доступно только чтение параметров, поэтому для управления устройствами начал писать новый модуль zigbee2mqtt
 
-[b]Инструкция по перепрошивке стика:[/b]
+# Инструкция по перепрошивке стика:
 Мне понадобился драйвер для дебагера https://github.com/kirovilya/files/blob/master/swrc212a.zip
 Прошивал по этой инструкции: https://www.zigbee2mqtt.io/getting_started/flashing_the_cc2531.html
 Еще инструкция https://github.com/kirovilya/ioBroker.zigbee/wiki/%D0%9F%D1%80%D0%BE%D1%88%D0%B8%D0%B2%D0%BA%D0%B0
@@ -27,7 +27,7 @@
 Последние версии прошивок можно взять тут https://github.com/Koenkk/Z-Stack-firmware/tree/dev/coordinator/
 
 
-[b]Инструкция по установке zigbee2mqtt для linux:[/b]
+# Инструкция по установке zigbee2mqtt для linux:
 https://www.zigbee2mqtt.io/getting_started/running_zigbee2mqtt.html
 
 Если вам нужна поддержка разрабатываемого в данный момент железа, можно установить девелоперскую ветку. Тогда вместо 
@@ -46,7 +46,7 @@ cd /opt/zigbee2mqtt
 npm install
 [/code]
 
-[b]Установка zigbee2mqtt для windows [/b]
+# Установка zigbee2mqtt для windows 
 1) Устанавливаем брокер mqtt, если у вас его еще нет по инструкции http://www.steves-internet-guide.com/install-mosquitto-broker/
 
 Кому лениво устанавливать или держать у себя брокер, а также пользователям windows, у которых нет брокера, при наличии платной подписки на connect (200р.), вы можете использовать адрес http://connect.smartliving.ru в качестве брокера mqtt.
@@ -61,7 +61,7 @@ https://nodejs.org/en/download/
 
 Пока только не понятно, как управлять и перезагружать сервис под виндой.
 
-[b]Настраиваем конфигурационный файл /opt/zigbee2mqtt/data/configuration.yaml[/b]
+# Настраиваем конфигурационный файл /opt/zigbee2mqtt/data/configuration.yaml
 пример вариантов настроек конфигурационного файла https://www.zigbee2mqtt.io/configuration/configuration.html
 [spoiler][code]homeassistant: false
 permit_join: true
