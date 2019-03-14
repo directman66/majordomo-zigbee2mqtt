@@ -99,13 +99,12 @@ serial:
 
 # Updating local zigbee2mqtt to the current version:
 
-
-
-Run the command sudo systemctl start zigbee2mqtt
+Run the command
+``` bashsudo systemctl start zigbee2mqtt```
 
 # Updating local zigbee2mqtt to the current version:
 
-`` bash
+``` bash
 # Stop zigbee2mqtt and go to directory
 sudo systemctl stop zigbee2mqtt
 cd / opt / zigbee2mqtt
