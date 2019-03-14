@@ -1,5 +1,6 @@
 # Модуль для интеграции устройств zigbee в систему MAJORDOMO  c использованием zigbee2mqtt 
 
+[a link](https://mjdm.ru/)
 
 
 Давно известно, что с zigbee устройствами можно работать не только через шлюз MiHome. Имеется множество других решений, через которые можно получать данные и управлять устройствами (deconz, athom hommey, samsung smartthings, philips hue, Smart home Hommyn Zigbee Хаб (HU-20-Z) etc). По моему мнению,  самым интересным и бюджетным вариантом является проект zigbee2mqtt https://www.zigbee2mqtt.io  
