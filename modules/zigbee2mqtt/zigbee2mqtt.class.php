@@ -1689,7 +1689,7 @@ function createdb()
  zigbee2mqtt: TITLE varchar(255) NOT NULL DEFAULT ''
  zigbee2mqtt: LOCATION_ID int(10) NOT NULL DEFAULT '0'
  zigbee2mqtt: UPDATED datetime
- zigbee2mqtt: VALUE varchar(1000) NOT NULL DEFAULT ''
+ zigbee2mqtt: VALUE varchar(20000) NOT NULL DEFAULT ''
  zigbee2mqtt: PATH varchar(255) NOT NULL DEFAULT ''
  zigbee2mqtt: METRIKA varchar(255) NOT NULL DEFAULT ''
  zigbee2mqtt: PATH_WRITE varchar(255) NOT NULL DEFAULT ''
