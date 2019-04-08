@@ -79,16 +79,32 @@ $res[$i]['LINKED']=$lnk;
 
 $res[$i]['BATTERY']=$bat;}
 
+/*
  if (
 (($res[$i]['type']=='bulb')||
 ($res[$i]['type']=='remote')||
+($res[$i]['type']=='Router')||
 ($res[$i]['type']=='switch')
 )
 &&
 ($res[$i]['model']!='MFKZQ01LM')
-	
-
 )
+*/
+
+
+$sql="SELECT *  FROM  zigbee2mqtt_devices_list where model='".$res[$i]['SELECTTYPE']."'";
+//echo "<br>".$sql;
+ $ttype=SQLSelectOne($sql)['type'];
+//echo "1".$ttype;
+
+ if (
+
+($ttype=='bulb')||
+//($ttype=='remote')||
+($ttype=='switch')
+)
+//&&($res[$i]['model']!='MFKZQ01LM')
+
 
 {
 
