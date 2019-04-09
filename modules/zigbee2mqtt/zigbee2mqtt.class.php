@@ -1283,9 +1283,18 @@ else
 {
 debmes('insert', 'zigbee2mqtt');
 if ($json[$i]->{'model'}) $res2['SELECTTYPE']=    $json[$i]->{'model'};
+
+$res2['TITLE']=$res2['IEEEADDR'];
 debmes($res2, 'zigbee2mqtt');
-if ($res2['TITLE']) SQLInsert('zigbee2mqtt_devices', $res2);
-}}
+if (($res2['TITLE'])&&($res2['TYPE']!='Coordinator')) SQLInsert('zigbee2mqtt_devices', $res2);
+}
+
+
+if ($res2['TYPE']=='Coordinator') SQLExec('update zigbee2mqtt_devices set SELECTVENDOR="Texas Instruments", SELECTTYPE="cc2531", IEEEADDR="'.$res2['IEEEADDR'].'" where TITLE="bridge"', $res2);
+}
+
+
+
 
 
 
