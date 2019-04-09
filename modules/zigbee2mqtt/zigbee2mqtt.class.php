@@ -475,7 +475,18 @@ else
      $rec['IEEEADDR']=$dev_title;
 
      $rec['FIND']=date('Y-m-d H:i:s');
-SQLInsert('zigbee2mqtt_devices', $rec);
+
+if ($rec['TITLE']=='bridge' ){
+
+$cnt=SQLSelectOne("SELECT count(*) cnt FROM zigbee2mqtt_devices WHERE TITLE ='bridge'")['cnt'];
+echo $cnt; 
+
+if ($cnt==0) SQLInsert('zigbee2mqtt_devices', $rec);
+}
+else SQLInsert('zigbee2mqtt_devices', $rec);
+
+
+
 //     $this->refresh_db();
      $this->refreshdb_mqtt();
 
@@ -1143,6 +1154,7 @@ function updatedb() {
 
 
 function refresh_db() {
+/*
  $this->getConfig();
 $zigbee2mqttpath=$this->config['ZIGBEE2MQTTPATH'];
 $filename=$zigbee2mqttpath.'/data/database.db';
@@ -1189,7 +1201,7 @@ debmes($sql,'zigbee2mqtt');
     $res=SQLSelectOne($sql);
      if($res['ID']) 
 { /* If path_write foud in db */
-
+/*
         foreach ($json as $key=> $value) {
 if ($key=='type') $res['TYPE']=$value;
 if ($key=='nwkAddr') $res['NWKADDR']=$value;
@@ -1207,7 +1219,7 @@ SQLUPDATE('zigbee2mqtt_devices', $res);
 $this->updateparrent();
 //debmes('123', 'zigbee2mqtt');
 }
-
+*/
 }
 
 
@@ -1286,11 +1298,11 @@ if ($json[$i]->{'model'}) $res2['SELECTTYPE']=    $json[$i]->{'model'};
 
 $res2['TITLE']=$res2['IEEEADDR'];
 debmes($res2, 'zigbee2mqtt');
-if (($res2['TITLE'])&&($res2['TYPE']!='Coordinator')) SQLInsert('zigbee2mqtt_devices', $res2);
+if (($res2['TITLE'])&&($res2['TYPE']!='Coordinator')&&($res2['TITLE']!='bridge')) SQLInsert('zigbee2mqtt_devices', $res2);
 }
 
 
-if ($res2['TYPE']=='Coordinator') SQLExec('update zigbee2mqtt_devices set SELECTVENDOR="Texas Instruments", SELECTTYPE="cc2531", IEEEADDR="'.$res2['IEEEADDR'].'" where TITLE="bridge"', $res2);
+if ($res2['TYPE']=='Coordinator') SQLExec	('update zigbee2mqtt_devices set SELECTVENDOR="Texas Instruments", SELECTTYPE="cc2531", IEEEADDR="'.$res2['IEEEADDR'].'" where TITLE="bridge"', $res2);
 }
 
 
