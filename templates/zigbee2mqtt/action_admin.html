@@ -23,10 +23,11 @@ TITLE: [#TITLE#]
 	[#endif#]
 
 
+
 	[#if PERMIT=="1"#]
-		<span class="label label-success" title="Открыт для сопряжения">Открыт для сопряжения</span>
+<span class="label label-success" title="Открыт для сопряжения">  <a href="?view_mode=stoppairing"  title="Stop pairing" >		Открыт для сопряжения</span></a>
 	[#else#]
-		<span class="label label-danger" title="Закрыт  для сопряжения">Закрыт  для сопряжения</span>
+<span class="label label-danger" title="Закрыт  для сопряжения">   <a href="?view_mode=startpairing"  title="Start pairing" >	Закрыт  для сопряжения</span></a>
 	[#endif#]
 
 
