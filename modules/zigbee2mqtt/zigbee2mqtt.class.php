@@ -59,6 +59,8 @@ function saveParams($data=0) {
 */
 function getParams() {
   global $id;
+  global $ieee;
+
   global $mode;
   global $view_mode;
   global $edit_mode;
@@ -66,6 +68,11 @@ function getParams() {
   if (isset($id)) {
    $this->id=$id;
   }
+
+  if (isset($ieee)) {
+   $this->ieee=$ieee;
+  }
+
   if (isset($mode)) {
    $this->mode=$mode;
   }
@@ -1091,6 +1098,14 @@ $out['status']=$a;
    $this->delete_dev($this->id);
    $this->redirect("?");
   }
+
+
+  if ($this->view_mode=='delete_dev_z2m') {
+  $this->sendcommand('zigbee2mqtt/bridge/config/remove', $this->ieee);
+   $this->delete_dev($this->id);
+   $this->redirect("?");
+  }
+
 
   if ($this->view_mode=='delete_mqtt') {
    $this->delete_mqtt($this->id);
