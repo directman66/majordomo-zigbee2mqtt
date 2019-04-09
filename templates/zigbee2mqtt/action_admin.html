@@ -22,6 +22,12 @@ TITLE: [#TITLE#]
 		<span class="label label-danger" title="Статус цикла">Цикл остановлен</span>
 	[#endif#]
 
+	[#if CYCLERUN==1#]
+		<span class="label label-success" title="Приложение zigbee2mqtt">zigbee2mqtt working</span>
+	[#else#]
+		<span class="label label-danger" title="Приложение zigbee2mqtt">zigbee2mqtt not working</span>
+	[#endif#]
+
 
 
 	[#if PERMIT=="1"#]
