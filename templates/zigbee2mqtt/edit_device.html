@@ -27,6 +27,14 @@
 
 
      <div class="form-group">
+     <label class="control-label"> IEEEADDR:</label>
+     <div class="col-md-6 input-group">
+     <input type="text"  class="form-control" placeholder="<#LANG_OW_CITYNAME#>" value="[#IEEEADDR#]" name="ieeeaddr" disabled>
+     <div class="input-group-btn">
+     </div> </div> </div>
+
+
+     <div class="form-group">
      <label class="control-label"> MODEL:</label>
      <div class="col-md-6 input-group">
      <input type="text"  class="form-control" placeholder="<#LANG_OW_CITYNAME#>" value="[#MODEL#]" name="model" disabled >
@@ -206,7 +214,7 @@ script.src = "../templates/xiaomimiio/css/bootstrap-select.min.js"
 document.body.appendChild(script);
 
 script.onload = function() {
-	// после подгрузки js-файла перерисуем элемент select
+	// РїРѕСЃР»Рµ РїРѕРґРіСЂСѓР·РєРё js-С„Р°Р№Р»Р° РїРµСЂРµСЂРёСЃСѓРµРј СЌР»РµРјРµРЅС‚ select
 	$('.selectpicker').selectpicker('render');
 }
 
