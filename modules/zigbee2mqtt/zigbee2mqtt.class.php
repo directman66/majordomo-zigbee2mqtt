@@ -1298,7 +1298,9 @@ $res2['TYPE']=   	$json[$i]->{'type'};
 //$res2['MODEL']=$json[$i]->{'type'};
 
 
-$res2['IEEEADDR']=      $json[$i]->{'ieeeAddr'};
+//$res2['IEEEADDR']=      $json[$i]->{'ieeeAddr'};
+$res2['IEEEADDR']=$cdev;
+
 
      if ($res2['ID']) 
 {
@@ -1313,7 +1315,8 @@ if ($json[$i]->{'model'}) $res2['SELECTTYPE']=    $json[$i]->{'model'};
 
 $res2['TITLE']=$res2['IEEEADDR'];
 debmes($res2, 'zigbee2mqtt');
-if (($res2['TITLE'])&&($res2['TYPE']!='Coordinator')&&($res2['TITLE']!='bridge')) SQLInsert('zigbee2mqtt_devices', $res2);
+if (($res2['TITLE'])&&($res2['TYPE']!='Coordinator')&&($res2['TITLE']!='bridge')) 
+SQLInsert('zigbee2mqtt_devices', $res2);
 }
 
 
