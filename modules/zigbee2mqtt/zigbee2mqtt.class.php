@@ -1130,6 +1130,10 @@ $out['status']=$a;
      if ($this->view_mode=='refresh_mqtt') {
 //         $this->refresh_db();
 //  $this->sendcommand('zigbee2mqtt/bridge/log', 'zigbee2mqtt/bridge/config/devices');
+
+
+SQLExec ('update  zigbee2mqtt set VALUE="" where TITLE="zigbee2mqtt/bridge/log"');
+
   $this->sendcommand('zigbee2mqtt/bridge/config/devices', '');
 
 
@@ -1728,7 +1732,7 @@ function createdb()
  zigbee2mqtt: TITLE varchar(255) NOT NULL DEFAULT ''
  zigbee2mqtt: LOCATION_ID int(10) NOT NULL DEFAULT '0'
  zigbee2mqtt: UPDATED datetime
- zigbee2mqtt: VALUE varchar(20000) NOT NULL DEFAULT ''
+ zigbee2mqtt: VALUE longtext NOT NULL DEFAULT ''
  zigbee2mqtt: PATH varchar(255) NOT NULL DEFAULT ''
  zigbee2mqtt: METRIKA varchar(255) NOT NULL DEFAULT ''
  zigbee2mqtt: PATH_WRITE varchar(255) NOT NULL DEFAULT ''
