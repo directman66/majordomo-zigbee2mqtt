@@ -227,7 +227,7 @@ debmes('Не хватает данных', 'zigbee2mqtt');
    if ($this->config['MQTT_HOST']) {
     $host=$this->config['MQTT_HOST'];
    } else {
-    $host='localhost';
+    $host='127.0.0.1';
    }
    if ($this->config['MQTT_PORT']) {
     $port=$this->config['MQTT_PORT'];
@@ -637,7 +637,7 @@ $out['PERMIT']=$permit['VALUE'];
 
 
  if (!$out['ZIGBEE2MQTTPATH']) {
-  $out['ZIGBEE2MQTTPATH']='/opt/zigbee2mqtt/';
+  $out['ZIGBEE2MQTTPATH']='/opt/zigbee2mqtt';
  }
 
 
