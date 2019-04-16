@@ -94,22 +94,20 @@ $res[$i]['BATTERY']=$bat;}
 
 $sql="SELECT *  FROM  zigbee2mqtt_devices_list where model='".$res[$i]['SELECTTYPE']."'";
 //echo "<br>".$sql;
- $ttype=SQLSelectOne($sql)['type'];
+$basa=SQLSelectOne($sql);
+ $ttype=$basa['type'];
 //echo "1".$ttype;
 
- if (
+ if ($ttype=='bulb')  $res[$i]['CHANGEABLE']='1';
 
-($ttype=='bulb')||
-//($ttype=='remote')||
-($ttype=='switch')
-)
+
+
+ if ( ($ttype=='switch')) $res[$i]['CHANGEABLE']='1';
+ if ( ($ttype=='switch') && (strpos($basa['description'],'double')>0)) $res[$i]['CHANGEABLE']='2';
+
 //&&($res[$i]['model']!='MFKZQ01LM')
 
 
-{
-
-  $res[$i]['CHANGEABLE']='1';
-}
 
 
 //echo time().":".strtotime($res[$i]['FIND'])."=".time()-strtotime($res[$i]['FIND'])."<br>";
