@@ -317,7 +317,7 @@ debmes($sql, 'zigbee2mqtt');
 $cnt=count($rec);
 
 debmes("Найдено $cnt свойств, которые можно изменить", 'zigbee2mqtt');
-
+debmes($rec,'zigbee2mqtt');
   for($i=0;$i<$cnt;$i++) {
 
   if ($rec[$i]['ID'] || $rec[$i]['PATH_WRITE']) {
@@ -328,7 +328,7 @@ debmes("Найдено $cnt свойств, которые можно измен
 
 
 debmes('Данных  хватает, параметр '.$rec[$i]['ID'].' путь управления '.$rec[$i]['PATH'], 'zigbee2mqtt');
-debmes($rec,'zigbee2mqtt');
+
 debmes('Поехали дальше', 'zigbee2mqtt');
 
 
@@ -385,42 +385,45 @@ $jsonvalue=json_encode($json) ;
 
 **/
 
+if (strpos($value,'vice')>0) {
+$json=null;
+
+debmes('Требуется включить или выключить устройство', 'zigbee2mqtt1');
+debmes($value.' $rec[$i][METRIKA]='.$rec[$i]['METRIKA']. ' PATH_WRITE='.$rec[$i]['PATH_WRITE'].' strpos='.strpos($rec[$i]['PATH_WRITE'],'right'), 'zigbee2mqtt');
+
+if  (($value=="device_on_left")&&(strpos($rec[$i]['METRIKA'],"tate")>0)) $json=array( $rec[$i]['COMMAND_VALUE']=> $rec[$i]['PAYLOAD_ON']);
+if (($value=="device_off_left")&&(strpos($rec[$i]['METRIKA'],"tate")>0))  $json=array( $rec[$i]['COMMAND_VALUE']=> $rec[$i]['PAYLOAD_OFF']);
+
+if  (($value=="device_on_right")&&(strpos($rec[$i]['METRIKA'],"tate")>0) &&(strpos($rec[$i]['PATH_WRITE'],'right')>0)) $json=array( $rec[$i]['COMMAND_VALUE']=> $rec[$i]['PAYLOAD_ON']);
+if (($value=="device_off_right")&&(strpos($rec[$i]['METRIKA'],"tate")>0) &&(strpos($rec[$i]['PATH_WRITE'],'right')>0)) $json=array( $rec[$i]['COMMAND_VALUE']=> $rec[$i]['PAYLOAD_OFF']);
+} else {
 
 if (($rec[$i]['PAYLOAD_ON'])||$rec[$i]['PAYLOAD_OFF']) {
-debmes('Подменяем '.$value. " на ". $rec[$i]['PAYLOAD_ON']."/".$rec[$i]['PAYLOAD_OFF'], 'zigbee2mqtt');
+debmes('Подменяем '.$value. " на ". $rec[$i]['PAYLOAD_ON']."/".$rec[$i]['PAYLOAD_OFF'], 'zigbee2mqtt1');
 
 //if (($rec['PAYLOAD_ON'])&& ($value=="1"))  $json=array( $rec['METRIKA']=> $rec['PAYLOAD_ON']);
 //if (($rec['PAYLOAD_OFF'])&& ($value=="0"))  $json=array( $rec['METRIKA']=> $rec['PAYLOAD_OFF']);
 
 if  ($value=="1") $json=array( $rec[$i]['COMMAND_VALUE']=> $rec[$i]['PAYLOAD_ON']);
 if ($value=="0")  $json=array( $rec[$i]['COMMAND_VALUE']=> $rec[$i]['PAYLOAD_OFF']);
+debmes('Заменили  '.$value. "  на ". $jsonvalue, 'zigbee2mqtt1');
+}
 
-
-if  (($value=="device_on_left")&&($rec[$i]['METRIKA']=="state")) $json=array( $rec[$i]['COMMAND_VALUE']=> $rec[$i]['PAYLOAD_ON']);
-if (($value=="device_off_left")&&($rec[$i]['METRIKA']=="state"))  $json=array( $rec[$i]['COMMAND_VALUE']=> $rec[$i]['PAYLOAD_OFF']);
-if  (($value=="device_on_right")&&($rec[$i]['METRIKA']=="state")) $json=array( $rec[$i]['COMMAND_VALUE']=> $rec[$i]['PAYLOAD_ON']);
-if (($value=="device_off_right")&&($rec[$i]['METRIKA']=="state"))  $json=array( $rec[$i]['COMMAND_VALUE']=> $rec[$i]['PAYLOAD_OFF']);
-
-
-
-$jsonvalue=json_encode($json) ;
-
-debmes('Заменили  '.$value. "  на ". $jsonvalue, 'zigbee2mqtt');
-
-
-} else 
+else 
 {
 $json=array( $rec[$i]['COMMAND_VALUE']=> $value);
-$jsonvalue=json_encode($json) ;
 }
-debmes('Публикую zigbee2mqqtt '.$rec[$i]['PATH_WRITE'].":".$jsonvalue, 'zigbee2mqtt');
-
-
+}
+$jsonvalue=json_encode($json) ;
+if ($jsonvalue!='null') { 
+debmes('Публикую zigbee2mqqtt '.$rec[$i]['PATH_WRITE'].":".$jsonvalue, 'zigbee2mqtt1');
    if ($rec[$i]['PATH_WRITE']) {
 
    $mqtt_client->publish($rec[$i]['PATH_WRITE'],$jsonvalue, (int)$rec[$i]['QOS'], (int)$rec[$i]['RETAIN']);
        
-   }
+   }} else 
+
+debmes('Публиковать не требуется  '.$rec[$i]['PATH_WRITE'].":".$jsonvalue, 'zigbee2mqtt1');
 
 // else {    $mqtt_client->publish($rec['PATH']."/",$jsonvalue, (int)$rec['QOS'], (int)$rec['RETAIN']);   }
    $mqtt_client->close();
