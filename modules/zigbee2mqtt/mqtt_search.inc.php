@@ -236,6 +236,20 @@ $basa=SQLSelectOne($sql);
 // echo "</script>";
 
 
+if ($this->tab=='groups'){
+
+  $sql0='SELECT *  FROM zigbee2mqtt_grouplist';
+
+debmes($sql0,'zigbee2mqtt');
+
+$ssql=SQLSelectOne($sql0);
+
+$out['GROUPS']=$ssql;
+
+
+}
+
+
 if ($this->tab=='edit_parametrs'){
 
 $vm=$this->id;
