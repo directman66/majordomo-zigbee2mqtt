@@ -479,6 +479,76 @@ debmes('Сработал processMessage :'.$path." value:". $value.' strpos:'. s
        }
    }
 
+
+
+if ($path=='zigbee2mqtt/bridge/log')
+//if ($path=='zigbee2mqtt/bridge/state')
+
+{
+$json=json_decode($value);
+
+debmes('Пришло важное сообщение, поместим его в журнал :'.$path." value:". $value." type:".$json->{'type'},'zigbee2mqtt');
+
+
+//{"type":"groups","message":{"1":{"friendly_name":"232323"},"2":{"friendly_name":"group1"},"3":{"friendly_name":"group1"},"4":{"friendly_name":"group1"}}}
+$arr=sqlselectone('select * from  zigbee2mqtt_log  where TITLE="dummy"');
+$arr['TITLE']= $path;
+$arr['MESSAGE']= $value;
+$arr['TYPE']= $json->{'type'};
+$arr['FIND']= date('Y-m-d H:i:s');
+
+SQLInsert('zigbee2mqtt_log', $arr);
+
+
+//раскодируем
+
+
+
+
+if ($json->{'type'}=='groups') {
+
+
+debmes('обновим справочник групп','zigbee2mqtt');
+
+
+
+debmes($json->{'message'}, 'zigbee2mqtt');
+
+foreach ($json->{'message'} as $key=> $value)
+
+{
+
+//debmes($key.":". $value, 'zigbee2mqtt');
+//echo $key.":". $value->{'friendly_name'};
+$grs=SQLSElectOne("select * from zigbee2mqtt_groups where Z2M_ID='$key'");
+
+$grs['Z2M_ID']=$key;
+$grs['TITLE']=$value->{'friendly_name'};
+$grs['ADDED']= date('Y-m-d H:i:s');
+
+
+
+debmes($grs, 'zigbee2mqtt');
+
+if  (!$grs['ID']) 
+{
+debmes('SQLInsert zigbee2mqtt_grouplist' , 'zigbee2mqtt');
+SQLInsert(  'zigbee2mqtt_grouplist',   $grs);
+} else 
+
+{
+debmes('SQLUpdate zigbee2mqtt_grouplist' , 'zigbee2mqtt');
+SQLUpdate(  'zigbee2mqtt_grouplist',   $grs);
+}
+}
+
+}
+
+
+}
+
+
+
    /* Search 'PATH' in database (db) */
 $dev_title=explode('/',$path)[1];
 
@@ -722,6 +792,7 @@ $out['FIND']=$res['FIND'];
 $out['LOCATION_ID']=$res['LOCATION_ID'];
 $out['SELECTTYPE']=$res['SELECTTYPE'];
 $out['SELECTVENDOR']=$res['SELECTVENDOR'];
+$out['GROUP']=$res['GROUP'];
 $out['NEEDSAVE']="0";
 $out['IEEEADDR']=$res['IEEEADDR'];
 
@@ -815,8 +886,15 @@ $out['SELECTTYPEARRAY']=$tmp;
    }
 
 
+   global $creategroup;
+
+if ($creategroup) {
+   $rec['GROUP']=$creategroup;
 
 
+//  $this->sendcommand('zigbee2mqtt/bridge/config/add_group', $creategroup);
+  $this->sendcommand('zigbee2mqtt/bridge/group/'.$creategroup.'/add', $dev_title);
+}
 
    global $dev_location_id;
   $rec['LOCATION_ID']=$dev_location_id;
@@ -1139,6 +1217,18 @@ $out['status']=$a;
   if ($this->view_mode=='edit_mqtt') {
    $this->edit_mqtt($out, $this->id);
   }
+
+
+
+
+//echo $this->view_mode;
+  if ($this->view_mode=='creategroup') {
+//   $this->edit_mqtt($out, $this->id);
+debmes('creategroup id:'.$this->id.' group:'.$this->groupname, 'zigbee2mqtt');
+
+  }
+
+
   if ($this->view_mode=='delete_dev') {
    $this->delete_dev($this->id);
    $this->redirect("?");
@@ -1172,6 +1262,25 @@ $out['status']=$a;
      }
 
 
+     if ($this->view_mode=='getgroupslist') {
+
+  SQLExec ('update  zigbee2mqtt set VALUE="" where TITLE="zigbee2mqtt/bridge/log"');
+//zigbee2mqtt/bridge/device/[friendly_name]/get_group_membership
+//https://www.zigbee2mqtt.io/information/mqtt_topics_and_message_structure.html
+
+//  $this->sendcommand('zigbee2mqtt/bridge/device/0x00158d0002c65d56/get_group_membership', '');
+//  $this->sendcommand('zigbee2mqtt/bridge/device/0x00158d0002c65d56/grouplist', '');
+//  $this->sendcommand('zigbee2mqtt/bridge/device/0x00158d0002c65d56/get_group_membership', 'grouplist');
+
+  $this->sendcommand('zigbee2mqtt/bridge/config/groups', '');
+
+
+//  $this->sendcommand('zigbee2mqtt/bridge/group/group1', '');
+  $this->redirect("?");
+
+}
+
+
      if ($this->view_mode=='refresh_mqtt') {
 //         $this->refresh_db();
 //  $this->sendcommand('zigbee2mqtt/bridge/log', 'zigbee2mqtt/bridge/config/devices');
@@ -1180,6 +1289,7 @@ $out['status']=$a;
 SQLExec ('update  zigbee2mqtt set VALUE="" where TITLE="zigbee2mqtt/bridge/log"');
 
   $this->sendcommand('zigbee2mqtt/bridge/config/devices', '');
+  $this->sendcommand('zigbee2mqtt/bridge/config/devices/get', '');
 
 
 $cmd='
@@ -1723,6 +1833,7 @@ function createdb()
  zigbee2mqtt_devices: MANUFACTURE varchar(100) NOT NULL DEFAULT ''
  zigbee2mqtt_devices: DEVICE_NAME varchar(100) NOT NULL DEFAULT ''
  zigbee2mqtt_devices: MODEL varchar(100) NOT NULL DEFAULT ''
+ zigbee2mqtt_devices: GROUP varchar(100) NOT NULL DEFAULT ''
  zigbee2mqtt_devices: TYPE varchar(100) NOT NULL DEFAULT ''
  zigbee2mqtt_devices: SELECTTYPE varchar(100) NOT NULL DEFAULT ''
  zigbee2mqtt_devices: SELECTVENDOR varchar(100) NOT NULL DEFAULT ''
@@ -1795,6 +1906,18 @@ function createdb()
  zigbee2mqtt: PAYLOAD_OFF varchar(255) NOT NULL DEFAULT ''
  zigbee2mqtt: PAYLOAD_TRUE varchar(255) NOT NULL DEFAULT ''
  zigbee2mqtt: PAYLOAD_FALSE varchar(255) NOT NULL DEFAULT ''
+
+ zigbee2mqtt_log: ID int(10) unsigned NOT NULL auto_increment
+ zigbee2mqtt_log: TITLE varchar(255) NOT NULL DEFAULT ''
+ zigbee2mqtt_log: MESSAGE varchar(255) NOT NULL DEFAULT ''
+ zigbee2mqtt_log: TYPE varchar(255) NOT NULL DEFAULT ''
+ zigbee2mqtt_log: FIND datetime
+
+ zigbee2mqtt_grouplist: ID int(10) unsigned NOT NULL auto_increment
+ zigbee2mqtt_grouplist: Z2M_ID varchar(255) NOT NULL DEFAULT ''
+ zigbee2mqtt_grouplist: TITLE varchar(255) NOT NULL DEFAULT ''
+ zigbee2mqtt_grouplist: ADDED datetime
+
 
 
 
