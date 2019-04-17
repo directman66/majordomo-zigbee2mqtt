@@ -5,11 +5,24 @@
   if ($this->owner->name=='panel') {
    $out['CONTROLPANEL']=1;
   }
+
+
+//echo "mqtt_edit ".$this->mode;
+
+
   $table_name='zigbee2mqtt';
 //$id=$this->id;
 $sql="SELECT * FROM $table_name WHERE ID='$id'";
 debmes($sql,'zigbee2mqtt');
   $rec=SQLSelectOne($sql);
+
+
+
+  if ($this->mode=='creategroup') {
+echo 'creategroup';
+}
+
+
   if ($this->mode=='update') {
 
 
