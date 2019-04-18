@@ -242,12 +242,26 @@ if ($this->tab=='groups'){
 
 debmes($sql0,'zigbee2mqtt');
 
-$ssql=SQLSelectOne($sql0);
+$ssql=SQLSelect($sql0);
 
 $out['GROUPS']=$ssql;
 
 
 }
+
+if ($this->tab=='log2'){
+
+  $sql0='SELECT *  FROM zigbee2mqtt_log order by FIND DESC';
+
+debmes($sql0,'zigbee2mqtt');
+
+$ssql=SQLSelect($sql0);
+
+$out['LOG2']=$ssql;
+
+
+}
+
 
 
 if ($this->tab=='edit_parametrs'){
