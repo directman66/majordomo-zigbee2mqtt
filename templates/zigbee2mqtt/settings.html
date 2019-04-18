@@ -44,6 +44,34 @@
  <div class="controls"><input type="text" name="mqtt_query" value="<#MQTT_QUERY#>" class="input"></div>
 </div>
 
+
+<div class="form-group">
+
+ <label class="control-label"[#if ERR_Z2M_LOGMODE#] style="color:red;font-weight:bold"[#endif#]>
+ zigbee2mqtt log level:
+ (*)
+ </label>
+<!--
+ <div class="controls"><input type="text" name="z2m_logmode" value="<#Z2M_LOGMODE#>" class="input"></div>
+-->
+
+<div class="col-md-1 input-group">
+ <select name="z2m_logmode" class="input span2">
+<!-- <select name="z2m_logmode"  class="form-control input"> -->
+
+<option value="[#Z2M_LOGMODE#]"[#if SELECTED#] selected[#endif#]>debug
+<option value="[#Z2M_LOGMODE#]"[#if SELECTED#] selected[#endif#]>info
+<option value="[#Z2M_LOGMODE#]"[#if SELECTED#] selected[#endif#]>warn
+<option value="[#Z2M_LOGMODE#]"[#if SELECTED#] selected[#endif#]>error
+
+ </select>
+
+
+
+</div>
+</div>
+
+
 <div class="form-group">
  <div class="controls">
  <label><input type="checkbox" name="mqtt_auth" value="1"[#if MQTT_AUTH="1"#] checked[#endif#]> authorization required</label>
