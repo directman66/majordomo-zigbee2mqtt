@@ -235,6 +235,13 @@ debmes('Не хватает данных', 'zigbee2mqtt');
     $port=1883;
    }
 
+   if ($this->config['Z2M_LOGMODE']) {
+    $loglevel=$this->config['Z2M_LOGMODE'];
+   } else {
+    $leglevel='debug';
+   }
+
+
    $mqtt_client = new phpMQTT($host, $port, $client_name.' Client');
 
    if(!$mqtt_client->connect(true, NULL,$username,$password))
@@ -369,6 +376,13 @@ debmes('Поехали дальше', 'zigbee2mqtt');
     $port=1883;
    }
 
+   if ($this->config['Z2M_LOGMODE']) {
+    $loglevel=$this->config['Z2M_LOGMODE'];
+   } else {
+    $loglewel='debug';
+   }
+
+
    $mqtt_client = new phpMQTT($host, $port, $client_name.' Client');
 
    if(!$mqtt_client->connect(true, NULL,$username,$password))
@@ -479,13 +493,22 @@ debmes('Сработал processMessage :'.$path." value:". $value.' strpos:'. s
        }
    }
 
+unset($msgtype);
+
+if (strpos($path,'igbee2mqtt/0x')>0) {$msgtype='device_state';}
+if (strpos($path,'igbee2mqtt/bridge/state')>0) {$msgtype='bridge_state';}
 
 
-if ($path=='zigbee2mqtt/bridge/log')
+//if ($path=='zigbee2mqtt/bridge/log') {$msgtype=$json->{'type'};}
+
+
+
+if (($path=='zigbee2mqtt/bridge/log')||($msgtype))
 //if ($path=='zigbee2mqtt/bridge/state')
 
 {
 $json=json_decode($value);
+$msgtype=$json->{'type'};
 
 debmes('Пришло важное сообщение, поместим его в журнал :'.$path." value:". $value." type:".$json->{'type'},'zigbee2mqtt');
 
@@ -493,8 +516,8 @@ debmes('Пришло важное сообщение, поместим его в
 //{"type":"groups","message":{"1":{"friendly_name":"232323"},"2":{"friendly_name":"group1"},"3":{"friendly_name":"group1"},"4":{"friendly_name":"group1"}}}
 $arr=sqlselectone('select * from  zigbee2mqtt_log  where TITLE="dummy"');
 $arr['TITLE']= $path;
-$arr['MESSAGE']= $value;
-$arr['TYPE']= $json->{'type'};
+if ($msgtype=='device_state') {$arr['MESSAGE']= $path.":".$value; } else  {$arr['MESSAGE']= $value;}
+$arr['TYPE']= $msgtype;
 $arr['FIND']= date('Y-m-d H:i:s');
 
 SQLInsert('zigbee2mqtt_log', $arr);
@@ -721,6 +744,7 @@ $out['PERMIT']=$permit['VALUE'];
  $out['MQTT_CLIENT']=$this->config['MQTT_CLIENT'];
  $out['MQTT_HOST']=$this->config['MQTT_HOST'];
  $out['MQTT_PORT']=$this->config['MQTT_PORT'];
+ $out['Z2M_LOGMODE']=$this->config['Z2M_LOGMODE'];
  $out['ZIGBEE2MQTTPATH']=$this->config['ZIGBEE2MQTTPATH'];
  $out['MQTT_QUERY']=$this->config['MQTT_QUERY'];
 
@@ -1101,12 +1125,14 @@ debmes('!!!!!!!device_off','zigbee2mqtt');
 
   if ($this->view_mode=='startpairing') {
   $this->sendcommand('zigbee2mqtt/bridge/config/permit_join', 'true');
-  $this->redirect("?tab=service");
+//  $this->redirect("?tab=service");
+  $this->redirect("?");
 }
 
   if ($this->view_mode=='stoppairing') {
   $this->sendcommand('zigbee2mqtt/bridge/config/permit_join', 'false');
-  $this->redirect("?tab=service");
+//  $this->redirect("?tab=service");
+  $this->redirect("?");
 }
 
 
@@ -1150,14 +1176,15 @@ $out['status']=$a;
 
 
 
-
-
- if ($this->view_mode=='update_settings') {
-
 //$vm1=$this->view_mode;
 // echo "<script type='text/javascript'>";
 // echo "alert('$vm1');";
 // echo "</script>";
+
+
+
+ if ($this->view_mode=='update_settings') {
+
 
 
    global $mqtt_client;
@@ -1166,9 +1193,16 @@ $out['status']=$a;
    global $mqtt_password;
    global $mqtt_auth;
    global $mqtt_port;
+   global $z2m_logmode;
    global $mqtt_query;
    global $zigbee2mqttpath;
 //echo $zigbee2mqttpath;
+
+//$vm1=$this->view_mode;
+// echo "<script type='text/javascript'>";
+// echo "alert('$z2m_logmode');";
+// echo "</script>";
+
 
    $this->config['MQTT_CLIENT']=trim($mqtt_client);
    $this->config['ZIGBEE2MQTTPATH']=trim($zigbee2mqttpath);
@@ -1178,6 +1212,11 @@ $out['status']=$a;
    $this->config['MQTT_AUTH']=(int)$mqtt_auth;
    $this->config['MQTT_PORT']=(int)$mqtt_port;
    $this->config['MQTT_QUERY']=trim($mqtt_query);
+   $this->config['Z2M_LOGMODE']=trim($z2m_logmode);
+
+//  $this->sendcommand('zigbee2mqtt/bridge/config/log_level', $z2m_logmode);
+
+
    $this->saveConfig();
 
    setGlobal('cycle_zigbee2mqttControl', 'restart');
@@ -1276,7 +1315,7 @@ debmes('creategroup id:'.$this->id.' group:'.$this->groupname, 'zigbee2mqtt');
 
 
 //  $this->sendcommand('zigbee2mqtt/bridge/group/group1', '');
-  $this->redirect("?");
+  $this->redirect("?tab=groups");
 
 }
 
