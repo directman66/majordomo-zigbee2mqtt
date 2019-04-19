@@ -174,5 +174,4 @@ https://www.zigbee2mqtt.io/information/supported_devices.html
 
 Обсуждение умных ламп http://majordomo.smartliving.ru/forum/viewtopic.php?f=8&t=6016&p=95733#p95733
 
-Более полнаБолее подробная информация содержится на форуме  
-https://mjdm.ru/forum/viewtopic.php?f=5&t=6011 
+#Более подробная информация содержится на форуме  https://mjdm.ru/forum/viewtopic.php?f=5&t=6011 
