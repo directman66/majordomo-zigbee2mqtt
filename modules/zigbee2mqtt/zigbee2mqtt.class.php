@@ -700,6 +700,9 @@ debmes('Заменили  '.$value. "  на ". $newvalue, 'zigbee2mqtt');
 }  else 
 {$newvalue=$value;}
 
+
+if (!$newvalue) {$newvalue=$value;}
+
 //пишем в переменную
 //       setGlobal($rec['LINKED_OBJECT'].'.'.$rec['LINKED_PROPERTY'], $newvalue, array($this->name=>'0'));
 
