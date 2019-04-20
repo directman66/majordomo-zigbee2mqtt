@@ -541,12 +541,7 @@ $this->parse_deviceinfo($json);
 
 
 if ($json->{'type'}=='groups') {
-
-
 debmes('обновим справочник групп','zigbee2mqtt');
-
-
-
 debmes($json->{'message'}, 'zigbee2mqtt');
 
 foreach ($json->{'message'} as $key=> $value)
@@ -620,10 +615,12 @@ if ($rec['TITLE']=='bridge' ){
 
 $cnt=SQLSelectOne("SELECT count(*) cnt FROM zigbee2mqtt_devices WHERE TITLE ='bridge'")['cnt'];
 echo $cnt; 
+     $rec['FIND']=date('Y-m-d H:i:s');
 
 if ($cnt==0) SQLInsert('zigbee2mqtt_devices', $rec);
+
 }
-else SQLInsert('zigbee2mqtt_devices', $rec);
+else SQLUpdate('zigbee2mqtt_devices', $rec);
 
 
 
@@ -667,7 +664,9 @@ debmes($sql, 'zigbee2mqtt');
 //     $rec['METRIKA']="1"; 
      $rec['DEV_ID']=$dev_id;
      $rec['TITLE']=$path;
-     $rec['VALUE']=$value.'';
+//     $rec['VALUE']=$value.'';
+     $rec['VALUE']=$value;
+
      $rec['UPDATED']=date('Y-m-d H:i:s');
      $rec['ID']=null;
 SQLInsert('zigbee2mqtt', $rec);
@@ -710,6 +709,50 @@ debmes('Вызываю setglobal: value:'.$rec['LINKED_OBJECT'].'.'.$rec['LINKED
      if ($rec['LINKED_OBJECT'] && $cmd_rec['LINKED_METHOD']) {
        callMethod($rec['LINKED_OBJECT'] . '.' . $rec['LINKED_METHOD'], $rec['VALUE']);
      }
+
+//сюда пишем обработчик click
+if (substr($path,strrpos($path,'/')+1)=='click')
+{
+debmes('получено сообщение от пульта, разберем возможные варианты','zigbee2mqtt');
+
+
+   $rec1=SQLSelectOne("SELECT * FROM zigbee2mqtt WHERE PATH LIKE '".DBSafe($path)." and METRIKA='$value'" );
+   $newvalue='click';
+   if(!$rec1['ID']){ /* If 'PATH' not found in db */
+     $rec1['PATH']=$path;
+     $rec1['METRIKA']=$value;
+     $rec1['DEV_ID']=$dev_id;
+     $rec1['TITLE']=$path;
+//     $rec['VALUE']=$value.'';
+     $rec1['VALUE']=$newvalue;
+
+
+     $rec1['UPDATED']=date('Y-m-d H:i:s');
+     $rec1['ID']=null;
+SQLInsert('zigbee2mqtt', $rec1);
+   }else{
+     $rec1['METRIKA']=$value;
+     $rec1['VALUE']=$newvalue;
+     $rec1['DEV_ID']=$dev_id;
+     $rec1['UPDATED']=date('Y-m-d H:i:s');
+     SQLUpdate('zigbee2mqtt', $rec1);
+
+}
+
+     if($rec1['LINKED_OBJECT'] && $rec1['LINKED_PROPERTY']) {
+debmes('Вызываю setglobal: value:'.$rec1['LINKED_OBJECT'].'.'.$rec1['LINKED_PROPERTY'].' value:'. $newvalue,'zigbee2mqtt');
+       setGlobal($rec1['LINKED_OBJECT'].'.'.$rec1['LINKED_PROPERTY'], $newvalue, array('zigbee2mqtt'=>'0'));
+     }
+     if ($rec1['LINKED_OBJECT'] && $cmd_rec1['LINKED_METHOD']) {
+       callMethod($rec1['LINKED_OBJECT'] . '.' . $rec1['LINKED_METHOD'], $rec['VALUE']);
+     }
+
+
+
+
+}
+
+
 
    }
 
