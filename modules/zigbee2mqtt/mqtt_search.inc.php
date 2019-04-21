@@ -251,7 +251,7 @@ $out['GROUPS']=$ssql;
 
 if ($this->tab=='log2'){
 
-  $sql0='SELECT *  FROM zigbee2mqtt_log order by FIND DESC';
+  $sql0='SELECT *  FROM zigbee2mqtt_log order by FIND DESC LIMIT 100';
 
 debmes($sql0,'zigbee2mqtt');
 
@@ -294,18 +294,27 @@ $zm=$ssql['SELECTTYPE'];
 
 
 //$sql="select * from (select *,zigbee2mqtt.ID zmID  from zigbee2mqtt where PATH like CONCAT('%','".$ssql['IEEEADDR']."','%')  )zigbee2mqtt left join (select * from zigbee2mqtt_devices_command WHERE zigbeeModel='".$zm."') zigbee2mqtt_devices_command ON zigbee2mqtt.METRIKA=zigbee2mqtt_devices_command.value_template ";
+//////////////
+//////////////
 
 $sql="select  zigbee2mqtt.*, zigbee2mqtt_devices_command.*  from (select *,zigbee2mqtt.ID zmID  from zigbee2mqtt where PATH like CONCAT('%','".$ssql['IEEEADDR']."','%')  )zigbee2mqtt left join (select * from zigbee2mqtt_devices_command WHERE zigbeeModel='".$zm."') zigbee2mqtt_devices_command ON zigbee2mqtt.METRIKA=zigbee2mqtt_devices_command.value_template 
 union
 select  zigbee2mqtt.*, zigbee2mqtt_devices_command.*  from (select * from zigbee2mqtt_devices_command WHERE zigbeeModel='".$zm."') zigbee2mqtt_devices_command left join (select *,zigbee2mqtt.ID zmID  from zigbee2mqtt where PATH like CONCAT('%','".$ssql['IEEEADDR']."','%')  )zigbee2mqtt ON zigbee2mqtt.METRIKA=zigbee2mqtt_devices_command.value_template
 ";
 
+//$sql="select  zigbee2mqtt_devices.*, zigbee2mqtt_devices_command.*  from (select *,zigbee2mqtt.ID zmID  from zigbee2mqtt_devices where PATH like CONCAT('%','".$ssql['IEEEADDR']."','%')  )zigbee2mqtt left join (select * from zigbee2mqtt_devices_command WHERE zigbeeModel='".$zm."') zigbee2mqtt_devices_command ON zigbee2mqtt.METRIKA=zigbee2mqtt_devices_command.value_template 
+//union
+//select  zigbee2mqtt.*, zigbee2mqtt_devices_command.*  from (select * from zigbee2mqtt_devices_command WHERE zigbeeModel='".$zm."') zigbee2mqtt_devices_command left join (select *,zigbee2mqtt.ID zmID  from zigbee2mqtt where PATH like CONCAT('%','".$ssql['IEEEADDR']."','%')  )zigbee2mqtt ON zigbee2mqtt.METRIKA=zigbee2mqtt_devices_command.value_template
+//";
+
+
+
 
 debmes($sql,'zigbee2mqtt');
 
  $res=SQLSelect($sql);
 
-  if ($res[0]['ID']) {
+  if (!$res[0]['ID1']) {
 
    $total=count($res);
    for($i=0;$i<$total;$i++) {
