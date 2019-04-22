@@ -739,13 +739,13 @@ debmes($sql, 'zigbee2mqtt');
    if(!$rec1['ID']){ /* If 'PATH' not found in db */
      debmes('кнопка click нажата первый раз', 'zigbee2mqtt');
      $rec1['PATH']=$path;
-//     $rec1['METRIKA']=$value;
-     $rec1['METRIKA']=$newvalue;
+     $rec1['METRIKA']=$value;
+     //$rec1['METRIKA']=$newvalue;
      $rec1['DEV_ID']=$dev_id;
      $rec1['TITLE']=$path;
 //     $rec['VALUE']=$value.'';
-//     $rec1['VALUE']=$newvalue;
-     $rec1['VALUE']=$value;
+     $rec1['VALUE']=$newvalue;
+//     $rec1['VALUE']=$value;
 
 
      $rec1['UPDATED']=date('Y-m-d H:i:s');
@@ -753,10 +753,10 @@ debmes($sql, 'zigbee2mqtt');
 SQLInsert('zigbee2mqtt', $rec1);
    }else{
      debmes('кнопка click ранее уже нажималас, есть информация в базе данных', 'zigbee2mqtt');
-//     $rec1['METRIKA']=$value;
-     $rec1['METRIKA']=$newvalue;
-//     $rec1['VALUE']=$newvalue;
-     $rec1['VALUE']=$value;
+     $rec1['METRIKA']=$value;
+//     $rec1['METRIKA']=$newvalue;
+     $rec1['VALUE']=$newvalue;
+//     $rec1['VALUE']=$value;
      $rec1['DEV_ID']=$dev_id;
      $rec1['UPDATED']=date('Y-m-d H:i:s');
      SQLUpdate('zigbee2mqtt', $rec1);
