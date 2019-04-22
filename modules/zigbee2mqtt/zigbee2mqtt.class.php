@@ -976,7 +976,7 @@ $out['SELECTTYPEARRAY']=$tmp;
    $location_id_opt[$tmp[$locations_i]['ID']]=$tmp[$locations_i]['TITLE'];
   }
   for($i=0;$i<count($tmp);$i++) {
-   if ($res['GROUP']==$tmp[$i]['ID']) $tmp[$i]['SELECTED']=1;
+   if ($res['GROUP']==$tmp[$i]['TITLE']) $tmp[$i]['SELECTED']=1;
   }
   $out['GROUPS']=$tmp;
 
@@ -1040,13 +1040,26 @@ $out['SELECTTYPEARRAY']=$tmp;
 
    global $creategroup;
 
-if ($creategroup) {
+if (($creategroup)&&(strlen($creategroup)>0)&&($creategroup!='select')) {
    $rec['GROUP']=$creategroup;
 
+$tmp=SQLSelectOne("SELECT * from zigbee2mqtt_grouplist where TITLE='$creategroup'");
 
-//  $this->sendcommand('zigbee2mqtt/bridge/config/add_group', $creategroup);
+if (!$tmp['ID'])  $this->sendcommand('zigbee2mqtt/bridge/config/add_group', $creategroup);
   $this->sendcommand('zigbee2mqtt/bridge/group/'.$creategroup.'/add', $dev_title);
-}
+} else $rec['GROUP']='';
+
+
+   global $selectdevicegroup;
+   
+   debmes('$selectdevicegroup='.$selectdevicegroup,'zigbee2mqtt');
+
+if (($selectdevicegroup)&&(strlen($selectdevicegroup)>0)) {
+   $rec['GROUP']=$selectdevicegroup;
+
+  $this->sendcommand('zigbee2mqtt/bridge/group/'.$creategroup.'/add', $dev_title);
+} else $rec['GROUP']=''; 
+
 
    
 //$vm=$dev_location_id;
@@ -1453,6 +1466,8 @@ debmes('creategroup id:'.$this->id.' group:'.$this->groupname, 'zigbee2mqtt');
      if ($this->view_mode=='getgroupslist') {
 
   SQLExec ('update  zigbee2mqtt set VALUE="" where TITLE="zigbee2mqtt/bridge/log"');
+  //SQLExec("DELETE FROM zigbee2mqtt_grouplist WHERE ID='".$this->id."'");
+//  SQLExec("DELETE FROM zigbee2mqtt_grouplist");
 //zigbee2mqtt/bridge/device/[friendly_name]/get_group_membership
 //https://www.zigbee2mqtt.io/information/mqtt_topics_and_message_structure.html
 
@@ -1467,6 +1482,43 @@ debmes('creategroup id:'.$this->id.' group:'.$this->groupname, 'zigbee2mqtt');
   $this->redirect("?tab=groups");
 
 }
+
+
+ if ($this->view_mode=='clearallgroups') {
+
+  SQLExec ('update  zigbee2mqtt set VALUE="" where TITLE="zigbee2mqtt/bridge/log"');
+  //SQLExec("DELETE FROM zigbee2mqtt_grouplist WHERE ID='".$this->id."'");
+  
+//zigbee2mqtt/bridge/device/[friendly_name]/get_group_membership
+//https://www.zigbee2mqtt.io/information/mqtt_topics_and_message_structure.html
+
+//  $this->sendcommand('zigbee2mqtt/bridge/device/0x00158d0002c65d56/get_group_membership', '');
+//  $this->sendcommand('zigbee2mqtt/bridge/device/0x00158d0002c65d56/grouplist', '');
+//  $this->sendcommand('zigbee2mqtt/bridge/device/0x00158d0002c65d56/get_group_membership', 'grouplist');
+
+$tmp=SQLSelect("SELECT * from zigbee2mqtt_devices");
+  for($i=0;$i<count($tmp);$i++) {
+
+  $this->sendcommand('zigbee2mqtt/bridge/config/device_group_remove_all',$tmp[$i]['TITLE']);
+  //$this->sendcommand('zigbee2mqtt/bridge/group/'.$tmp[$i]['TITLE'].'/remove_all','');
+  
+}
+
+
+$tmp=SQLSelect("SELECT * from zigbee2mqtt_grouplist");
+  for($i=0;$i<count($tmp);$i++) {
+
+  //$this->sendcommand('zigbee2mqtt/bridge/config/device_group_remove_all',$tmp[$i]['TITLE']);
+  $this->sendcommand('zigbee2mqtt/bridge/group/'.$tmp[$i]['TITLE'].'/remove_all','');
+  
+}
+
+SQLExec("DELETE FROM zigbee2mqtt_grouplist");
+//  $this->sendcommand('zigbee2mqtt/bridge/group/group1', '');
+  $this->redirect("?tab=groups");
+
+}
+
 
 
      if ($this->view_mode=='refresh_mqtt') {
