@@ -954,9 +954,17 @@ $out['SELECTTYPEARRAY']=$tmp;
    $location_id_opt[$tmp[$locations_i]['ID']]=$tmp[$locations_i]['TITLE'];
   }
   for($i=0;$i<count($tmp);$i++) {
-   if ($rec['LOCATION_ID']==$tmp[$i]['ID']) $tmp[$i]['SELECTED']=1;
+   if ($res['LOCATION_ID']==$tmp[$i]['ID']) $tmp[$i]['SELECTED']=1;
   }
   $out['LOCATION_ID_OPTIONS']=$tmp;
+
+
+
+debmes('location', 'zigbee2mqtt');
+debmes($tmp, 'zigbee2mqtt');
+
+
+
 
 }
 
