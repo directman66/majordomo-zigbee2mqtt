@@ -159,7 +159,7 @@
      </div> </div> </div>
 
 
-[#if !IS_SET_LOCATION_ID#]
+
 <div class="form-group">
  <label class="control-label"[#if ERR_LOCATION_ID#] style="color:red;font-weight:bold"[#endif#]>
  <#LANG_LOCATION#>:
@@ -168,8 +168,8 @@
 
 
 <div class="col-md-6 input-group">
- <select name="dev_location_id"  class="form-control input">
-  <option value="">select
+ <option value="">select
+ <select name="devlocid"  class="form-control input">
   [#begin LOCATION_ID_OPTIONS#]<option value="[#ID#]"[#if SELECTED#] selected[#endif#]>[#TITLE#]
   [#end LOCATION_ID_OPTIONS#]
  </select>
@@ -178,16 +178,13 @@
 
 
 
-[#endif IS_SET_LOCATION_ID#]
 
 
 
-<div class="form-group">
- <label class="control-label">
- LOCATION_ID:
- </label>
- <div class="col-md-6 input-group"><input  type="text" name="d_id" value="[#LOCATION_ID#]" class="form-control input"></div>
-</div>
+
+
+
+
 
 
 </td><td valign="top">
