@@ -801,7 +801,8 @@ function admin(&$out) {
 		}
 
 
-$seen=SQLSelectOne("select max(FIND) FIND from zigbee2mqtt_log where MESSAGE='online'  ");
+//$seen=SQLSelectOne("select max(FIND) FIND from zigbee2mqtt_log where MESSAGE='online'  ");
+$seen=SQLSelectOne("select max(FIND) FIND from zigbee2mqtt_log   ");
 
 
 $out['SEEN']=$seen['FIND'];
