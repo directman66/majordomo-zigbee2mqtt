@@ -550,11 +550,11 @@ foreach ($json->{'message'} as $key=> $value)
 
 //debmes($key.":". $value, 'zigbee2mqtt');
 //echo $key.":". $value->{'friendly_name'};
-$grs=SQLSElectOne("select * from zigbee2mqtt_groups where Z2M_ID='$key'");
+$sql="select * from zigbee2mqtt_grouplist  where Z2M_ID='$key'";
+debmes($sql, 'zigbee2mqtt');
 
-$grs['Z2M_ID']=$key;
-$grs['TITLE']=$value->{'friendly_name'};
-$grs['ADDED']= date('Y-m-d H:i:s');
+$grs=SQLSElectOne($sql);
+
 
 
 
@@ -562,11 +562,21 @@ debmes($grs, 'zigbee2mqtt');
 
 if  (!$grs['ID']) 
 {
+    
+$grs['Z2M_ID']=$key;
+$grs['TITLE']=$value->{'friendly_name'};
+$grs['ADDED']= date('Y-m-d H:i:s');
+    
 debmes('SQLInsert zigbee2mqtt_grouplist' , 'zigbee2mqtt');
 SQLInsert(  'zigbee2mqtt_grouplist',   $grs);
 } else 
 
 {
+    
+$grs['Z2M_ID']=$key;
+$grs['TITLE']=$value->{'friendly_name'};
+$grs['ADDED']= date('Y-m-d H:i:s');
+
 debmes('SQLUpdate zigbee2mqtt_grouplist' , 'zigbee2mqtt');
 SQLUpdate(  'zigbee2mqtt_grouplist',   $grs);
 }
@@ -957,11 +967,24 @@ $out['SELECTTYPEARRAY']=$tmp;
    if ($res['LOCATION_ID']==$tmp[$i]['ID']) $tmp[$i]['SELECTED']=1;
   }
   $out['LOCATION_ID_OPTIONS']=$tmp;
+  
+  
+    //options for 'LOCATION_ID' (select)
+  $tmp=SQLSelect("SELECT ID, TITLE FROM zigbee2mqtt_grouplist ORDER BY TITLE");
+  $locations_total=count($tmp);
+  for($locations_i=0;$locations_i<$locations_total;$locations_i++) {
+   $location_id_opt[$tmp[$locations_i]['ID']]=$tmp[$locations_i]['TITLE'];
+  }
+  for($i=0;$i<count($tmp);$i++) {
+   if ($res['GROUP']==$tmp[$i]['ID']) $tmp[$i]['SELECTED']=1;
+  }
+  $out['GROUPS']=$tmp;
 
 
 
-debmes('location', 'zigbee2mqtt');
-debmes($tmp, 'zigbee2mqtt');
+
+//debmes('location', 'zigbee2mqtt');
+//debmes($tmp, 'zigbee2mqtt');
 
 
 
@@ -1152,6 +1175,22 @@ $out['LOG']=$a;
 // echo "<script type='text/javascript'>";
 // echo "alert('$vm1');";
 // echo "</script>";
+
+
+ if ($this->view_mode=='send_test_mqtt') {
+
+
+global $mqttsendpath;
+global $mqttsendvalue;
+debmes('send custom message topic: '.$mqttsendpath.' value:'.$mqttsendvalue, 'zigbee2mqtt');
+
+  $this->sendcommand($mqttsendpath, $mqttsendvalue);
+//  $this->sendcommand('zigbee2mqtt/bridge/config/devices', '');
+
+$this->redirect("?tab=log");
+
+
+}
 
 
  if ($this->tab=='service') {
@@ -1381,6 +1420,13 @@ debmes('creategroup id:'.$this->id.' group:'.$this->groupname, 'zigbee2mqtt');
   $this->sendcommand('zigbee2mqtt/bridge/config/remove', $this->ieee);
    $this->delete_dev($this->id);
    $this->redirect("?");
+  }
+
+
+  if ($this->view_mode=='delete_group') {
+  //$this->sendcommand('zigbee2mqtt/bridge/config/remove', $this->ieee);
+  SQLExec("DELETE FROM zigbee2mqtt_grouplist WHERE ID='".$this->id."'");
+   $this->redirect("?tab=groups");
   }
 
 
