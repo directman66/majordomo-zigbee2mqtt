@@ -131,7 +131,7 @@ echo 'creategroup';
 
 
 
-
+  /*
 
   //options for 'LOCATION_ID' (select)
   $tmp=SQLSelect("SELECT ID, TITLE FROM locations ORDER BY TITLE");
@@ -144,8 +144,9 @@ echo 'creategroup';
   }
   $out['LOCATION_ID_OPTIONS']=$tmp;
 
-
-
+debmes('location', 'zigbee2mqtt');
+debmes($tmp, 'zigbee2mqtt');
+*/
 
   if (is_array($rec)) {
    foreach($rec as $k=>$v) {
