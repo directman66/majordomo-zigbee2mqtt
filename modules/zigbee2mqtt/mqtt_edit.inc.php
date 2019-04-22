@@ -36,12 +36,14 @@ echo 'creategroup';
 //    $ok=0;
 //   }
   //updating 'LOCATION_ID' (select)
-   if (IsSet($this->location_id)) {
-    $rec['LOCATION_ID']=$this->location_id;
-   } else {
-   global $location_id;
-   $rec['LOCATION_ID']=$location_id;
-   }
+//   if (IsSet($this->location_id)) {
+//    $rec['LOCATION_ID']=$this->location_id;
+//   } else {
+//   global $dev_location_id;
+//debmes('$dev_location_id='. $dev_location_id, 'zigbee2mqtt');
+
+//   $rec['LOCATION_ID']=$dev_location_id;
+//   }
   //updating 'PATH' (varchar, required)
 //   global $path;
 //   $rec['PATH']=$path;
