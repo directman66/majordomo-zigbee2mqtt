@@ -48,7 +48,11 @@
      <div class="form-group">
      <label class="control-label">GROUP (NEW):</label>
      <div class="col-md-6 input-group">
+     <!--
      <input type="text"  class="form-control" value="[#GROUP#]" name="creategroup" >
+     -->
+     
+     <input type="text"  class="form-control" value="" name="creategroup" >
      <div class="input-group-btn">
      </div> </div> 
 
@@ -60,23 +64,23 @@
 
 <div class="form-group">
  <label class="control-label"[#if ERR_LOCATION_ID#] style="color:red;font-weight:bold"[#endif#]>
-GROUP:
+GROUP (SELECT):
  </label>
 
 
 
 <div class="col-md-6 input-group">
 
- <select name="devlocid"  class="form-control input">
+ <select name="selectdevicegroup"  class="form-control input">
  <option value="">select
-  [#begin GROUPS#]<option value="[#ID#]"[#if SELECTED#] selected[#endif#]>[#TITLE#]
+  [#begin GROUPS#]<option value="[#TITLE#]"[#if SELECTED#] selected[#endif#]>[#TITLE#]
   [#end GROUPS#]
  </select>
 </div>
 </div>
 
 
-
+<!--
 
 
      <div class="form-group">
@@ -87,7 +91,7 @@ GROUP:
      </div> </div> </div>
 
 
-
+-->
 
 
 <!----------------------------------------->
@@ -159,7 +163,7 @@ GROUP:
 
 
 
-
+<!--
 
 	
      <div class="form-group">
@@ -169,7 +173,7 @@ GROUP:
      <div class="input-group-btn">
      </div> </div> </div>
 
-
+-->
 
      <div class="form-group">
      <label class="control-label">DESCRIPTION</label>
@@ -248,7 +252,7 @@ script.src = "../templates/zigbee2mqtt/css/bootstrap-select.min.js"
 document.body.appendChild(script);
 
 script.onload = function() {
-	// Р В РЎвЂ”Р В РЎвЂўР РЋР С“Р В Р’В»Р В Р’Вµ Р В РЎвЂ”Р В РЎвЂўР В РўвЂР В РЎвЂ“Р РЋР вЂљР РЋРЎвЂњР В Р’В·Р В РЎвЂќР В РЎвЂ js-Р РЋРІР‚С›Р В Р’В°Р В РІвЂћвЂ“Р В Р’В»Р В Р’В° Р В РЎвЂ”Р В Р’ВµР РЋР вЂљР В Р’ВµР РЋР вЂљР В РЎвЂР РЋР С“Р РЋРЎвЂњР В Р’ВµР В РЎВ Р РЋР РЉР В Р’В»Р В Р’ВµР В РЎВР В Р’ВµР В Р вЂ¦Р РЋРІР‚С™ select
+	// Р С—Р С•РЎРѓР В»Р Вµ Р С—Р С•Р Т‘Р С–РЎР‚РЎС“Р В·Р С”Р С‘ js-РЎвЂћР В°Р в„–Р В»Р В° Р С—Р ВµРЎР‚Р ВµРЎР‚Р С‘РЎРѓРЎС“Р ВµР С РЎРЊР В»Р ВµР СР ВµР Р…РЎвЂљ select
 	$('.selectpicker').selectpicker('render');
 }
 
