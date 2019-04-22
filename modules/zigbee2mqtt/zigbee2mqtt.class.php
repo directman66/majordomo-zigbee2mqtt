@@ -714,28 +714,39 @@ debmes('Вызываю setglobal: value:'.$rec['LINKED_OBJECT'].'.'.$rec['LINKED
      }
 
 //сюда пишем обработчик click
-if (substr($path,strrpos($path,'/')+1)=='click')
+if ((substr($path,strrpos($path,'/')+1)=='click')||(substr($path,strrpos($path,'/')+1)=='release'))
 {
 debmes('получено сообщение от пульта, разберем возможные варианты','zigbee2mqtt');
 
 
-   $rec1=SQLSelectOne("SELECT * FROM zigbee2mqtt WHERE PATH LIKE '".DBSafe($path)." and METRIKA='$value'" );
-   $newvalue='click';
+//   $rec1=SQLSelectOne("SELECT * FROM zigbee2mqtt WHERE PATH LIKE '".DBSafe($path)." and METRIKA='$value'" );
+$sql="SELECT * FROM zigbee2mqtt WHERE PATH LIKE '%$path%' and VALUE='$value'" ;
+debmes($sql, 'zigbee2mqtt');
+
+   $rec1=SQLSelectOne($sql);
+//   $newvalue='click';
+   $newvalue=substr($path,strrpos($path,'/')+1);
    if(!$rec1['ID']){ /* If 'PATH' not found in db */
+     debmes('кнопка click нажата первый раз', 'zigbee2mqtt');
      $rec1['PATH']=$path;
-     $rec1['METRIKA']=$value;
+//     $rec1['METRIKA']=$value;
+     $rec1['METRIKA']=$newvalue;
      $rec1['DEV_ID']=$dev_id;
      $rec1['TITLE']=$path;
 //     $rec['VALUE']=$value.'';
-     $rec1['VALUE']=$newvalue;
+//     $rec1['VALUE']=$newvalue;
+     $rec1['VALUE']=$value;
 
 
      $rec1['UPDATED']=date('Y-m-d H:i:s');
      $rec1['ID']=null;
 SQLInsert('zigbee2mqtt', $rec1);
    }else{
-     $rec1['METRIKA']=$value;
-     $rec1['VALUE']=$newvalue;
+     debmes('кнопка click ранее уже нажималас, есть информация в базе данных', 'zigbee2mqtt');
+//     $rec1['METRIKA']=$value;
+     $rec1['METRIKA']=$newvalue;
+//     $rec1['VALUE']=$newvalue;
+     $rec1['VALUE']=$value;
      $rec1['DEV_ID']=$dev_id;
      $rec1['UPDATED']=date('Y-m-d H:i:s');
      SQLUpdate('zigbee2mqtt', $rec1);
