@@ -977,6 +977,21 @@ $out['SELECTTYPEARRAY']=$tmp;
     $ok=0;
    }
 
+
+
+
+
+
+
+   global $devlocid;
+   $rec['LOCATION_ID']=$devlocid;
+   if ($rec['LOCATION_ID']=='') {
+    $out['ERR_LOCATION_ID']=1;
+    $ok=0;
+   }
+   debmes('$dev_location_id='. $devlocid, 'zigbee2mqtt');
+
+
    global $selecttype;
    $rec['SELECTTYPE']=$selecttype;
    if ($rec['SELECTTYPE']=='') {
@@ -1002,8 +1017,6 @@ if ($creategroup) {
   $this->sendcommand('zigbee2mqtt/bridge/group/'.$creategroup.'/add', $dev_title);
 }
 
-   global $dev_location_id;
-  $rec['LOCATION_ID']=$dev_location_id;
    
 //$vm=$dev_location_id;
 // echo "<script type='text/javascript'>";
