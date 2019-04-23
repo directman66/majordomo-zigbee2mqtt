@@ -1290,6 +1290,12 @@ debmes('!!!!!!!device_off','zigbee2mqtt');
   $this->redirect("?");
 }
 
+  if ($this->view_mode=='resetznp') {
+  $this->sendcommand('zigbee2mqtt/bridge/config/reset', '');
+//  $this->redirect("?tab=service");
+  $this->redirect("?");
+}
+
 
 
 
