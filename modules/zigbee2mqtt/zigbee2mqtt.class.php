@@ -666,7 +666,12 @@ print_r($rec);
 
 
 //     $this->refresh_db();
-     $this->refreshdb_mqtt();
+//     $this->refreshdb_mqtt();
+
+SQLExec ('update  zigbee2mqtt set VALUE="" where TITLE="zigbee2mqtt/bridge/log"');
+$this->sendcommand('zigbee2mqtt/bridge/config/devices', '');
+
+
 
 
        }
@@ -759,7 +764,17 @@ debmes('Вызываю setglobal: value:'.$rec['LINKED_OBJECT'].'.'.$rec['LINKED
      }
 
 //сюда пишем обработчик click
-if ((substr($path,strrpos($path,'/')+1)=='click')||(substr($path,strrpos($path,'/')+1)=='release'))
+
+//////////////////////////////////////////////////
+//////////////////////////////////////////////////
+//////////////////////////////////////////////////
+//////////////////////////////////////////////////
+
+//////////////////////////////////////////////////
+
+//////////////////////////////////////////////////
+
+if ((substr($path,strrpos($path,'/')+1)=='click')||(substr($path,strrpos($path,'/')+1)=='release')||(substr($path,strrpos($path,'/')+1)=='action'))
 {
 debmes('получено сообщение от пульта, разберем возможные варианты','zigbee2mqtt');
 
