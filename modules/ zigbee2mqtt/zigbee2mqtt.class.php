@@ -520,9 +520,11 @@ if ($msgtype=='device_state') {$arr['MESSAGE']= $path.":".$value; } else  {$arr[
 $arr['TYPE']= $msgtype;
 $arr['FIND']= date('Y-m-d H:i:s');
 
-SQLInsert('zigbee2mqtt_log', $arr);
+DEBMES($arr , 'zigbee2mqtt');
 
+$ok=SQLInsert('zigbee2mqtt_log', $arr);
 
+debmes('Поместили '.$ok , 'zigbee2mqtt');
 //раскодируем
 
 
@@ -530,9 +532,14 @@ SQLInsert('zigbee2mqtt_log', $arr);
 
 //parse_deviceinfo($ar)
 
+debmes($json,'zigbee2mqtt');
+debmes($json->{'type'},'zigbee2mqtt');
+
+
+
 if ($json->{'type'}=='devices') {
 
-debmes('справочник устройств','zigbee2mqtt');
+debmes('справочник устройств:','zigbee2mqtt');
 
 //$this->parse_deviceinfo($json->{'message'});
 $this->parse_deviceinfo($json);
@@ -590,15 +597,22 @@ SQLUpdate(  'zigbee2mqtt_grouplist',   $grs);
 
 
    /* Search 'PATH' in database (db) */
+
+debmes('path='.$path,'zigbee2mqtt') ;
+
 $dev_title=explode('/',$path)[1];
 
-if ($dev_title=='bridge')  {
+debmes('$dev_title='.$dev_title,'zigbee2mqtt') ;
 
-$arr=sqlselectone('select * from  zigbee2mqtt_devices where TITLE="bridge"');
+
+
+//if ($dev_title=='bridge')  {
+
+//arr=sqlselectone('select * from  zigbee2mqtt_devices where TITLE="bridge"');
 
 //if ($arr['IEEEADDR']) {$dev_title=$arr['IEEEADDR'];} else  {$dev_title='bridge';}
 
-}
+//}
 //echo $path.":".$dev_title."<br>";
 
 //if (strpos($dev_title,"/set/")==0)
@@ -609,7 +623,7 @@ $arr=sqlselectone('select * from  zigbee2mqtt_devices where TITLE="bridge"');
 //debmes($path.' strpos:'. strpos($path,"set"), 'zigbee2mqtt');
 if (strpos($path,"set")>0)
 {
-debmes('путь содержит set, его мы записывать не будем', 'zigbee2mqtt');
+debmes('путь содержит set, его мы записывать не будем, чтобы не было колизии', 'zigbee2mqtt');
 }
 else 
 {
@@ -627,7 +641,7 @@ debmes('апдейтим zigbee2mqtt_devices: '.$sql, 'zigbee2mqtt');
      $rec['IEEEADDR']=$dev_title;
      $rec['FIND']=date('Y-m-d H:i:s');
 
-                    if ($rec['TITLE']=='bridge' ){
+                    if ($dev_title=='bridge222' ){
                     debmes('это шлюз',zigbee2mqtt);
 
                     $cnt=SQLSelectOne("SELECT count(*) cnt FROM zigbee2mqtt_devices WHERE TITLE ='bridge'")['cnt'];
@@ -1787,8 +1801,10 @@ function parse_deviceinfo($ar) {
 //$log1=$log['VALUE'];
 
 $log1=$ar;
-debmes('log: '.$log1, 'zigbee2mqtt');
-$json2=json_decode($log1);
+//debmes('log: '.$log1, 'zigbee2mqtt');
+debmes($log1, 'zigbee2mqtt');
+//$json2=json_decode($log1);
+$json2=$log1;
 
 //debmes($json, 'zigbee2mqtt');
 
