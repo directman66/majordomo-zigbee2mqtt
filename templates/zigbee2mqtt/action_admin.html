@@ -20,9 +20,9 @@ DATASOURCE: [#DATA_SOURCE#]
 <li [#if TAB=="cicle" #] class="active" [#endif#]>
 
 	[#if CYCLERUN==1#]
-		<span class="label label-success" title="Статус цикла">Цикл запущен</span>
+		<span class="label label-success" title="Статус цикла"><a href="?view_mode=cycle_start"  title="Restart  cycle" ><font color="white" >Цикл запущен</span></font></a>
 	[#else#]
-		<span class="label label-danger" title="Статус цикла">Цикл остановлен</span>
+		<span class="label label-danger" title="Статус цикла"><a href="?view_mode=cycle_start"  title="Start  cycle" ><font color="white" >Цикл остановлен</font></span></a>
 	[#endif#]
 
 	[#if SEEN2==1#]
