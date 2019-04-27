@@ -1207,6 +1207,11 @@ $out['LOG']=$a;
 // echo "</script>";
 
 
+ if ($this->view_mode=='cycle_start') {
+setGlobal('cycle_zigbee2mqttControl','start'); 
+}
+
+
  if ($this->view_mode=='send_test_mqtt') {
 
 
