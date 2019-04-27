@@ -594,7 +594,7 @@ SQLUpdate(  'zigbee2mqtt_grouplist',   $grs);
 
 }
 
-
+//добавляем в справочник устройств zigbee2mqtt_devices
 
    /* Search 'PATH' in database (db) */
 
@@ -641,7 +641,7 @@ debmes('апдейтим zigbee2mqtt_devices: '.$sql, 'zigbee2mqtt');
      $rec['IEEEADDR']=$dev_title;
      $rec['FIND']=date('Y-m-d H:i:s');
 
-                    if ($dev_title=='bridge222' ){
+                    if ($dev_title=='bridge' ){
                     debmes('это шлюз',zigbee2mqtt);
 
                     $cnt=SQLSelectOne("SELECT count(*) cnt FROM zigbee2mqtt_devices WHERE TITLE ='bridge'")['cnt'];
@@ -659,7 +659,9 @@ debmes('устройство  новое, нужно создать новое �
      $rec['TITLE']=$dev_title;
      $rec['IEEEADDR']=$dev_title;
      $rec['FIND']=date('Y-m-d H:i:s');
-     SQLInsert('zigbee2mqtt_devices', $rec);
+//if   ($rec['TITLE']=='bridge')  {      $rec['IEEEADDR']='bridge2';}
+print_r($rec);
+      SQLInsert('zigbee2mqtt_devices', $rec);
 
 
 
@@ -677,6 +679,8 @@ SQLUPDATE('zigbee2mqtt_devices', $rec);
 }
 
 } 
+
+//добавляем в справочник топиков  zigbee2mqtt
 
 //   $dev_id=SQLSelectOne("SELECT * FROM zigbee2mqtt_devices WHERE TITLE LIKE '%".DBSafe($dev_title)."%'")['ID'];
 $sql="SELECT * FROM zigbee2mqtt_devices WHERE IEEEADDR LIKE '%".DBSafe($dev_title)."%'";
@@ -1818,6 +1822,9 @@ $json=$json2->{'message'};
 $cdev=$json[$i]->{'ieeeAddr'};
 
 if ($cdev){
+
+
+
 debmes('cdev:'.$cdev, 'zigbee2mqtt');
 $sql="SELECT * FROM zigbee2mqtt_devices where IEEEADDR='".$cdev."'";
 debmes($sql, 'zigbee2mqtt');
@@ -1866,12 +1873,12 @@ if ($json[$i]->{'model'}) $res2['SELECTTYPE']=    $json[$i]->{'model'};
 
 $res2['TITLE']=$res2['IEEEADDR'];
 debmes($res2, 'zigbee2mqtt');
-if (($res2['TITLE'])&&($res2['TYPE']!='Coordinator')&&($res2['TITLE']!='bridge')) 
+if (($res2['TITLE'])&&($res2['TYPE']!='Coordinator')&&($res2['TITLE']!='bridge')&&($res2['TYPE']!='bridge') ) 
 SQLInsert('zigbee2mqtt_devices', $res2);
 }
 
 
-if ($res2['TYPE']=='Coordinator') SQLExec	('update zigbee2mqtt_devices set SELECTVENDOR="Texas Instruments", SELECTTYPE="cc2531", IEEEADDR="'.$res2['IEEEADDR'].'" where TITLE="bridge"', $res2);
+if ($res2['TYPE']=='Coordinator') SQLExec	('update zigbee2mqtt_devices set MANUFNAME="parse_deviceinfo", SELECTVENDOR="Texas Instruments", SELECTTYPE="cc2531", IEEEADDR="'.$res2['IEEEADDR'].'" where TITLE="bridge"', $res2);
 }
 
 
