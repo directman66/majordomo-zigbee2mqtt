@@ -613,24 +613,39 @@ debmes('путь содержит set, его мы записывать не б�
 }
 else 
 {
-     $rec=SQLSelectOne("SELECT * FROM zigbee2mqtt_devices WHERE IEEEADDR LIKE '%".DBSafe($dev_title)."%'");
+     $sql="SELECT * FROM zigbee2mqtt_devices WHERE IEEEADDR LIKE '%".DBSafe($dev_title)."%'";
+     $rec=SQLSelectOne($sql);
+
+debmes('апдейтим zigbee2mqtt_devices: '.$sql, 'zigbee2mqtt');
+
      
-     if(!$rec['ID']) { /* If path_write foud in db */
+
+
+
+
      $rec['TITLE']=$dev_title;
      $rec['IEEEADDR']=$dev_title;
-
      $rec['FIND']=date('Y-m-d H:i:s');
 
-if ($rec['TITLE']=='bridge' ){
+                    if ($rec['TITLE']=='bridge' ){
+                    debmes('это шлюз',zigbee2mqtt);
 
-$cnt=SQLSelectOne("SELECT count(*) cnt FROM zigbee2mqtt_devices WHERE TITLE ='bridge'")['cnt'];
-echo $cnt; 
+                    $cnt=SQLSelectOne("SELECT count(*) cnt FROM zigbee2mqtt_devices WHERE TITLE ='bridge'")['cnt'];
+		    echo $cnt; 
+	 	     $rec['FIND']=date('Y-m-d H:i:s');
+
+                    if ($cnt==0) {SQLInsert('zigbee2mqtt_devices', $rec);} else 
+                        {SQLUpdate('zigbee2mqtt_devices', $rec);}
+//                       break;
+} else { 
+
+     if(!$rec['ID']) { /* If path_write foud in db */
+
+debmes('устройство  новое, нужно создать новое устройство  zigbee2mqtt_devices: '.$sql, 'zigbee2mqtt');
+     $rec['TITLE']=$dev_title;
+     $rec['IEEEADDR']=$dev_title;
      $rec['FIND']=date('Y-m-d H:i:s');
-
-if ($cnt==0) SQLInsert('zigbee2mqtt_devices', $rec);
-
-}
-else SQLUpdate('zigbee2mqtt_devices', $rec);
+     SQLInsert('zigbee2mqtt_devices', $rec);
 
 
 
@@ -641,9 +656,11 @@ else SQLUpdate('zigbee2mqtt_devices', $rec);
        }
 else 
 {
+debmes('устройство уже зарегистрировано в системе   zigbee2mqtt_devices: '.$sql, 'zigbee2mqtt');
      $rec['IEEEADDR']=$dev_title;
      $rec['FIND']=date('Y-m-d H:i:s');
 SQLUPDATE('zigbee2mqtt_devices', $rec);
+}
 
 } 
 
