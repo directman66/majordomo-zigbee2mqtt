@@ -187,13 +187,13 @@ function run() {
 * @access public
 */
  function setProperty($id, $value, $set_linked=0) {
-debmes('Нужно изменить значение id='.$id.' на '.$value, 'zigbee2mqtt');
+if (ZMQTT_DEBUG=="1" ) if (ZMQTT_DEBUG=="1" ) debmes('Нужно изменить значение id='.$id.' на '.$value, 'zigbee2mqtt');
 
-debmes("SELECT * FROM zigbee2mqtt WHERE ID='".$id."'", 'zigbee2mqtt');
+if (ZMQTT_DEBUG=="1" ) debmes("SELECT * FROM zigbee2mqtt WHERE ID='".$id."'", 'zigbee2mqtt');
   $rec=SQLSelectOne("SELECT * FROM zigbee2mqtt WHERE ID='".$id."'");
 
   if (!$rec['ID'] || !$rec['PATH']) {
-debmes('Не хватает данных', 'zigbee2mqtt');
+if (ZMQTT_DEBUG=="1" ) debmes('Не хватает данных', 'zigbee2mqtt');
    return 0;
   }
 
@@ -219,6 +219,16 @@ debmes('Не хватает данных', 'zigbee2mqtt');
    } else {
     $client_name="MajorDoMo MQTT";
    }
+
+
+   if ($mqtt->config['MQTT_DEBUG']) {
+    $debug=$mqtt->config['MQTT_DEBUG'];
+   } else {
+    $debug="0";
+   }
+
+
+
 
    if ($this->config['MQTT_AUTH']) {
     $username=$this->config['MQTT_USERNAME'];
@@ -246,7 +256,7 @@ debmes('Не хватает данных', 'zigbee2mqtt');
 
    if(!$mqtt_client->connect(true, NULL,$username,$password))
    {
-debmes('Ошибка подключения к mqtt', 'zigbee2mqtt');
+if (ZMQTT_DEBUG=="1" ) debmes('Ошибка подключения к mqtt', 'zigbee2mqtt');
     return 0;
    }
 
@@ -260,7 +270,7 @@ $jsonvalue=json_encode($json) ;
 
 
 if (($rec['PAYLOAD_ON'])||$rec['PAYLOAD_OFF']) {
-debmes('Подменяем '.$value. " на ". $rec['PAYLOAD_ON']."/".$rec['PAYLOAD_OFF'], 'zigbee2mqtt');
+if (ZMQTT_DEBUG=="1" ) debmes('Подменяем '.$value. " на ". $rec['PAYLOAD_ON']."/".$rec['PAYLOAD_OFF'], 'zigbee2mqtt');
 
 //if (($rec['PAYLOAD_ON'])&& ($value=="1"))  $json=array( $rec['METRIKA']=> $rec['PAYLOAD_ON']);
 //if (($rec['PAYLOAD_OFF'])&& ($value=="0"))  $json=array( $rec['METRIKA']=> $rec['PAYLOAD_OFF']);
@@ -269,7 +279,7 @@ if  ($value=="1") $json=array( $rec['COMMAND_VALUE']=> $rec['PAYLOAD_ON']);
 if ($value=="0")  $json=array( $rec['COMMAND_VALUE']=> $rec['PAYLOAD_OFF']);
 $jsonvalue=json_encode($json) ;
 
-debmes('Заменили  '.$value. "  на ". $jsonvalue, 'zigbee2mqtt');
+if (ZMQTT_DEBUG=="1" ) debmes('Заменили  '.$value. "  на ". $jsonvalue, 'zigbee2mqtt');
 
 
 } else 
@@ -277,7 +287,7 @@ debmes('Заменили  '.$value. "  на ". $jsonvalue, 'zigbee2mqtt');
 $json=array( $rec['COMMAND_VALUE']=> $value);
 $jsonvalue=json_encode($json) ;
 }
-debmes('Публикую zigbee2mqqtt '.$rec['PATH_WRITE'].":".$jsonvalue, 'zigbee2mqtt');
+if (ZMQTT_DEBUG=="1" ) debmes('Публикую zigbee2mqqtt '.$rec['PATH_WRITE'].":".$jsonvalue, 'zigbee2mqtt');
 
 
    if ($rec['PATH_WRITE']) {
@@ -314,29 +324,29 @@ debmes('Публикую zigbee2mqqtt '.$rec['PATH_WRITE'].":".$jsonvalue, 'zigb
 
 
  function setPropertyDevice($id, $value, $set_linked=0) {
-debmes('Нужно изменить значение id='.$id.' на '.$value, 'zigbee2mqtt');
+if (ZMQTT_DEBUG=="1" ) debmes('Нужно изменить значение id='.$id.' на '.$value, 'zigbee2mqtt');
 
 $sql="SELECT * FROM zigbee2mqtt WHERE DEV_ID='".$id."' and length(PATH_WRITE)>2";
 
-debmes($sql, 'zigbee2mqtt');
+if (ZMQTT_DEBUG=="1" ) debmes($sql, 'zigbee2mqtt');
 //  $rec=SQLSelectOne("SELECT * FROM zigbee2mqtt WHERE DEV_ID='".$id."' and PATH_WRITE is not null");
   $rec=SQLSelect($sql);
 $cnt=count($rec);
 
-debmes("Найдено $cnt свойств, которые можно изменить", 'zigbee2mqtt');
-debmes($rec,'zigbee2mqtt');
+if (ZMQTT_DEBUG=="1" ) debmes("Найдено $cnt свойств, которые можно изменить", 'zigbee2mqtt');
+if (ZMQTT_DEBUG=="1" ) debmes($rec,'zigbee2mqtt');
   for($i=0;$i<$cnt;$i++) {
 
   if ($rec[$i]['ID'] || $rec[$i]['PATH_WRITE']) {
-//debmes('Не хватает данных, устройство '.$rec['ID'].' или путь управления '.$rec['PATH'].' не найдены', 'zigbee2mqtt');
+//if (ZMQTT_DEBUG=="1" ) debmes('Не хватает данных, устройство '.$rec['ID'].' или путь управления '.$rec['PATH'].' не найдены', 'zigbee2mqtt');
 //   return 0;
 
 
 
 
-debmes('Данных  хватает, параметр '.$rec[$i]['ID'].' путь управления '.$rec[$i]['PATH'], 'zigbee2mqtt');
+if (ZMQTT_DEBUG=="1" ) debmes('Данных  хватает, параметр '.$rec[$i]['ID'].' путь управления '.$rec[$i]['PATH'], 'zigbee2mqtt');
 
-debmes('Поехали дальше', 'zigbee2mqtt');
+if (ZMQTT_DEBUG=="1" ) debmes('Поехали дальше', 'zigbee2mqtt');
 
 
      if ($rec[$i]['REPLACE_LIST']!='') {
@@ -360,6 +370,18 @@ debmes('Поехали дальше', 'zigbee2mqtt');
    } else {
     $client_name="MajorDoMo MQTT";
    }
+
+
+
+   if ($mqtt->config['MQTT_DEBUG']) {
+    $debug=$mqtt->config['MQTT_DEBUG'];
+   } else {
+    $debug="0";
+   }
+
+
+
+
 
    if ($this->config['MQTT_AUTH']) {
     $username=$this->config['MQTT_USERNAME'];
@@ -387,7 +409,7 @@ debmes('Поехали дальше', 'zigbee2mqtt');
 
    if(!$mqtt_client->connect(true, NULL,$username,$password))
    {
-debmes('Ошибка подключения к mqtt', 'zigbee2mqtt');
+if (ZMQTT_DEBUG=="1" ) debmes('Ошибка подключения к mqtt', 'zigbee2mqtt');
     return 0;
    }
 
@@ -402,8 +424,8 @@ $jsonvalue=json_encode($json) ;
 if (strpos($value,'vice')>0) {
 $json=null;
 
-debmes('Требуется включить или выключить устройство', 'zigbee2mqtt1');
-debmes($value.' $rec[$i][METRIKA]='.$rec[$i]['METRIKA']. ' PATH_WRITE='.$rec[$i]['PATH_WRITE'].' strpos='.strpos($rec[$i]['PATH_WRITE'],'right'), 'zigbee2mqtt');
+if (ZMQTT_DEBUG=="1" ) debmes('Требуется включить или выключить устройство', 'zigbee2mqtt1');
+if (ZMQTT_DEBUG=="1" ) debmes($value.' $rec[$i][METRIKA]='.$rec[$i]['METRIKA']. ' PATH_WRITE='.$rec[$i]['PATH_WRITE'].' strpos='.strpos($rec[$i]['PATH_WRITE'],'right'), 'zigbee2mqtt');
 
 if  (($value=="device_on_left")&&(strpos($rec[$i]['METRIKA'],"tate")>0)) $json=array( $rec[$i]['COMMAND_VALUE']=> $rec[$i]['PAYLOAD_ON']);
 if (($value=="device_off_left")&&(strpos($rec[$i]['METRIKA'],"tate")>0))  $json=array( $rec[$i]['COMMAND_VALUE']=> $rec[$i]['PAYLOAD_OFF']);
@@ -413,14 +435,14 @@ if (($value=="device_off_right")&&(strpos($rec[$i]['METRIKA'],"tate")>0) &&(strp
 } else {
 
 if (($rec[$i]['PAYLOAD_ON'])||$rec[$i]['PAYLOAD_OFF']) {
-debmes('Подменяем '.$value. " на ". $rec[$i]['PAYLOAD_ON']."/".$rec[$i]['PAYLOAD_OFF'], 'zigbee2mqtt1');
+if (ZMQTT_DEBUG=="1" ) debmes('Подменяем '.$value. " на ". $rec[$i]['PAYLOAD_ON']."/".$rec[$i]['PAYLOAD_OFF'], 'zigbee2mqtt1');
 
 //if (($rec['PAYLOAD_ON'])&& ($value=="1"))  $json=array( $rec['METRIKA']=> $rec['PAYLOAD_ON']);
 //if (($rec['PAYLOAD_OFF'])&& ($value=="0"))  $json=array( $rec['METRIKA']=> $rec['PAYLOAD_OFF']);
 
 if  ($value=="1") $json=array( $rec[$i]['COMMAND_VALUE']=> $rec[$i]['PAYLOAD_ON']);
 if ($value=="0")  $json=array( $rec[$i]['COMMAND_VALUE']=> $rec[$i]['PAYLOAD_OFF']);
-debmes('Заменили  '.$value. "  на ". $jsonvalue, 'zigbee2mqtt1');
+if (ZMQTT_DEBUG=="1" ) debmes('Заменили  '.$value. "  на ". $jsonvalue, 'zigbee2mqtt1');
 }
 
 else 
@@ -430,14 +452,14 @@ $json=array( $rec[$i]['COMMAND_VALUE']=> $value);
 }
 $jsonvalue=json_encode($json) ;
 if ($jsonvalue!='null') { 
-debmes('Публикую zigbee2mqqtt '.$rec[$i]['PATH_WRITE'].":".$jsonvalue, 'zigbee2mqtt1');
+if (ZMQTT_DEBUG=="1" ) debmes('Публикую zigbee2mqqtt '.$rec[$i]['PATH_WRITE'].":".$jsonvalue, 'zigbee2mqtt1');
    if ($rec[$i]['PATH_WRITE']) {
 
    $mqtt_client->publish($rec[$i]['PATH_WRITE'],$jsonvalue, (int)$rec[$i]['QOS'], (int)$rec[$i]['RETAIN']);
        
    }} else 
 
-debmes('Публиковать не требуется  '.$rec[$i]['PATH_WRITE'].":".$jsonvalue, 'zigbee2mqtt1');
+if (ZMQTT_DEBUG=="1" ) debmes('Публиковать не требуется  '.$rec[$i]['PATH_WRITE'].":".$jsonvalue, 'zigbee2mqtt1');
 
 // else {    $mqtt_client->publish($rec['PATH']."/",$jsonvalue, (int)$rec['QOS'], (int)$rec['RETAIN']);   }
    $mqtt_client->close();
@@ -464,7 +486,7 @@ debmes('Публиковать не требуется  '.$rec[$i]['PATH_WRITE']
 //  }
  }
  } 
-//else debmes('Не хватает данных, устройство '.$rec['ID'].' или путь управления '.$rec['PATH'].' не найдены', 'zigbee2mqtt');
+//else if (ZMQTT_DEBUG=="1" ) debmes('Не хватает данных, устройство '.$rec['ID'].' или путь управления '.$rec['PATH'].' не найдены', 'zigbee2mqtt');
   }
 
 
@@ -478,8 +500,8 @@ debmes('Публиковать не требуется  '.$rec[$i]['PATH_WRITE']
 */
  function processMessage($path, $value) {
 
-debmes('Сработал processMessage :'.$path." value:". $value.' strpos:'. strpos($path,"set"),'zigbee2mqtt');
-//debmes('Сработал processMessage :'.$path." value:". $value,'zigbee2mqtt');
+if (ZMQTT_DEBUG=="1" ) debmes('Сработал processMessage :'.$path." value:". $value.' strpos:'. strpos($path,"set"),'zigbee2mqtt');
+//if (ZMQTT_DEBUG=="1" ) debmes('Сработал processMessage :'.$path." value:". $value,'zigbee2mqtt');
    if (preg_match('/\#$/', $path)) {
     return 0;
    }
@@ -510,7 +532,7 @@ if (($path=='zigbee2mqtt/bridge/log')||($msgtype))
 $json=json_decode($value);
 $msgtype=$json->{'type'};
 
-debmes('Пришло важное сообщение, поместим его в журнал :'.$path." value:". $value." type:".$json->{'type'},'zigbee2mqtt');
+if (ZMQTT_DEBUG=="1" ) debmes('Пришло важное сообщение, поместим его в журнал :'.$path." value:". $value." type:".$json->{'type'},'zigbee2mqtt');
 
 
 //{"type":"groups","message":{"1":{"friendly_name":"232323"},"2":{"friendly_name":"group1"},"3":{"friendly_name":"group1"},"4":{"friendly_name":"group1"}}}
@@ -520,11 +542,11 @@ if ($msgtype=='device_state') {$arr['MESSAGE']= $path.":".$value; } else  {$arr[
 $arr['TYPE']= $msgtype;
 $arr['FIND']= date('Y-m-d H:i:s');
 
-DEBMES($arr , 'zigbee2mqtt');
+if (ZMQTT_DEBUG=="1" ) debmes($arr , 'zigbee2mqtt');
 
 $ok=SQLInsert('zigbee2mqtt_log', $arr);
 
-debmes('Поместили '.$ok , 'zigbee2mqtt');
+if (ZMQTT_DEBUG=="1" ) debmes('Поместили '.$ok , 'zigbee2mqtt');
 //раскодируем
 
 
@@ -532,14 +554,14 @@ debmes('Поместили '.$ok , 'zigbee2mqtt');
 
 //parse_deviceinfo($ar)
 
-debmes($json,'zigbee2mqtt');
-debmes($json->{'type'},'zigbee2mqtt');
+if (ZMQTT_DEBUG=="1" ) debmes($json,'zigbee2mqtt');
+if (ZMQTT_DEBUG=="1" ) debmes($json->{'type'},'zigbee2mqtt');
 
 
 
 if ($json->{'type'}=='devices') {
 
-debmes('справочник устройств:','zigbee2mqtt');
+if (ZMQTT_DEBUG=="1" ) debmes('справочник устройств:','zigbee2mqtt');
 
 //$this->parse_deviceinfo($json->{'message'});
 $this->parse_deviceinfo($json);
@@ -548,24 +570,24 @@ $this->parse_deviceinfo($json);
 
 
 if ($json->{'type'}=='groups') {
-debmes('обновим справочник групп','zigbee2mqtt');
-debmes($json->{'message'}, 'zigbee2mqtt');
+if (ZMQTT_DEBUG=="1" ) debmes('обновим справочник групп','zigbee2mqtt');
+if (ZMQTT_DEBUG=="1" ) debmes($json->{'message'}, 'zigbee2mqtt');
 
 foreach ($json->{'message'} as $key=> $value)
 
 {
 
-//debmes($key.":". $value, 'zigbee2mqtt');
+//if (ZMQTT_DEBUG=="1" ) debmes($key.":". $value, 'zigbee2mqtt');
 //echo $key.":". $value->{'friendly_name'};
 $sql="select * from zigbee2mqtt_grouplist  where Z2M_ID='$key'";
-debmes($sql, 'zigbee2mqtt');
+if (ZMQTT_DEBUG=="1" ) debmes($sql, 'zigbee2mqtt');
 
 $grs=SQLSElectOne($sql);
 
 
 
 
-debmes($grs, 'zigbee2mqtt');
+if (ZMQTT_DEBUG=="1" ) debmes($grs, 'zigbee2mqtt');
 
 if  (!$grs['ID']) 
 {
@@ -574,7 +596,7 @@ $grs['Z2M_ID']=$key;
 $grs['TITLE']=$value->{'friendly_name'};
 $grs['ADDED']= date('Y-m-d H:i:s');
     
-debmes('SQLInsert zigbee2mqtt_grouplist' , 'zigbee2mqtt');
+if (ZMQTT_DEBUG=="1" ) debmes('SQLInsert zigbee2mqtt_grouplist' , 'zigbee2mqtt');
 SQLInsert(  'zigbee2mqtt_grouplist',   $grs);
 } else 
 
@@ -584,7 +606,7 @@ $grs['Z2M_ID']=$key;
 $grs['TITLE']=$value->{'friendly_name'};
 $grs['ADDED']= date('Y-m-d H:i:s');
 
-debmes('SQLUpdate zigbee2mqtt_grouplist' , 'zigbee2mqtt');
+if (ZMQTT_DEBUG=="1" ) debmes('SQLUpdate zigbee2mqtt_grouplist' , 'zigbee2mqtt');
 SQLUpdate(  'zigbee2mqtt_grouplist',   $grs);
 }
 }
@@ -598,11 +620,11 @@ SQLUpdate(  'zigbee2mqtt_grouplist',   $grs);
 
    /* Search 'PATH' in database (db) */
 
-debmes('path='.$path,'zigbee2mqtt') ;
+if (ZMQTT_DEBUG=="1" ) debmes('path='.$path,'zigbee2mqtt') ;
 
 $dev_title=explode('/',$path)[1];
 
-debmes('$dev_title='.$dev_title,'zigbee2mqtt') ;
+if (ZMQTT_DEBUG=="1" ) debmes('$dev_title='.$dev_title,'zigbee2mqtt') ;
 
 
 
@@ -620,17 +642,17 @@ debmes('$dev_title='.$dev_title,'zigbee2mqtt') ;
 //если нет в пути параметра set, управляющие свои значения нам не нужны
 //if (strpos($path,"set")===false)
 
-//debmes($path.' strpos:'. strpos($path,"set"), 'zigbee2mqtt');
+//if (ZMQTT_DEBUG=="1" ) debmes($path.' strpos:'. strpos($path,"set"), 'zigbee2mqtt');
 if (strpos($path,"set")>0)
 {
-debmes('путь содержит set, его мы записывать не будем, чтобы не было колизии', 'zigbee2mqtt');
+if (ZMQTT_DEBUG=="1" ) debmes('путь содержит set, его мы записывать не будем, чтобы не было колизии', 'zigbee2mqtt');
 }
 else 
 {
      $sql="SELECT * FROM zigbee2mqtt_devices WHERE IEEEADDR LIKE '%".DBSafe($dev_title)."%'";
      $rec=SQLSelectOne($sql);
 
-debmes('апдейтим zigbee2mqtt_devices: '.$sql, 'zigbee2mqtt');
+if (ZMQTT_DEBUG=="1" ) debmes('апдейтим zigbee2mqtt_devices: '.$sql, 'zigbee2mqtt');
 
      
 
@@ -642,7 +664,7 @@ debmes('апдейтим zigbee2mqtt_devices: '.$sql, 'zigbee2mqtt');
      $rec['FIND']=date('Y-m-d H:i:s');
 
                     if ($dev_title=='bridge' ){
-                    debmes('это шлюз',zigbee2mqtt);
+                    if (ZMQTT_DEBUG=="1" ) debmes('это шлюз',zigbee2mqtt);
 
                     $cnt=SQLSelectOne("SELECT count(*) cnt FROM zigbee2mqtt_devices WHERE TITLE ='bridge'")['cnt'];
 		    echo $cnt; 
@@ -655,7 +677,7 @@ debmes('апдейтим zigbee2mqtt_devices: '.$sql, 'zigbee2mqtt');
 
      if(!$rec['ID']) { /* If path_write foud in db */
 
-debmes('устройство  новое, нужно создать новое устройство  zigbee2mqtt_devices: '.$sql, 'zigbee2mqtt');
+if (ZMQTT_DEBUG=="1" ) debmes('устройство  новое, нужно создать новое устройство  zigbee2mqtt_devices: '.$sql, 'zigbee2mqtt');
      $rec['TITLE']=$dev_title;
      $rec['IEEEADDR']=$dev_title;
      $rec['FIND']=date('Y-m-d H:i:s');
@@ -677,7 +699,7 @@ $this->sendcommand('zigbee2mqtt/bridge/config/devices', '');
        }
 else 
 {
-debmes('устройство уже зарегистрировано в системе   zigbee2mqtt_devices: '.$sql, 'zigbee2mqtt');
+if (ZMQTT_DEBUG=="1" ) debmes('устройство уже зарегистрировано в системе   zigbee2mqtt_devices: '.$sql, 'zigbee2mqtt');
      $rec['IEEEADDR']=$dev_title;
      $rec['FIND']=date('Y-m-d H:i:s');
 SQLUPDATE('zigbee2mqtt_devices', $rec);
@@ -689,7 +711,7 @@ SQLUPDATE('zigbee2mqtt_devices', $rec);
 
 //   $dev_id=SQLSelectOne("SELECT * FROM zigbee2mqtt_devices WHERE TITLE LIKE '%".DBSafe($dev_title)."%'")['ID'];
 $sql="SELECT * FROM zigbee2mqtt_devices WHERE IEEEADDR LIKE '%".DBSafe($dev_title)."%'";
-debmes($sql, 'zigbee2mqtt');
+if (ZMQTT_DEBUG=="1" ) debmes($sql, 'zigbee2mqtt');
    $dev_id=SQLSelectOne($sql)['ID'];
 
 
@@ -746,7 +768,7 @@ SQLInsert('zigbee2mqtt', $rec);
 if (($rec['PAYLOAD_ON'])||$rec['PAYLOAD_OFF']) {
 if ($value==$rec['PAYLOAD_ON'])  $newvalue=1;
 if ($value==$rec['PAYLOAD_OFF'])  $newvalue=0;
-debmes('Заменили  '.$value. "  на ". $newvalue, 'zigbee2mqtt');
+if (ZMQTT_DEBUG=="1" ) debmes('Заменили  '.$value. "  на ". $newvalue, 'zigbee2mqtt');
 }  else 
 {$newvalue=$value;}
 
@@ -756,7 +778,7 @@ if ((!$newvalue) || (strlen($newvalue)==0)) {$newvalue=$value;}
 //пишем в переменную
 //       setGlobal($rec['LINKED_OBJECT'].'.'.$rec['LINKED_PROPERTY'], $newvalue, array($this->name=>'0'));
 
-debmes('Вызываю setglobal: value:'.$rec['LINKED_OBJECT'].'.'.$rec['LINKED_PROPERTY'].' value:'. $newvalue,'zigbee2mqtt');
+if (ZMQTT_DEBUG=="1" ) debmes('Вызываю setglobal: value:'.$rec['LINKED_OBJECT'].'.'.$rec['LINKED_PROPERTY'].' value:'. $newvalue,'zigbee2mqtt');
        setGlobal($rec['LINKED_OBJECT'].'.'.$rec['LINKED_PROPERTY'], $newvalue, array('zigbee2mqtt'=>'0'));
      }
      if ($rec['LINKED_OBJECT'] && $cmd_rec['LINKED_METHOD']) {
@@ -776,18 +798,18 @@ debmes('Вызываю setglobal: value:'.$rec['LINKED_OBJECT'].'.'.$rec['LINKED
 
 if ((substr($path,strrpos($path,'/')+1)=='click')||(substr($path,strrpos($path,'/')+1)=='release')||(substr($path,strrpos($path,'/')+1)=='action'))
 {
-debmes('получено сообщение от пульта, разберем возможные варианты','zigbee2mqtt');
+if (ZMQTT_DEBUG=="1" ) debmes('получено сообщение от пульта, разберем возможные варианты','zigbee2mqtt');
 
 
 //   $rec1=SQLSelectOne("SELECT * FROM zigbee2mqtt WHERE PATH LIKE '".DBSafe($path)." and METRIKA='$value'" );
 $sql="SELECT * FROM zigbee2mqtt WHERE PATH LIKE '%$path%' and VALUE='$value'" ;
-debmes($sql, 'zigbee2mqtt');
+if (ZMQTT_DEBUG=="1" ) debmes($sql, 'zigbee2mqtt');
 
    $rec1=SQLSelectOne($sql);
 //   $newvalue='click';
    $newvalue=substr($path,strrpos($path,'/')+1);
    if(!$rec1['ID']){ /* If 'PATH' not found in db */
-     debmes('кнопка click нажата первый раз', 'zigbee2mqtt');
+     if (ZMQTT_DEBUG=="1" ) debmes('кнопка click нажата первый раз', 'zigbee2mqtt');
      $rec1['PATH']=$path;
      $rec1['METRIKA']=$value;
      //$rec1['METRIKA']=$newvalue;
@@ -802,7 +824,7 @@ debmes($sql, 'zigbee2mqtt');
      $rec1['ID']=null;
 SQLInsert('zigbee2mqtt', $rec1);
    }else{
-     debmes('кнопка click ранее уже нажималас, есть информация в базе данных', 'zigbee2mqtt');
+     if (ZMQTT_DEBUG=="1" ) debmes('кнопка click ранее уже нажималас, есть информация в базе данных', 'zigbee2mqtt');
      $rec1['METRIKA']=$value;
 //     $rec1['METRIKA']=$newvalue;
      $rec1['VALUE']=$newvalue;
@@ -814,7 +836,7 @@ SQLInsert('zigbee2mqtt', $rec1);
 }
 
      if($rec1['LINKED_OBJECT'] && $rec1['LINKED_PROPERTY']) {
-debmes('Вызываю setglobal: value:'.$rec1['LINKED_OBJECT'].'.'.$rec1['LINKED_PROPERTY'].' value:'. $newvalue,'zigbee2mqtt');
+if (ZMQTT_DEBUG=="1" ) debmes('Вызываю setglobal: value:'.$rec1['LINKED_OBJECT'].'.'.$rec1['LINKED_PROPERTY'].' value:'. $newvalue,'zigbee2mqtt');
        setGlobal($rec1['LINKED_OBJECT'].'.'.$rec1['LINKED_PROPERTY'], $newvalue, array('zigbee2mqtt'=>'0'));
      }
      if ($rec1['LINKED_OBJECT'] && $cmd_rec1['LINKED_METHOD']) {
@@ -883,6 +905,15 @@ $out['PERMIT']=$permit['VALUE'];
 
 
  $this->getConfig();
+ $out['MQTT_DEBUG']=$this->config['MQTT_DEBUG'];
+
+
+define("ZMQTT_DEBUG", $this->config['MQTT_DEBUG']);
+
+
+
+ $out['ZMQTT_DEBUG']=ZMQTT_DEBUG;
+
  $out['MQTT_CLIENT']=$this->config['MQTT_CLIENT'];
  $out['MQTT_HOST']=$this->config['MQTT_HOST'];
  $out['MQTT_PORT']=$this->config['MQTT_PORT'];
@@ -963,7 +994,7 @@ $out['NEEDSAVE']="0";
 $out['IEEEADDR']=$res['IEEEADDR'];
 
 
-$res1=SQLSelectOne("SELECT * FROM zigbee2mqtt_devices_list where zigbeeModel='".$res['MODELID']."'");
+$res1=SQLSelectOne("SELECT * FROM zigbee2mqtt_devices_list where model='".$res['SELECTTYPE']."'");
 $out['MODELNAME']=$res1['model'];
 
 //$out['SELECTVENDOR']=$res1['vendor'];
@@ -972,19 +1003,22 @@ if (strlen($out['SELECTVENDOR'])=="0") {
 //echo "123";
 //$out['SELECTVEDNOR']=$res1['vendor'];
 $out['NEEDSAVEVENDOR']="1";
-//debmes("SELECTTYPE:".strlen($out['SELECTTYPE']).":".$out['SELECTTYPE'], 'zigbee2mqtt');
+//if (ZMQTT_DEBUG=="1" ) debmes("SELECTTYPE:".strlen($out['SELECTTYPE']).":".$out['SELECTTYPE'], 'zigbee2mqtt');
 }
 
 if (strlen($out['SELECTTYPE'])=="0") {
 //echo "123";
 $out['SELECTTYPE']=$res1['model'];
 $out['NEEDSAVETYPE']="1";
-//debmes("SELECTTYPE:".strlen($out['SELECTTYPE']).":".$out['SELECTTYPE'], 'zigbee2mqtt');
+//if (ZMQTT_DEBUG=="1" ) debmes("SELECTTYPE:".strlen($out['SELECTTYPE']).":".$out['SELECTTYPE'], 'zigbee2mqtt');
 }
 
 
 $out['VENDOR']=$res1['vendor'];
 $out['DESCRIPTION']=$res1['description'];
+
+//$out['DESCRIPTION']=SQLSelectOne("SELECT * FROM zigbee2mqtt_devices_list where zigbeeModel='".$res['MODELID']."'");
+
 $out['EXTEND']=$res1['extend'];
 $out['SUPPORTS']=$res1['supports'];
 $out['FROMZIGBEE']=$res1['fromZigbee'];
@@ -1004,7 +1038,7 @@ $tmp=SQLSelect("SELECT * FROM zigbee2mqtt_devices_list where vendor='".$out['SEL
 $tmp=SQLSelect("SELECT * FROM zigbee2mqtt_devices_list   order by vendor, zigbeeModel");
 }
 $out['SELECTTYPEARRAY']=$tmp;
-//debmes($tmp, 'zigbee2mqtt');
+//if (ZMQTT_DEBUG=="1" ) debmes($tmp, 'zigbee2mqtt');
 
 
   //options for 'LOCATION_ID' (select)
@@ -1033,8 +1067,8 @@ $out['SELECTTYPEARRAY']=$tmp;
 
 
 
-//debmes('location', 'zigbee2mqtt');
-//debmes($tmp, 'zigbee2mqtt');
+//if (ZMQTT_DEBUG=="1" ) debmes('location', 'zigbee2mqtt');
+//if (ZMQTT_DEBUG=="1" ) debmes($tmp, 'zigbee2mqtt');
 
 
 
@@ -1070,7 +1104,7 @@ $out['SELECTTYPEARRAY']=$tmp;
     $out['ERR_LOCATION_ID']=1;
     $ok=0;
    }
-   debmes('$dev_location_id='. $devlocid, 'zigbee2mqtt');
+   if (ZMQTT_DEBUG=="1" ) debmes('$dev_location_id='. $devlocid, 'zigbee2mqtt');
 
 
    global $selecttype;
@@ -1102,7 +1136,7 @@ if (!$tmp['ID'])  $this->sendcommand('zigbee2mqtt/bridge/config/add_group', $cre
 
    global $selectdevicegroup;
    
-   debmes('$selectdevicegroup='.$selectdevicegroup,'zigbee2mqtt');
+   if (ZMQTT_DEBUG=="1" ) debmes('$selectdevicegroup='.$selectdevicegroup,'zigbee2mqtt');
 
 if (($selectdevicegroup)&&(strlen($selectdevicegroup)>0)) {
    $rec['GROUP']=$selectdevicegroup;
@@ -1170,8 +1204,8 @@ $zigbee2mqttpath=$this->config['ZIGBEE2MQTTPATH'];
             }
 $cnt=count($files);
 
-//debmes($cnt,'zigbee2mqtt');
-debmes($files[$cnt-1]['TITLE'],'zigbee2mqtt');
+//if (ZMQTT_DEBUG=="1" ) debmes($cnt,'zigbee2mqtt');
+if (ZMQTT_DEBUG=="1" ) debmes($files[$cnt-1]['TITLE'],'zigbee2mqtt');
 
 $lastfile=$files[$cnt-1]['TITLE'];
 $filename=$zigbee2mqttpath.'/data/log/'.$lastfile.'/log.txt';
@@ -1251,7 +1285,7 @@ $this->redirect("?");
 
 global $mqttsendpath;
 global $mqttsendvalue;
-debmes('send custom message topic: '.$mqttsendpath.' value:'.$mqttsendvalue, 'zigbee2mqtt');
+if (ZMQTT_DEBUG=="1" ) debmes('send custom message topic: '.$mqttsendpath.' value:'.$mqttsendvalue, 'zigbee2mqtt');
 
   $this->sendcommand($mqttsendpath, $mqttsendvalue);
 //  $this->sendcommand('zigbee2mqtt/bridge/config/devices', '');
@@ -1303,14 +1337,14 @@ $out['status']=$a;
  if ($this->view_mode=='device_on') {
 	$id=$this->id;
 //	$this->setProperty($mqtt_properties[$i]['ID'], $value);
-debmes('!!!!!!!device_on','zigbee2mqtt');
+if (ZMQTT_DEBUG=="1" ) debmes('!!!!!!!device_on','zigbee2mqtt');
 	$this->setPropertyDevice($id, 'device_on_left');
    $this->redirect("?");
 }
 
  if ($this->view_mode=='device_off') {
 	$id=$this->id;
-debmes('!!!!!!!device_off','zigbee2mqtt');
+if (ZMQTT_DEBUG=="1" ) debmes('!!!!!!!device_off','zigbee2mqtt');
 //	$this->setProperty($mqtt_properties[$i]['ID'], $value);
 	$this->setPropertyDevice($id, 'device_off_left');
    $this->redirect("?");
@@ -1319,14 +1353,14 @@ debmes('!!!!!!!device_off','zigbee2mqtt');
  if ($this->view_mode=='device_on_right') {
 	$id=$this->id;
 //	$this->setProperty($mqtt_properties[$i]['ID'], $value);
-debmes('!!!!!!!device_on','zigbee2mqtt');
+if (ZMQTT_DEBUG=="1" ) debmes('!!!!!!!device_on','zigbee2mqtt');
 	$this->setPropertyDevice($id, 'device_on_right');
    $this->redirect("?");
 }
 
  if ($this->view_mode=='device_off_right') {
 	$id=$this->id;
-debmes('!!!!!!!device_off','zigbee2mqtt');
+if (ZMQTT_DEBUG=="1" ) debmes('!!!!!!!device_off','zigbee2mqtt');
 //	$this->setProperty($mqtt_properties[$i]['ID'], $value);
 	$this->setPropertyDevice($id, 'device_off_right');
    $this->redirect("?");
@@ -1405,6 +1439,7 @@ $out['status']=$a;
 
 
    global $mqtt_client;
+   global $mqtt_debug;
    global $mqtt_host;
    global $mqtt_username;
    global $mqtt_password;
@@ -1422,6 +1457,7 @@ $out['status']=$a;
 
 
    $this->config['MQTT_CLIENT']=trim($mqtt_client);
+   $this->config['MQTT_DEBUG']=trim($mqtt_debug);
    $this->config['ZIGBEE2MQTTPATH']=trim($zigbee2mqttpath);
    $this->config['MQTT_HOST']=trim($mqtt_host);
    $this->config['MQTT_USERNAME']=trim($mqtt_username);
@@ -1480,7 +1516,7 @@ $out['status']=$a;
 //echo $this->view_mode;
   if ($this->view_mode=='creategroup') {
 //   $this->edit_mqtt($out, $this->id);
-debmes('creategroup id:'.$this->id.' group:'.$this->groupname, 'zigbee2mqtt');
+if (ZMQTT_DEBUG=="1" ) debmes('creategroup id:'.$this->id.' group:'.$this->groupname, 'zigbee2mqtt');
 
   }
 
@@ -1673,7 +1709,7 @@ SQLUPDATE('zigbee2mqtt_devices', $res2);
         foreach ($json as $key=> $value) {if ($key=='ieeeAddr') $cdev=$value;	  }
 //devices
 $sql="SELECT * FROM zigbee2mqtt_devices where IEEEADDR='$cdev'";
-debmes($sql,'zigbee2mqtt');
+if (ZMQTT_DEBUG=="1" ) debmes($sql,'zigbee2mqtt');
     $res=SQLSelectOne($sql);
      if($res['ID']) 
 { /* If path_write foud in db */
@@ -1693,7 +1729,7 @@ if ($key=='_id') $res['D_ID']=$value;
 SQLUPDATE('zigbee2mqtt_devices', $res);
       }
 $this->updateparrent();
-//debmes('123', 'zigbee2mqtt');
+//if (ZMQTT_DEBUG=="1" ) debmes('123', 'zigbee2mqtt');
 }
 */
 }
@@ -1703,34 +1739,34 @@ function refreshdb_mqtt() {
 
 $log=SQLSelectOne ('select * from zigbee2mqtt where TITLE="zigbee2mqtt/bridge/log"');
 $log1=$log['VALUE'];
-debmes('log: '.$log1, 'zigbee2mqtt');
+if (ZMQTT_DEBUG=="1" ) debmes('log: '.$log1, 'zigbee2mqtt');
 $json2=json_decode($log1);
 
-//debmes($json, 'zigbee2mqtt');
+//if (ZMQTT_DEBUG=="1" ) debmes($json, 'zigbee2mqtt');
 
 
 $json=$json2->{'message'};
-//debmes($json, 'zigbee2mqtt');
+//if (ZMQTT_DEBUG=="1" ) debmes($json, 'zigbee2mqtt');
 
 /*
 foreach ( $json as $v)
 {
-debmes('****************', 'zigbee2mqtt');
-debmes('ieeeAddr:'.$v, 'zigbee2mqtt');
+if (ZMQTT_DEBUG=="1" ) debmes('****************', 'zigbee2mqtt');
+if (ZMQTT_DEBUG=="1" ) debmes('ieeeAddr:'.$v, 'zigbee2mqtt');
 }
 */
 
 
     $total = count($json);
-//   debmes('total:'.$total, 'zigbee2mqtt');
+//   if (ZMQTT_DEBUG=="1" ) debmes('total:'.$total, 'zigbee2mqtt');
     for ($i=0;$i<$total;$i++) {
 
 $cdev=$json[$i]->{'ieeeAddr'};
 
 if ($cdev){
-debmes('cdev:'.$cdev, 'zigbee2mqtt');
+if (ZMQTT_DEBUG=="1" ) debmes('cdev:'.$cdev, 'zigbee2mqtt');
 $sql="SELECT * FROM zigbee2mqtt_devices where IEEEADDR='".$cdev."'";
-debmes($sql, 'zigbee2mqtt');
+if (ZMQTT_DEBUG=="1" ) debmes($sql, 'zigbee2mqtt');
 $res2=SQLSelectOne($sql);
 
 
@@ -1765,17 +1801,17 @@ $res2['IEEEADDR']=$cdev;
 
      if ($res2['ID']) 
 {
-debmes('update', 'zigbee2mqtt');
-debmes($res2, 'zigbee2mqtt');
+if (ZMQTT_DEBUG=="1" ) debmes('update', 'zigbee2mqtt');
+if (ZMQTT_DEBUG=="1" ) debmes($res2, 'zigbee2mqtt');
 SQLUPDATE('zigbee2mqtt_devices', $res2);
 }
 else 
 {
-debmes('insert', 'zigbee2mqtt');
+if (ZMQTT_DEBUG=="1" ) debmes('insert', 'zigbee2mqtt');
 if ($json[$i]->{'model'}) $res2['SELECTTYPE']=    $json[$i]->{'model'};
 
 $res2['TITLE']=$res2['IEEEADDR'];
-debmes($res2, 'zigbee2mqtt');
+if (ZMQTT_DEBUG=="1" ) debmes($res2, 'zigbee2mqtt');
 if (($res2['TITLE'])&&($res2['TYPE']!='Coordinator')&&($res2['TITLE']!='bridge')) 
 SQLInsert('zigbee2mqtt_devices', $res2);
 }
@@ -1791,7 +1827,7 @@ if ($res2['TYPE']=='Coordinator') SQLExec	('update zigbee2mqtt_devices set SELEC
 
 }
 /*
-debmes($sql, 'zigbee2mqtt');
+if (ZMQTT_DEBUG=="1" ) debmes($sql, 'zigbee2mqtt');
 $res2=SQLSelectOne($sql);
 
      if($res['ID']) 
@@ -1820,18 +1856,18 @@ function parse_deviceinfo($ar) {
 //$log1=$log['VALUE'];
 
 $log1=$ar;
-//debmes('log: '.$log1, 'zigbee2mqtt');
-debmes($log1, 'zigbee2mqtt');
+//if (ZMQTT_DEBUG=="1" ) debmes('log: '.$log1, 'zigbee2mqtt');
+if (ZMQTT_DEBUG=="1" ) debmes($log1, 'zigbee2mqtt');
 //$json2=json_decode($log1);
 $json2=$log1;
 
-//debmes($json, 'zigbee2mqtt');
+//if (ZMQTT_DEBUG=="1" ) debmes($json, 'zigbee2mqtt');
 
 
 $json=$json2->{'message'};
 
     $total = count($json);
-//   debmes('total:'.$total, 'zigbee2mqtt');
+//   if (ZMQTT_DEBUG=="1" ) debmes('total:'.$total, 'zigbee2mqtt');
     for ($i=0;$i<$total;$i++) {
 
 $cdev=$json[$i]->{'ieeeAddr'};
@@ -1840,9 +1876,9 @@ if ($cdev){
 
 
 
-debmes('cdev:'.$cdev, 'zigbee2mqtt');
+if (ZMQTT_DEBUG=="1" ) debmes('cdev:'.$cdev, 'zigbee2mqtt');
 $sql="SELECT * FROM zigbee2mqtt_devices where IEEEADDR='".$cdev."'";
-debmes($sql, 'zigbee2mqtt');
+if (ZMQTT_DEBUG=="1" ) debmes($sql, 'zigbee2mqtt');
 $res2=SQLSelectOne($sql);
 
 
@@ -1877,17 +1913,17 @@ $res2['IEEEADDR']=$cdev;
 
      if ($res2['ID']) 
 {
-debmes('update', 'zigbee2mqtt');
-debmes($res2, 'zigbee2mqtt');
+if (ZMQTT_DEBUG=="1" ) debmes('update', 'zigbee2mqtt');
+if (ZMQTT_DEBUG=="1" ) debmes($res2, 'zigbee2mqtt');
 SQLUPDATE('zigbee2mqtt_devices', $res2);
 }
 else 
 {
-debmes('insert', 'zigbee2mqtt');
+if (ZMQTT_DEBUG=="1" ) debmes('insert', 'zigbee2mqtt');
 if ($json[$i]->{'model'}) $res2['SELECTTYPE']=    $json[$i]->{'model'};
 
 $res2['TITLE']=$res2['IEEEADDR'];
-debmes($res2, 'zigbee2mqtt');
+if (ZMQTT_DEBUG=="1" ) debmes($res2, 'zigbee2mqtt');
 if (($res2['TITLE'])&&($res2['TYPE']!='Coordinator')&&($res2['TITLE']!='bridge')&&($res2['TYPE']!='bridge') ) 
 SQLInsert('zigbee2mqtt_devices', $res2);
 }
@@ -1916,19 +1952,19 @@ $rec4=SQLSelect ("select * from zigbee2mqtt_devices ");
 $rec4[$ij]['LQI']='';
 $rec4[$ij]['STATUS']='';
 $rec4[$ij]['PARRENTIEEEADDR']='';
-debmes($rec4[$ij], 'z2m');
+if (ZMQTT_DEBUG=="1" ) debmes($rec4[$ij], 'z2m');
 SQLUpdate(  'zigbee2mqtt_devices',$rec4[$ij]); 
 }
 
 
 $maparray=SQLSelectOne ('select * from zigbee2mqtt where TITLE="zigbee2mqtt/bridge/networkmap/raw"');
 $map=$maparray['VALUE'];
-debmes($map, 'zigbee2mqtt');
+if (ZMQTT_DEBUG=="1" ) debmes($map, 'zigbee2mqtt');
 
 $json1=json_decode($map);
 
     $total = count($json1);
-debmes($total, 'zigbee2mqtt');
+if (ZMQTT_DEBUG=="1" ) debmes($total, 'zigbee2mqtt');
 
     for ($ij=0;$ij<$total;$ij++) {
 //$str=$json1[$ij]['ieeeAddr'].":".$json1[$ij]['nwkAddr'];
@@ -1940,11 +1976,11 @@ $status=$str->{'status'};
 $nwkAddr=$str->{'nwkAddr'};
 $lqi=$str->{'lqi'};
 
-debmes($ieeeAddr.":".$parent, 'zigbee2mqtt');
+if (ZMQTT_DEBUG=="1" ) debmes($ieeeAddr.":".$parent, 'zigbee2mqtt');
 
 $defaultiee=SQLSelectOne ("select * from zigbee2mqtt_devices where TITLE='bridge'")['IEEEADDR'];
 
-debmes('default:'.$defaultiee, 'zigbee2mqtt');
+if (ZMQTT_DEBUG=="1" ) debmes('default:'.$defaultiee, 'zigbee2mqtt');
 
 $rec3=SQLSelectOne ("select * from zigbee2mqtt_devices where IEEEADDR='$ieeeAddr'");
 if   ($rec3) 
@@ -1963,7 +1999,7 @@ SQLUpdate(  'zigbee2mqtt_devices',$rec3);
 // $json3= json_decode  ($str,true);
 
 //foreach ( $json3 as $key=>$value)
-//{debmes($key.":".$value, 'zigbee2mqtt');}
+//{if (ZMQTT_DEBUG=="1" ) debmes($key.":".$value, 'zigbee2mqtt');}
 
 
 
@@ -2021,18 +2057,18 @@ function usual(&$out) {
 
  function propertySetHandle($object, $property, $value) {
 
-debmes('Сработал propertySetHandle object:'.$object." property:". $property." value:". $value,  'zigbee2mqtt');
+if (ZMQTT_DEBUG=="1" ) debmes('Сработал propertySetHandle object:'.$object." property:". $property." value:". $value,  'zigbee2mqtt');
 $sql="SELECT * FROM zigbee2mqtt WHERE LINKED_OBJECT LIKE '".DBSafe($object)."' AND LINKED_PROPERTY LIKE '".DBSafe($property)."'";
-debmes($sql, 'zigbee2mqtt');
+if (ZMQTT_DEBUG=="1" ) debmes($sql, 'zigbee2mqtt');
 
 
    $mqtt_properties=SQLSelect($sql);
    $total=count($mqtt_properties);
-debmes($object.":". $property.":". $value. ' найдено результатов '. $total, 'zigbee2mqtt');
+if (ZMQTT_DEBUG=="1" ) debmes($object.":". $property.":". $value. ' найдено результатов '. $total, 'zigbee2mqtt');
 
    if ($total) {
     for($i=0;$i<$total;$i++) {
-     debmes('Запускаем setProperty '. $mqtt_properties[$i]['ID'].":".$value, 'zigbee2mqtt');
+     if (ZMQTT_DEBUG=="1" ) debmes('Запускаем setProperty '. $mqtt_properties[$i]['ID'].":".$value, 'zigbee2mqtt');
      $this->setProperty($mqtt_properties[$i]['ID'], $value);
     }
    }  
@@ -2046,11 +2082,11 @@ debmes($object.":". $property.":". $value. ' найдено результато
 */
  function delete_dev($id) {
 
-//debmes("SELECT * FROM zigbee2mqtt WHERE DEV_ID='$id'",'zigbee2mqtt');
+//if (ZMQTT_DEBUG=="1" ) debmes("SELECT * FROM zigbee2mqtt WHERE DEV_ID='$id'",'zigbee2mqtt');
 //  $rec=SQLSelectOne("SELECT * FROM zigbee2mqtt WHERE DEV_ID='$id'");
   // some action for related tables
 
-//debmes("DELETE FROM zigbee2mqtt WHERE DEV_ID='".$rec['DEV_ID']."'",'zigbee2mqtt');
+//if (ZMQTT_DEBUG=="1" ) debmes("DELETE FROM zigbee2mqtt WHERE DEV_ID='".$rec['DEV_ID']."'",'zigbee2mqtt');
 
   SQLExec("DELETE FROM zigbee2mqtt_devices WHERE ID='".$id."'");
 
@@ -2061,11 +2097,11 @@ debmes($object.":". $property.":". $value. ' найдено результато
 
  function delete_mqtt($id) {
 
-//debmes("SELECT * FROM zigbee2mqtt WHERE DEV_ID='$id'",'zigbee2mqtt');
+//if (ZMQTT_DEBUG=="1" ) debmes("SELECT * FROM zigbee2mqtt WHERE DEV_ID='$id'",'zigbee2mqtt');
 //  $rec=SQLSelectOne("SELECT * FROM zigbee2mqtt WHERE DEV_ID='$id'");
   // some action for related tables
 
-//debmes("DELETE FROM zigbee2mqtt WHERE DEV_ID='".$rec['DEV_ID']."'",'zigbee2mqtt');
+//if (ZMQTT_DEBUG=="1" ) debmes("DELETE FROM zigbee2mqtt WHERE DEV_ID='".$rec['DEV_ID']."'",'zigbee2mqtt');
 
 
   SQLExec("DELETE FROM zigbee2mqtt WHERE ID='".$id."'");
@@ -2104,6 +2140,13 @@ function get_map(){
     $client_name="MajorDoMo MQTT";
    }
 
+   if ($mqtt->config['MQTT_DEBUG']) {
+    $debug=$mqtt->config['MQTT_DEBUG'];
+   } else {
+    $debug="0";
+   }
+
+
    if ($this->config['MQTT_AUTH']) {
     $username=$this->config['MQTT_USERNAME'];
     $password=$this->config['MQTT_PASSWORD'];
@@ -2127,7 +2170,7 @@ function get_map(){
    }
 
 
-debmes('Запрашиваем карту ', 'zigbee2mqtt');
+if (ZMQTT_DEBUG=="1" ) debmes('Запрашиваем карту ', 'zigbee2mqtt');
 
 
 
@@ -2152,6 +2195,15 @@ function sendcommand($topic, $command){
     $client_name="MajorDoMo MQTT";
    }
 
+   if ($mqtt->config['MQTT_DEBUG']) {
+    $debug=$mqtt->config['MQTT_DEBUG'];
+   } else {
+    $MQTT_DEBUG="0";
+   }
+
+
+
+
    if ($this->config['MQTT_AUTH']) {
     $username=$this->config['MQTT_USERNAME'];
     $password=$this->config['MQTT_PASSWORD'];
@@ -2175,7 +2227,7 @@ function sendcommand($topic, $command){
    }
 
 
-debmes('Запрашиваем '.$topic.' '.$command, 'zigbee2mqtt');
+if (ZMQTT_DEBUG=="1" ) debmes('Запрашиваем '.$topic.' '.$command, 'zigbee2mqtt');
    $mqtt_client->publish($topic,$command);
    $mqtt_client->close();
 }
