@@ -501,6 +501,15 @@ if (ZMQTT_DEBUG=="1" ) debmes('Публиковать не требуется  '
 *
 * @access public
 */
+
+
+    function api($params) {
+        if ($_REQUEST['topic']) {
+            $this->processMessage($_REQUEST['topic'], $_REQUEST['msg']);
+        }
+    }
+
+
  function processMessage($path, $value) {
 
 if (ZMQTT_DEBUG=="1" ) debmes('Сработал processMessage :'.$path." value:". $value.' strpos:'. strpos($path,"set"),'zigbee2mqtt');
