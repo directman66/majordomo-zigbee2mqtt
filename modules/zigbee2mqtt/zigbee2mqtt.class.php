@@ -95,6 +95,9 @@ function getParams() {
 */
 function run() {
  global $session;
+
+define("ZMQTT_DEBUG", "1");
+
   $out=array();
   if ($this->action=='admin') {
    $this->admin($out);
@@ -316,9 +319,9 @@ if (ZMQTT_DEBUG=="1" ) debmes('Публикую zigbee2mqqtt '.$rec['PATH_WRITE'
   SQLUpdate('zigbee2mqtt', $rec);
 
 
-//  if ($set_linked && $rec['LINKED_OBJECT'] && $rec['LINKED_PROPERTY']) {
-//   setGlobal($rec['LINKED_OBJECT'].'.'.$rec['LINKED_PROPERTY'], $value, array($this->name=>'0'));
-//  }
+  if ($set_linked && $rec['LINKED_OBJECT'] && $rec['LINKED_PROPERTY']) {
+   setGlobal($rec['LINKED_OBJECT'].'.'.$rec['LINKED_PROPERTY'], $value, array($this->name=>'0'));
+  }
 
  }
 
@@ -714,8 +717,19 @@ $sql="SELECT * FROM zigbee2mqtt_devices WHERE IEEEADDR LIKE '%".DBSafe($dev_titl
 if (ZMQTT_DEBUG=="1" ) debmes($sql, 'zigbee2mqtt');
    $dev_id=SQLSelectOne($sql)['ID'];
 
+////////////////////////////////////
+//$sql="SELECT * FROM zigbee2mqtt WHERE PATH LIKE '".DBSafe($path)."'";
 
-   $rec=SQLSelectOne("SELECT * FROM zigbee2mqtt WHERE PATH LIKE '".DBSafe($path)."'");
+
+
+$npath=substr($path,0,strrpos($path,'/'));
+$metrika=substr($path,strrpos($path,'/')+1); 
+
+$sql="SELECT * FROM zigbee2mqtt WHERE PATH LIKE '%$npath%' and METRIKA='$metrika'" ;
+
+
+debmes($sql, 'zigbee2mqtt');
+   $rec=SQLSelectOne($sql);
 
    
    if(!$rec['ID']){ /* If 'PATH' not found in db */
@@ -741,12 +755,18 @@ if (ZMQTT_DEBUG=="1" ) debmes($sql, 'zigbee2mqtt');
 
      $rec['UPDATED']=date('Y-m-d H:i:s');
      $rec['ID']=null;
+debmes($rec, 'zigbee2mqtt');
+debmes('SQLInsert zigbee2mqtt', 'zigbee2mqtt');
+
 SQLInsert('zigbee2mqtt', $rec);
    }else{
      /* Update values in db */
      $rec['VALUE']=$value.'';
      $rec['DEV_ID']=$dev_id;
      $rec['UPDATED']=date('Y-m-d H:i:s');
+
+debmes($rec, 'zigbee2mqtt');
+debmes('SQupdate zigbee2mqtt', 'zigbee2mqtt');
 
      SQLUpdate('zigbee2mqtt', $rec);
      /* Update property in linked object if it exist */
@@ -768,6 +788,10 @@ SQLInsert('zigbee2mqtt', $rec);
 if (($rec['PAYLOAD_ON'])||$rec['PAYLOAD_OFF']) {
 if ($value==$rec['PAYLOAD_ON'])  $newvalue=1;
 if ($value==$rec['PAYLOAD_OFF'])  $newvalue=0;
+
+//if ($value==$rec['PAYLOAD_ON'])  $newvalue=1;
+//if ($value==$rec['PAYLOAD_OFF'])  $newvalue=0;
+
 if (ZMQTT_DEBUG=="1" ) debmes('Заменили  '.$value. "  на ". $newvalue, 'zigbee2mqtt');
 }  else 
 {$newvalue=$value;}
@@ -775,13 +799,18 @@ if (ZMQTT_DEBUG=="1" ) debmes('Заменили  '.$value. "  на ". $newvalue,
 
 if ((!$newvalue) || (strlen($newvalue)==0)) {$newvalue=$value;}
 
+if ($newvalue=='OFF') {$newvalue="0";}
+if ($newvalue=='ON') {$newvalue="1";}
+
+
+
 //пишем в переменную
 //       setGlobal($rec['LINKED_OBJECT'].'.'.$rec['LINKED_PROPERTY'], $newvalue, array($this->name=>'0'));
 
 if (ZMQTT_DEBUG=="1" ) debmes('Вызываю setglobal: value:'.$rec['LINKED_OBJECT'].'.'.$rec['LINKED_PROPERTY'].' value:'. $newvalue,'zigbee2mqtt');
        setGlobal($rec['LINKED_OBJECT'].'.'.$rec['LINKED_PROPERTY'], $newvalue, array('zigbee2mqtt'=>'0'));
      }
-     if ($rec['LINKED_OBJECT'] && $cmd_rec['LINKED_METHOD']) {
+     if ($rec['LINKED_OBJECT'] && $rec['LINKED_METHOD']) {
        callMethod($rec['LINKED_OBJECT'] . '.' . $rec['LINKED_METHOD'], $rec['VALUE']);
      }
 
@@ -798,18 +827,28 @@ if (ZMQTT_DEBUG=="1" ) debmes('Вызываю setglobal: value:'.$rec['LINKED_OB
 
 if ((substr($path,strrpos($path,'/')+1)=='click')||(substr($path,strrpos($path,'/')+1)=='release')||(substr($path,strrpos($path,'/')+1)=='action'))
 {
-if (ZMQTT_DEBUG=="1" ) debmes('получено сообщение от пульта, разберем возможные варианты','zigbee2mqtt');
+//if (ZMQTT_DEBUG=="1" ) 
+debmes('получено сообщение '.substr($path,strrpos($path,'/')+1).' от пульта, разберем возможные варианты','zigbee2mqtt');
 
 
 //   $rec1=SQLSelectOne("SELECT * FROM zigbee2mqtt WHERE PATH LIKE '".DBSafe($path)." and METRIKA='$value'" );
-$sql="SELECT * FROM zigbee2mqtt WHERE PATH LIKE '%$path%' and VALUE='$value'" ;
+     if ($value=="") {$value="null";}
+
+$npath=substr($path,0,strrpos($path,'/'));
+$sql="SELECT * FROM zigbee2mqtt WHERE PATH LIKE '%$npath%' and METRIKA='$value'" ;
 if (ZMQTT_DEBUG=="1" ) debmes($sql, 'zigbee2mqtt');
+debmes($sql, 'zigbee2mqtt');
+
 
    $rec1=SQLSelectOne($sql);
 //   $newvalue='click';
    $newvalue=substr($path,strrpos($path,'/')+1);
+debmes(   $rec1, 'zigbee2mqtt');
+
    if(!$rec1['ID']){ /* If 'PATH' not found in db */
-     if (ZMQTT_DEBUG=="1" ) debmes('кнопка click нажата первый раз', 'zigbee2mqtt');
+//     if (ZMQTT_DEBUG=="1" ) 
+
+debmes('кнопка click нажата первый раз', 'zigbee2mqtt');
      $rec1['PATH']=$path;
      $rec1['METRIKA']=$value;
      //$rec1['METRIKA']=$newvalue;
@@ -822,25 +861,46 @@ if (ZMQTT_DEBUG=="1" ) debmes($sql, 'zigbee2mqtt');
 
      $rec1['UPDATED']=date('Y-m-d H:i:s');
      $rec1['ID']=null;
+debmes(   'SQLInsert zigbee2mqtt', 'zigbee2mqtt');
 SQLInsert('zigbee2mqtt', $rec1);
-   }else{
-     if (ZMQTT_DEBUG=="1" ) debmes('кнопка click ранее уже нажималас, есть информация в базе данных', 'zigbee2mqtt');
+   }
+else
+{
+//     if (ZMQTT_DEBUG=="1" ) 
+debmes('кнопка click ранее уже нажималас, есть информация в базе данных', 'zigbee2mqtt');
      $rec1['METRIKA']=$value;
 //     $rec1['METRIKA']=$newvalue;
      $rec1['VALUE']=$newvalue;
 //     $rec1['VALUE']=$value;
      $rec1['DEV_ID']=$dev_id;
      $rec1['UPDATED']=date('Y-m-d H:i:s');
+debmes(   'SQLUpdate zigbee2mqtt', 'zigbee2mqtt');
+debmes(   $rec1, 'zigbee2mqtt');
+
      SQLUpdate('zigbee2mqtt', $rec1);
 
 }
 
+if ($newvalue=='OFF') {$newvalue="0";}
+if ($newvalue=='ON') {$newvalue="1";}
+
+
+debmes('Проверяем, нужно ли вызвать setglobal: '.$rec1['LINKED_OBJECT'].'.'.$rec1['LINKED_PROPERTY'].' value:'. $newvalue,'zigbee2mqtt');
+
+
      if($rec1['LINKED_OBJECT'] && $rec1['LINKED_PROPERTY']) {
-if (ZMQTT_DEBUG=="1" ) debmes('Вызываю setglobal: value:'.$rec1['LINKED_OBJECT'].'.'.$rec1['LINKED_PROPERTY'].' value:'. $newvalue,'zigbee2mqtt');
-       setGlobal($rec1['LINKED_OBJECT'].'.'.$rec1['LINKED_PROPERTY'], $newvalue, array('zigbee2mqtt'=>'0'));
+debmes('Вызываю setglobal: value:'.$rec1['LINKED_OBJECT'].'.'.$rec1['LINKED_PROPERTY'].' value:'. $newvalue,'zigbee2mqtt');
+setGlobal($rec1['LINKED_OBJECT'].'.'.$rec1['LINKED_PROPERTY'], $newvalue, array('zigbee2mqtt'=>'0'));
+
      }
-     if ($rec1['LINKED_OBJECT'] && $cmd_rec1['LINKED_METHOD']) {
-       callMethod($rec1['LINKED_OBJECT'] . '.' . $rec1['LINKED_METHOD'], $rec['VALUE']);
+
+debmes('Проверяем, нужно ли вызвать метод : '.$rec1['LINKED_OBJECT'].'.'.$rec1['LINKED_METHOD'].' value:'. $newvalue,'zigbee2mqtt');
+
+     if ($rec1['LINKED_OBJECT'] && $rec1['LINKED_METHOD']) {
+
+debmes('выполним метод '.$rec1['LINKED_OBJECT'] . '.' . $rec1['LINKED_METHOD'],'zigbee2mqtt');
+//       callMethod($rec1['LINKED_OBJECT'] . '.' . $rec1['LINKED_METHOD'], $rec1['VALUE']);
+       callMethod($rec1['LINKED_OBJECT'] . '.' . $rec1['LINKED_METHOD']);
      }
 
 
@@ -908,7 +968,8 @@ $out['PERMIT']=$permit['VALUE'];
  $out['MQTT_DEBUG']=$this->config['MQTT_DEBUG'];
 
 
-define("ZMQTT_DEBUG", $this->config['MQTT_DEBUG']);
+//define("ZMQTT_DEBUG", $this->config['MQTT_DEBUG']);
+define("ZMQTT_DEBUG", "1");
 
 
 
