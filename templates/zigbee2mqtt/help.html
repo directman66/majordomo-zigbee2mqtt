@@ -65,7 +65,7 @@
 <div class="panel-group" id="accordion">
 	<div class="panel panel-info">
 		<div class="panel-heading">
-		<a data-toggle="collapse" data-parent="#accordion" href="#vidget">Установка и обновление zigbee2mqtt</a>
+		<a data-toggle="collapse" data-parent="#accordion" href="#vidget">Установка zigbee2mqtt</a>
 		</div>
 		<div class="panel-body collapse" id="vidget">
 <a href="https://www.zigbee2mqtt.io/getting_started/running_zigbee2mqtt.html" target="_blank">Оригинальная инструкция по установке для linux
@@ -191,6 +191,20 @@ systemctl status zigbee2mqtt.service<br>
 sudo systemctl enable zigbee2mqtt.service<br>
 </code></b><br>
 
+
+
+		</div> </div> </div>
+
+
+<div class="panel-group" id="accordion">
+	<div class="panel panel-info">
+		<div class="panel-heading">
+		<a data-toggle="collapse" data-parent="#accordion" href="#update">Обновление zigbee2mqtt</a>
+		</div>
+		<div class="panel-body collapse" id="update">
+<a href="https://www.zigbee2mqtt.io/getting_started/running_zigbee2mqtt.html" target="_blank">Оригинальная инструкция по установке для linux
+</a><br><br>
+
 <b>обновление локального архива проекта zigbee2mqtt<br></b>
 <code><b>
 # Stop zigbee2mqtt and go to directory<br>
@@ -224,6 +238,21 @@ sudo systemctl start zigbee2mqtt<br>
 <div class="panel-group" id="accordion">
 	<div class="panel panel-info">
 		<div class="panel-heading">
+		<a data-toggle="collapse" data-parent="#accordion" href="#docker">Установка в docker</a>
+		</div>
+		<div class="panel-body collapse" id="docker">
+<a href="https://www.zigbee2mqtt.io/information/docker.html" target="_blank">Оригинальная инструкция по установке в docker. Это наиболее простой вариант установки для Windows
+</a><br><br>
+
+
+		</div> </div> </div>
+
+
+
+
+<div class="panel-group" id="accordion">
+	<div class="panel panel-info">
+		<div class="panel-heading">
 		<a data-toggle="collapse" data-parent="#accordion" href="#pair">Подключение устройств</a>
 		</div>
 		<div class="panel-body collapse" id="pair">
@@ -234,6 +263,53 @@ zigbee2mqtt может автоматически добавлять устро�
 <code><b>
 permit_join: true<br>
 </code></b>
+
+		</div> </div> </div>
+
+
+
+
+<div class="panel-group" id="accordion">
+	<div class="panel panel-info">
+		<div class="panel-heading">
+		<a data-toggle="collapse" data-parent="#accordion" href="#dev">Переход на ветку для разработчиков DEV </a>
+		</div>
+		<div class="panel-body collapse" id="dev">
+<a href="http://www.zigbee2mqtt.io/how_tos/how-to-switch-to-dev-branch.html" target="_blank">Оригинальная инструкция по установке для linux
+</a><br><br>
+
+<b>Как перейти на ветку dev<br></b>
+
+Ветка разработчика Zigbee2mqtt содержит последние функции, улучшения и поддерживаемые устройства. Если вы хотите попробовать это, вы можете проверить ветку dev.<br>
+ПРИМЕЧАНИЕ: эта ветка является веткой разработки! Это может быть менее стабильным, чем версия выпуска!<br>
+
+<code><b>
+
+# Stop zigbee2mqtt and go to directory<br>
+sudo systemctl stop zigbee2mqtt<br>
+cd /opt/zigbee2mqtt<br>
+<br>
+# Backup configuration<br>
+cp -R data data-backup<br>
+<br>
+# Update<br>
+git checkout HEAD -- npm-shrinkwrap.json<br>
+git fetch<br>
+git checkout dev # Change 'dev' to 'master' to switch back to the release version<br>
+git pull<br>
+rm -rf node_modules<br>
+npm install<br>
+
+# Restore configuration<br>
+cp -R data-backup/* data<br>
+rm -rf data-backup<br>
+<br>
+# Start zigbee2mqtt<br>
+sudo systemctl start zigbee2mqtt
+
+</code></b>
+
+
 
 		</div> </div> </div>
 
