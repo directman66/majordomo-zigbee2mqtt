@@ -48,23 +48,26 @@
 <div class="form-group">
 
  <label class="control-label"[#if ERR_Z2M_LOGMODE#] style="color:red;font-weight:bold"[#endif#]>
- zigbee2mqtt log level:
+ zigbee2mqtt log level
+[#Z2M_LOGMODE#]
+:
  (*)
  </label>
-<!--
- <div class="controls"><input type="text" name="z2m_logmode" value="<#Z2M_LOGMODE#>" class="input"></div>
--->
+
+
 
 <div class="col-md-1 input-group">
- <select name="z2m_logmode" class="input span2">
-<!-- <select name="z2m_logmode"  class="form-control input"> -->
 
-<option value="[#Z2M_LOGMODE#]"[#if SELECTED#] selected[#endif#]>debug
-<option value="[#Z2M_LOGMODE#]"[#if SELECTED#] selected[#endif#]>info
-<option value="[#Z2M_LOGMODE#]"[#if SELECTED#] selected[#endif#]>warn
-<option value="[#Z2M_LOGMODE#]"[#if SELECTED#] selected[#endif#]>error
 
- </select>
+     <select name="z2m_logmode2" id="z2m_logmode2" class="form-control">
+      <option value="debug"[#if Z2M_LOGMODE="debug"#] selected[#endif#]>debug</option>
+      <option value="info"[#if Z2M_LOGMODE="info"#] selected[#endif#]>info</option>
+      <option value="warn"[#if Z2M_LOGMODE="warn"#] selected[#endif#]>warn</option>
+      <option value="error"[#if Z2M_LOGMODE="error"#] selected[#endif#]>error</option>
+     </select>
+
+
+
 
 
 
