@@ -1308,7 +1308,23 @@ $out['FN']=$filename;
 //$a=file_get_contents ($filename, null,null,1000);
 
 
-$tmp=file($filename); 
+//$tmp=file($filename); 
+//$tmp=file_get_contents ($filename, null,null,1000);
+
+
+
+$file = new SplFileObject($filename, 'r');
+
+$file->seek(PHP_INT_MAX);
+
+$last_line = $file->key();
+
+$lines = new LimitIterator($file, $last_line - 500, $last_line);
+
+$tmp=(iterator_to_array($lines));
+
+
+
 $newtmp=array_reverse($tmp); 
 $a="";
 foreach ($newtmp as $value) 
@@ -1565,7 +1581,7 @@ include_once(DIR_MODULES . "zigbee2mqtt/zigbee2mqtt.class.php");
 $z2m= new zigbee2mqtt();
 $z2m->sendcommand("zigbee2mqtt/bridge/config/log_level", "'.$z2m_logmode2.'");
 ';
- SetTimeOut('z2m_set_dubug',$cmd, '60'); 
+ SetTimeOut('z2m_set_dubug',$cmd, '1'); 
 
 
 
@@ -2473,7 +2489,6 @@ EOD;
   require(DIR_MODULES.$this->name.'/database2.inc.php');
 
 }
-
 
 
 
