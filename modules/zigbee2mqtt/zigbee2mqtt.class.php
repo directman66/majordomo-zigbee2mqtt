@@ -2144,6 +2144,7 @@ SQLUpdate(  'zigbee2mqtt_devices',$rec3);
 function usual(&$out) {
     if ($this->ajax) {
         global $op;
+        global $fn;
         $result=array();
         if ($op=='getvalues') {
             global $ids;
@@ -2159,6 +2160,49 @@ function usual(&$out) {
             }
             $result['DATA']=$data;
         }
+
+            if ($op == 'viewlog'  ) {
+//echo "123";      
+//echo $fn;      
+
+if (filesize ($fn)>0) {
+
+$fz=filesize ($fn);
+
+$file = new SplFileObject($fn, 'r');
+
+
+
+$file->seek(PHP_INT_MAX);
+
+$last_line = $file->key();
+debmes($last_line, 'zg1');
+
+$max=500;
+if  ($max>$last_line ) {$max=$last_line;}
+
+$lines = new LimitIterator($file, $last_line - $max, $last_line);
+
+$tmp=(iterator_to_array($lines));
+//echo $tmp;
+
+$newtmp=array_reverse($tmp); 
+$a="";
+foreach ($newtmp as $value) 
+{ 
+$a.= $value; 
+} 
+
+$a =  str_replace( array("\r\n","\r","\n") , '<br>' , $a);
+//$out['LOG']=$a;
+print_r($a);
+//print_r(time());
+
+
+
+         }
+        }
+
         echo json_encode($result);
         exit;
     }
