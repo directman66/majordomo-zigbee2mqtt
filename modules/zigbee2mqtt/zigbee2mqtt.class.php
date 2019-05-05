@@ -1312,16 +1312,26 @@ $out['FN']=$filename;
 //$tmp=file_get_contents ($filename, null,null,1000);
 
 
+if (filesize ($filename)>0) {
+
+$fz=filesize ($filename);
 
 $file = new SplFileObject($filename, 'r');
+
+
 
 $file->seek(PHP_INT_MAX);
 
 $last_line = $file->key();
+debmes($last_line, 'zg1');
 
-$lines = new LimitIterator($file, $last_line - 500, $last_line);
+$max=500;
+if  ($max>$last_line ) {$max=$last_line;}
+
+$lines = new LimitIterator($file, $last_line - $max, $last_line);
 
 $tmp=(iterator_to_array($lines));
+}
 
 
 
