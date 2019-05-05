@@ -1,6 +1,9 @@
 
 
 
+
+
+
 <form action="?" method="post" enctype="multipart/form-data" name="frmEdit" class="form-horizontal">
 <fieldset>
 
@@ -40,7 +43,64 @@
 </table>
 
 
-[#FN#]:<br><hr>
+[#FN#]:<hr>
+
+
+
+<script type="text/javascript">
+    function viewlog(fn) {
+
+// clearTimeout(logTimer);
+
+// window.clearTimeout(logTimer);
+//  clearTimeout(deviceRefreshTimer[#ID#]);
+        var url="/ajax/zigbee2mqtt.html?op=viewlog&fn="+fn;
+        $("#auth_log").html('wait...');
+        $.ajax({
+            url: url,
+            cache: false,
+            success: function(html){
+                $("#auth_log").html(html);
+            }
+        });
+  logTimer = window.setTimeout('viewlog(fn);',3000);
+}
+
+
+    
+</script>
+<div class="modal fade" id="viewlog" tabindex="-1" role="dialog" aria-labelledby="about1" aria-hidden="true" height="100">
+ <div class="modal-dialog-lg">
+  <div class="modal-content">
+   <div class="modal-header">
+    <button class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+    <h4 class="modal-title">Log zigbee2mqtt</h4>
+   </div>
+   <div class="modal-body">
+
+
+    <div>
+
+     <pre class="pre-scrollable" id="auth_log" style="word-wrap: break-word;">
+     wait...
+    </pre>
+    </div>
+    <p class="float-left"></p>
+   </div>
+   <div class="modal-footer">
+    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+   </div>
+  </div>
+ </div>
+</div>
+
+
+
+
+
+
+   <a onclick="viewlog('[#FN#]')" class="btn btn-default"  data-toggle="modal" data-target="#viewlog"  title="View"><i class="glyphicon glyphicon-user"></i></a>
+
+<br>
+
 [#LOG#]
-
-
