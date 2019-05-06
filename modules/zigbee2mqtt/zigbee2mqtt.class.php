@@ -1062,14 +1062,15 @@ $out['DEVICE_LIST']=$res;
 $out['ID']=$res['ID'];
 $out['TITLE']=$res['TITLE'];
 $out['MODEL']=$res['MODEL'];
+$out['MODELID']=$res['MODELID'];
 $out['TYPE']=$res['TYPE'];
-$out['IEEADDR']=$res['IEEADDR'];
+$out['IEEEADDR']=$res['IEEEADDR'];
 $out['NWKADDR']=$res['NWKADDR'];
-$out['MANIFID']=$res['MANIFID'];
+$out['MANUFID']=$res['MANUFID'];
 $out['MANUFNAME']=$res['MANUFNAME'];
 $out['PARRENTIEEEADDR']=$res['PARRENTIEEEADDR'];
 $out['LQI']=$res['LQI'];
-$out['POWEDSOURCE']=$res['POWEDSOURCE'];
+$out['POWERSOURCE']=$res['POWERSOURCE'];
 $out['MODELID']=$res['MODELID'];
 $out['STATUS']=$res['STATUS'];
 $out['DID']=$res['DID'];
@@ -1081,6 +1082,8 @@ $out['SELECTVENDOR']=$res['SELECTVENDOR'];
 $out['GROUP']=$res['GROUP'];
 $out['NEEDSAVE']="0";
 $out['IEEEADDR']=$res['IEEEADDR'];
+$out['HWVERSION']=$res['HWVERSION'];
+$out['SWBUILDID']=$res['SWBUILDID'];
 
 
 $res1=SQLSelectOne("SELECT * FROM zigbee2mqtt_devices_list where model='".$res['SELECTTYPE']."'");
@@ -1310,7 +1313,7 @@ $out['FN']=$filename;
 
 //$tmp=file($filename); 
 //$tmp=file_get_contents ($filename, null,null,1000);
-
+/*
 
 if (filesize ($filename)>0) {
 
@@ -1344,7 +1347,7 @@ $a.= $value;
 
 $a =  str_replace( array("\r\n","\r","\n") , '<br>' , $a);
 $out['LOG']=$a;
-
+*/
 
             $path = $zigbee2mqttpath.'/data/log';
 
@@ -1914,8 +1917,15 @@ $res2['SELECTTYPE']=    $json[$i]->{'model'};
 $res2['SELECTVENDOR']=$temp['vendor'];
 $res2['MANUFACTURE']=$temp['vendor'];
 $res2['MODEL']=$json[$i]->{'model'};
+
 $res2['DEVICE_NAME']=$temp['zigbeeModel'];
-$res2['TYPE']=   	$json[$i]->{'type'};
+$res2['TYPE']= 	$json[$i]->{'type'};
+
+
+$res2['MODELID']=$json[$i]->{'modelId'};
+$res2['NWKADDR']=$json[$i]->{'nwkAddr'};
+$res2['HWVERSION']=$json[$i]->{'hwVersion'};
+$res2['SWBUILDID']=$json[$i]->{'swBuildId'};
 
 //$res2['TYPE']=$temp['zigbeeModel'];
 //$res2['MODEL']=$json[$i]->{'type'};
@@ -1923,21 +1933,21 @@ $res2['TYPE']=   	$json[$i]->{'type'};
 
 //$res2['IEEEADDR']=      $json[$i]->{'ieeeAddr'};
 $res2['IEEEADDR']=$cdev;
-
+debmes($res2, 'zigbee2mqtt1');
 
      if ($res2['ID']) 
 {
-if (ZMQTT_DEBUG=="1" ) debmes('update', 'zigbee2mqtt');
-if (ZMQTT_DEBUG=="1" ) debmes($res2, 'zigbee2mqtt');
+ debmes('update', 'zigbee2mqtt1');
+
 SQLUPDATE('zigbee2mqtt_devices', $res2);
 }
 else 
 {
-if (ZMQTT_DEBUG=="1" ) debmes('insert', 'zigbee2mqtt');
+ debmes('insert', 'zigbee2mqtt1');
 if ($json[$i]->{'model'}) $res2['SELECTTYPE']=    $json[$i]->{'model'};
 
 $res2['TITLE']=$res2['IEEEADDR'];
-if (ZMQTT_DEBUG=="1" ) debmes($res2, 'zigbee2mqtt');
+debmes($res2, 'zigbee2mqtt1');
 if (($res2['TITLE'])&&($res2['TYPE']!='Coordinator')&&($res2['TITLE']!='bridge')) 
 SQLInsert('zigbee2mqtt_devices', $res2);
 }
@@ -2027,7 +2037,18 @@ $res2['SELECTVENDOR']=$temp['vendor'];
 $res2['MANUFACTURE']=$temp['vendor'];
 $res2['MODEL']=$json[$i]->{'model'};
 $res2['DEVICE_NAME']=$temp['zigbeeModel'];
+$res2['POWERSOURCE']=$json[$i]->{'powerSource'};
 $res2['TYPE']=   	$json[$i]->{'type'};
+
+$res2['MANUFID']=   	$json[$i]->{'manufId'};
+$res2['MODELID']=$json[$i]->{'modelId'};
+$res2['NWKADDR']=$json[$i]->{'nwkAddr'};
+$res2['HWVERSION']=$json[$i]->{'hwVersion'};
+$res2['SWBUILDID']=$json[$i]->{'swBuildId'};
+$res2['MANUFNAME']=$json[$i]->{'manufName'};
+
+
+
 
 //$res2['TYPE']=$temp['zigbeeModel'];
 //$res2['MODEL']=$json[$i]->{'type'};
@@ -2464,6 +2485,8 @@ function createdb()
  zigbee2mqtt_devices: MANUFID varchar(100) NOT NULL DEFAULT ''
  zigbee2mqtt_devices: MANUFNAME varchar(100) NOT NULL DEFAULT ''
  zigbee2mqtt_devices: POWERSOURCE varchar(100) NOT NULL DEFAULT ''
+ zigbee2mqtt_devices: HWVERSION varchar(100) NOT NULL DEFAULT ''
+ zigbee2mqtt_devices: SWBUILDID varchar(100) NOT NULL DEFAULT ''
  zigbee2mqtt_devices: MODELID varchar(100) NOT NULL DEFAULT ''
  zigbee2mqtt_devices: STATUS varchar(100) NOT NULL DEFAULT ''
  zigbee2mqtt_devices: JOINTIME varchar(100) NOT NULL DEFAULT ''
