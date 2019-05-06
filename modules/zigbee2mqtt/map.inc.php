@@ -32,7 +32,13 @@ if (!$maparray[$i]['PARRENTIEEEADDR']) {$parrentieee=$defaultiee;} else {$parren
 
 
 $out['map_array']=$nodes;
-//$out['EDGES']=$edges;
+
+
+$graph=SQLSelectOne ('select * from zigbee2mqtt where value like "digraph%"');
+
+$mygaph=str_replace(array("\r\n", "\r", "\n"), '',  strip_tags($graph['VALUE']));
+
+$out['GRAPH']=$mygaph;
 
 
 //$nodess=json_decode($maparray['VALUE'],true);
