@@ -2165,6 +2165,8 @@ function usual(&$out) {
 //echo "123";      
 //echo $fn;      
 
+print_r(time().": ". $fn."<hr>");
+
 if (filesize ($fn)>0) {
 
 $fz=filesize ($fn);
@@ -2196,7 +2198,9 @@ $a.= $value;
 $a =  str_replace( array("\r\n","\r","\n") , '<br>' , $a);
 //$out['LOG']=$a;
 print_r($a);
-//print_r(time());
+echo $a;
+
+//print_r(time().": ". $fn);
 
 
 
