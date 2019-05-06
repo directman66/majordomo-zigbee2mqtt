@@ -1,6 +1,46 @@
-<br>
+<div>
+<table>
+<tr><td>
    <a href="?view_mode=get_map" class="btn btn-default" title="Get network map" ><i class="glyphicon glyphicon-dashboard"></i> Update network map</a>
-<br>
+</td><td>
+
+
+   <a href="?view_mode=get_map_graph" class="btn btn-default" title="Get graphviz (https://www.graphviz.org/)" ><i class="glyphicon glyphicon-dashboard"></i> Get graphviz</a>
+
+</td><td>
+
+     <div style="{height: 10px;width: 100px;}">
+<!-- <p {height: 10px;width: 100px;}> [#GRAPH#] </p> -->
+<!--     <input type="text"   placeholder="<#LANG_OW_CITYNAME#>" title="https://www.graphviz.org/" value="[#GRAPH#]"  disabled> -->
+
+
+     </div>
+
+
+
+
+</td><td>
+
+
+   <a href="?view_mode=get_map_graph_req" class="btn btn-default" title="Get graphviz map (http://www.webgraphviz.com)" ><i class="glyphicon glyphicon-dashboard"></i> Get graphviz map</a>
+
+</tr>
+</td>
+
+<table>
+
+</div>
+
+
+<p id="target_anchor2">Symmetric structure but asymmetric layout: </p>
+
+<script src="http://www.webgraphviz.com/viz.js" charset="utf-8"></script>;
+<script>
+   var dot_source = 'digraph { rankdir="LR"; bgcolor="transparent"; a -> b -> c -> e; b -> d -> e -> a; }';
+    var elem = document.getElementById("target_anchor2");
+    elem.innerHTML = Viz(dot_source, "svg");
+</script>
+
 
 <!--[#map_array#]
 <br>
