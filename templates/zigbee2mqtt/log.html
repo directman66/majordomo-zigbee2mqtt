@@ -43,7 +43,7 @@
 </table>
 
 
-[#FN#]:<hr>
+<!-- [#FN#]:-->
 
 
 
@@ -55,7 +55,7 @@
 // window.clearTimeout(logTimer);
 //  clearTimeout(deviceRefreshTimer[#ID#]);
         var url="/ajax/zigbee2mqtt.html?op=viewlog&fn="+fn;
-        $("#auth_log").html('wait...');
+//        $("#auth_log").html('wait...');
         $.ajax({
             url: url,
             cache: false,
@@ -63,44 +63,43 @@
                 $("#auth_log").html(html);
             }
         });
-  logTimer = window.setTimeout('viewlog(fn);',3000);
+//  logTimer = window.setTimeout('viewlog(fn);',1000);
+//  logTimer = window.setTimeout('viewlog();',2000);
+//  logTimer = window.setTimeout('viewlog("/opt/zigbee2mqtt/data/log/2019-05-05.22-35-52/log.txt");',1000);
+  logTimer = window.setTimeout('viewlog("[#FN#]");',2000);
+//   viewlog("[#FN#]");
 }
-
+   viewlog("[#FN#]");
 
     
 </script>
-<div class="modal fade" id="viewlog" tabindex="-1" role="dialog" aria-labelledby="about1" aria-hidden="true" height="100">
- <div class="modal-dialog-lg">
-  <div class="modal-content">
-   <div class="modal-header">
-    <button class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-    <h4 class="modal-title">Log zigbee2mqtt</h4>
-   </div>
-   <div class="modal-body">
+<!--<div class="modal fade" id="viewlog" tabindex="-1" role="dialog" aria-labelledby="about1" aria-hidden="true" height="100"> -->
+<div  id="viewlog" tabindex="-1" role="dialog" aria-labelledby="about1" aria-hidden="true" height="100"> 
 
 
     <div>
 
-     <pre class="pre-scrollable" id="auth_log" style="word-wrap: break-word;">
-     wait...
-    </pre>
-    </div>
-    <p class="float-left"></p>
+
+    <p  id="auth_log" >    </p>
+
    </div>
-   <div class="modal-footer">
-    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-   </div>
-  </div>
- </div>
+
 </div>
 
 
 
 
 
+    <p  id="auth_log" >    </p>
+    </div>
+    </div>
 
-   <a onclick="viewlog('[#FN#]')" class="btn btn-default"  data-toggle="modal" data-target="#viewlog"  title="View"><i class="glyphicon glyphicon-user"></i></a>
+
+
+<!--   <a onclick="viewlog('[#FN#]')" class="btn btn-default"  data-toggle="modal" data-target="#viewlog"  title="View"><i class="glyphicon glyphicon-film"></i></a> -->
+
 
 <br>
 
-[#LOG#]
+[#LOG2#]
+
