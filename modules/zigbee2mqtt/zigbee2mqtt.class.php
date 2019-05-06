@@ -65,6 +65,7 @@ function getParams() {
   global $view_mode;
   global $edit_mode;
   global $tab;
+  global $viz;
   if (isset($id)) {
    $this->id=$id;
   }
@@ -85,6 +86,11 @@ function getParams() {
   if (isset($tab)) {
    $this->tab=$tab;
   }
+
+  if (isset($viz)) {
+   $this->viz=$viz;
+  }
+
 }
 /**
 * Run
@@ -115,6 +121,7 @@ define("ZMQTT_DEBUG", "1");
   $out['MODE']=$this->mode;
   $out['ACTION']=$this->action;
   $out['TAB']=$this->tab;
+  $out['VIZ']=$this->viz;
   if (IsSet($this->location_id)) {
    $out['IS_SET_LOCATION_ID']=1;
   }
@@ -1532,8 +1539,35 @@ $out['status']=$a;
 
    $this->get_map();
    $this->updateparrent();
-   $this->redirect("?tab=map");
+   $this->redirect("?tab=map&viz=1");
 }
+
+ if ($this->view_mode=='get_map_graph') {
+
+   $this->get_map_graphwiz();
+//   $this->updateparrent();
+   $this->redirect("?tab=map&viz=2");
+}
+
+
+ if ($this->view_mode=='get_map_graph_req') {
+
+//   $this->get_map_graphwiz();
+//   $this->updateparrent();
+//   $this->redirect("?tab=map");
+
+
+$graph=SQLSelectOne ('select * from zigbee2mqtt where value like "digraph%"');
+$graphdata=$graph['VALUE'];
+
+   $this->redirect("http://www.webgraphviz.com/?tab=map");
+
+
+}
+
+
+
+
 
  if ($this->view_mode=='updatedb') {
 
@@ -2372,6 +2406,59 @@ if (ZMQTT_DEBUG=="1" ) debmes('Запрашиваем карту ', 'zigbee2mqtt
 
 //   $mqtt_client->publish('zigbee2mqtt/bridge/networkmap','graphviz');
    $mqtt_client->publish('zigbee2mqtt/bridge/networkmap','raw');
+   //$mqtt_client->publish($rec['PATH_WRITE'].'/set',$jsonvalue, (int)$rec['QOS'], (int)$rec['RETAIN']);
+
+
+   $mqtt_client->close();
+}
+
+function get_map_graphwiz(){
+  include_once("./lib/mqtt/phpMQTT.php");
+
+   $this->getConfig();
+   if ($mqtt->config['MQTT_CLIENT']) {
+    $client_name=$mqtt->config['MQTT_CLIENT'];
+   } else {
+    $client_name="MajorDoMo MQTT";
+   }
+
+   if ($mqtt->config['MQTT_DEBUG']) {
+    $debug=$mqtt->config['MQTT_DEBUG'];
+   } else {
+    $debug="0";
+   }
+
+
+   if ($this->config['MQTT_AUTH']) {
+    $username=$this->config['MQTT_USERNAME'];
+    $password=$this->config['MQTT_PASSWORD'];
+   }
+   if ($this->config['MQTT_HOST']) {
+    $host=$this->config['MQTT_HOST'];
+   } else {
+    $host='localhost';
+   }
+   if ($this->config['MQTT_PORT']) {
+    $port=$this->config['MQTT_PORT'];
+   } else {
+    $port=1883;
+   }
+
+   $mqtt_client = new phpMQTT($host, $port, $client_name.' Client');
+
+   if(!$mqtt_client->connect(true, NULL,$username,$password))
+   {
+    return 0;
+   }
+
+
+if (ZMQTT_DEBUG=="1" ) debmes('Запрашиваем карту ', 'zigbee2mqtt');
+
+
+
+
+   $mqtt_client->publish('zigbee2mqtt/bridge/networkmap','graphviz');
+//   $mqtt_client->publish('zigbee2mqtt/bridge/networkmap','raw');
    //$mqtt_client->publish($rec['PATH_WRITE'].'/set',$jsonvalue, (int)$rec['QOS'], (int)$rec['RETAIN']);
 
 
