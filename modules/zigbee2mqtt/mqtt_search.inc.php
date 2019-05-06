@@ -73,7 +73,7 @@ $res[$i]['LINKED']=$lnk;
 
 
 
- if ($res[$i]['POWERSOURCE']=='Battery')
+if ($res[$i]['POWERSOURCE']=='Battery')
 {
 
  $bat=SQLSelectOne($sql="SELECT *  FROM  zigbee2mqtt where METRIKA='battery'  and DEV_ID='".$res[$i]['DEVID']."'")['VALUE'];
