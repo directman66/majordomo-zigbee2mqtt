@@ -2439,6 +2439,18 @@ $par1['fromZigbee'] = "";
 $par1['toZigbee'] = "";
 SQLInsert('zigbee2mqtt_devices_list', $par1);
 
+//LLKZMK11LM
+$par1['zigbeeModel'] = "lumi.relay.c2acn01";
+$par1['model'] = "LLKZMK11LM";
+$par1['vendor'] = "Xiaomi";
+$par1['type'] = "relay";
+$par1['description'] = "Xiaomi Aqara wireless relay controller (on/off, power measurement)";
+$par1['supports'] = "";
+$par1['extend'] = "";
+$par1['fromZigbee'] = "";
+$par1['toZigbee'] = "";
+SQLInsert('zigbee2mqtt_devices_list', $par1);
+
 
 }
 
