@@ -107,6 +107,11 @@ $basa=SQLSelectOne($sql);
 
  if ($ttype=='bulb')  $res[$i]['CHANGEABLE']='1';
 
+ if ($basa['model']=='KS-SM001')  $res[$i]['CHANGEABLE']='1';
+ if ($basa['model']=='LLKZMK11LM')  $res[$i]['CHANGEABLE']='2';
+
+
+
 
 
  if ( ($ttype=='switch')) $res[$i]['CHANGEABLE']='1';
