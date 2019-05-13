@@ -1,0 +1,208 @@
+<br>
+
+<form action="?" method="get" name="frmFilter">
+
+ <div class="row">
+
+
+<!--
+  <div class="col-md-3">
+  <select class="form-control" name="dev_id">
+
+
+   [#begin ZIGBEE2MQTTDEV#]
+
+   <option value="[#TITLE#]"[#if ID="<#LOCATION_ID#>"#] selected[#endif#]>[#TITLE#]
+   [#end ZIGBEE2MQTTDEV#]
+  </select>
+  </div>
+
+
+
+  <div class="col-md-3">
+  <select class="form-control" name="location_id">
+   <option value="0"><#LANG_FILTER_BY_LOCATION#> (<#LANG_ALL#>)
+   [#begin LOCATIONS#]
+   <option value="[#ID#]"[#if ID="<#LOCATION_ID#>"#] selected[#endif#]>[#TITLE#]
+   [#end LOCATIONS#]
+  </select>
+  </div>
+-->
+<!--  <div class="col-md-3" size="2">
+<input type="text"  name="title" value="<#TITLE#>" class="form-control" placeholder="<#LANG_SEARCH#>">
+  </div>
+
+
+  <div class="col-md-2">
+    <input type="submit" name="submit" value="<#LANG_SEARCH#>" class="btn btn-default">
+  </div>
+
+
+  <div class="col-md-2">
+   <a href="?view_mode=refresh_db" class="btn btn-default" title="Refresh config" ><i class="glyphicon glyphicon-refresh"></i> </a>
+  </div>
+-->
+<!--
+  <div class="col-md-2">
+   <a href="?view_mode=clear_trash" class="btn btn-default" title="Delete not linked topics."><i class="glyphicon glyphicon-floppy-remove"></i></a>
+  </div>
+
+-->
+
+
+ </div>
+</form>
+
+<br>
+
+
+<table width=100% >
+
+<tr>
+ <th>
+
+ </th>
+ <th>ID </th>
+ <th>TITLE </th>
+ <th>BATTERY </th>
+
+ <th>VENDOR </th>
+ <th>TYPE </th>
+
+
+
+</tr>
+</thead>
+<tbody>
+[#begin DEVICES#]
+<tr>
+
+
+
+ <td>
+[#if SELECTTYPE#]
+<img src="../templates/zigbee2mqtt/img/[#SELECTTYPE#].jpg"  height="62" width="62" class="img-rounded">
+[#endif#]
+<!--
+[#if TITLE="bridge"#]
+<img src="../templates/zigbee2mqtt/img/cc2531.jpg"  height="52" width="52" class="img-rounded">
+[#endif#]
+-->
+
+</td>
+ <td
+[#if LOST#] style="color:lightgray;font-weight:bold"[#endif#]
+>[#DEVID#]</td>
+ <td
+[#if LOST#] style="color:lightgray;font-weight:bold"[#endif#]
+>
+
+   <a href="?view_mode=view_mqtt&id=[#DEVID#]&tab=edit_device"  title="<#LANG_EDIT#>">
+<b>[#TITLE#]
+</b>
+</a>
+
+<!--
+<table border =0 width=100%><tr><td>
+[#TITLE#]</td>
+<td align="left">
+[#if POWER_WARNING<>""#]
+<span class="label label-[#POWER_WARNING#]"><i class="glyphicon glyphicon-flash"></i> [#BATTERY#]%</span>
+[#endif#]
+</td></tr></table>
+
+
+
+</b>
+</a>
+-->
+
+
+[#if LINKED!=""#]
+<left><small><br>  [#LINKED#]</small></left>
+[#endif#]
+
+[#if CHANGEABLE="1"#]
+<br>
+<left><small> 
+   <a href="?view_mode=device_on&id=[#DEVID#]&tab="  title="<#LANG_EDIT#>"> ON </a>
+   <a href="?view_mode=device_off&id=[#DEVID#]&tab="  title="<#LANG_EDIT#>"> OFF </a>
+
+</small></left>
+[#endif#]
+
+[#if CHANGEABLE="2"#]
+<br>
+<left><small> 
+   <a href="?view_mode=device_on&id=[#DEVID#]&tab="  title="<#LANG_EDIT#>"> ON </a>
+   <a href="?view_mode=device_off&id=[#DEVID#]&tab="  title="<#LANG_EDIT#>"> OFF </a>
+|
+   <a href="?view_mode=device_on_right&id=[#DEVID#]&tab="  title="<#LANG_EDIT#>"> ON </a>
+   <a href="?view_mode=device_off_right&id=[#DEVID#]&tab="  title="<#LANG_EDIT#>"> OFF </a>
+
+</small></left>
+[#endif#]
+
+
+
+
+
+</td>
+
+<td
+[#if LOST#] style="color:lightgray;font-weight:bold"[#endif#]
+>
+[#if POWER_WARNING<>""#]
+<span class="label label-[#POWER_WARNING#]"><i class="glyphicon glyphicon-flash"></i> [#BATTERY#]%</span>
+[#endif#]
+
+</td>
+
+ <td
+[#if LOST#] style="color:lightgray;font-weight:bold"[#endif#]
+>[#SELECTVENDOR#]</td>
+ <td
+[#if LOST#] style="color:lightgray;font-weight:bold"[#endif#]
+>[#SELECTTYPE#]</td>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</tr>
+[#end DEVICES#]
+</tbody>
+</table>
+<input type="hidden" name="data_source" value="<#DATA_SOURCE#>">
+<input type="hidden" name="view_mode" value="multiple_mqtt">
+</form>
+<!-- / search results (list) -->
+<!-- paging -->
+[#if PAGES#]
+<table border=0>
+<td align=right><b>Pages:</b>&nbsp;</td>
+[#begin PREVPAGE#]<td><a href="?view_mode=<#VIEW_MODE#>&mode=<#MODE#>&save_qry=1&page=[#NUM#]">&lt;&lt;&lt;</a></td>[#end PREVPAGE#]
+<td>
+[#begin PAGES#]
+[#if !SELECTED#]<a href="?view_mode=<#VIEW_MODE#>&mode=<#MODE#>&save_qry=1&page=[#NUM#]">[#else#]<b>[#endif#][#NUM#]</b></a>
+[#end PAGES#]
+</td>
+[#begin NEXTPAGE#]<td><a href="?view_mode=<#VIEW_MODE#>&mode=<#MODE#>&save_qry=1&page=[#NUM#]">&gt;&gt;&gt;</a></td>[#end NEXTPAGE#]
+</table>
+[#endif PAGES#]
+<!-- / paging -->
+
+[#endif DEVICES#]
+<!-- / results -->
+</td></tr></table>
+
