@@ -106,7 +106,13 @@ define("ZMQTT_DEBUG", "1");
 
   $out=array();
   if ($this->action=='admin') {
+
+
+
    $this->admin($out);
+
+
+
   } else {
    $this->usual($out);
   }
@@ -2197,6 +2203,14 @@ SQLUpdate(  'zigbee2mqtt_devices',$rec3);
 * @access public
 */
 function usual(&$out) {
+
+
+
+
+
+
+
+
     if ($this->ajax) {
         global $op;
         global $fn;
@@ -2265,7 +2279,14 @@ echo $a;
         echo json_encode($result);
         exit;
     }
- $this->admin($out);
+
+
+ if ($this->owner->action=='apps') {
+  $this->redirect(ROOTHTML."module/".$this->name.".html");
+//  $this->redirect(ROOTHTML."module/nick7zmail.html");
+ }  else {
+ $this->admin($out);}
+
 }
 /**
 * mqtt search
