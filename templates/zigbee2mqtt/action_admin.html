@@ -1,3 +1,4 @@
+<!--
 VIEW_MODE: [#VIEW_MODE#]
 TAB: [#TAB#]
 TITLE: [#TITLE#]
@@ -9,6 +10,7 @@ DATASOURCE: [#DATA_SOURCE#]
 	 <ul class="nav nav-tabs">
  [#if VIEW_MODE=""||VIEW_MODE="update_log"#]
 <li [#if TAB=="" || TAB=="indata" #] class="active" [#endif#]><a href="?data_source=<#DATA_SOURCE#>&view_mode=&id=<#ID#>&tab=devices">Devices</a> </li>
+<li [#if TAB=="table" #] class="active" [#endif#]><a href="?data_source=<#DATA_SOURCE#>&view_mode=&id=<#ID#>&tab=table">Devices table</a> </li>
 <li [#if TAB=="groups" #] class="active" [#endif#]><a href="?data_source=<#DATA_SOURCE#>&view_mode=&id=<#ID#>&tab=groups">Groups</a> </li>
 <li [#if TAB=="settings" #] class="active" [#endif#]><a href="?data_source=<#DATA_SOURCE#>&view_mode=&id=<#ID#>&tab=settings">Settings</a> </li>
 <li [#if TAB=="map" #] class="active" [#endif#]><a href="?data_source=<#DATA_SOURCE#>&view_mode=&id=<#ID#>&tab=map">Map</a> </li>
@@ -52,6 +54,10 @@ DATASOURCE: [#DATA_SOURCE#]
  <!-- table mqtt search -->
  [#if TAB="" || TAB="devices"#]
  [#if VIEW_MODE=""#] [#inc devices.html#] [#endif#]
+ [#endif#]
+
+ [#if  TAB="table"#]
+ [#if VIEW_MODE=""#] [#inc devices_old.html#] [#endif#]
  [#endif#]
 
  [#if VIEW_MODE="view_mqtt"#]
