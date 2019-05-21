@@ -87,6 +87,15 @@
         <div class="panel-heading">
           <div style="float:right;" class="dropdown">
 
+[#if CHANGEABLE=""#]
+
+            <a href="?view_mode=view_mqtt&id=[#DEVID#]&tab=edit_parametrs" class="btn btn-default btn-round" title="Данные">
+              <span class="glyphicon glyphicon-list"></span>
+            </a>
+
+
+[#endif#]
+
 
 [#if CHANGEABLE="1"#]
 
