@@ -69,13 +69,13 @@
 
 [#if "<#ACTION#>"=="admin"#]
 
-  <div class="panel [#if STATE="0"#]panel-primary[#else#]panel-info[#endif#]">
+  <div class="panel [#if STATE="1"#]panel-primary[#else#]panel-info[#endif#]">
 [#else#]
 
 [#if "<#SETTINGS_THEME#>"=="dark"#]
-  <div class="panel [#if STATE="0"#]panel-info[#else#]panel-primary[#endif#]">
+  <div class="panel [#if STATE="1"#]panel-info[#else#]panel-primary[#endif#]">
 [#else#]
-  <div class="panel [#if STATE="0"#]panel-primary[#else#]panel-info[#endif#]">
+  <div class="panel [#if STATE="1"#]panel-primary[#else#]panel-info[#endif#]">
 [#endif#]
 
 
@@ -161,7 +161,7 @@
 
 [#if LINKED!=""#]
 <div class="pull-right">
-[#LINKED#]
+<small>[#LINKED#]</small>
 </div>
 [#else#]
 <div class="pull-right">
