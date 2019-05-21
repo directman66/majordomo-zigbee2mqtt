@@ -45,14 +45,45 @@
 
 <!-- / paging -->
 <!-- search results (list) -->
+
+<!--[#ACTION#]
+<#SETTINGS_THEME#>
+
+-->
+
 <form action="?" method="post" name="frmList_dev_sonoff_devices" style="padding:0px">
+
+
+[#if  DEVICES#]  
 <div class="container-fluid">
 <div class="row col-md-12 col-lg-12">
 
-[#if  DEVICES#]  
+
+
 [#begin DEVICES#]  
+
+
   <div class="col-sm-6 col-md-6 col-lg-4">
-    <div class="panel [#if ONLINE!=""#]panel-success[#else#]panel-danger[#endif#]">
+
+
+
+[#if "<#ACTION#>"=="admin"#]
+
+  <div class="panel [#if STATE="0"#]panel-primary[#else#]panel-info[#endif#]">
+[#else#]
+
+[#if "<#SETTINGS_THEME#>"=="dark"#]
+  <div class="panel [#if STATE="0"#]panel-info[#else#]panel-primary[#endif#]">
+[#else#]
+  <div class="panel [#if STATE="0"#]panel-primary[#else#]panel-info[#endif#]">
+[#endif#]
+
+
+
+[#endif#]
+
+
+
         <div class="panel-heading">
           <div style="float:right;" class="dropdown">
 
@@ -200,7 +231,9 @@
 <!-- / search results (list) -->
 <!-- paging -->
 
-[#end DEVICES#] 
+
+
+[#end DEVICES#]  
 
 
 <!-- / paging -->
