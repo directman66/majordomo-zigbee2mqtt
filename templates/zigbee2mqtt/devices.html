@@ -67,15 +67,24 @@
 
 
 
-[#if "<#ACTION#>"=="admin"#]
 
+[#if "<#ACTION#>"=="admin"#]
+[#if LOST="1"#]   <div class="panel panel-warning"> [#else#]
   <div class="panel [#if STATE="1"#]panel-primary[#else#]panel-info[#endif#]">
+[#endif#]
 [#else#]
 
 [#if "<#SETTINGS_THEME#>"=="dark"#]
+
+[#if LOST="1"#]   <div class="panel panel-gray"> [#else#]
+
   <div class="panel [#if STATE="1"#]panel-info[#else#]panel-primary[#endif#]">
 [#else#]
   <div class="panel [#if STATE="1"#]panel-primary[#else#]panel-info[#endif#]">
+[#endif#]
+[#endif#]
+
+
 [#endif#]
 
 
@@ -147,7 +156,7 @@
               <li><a href="?view_mode=delete_dev_z2m&id=[#DEVID#]&ieee=[#IEEEADDR#]" onClick="return confirm('Are you sure? Please confirm.')" style="color: #a94442;"><span class="glyphicon glyphicon-trash"></span>Исключить из сети zigbee</a></li>
             </ul>             
           </div>
-          <h3 class="panel-title">[#TITLE#]
+          <h3 class="panel-title" [#if LOST#]style="color:lightgray;"[#endif#]>[#TITLE#]
 
 
 
@@ -185,27 +194,38 @@
 		<img class="card-img pull-left img-circle" src="../templates/zigbee2mqtt/img/[#SELECTTYPE#].jpg" alt="Device Logo">
 [#endif#]
         <div class="caption">
-          <div style="color:#999;font-size: 12px;">Модель</div>
-          <div style="font-size:20px">  [#if SELECTTYPE!=""#]
+
+
+          <div style="color:#999;font-size: 12px;[#if LOST#] ;color:lightgray;font-weight:bold[#endif#]">Модель</div>
+          <div style="font-size:20px[#if LOST#];color:lightgray;[#endif#]">  [#if SELECTTYPE!=""#]
 										   [#SELECTTYPE#]
 										  [#else#]
 										   &nbsp;
+
+
 										  [#endif#]</div>
           <div class="pull-right">
-            <div style="color:#999;font-size: 12px;"><#LANG_UPDATED#>
+ [#if FIND!=""#]
+            <div style="color:#999;font-size: 12px;[#if LOST#];color:lightgray;[#endif#]"><#LANG_UPDATED#>
+[#else#]
+ <div style="color:#999;font-size: 12px;[#if LOST#];color:lightgray;[#endif#]">
+[#endif#]
 
-			  [#if LOST!=""#]
+
+<!--			  [#if LOST!=""#]
 <!--				<div class="pull-right signal-level" style="background: linear-gradient(to right, [#RSSI_COLOR#] [#RSSI_LVL#]%,  #999 [#RSSI_LVL#]%);">
 				  <div class="glyphicon glyphicon-signal"></div>
 				</div>
--->
+
 			  [#else#]
-<!--				<div class="pull-left"> -->
+<!--				<div class="pull-left">
 				  <span class="label label-danger"><#LANG_OFFLINE#></span>
-<!--				</div> -->
+<!--				</div>
 			  [#endif#]
+
+-->
 </div>
-            <p> 
+            <p [#if LOST#]style=";color:lightgray;"[#endif#]> 
 
 
 
@@ -219,8 +239,9 @@
 				   &nbsp;
 				  [#endif#]</p>
           </div>
-          <div style="color:#999;font-size: 12px;">Производитель</div>
-          <p>  [#if SELECTVENDOR!=""#]
+          <div style="color:#999;font-size: 12px;[#if LOST#];color:lightgray;[#endif#] ">Производитель</div>
+          <p [#if LOST#]style="color:lightgray;"[#endif#]>  
+[#if SELECTVENDOR!=""#]
 			   [#SELECTVENDOR#]
 			  [#else#]
 			   &nbsp;
