@@ -66,7 +66,7 @@
    <a href="?view_mode=device_off&id=[#DEVID#]&tab=" class="btn btn-default btn-round"  title="Выключить">
               <span class="glyphicon glyphicon-remove"></span>
  </a>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 [#endif#]
 
 [#if CHANGEABLE="2"#]
@@ -85,22 +85,21 @@
    <a href="?view_mode=device_off_right&id=[#DEVID#]&tab=" class="btn btn-default btn-round"  title="Выключить">
               <span class="glyphicon glyphicon-remove"></span>
  </a>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;
 [#endif#]
 
 
 
 
 
-            <a href="?view_mode=view_mqtt&id=[#DEVID#]&tab=edit_parametrs" class="btn btn-default btn-round" title="Data">
-              <span class="glyphicon glyphicon-list"></span>
-            </a>
-
 
             <a class="btn btn-default btn-round" data-toggle="dropdown" href="#">
               <span class="caret"></span>
             </a>        
             <ul class="dropdown-menu">
+
+
+              <li><a href="?view_mode=view_mqtt&id=[#DEVID#]&tab=edit_parametrs" title="Edit"><span class="glyphicon glyphicon-list-alt"></span>Данные</a></li>
               <li><a href="?view_mode=view_mqtt&id=[#DEVID#]&tab=edit_device" title="Edit"><span class="glyphicon glyphicon-pencil"></span>Редактировать</a></li>
               <li><a href="?view_mode=view_mqtt&id=[#DEVID#]&tab=view_det" title="Share"><span class="glyphicon glyphicon-tags"></span>Дополнительно</a></li>
               <li class="divider"></li>
@@ -116,17 +115,6 @@
 <span class="label label-[#POWER_WARNING#]"><i class="glyphicon glyphicon-flash"></i> [#BATTERY#]%</span>
 [#endif#]
 
-
-			  [#if LOST!=""#]
-<!--				<div class="pull-right signal-level" style="background: linear-gradient(to right, [#RSSI_COLOR#] [#RSSI_LVL#]%,  #999 [#RSSI_LVL#]%);">
-				  <div class="glyphicon glyphicon-signal"></div>
-				</div>
--->
-			  [#else#]
-<!--				<div class="pull-left"> -->
-				  <span class="label label-danger"><#LANG_OFFLINE#></span>
-<!--				</div> -->
-			  [#endif#]
 
 
 </h3>
@@ -164,10 +152,30 @@
 										   &nbsp;
 										  [#endif#]</div>
           <div class="pull-right">
-            <div style="color:#999;font-size: 12px;"><#LANG_UPDATED#></div>
-            <p>  [#if FIND!=""#]
+            <div style="color:#999;font-size: 12px;"><#LANG_UPDATED#>
+
+			  [#if LOST!=""#]
+<!--				<div class="pull-right signal-level" style="background: linear-gradient(to right, [#RSSI_COLOR#] [#RSSI_LVL#]%,  #999 [#RSSI_LVL#]%);">
+				  <div class="glyphicon glyphicon-signal"></div>
+				</div>
+-->
+			  [#else#]
+<!--				<div class="pull-left"> -->
+				  <span class="label label-danger"><#LANG_OFFLINE#></span>
+<!--				</div> -->
+			  [#endif#]
+</div>
+            <p> 
+
+
+
+
+ [#if FIND!=""#]
 [#FIND#]
 				  [#else#]
+
+
+
 				   &nbsp;
 				  [#endif#]</p>
           </div>
