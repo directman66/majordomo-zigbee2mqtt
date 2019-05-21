@@ -294,8 +294,8 @@ if (ZMQTT_DEBUG=="1" ) debmes('Подменяем '.$value. " на ". $rec['PAYL
 //if (($rec['PAYLOAD_ON'])&& ($value=="1"))  $json=array( $rec['METRIKA']=> $rec['PAYLOAD_ON']);
 //if (($rec['PAYLOAD_OFF'])&& ($value=="0"))  $json=array( $rec['METRIKA']=> $rec['PAYLOAD_OFF']);
 
-if  ($value=="1") $json=array( $rec['COMMAND_VALUE']=> $rec['PAYLOAD_ON']);
-if ($value=="0")  $json=array( $rec['COMMAND_VALUE']=> $rec['PAYLOAD_OFF']);
+if  ($value=="1") {$json=array( $rec['COMMAND_VALUE']=> $rec['PAYLOAD_ON']); SQLExec('update zigbee2mqtt_devices set state="1" where ID="'.$rec['DEV_ID'].'"');}
+if ($value=="0")  {$json=array( $rec['COMMAND_VALUE']=> $rec['PAYLOAD_OFF']); SQLExec('update zigbee2mqtt_devices set state="0" where ID="'.$rec['DEV_ID'].'"');}
 $jsonvalue=json_encode($json) ;
 
 if (ZMQTT_DEBUG=="1" ) debmes('Заменили  '.$value. "  на ". $jsonvalue, 'zigbee2mqtt');
@@ -446,6 +446,19 @@ $json=null;
 if (ZMQTT_DEBUG=="1" ) debmes('Требуется включить или выключить устройство', 'zigbee2mqtt1');
 if (ZMQTT_DEBUG=="1" ) debmes($value.' $rec[$i][METRIKA]='.$rec[$i]['METRIKA']. ' PATH_WRITE='.$rec[$i]['PATH_WRITE'].' strpos='.strpos($rec[$i]['PATH_WRITE'],'right'), 'zigbee2mqtt');
 
+/*
+if  (($value=="device_togle")&&(strpos($rec[$i]['METRIKA'],"tate")>0))  {
+
+$cstate=SQLSelectOne('select * from zigbee2mqtt_devices where ID='.$rec[$i]['METRIKA'])['STATE'];
+
+if ($cstate=="1") { $json=array( $rec[$i]['COMMAND_VALUE']=> $rec[$i]['PAYLOAD_ON']); }
+else 
+{$json=array( $rec[$i]['COMMAND_VALUE']=> $rec[$i]['PAYLOAD_OFF']);  }
+
+}
+
+*/
+
 if  (($value=="device_on_left")&&(strpos($rec[$i]['METRIKA'],"tate")>0)) $json=array( $rec[$i]['COMMAND_VALUE']=> $rec[$i]['PAYLOAD_ON']);
 if (($value=="device_off_left")&&(strpos($rec[$i]['METRIKA'],"tate")>0))  $json=array( $rec[$i]['COMMAND_VALUE']=> $rec[$i]['PAYLOAD_OFF']);
 
@@ -506,6 +519,9 @@ if (ZMQTT_DEBUG=="1" ) debmes('Публиковать не требуется  '
  }
  } 
 //else if (ZMQTT_DEBUG=="1" ) debmes('Не хватает данных, устройство '.$rec['ID'].' или путь управления '.$rec['PATH'].' не найдены', 'zigbee2mqtt');
+
+// $this->redirect("?tab=");
+
   }
 
 
@@ -811,8 +827,8 @@ debmes('SQupdate zigbee2mqtt', 'zigbee2mqtt');
          }
 
 if (($rec['PAYLOAD_ON'])||$rec['PAYLOAD_OFF']) {
-if ($value==$rec['PAYLOAD_ON'])  $newvalue=1;
-if ($value==$rec['PAYLOAD_OFF'])  $newvalue=0;
+if ($value==$rec['PAYLOAD_ON'])  {$newvalue=1; SQLExec('update zigbee2mqtt_devices set state="1" where ID="'.$rec['DEV_ID'].'"');}
+if ($value==$rec['PAYLOAD_OFF']) {$newvalue=0; SQLExec('update zigbee2mqtt_devices set state="0" where ID="'.$rec['DEV_ID'].'"');}
 
 //if ($value==$rec['PAYLOAD_ON'])  $newvalue=1;
 //if ($value==$rec['PAYLOAD_OFF'])  $newvalue=0;
@@ -1462,6 +1478,30 @@ $a =  str_replace( array("\r\n","\r","\n") , '<br>' , $a);
 $out['status']=$a;
    $this->redirect("?tab=service");
 
+}
+
+
+ if ($this->view_mode=='device_togle') {
+	$id=$this->id;
+//	$this->setProperty($mqtt_properties[$i]['ID'], $value);
+if (ZMQTT_DEBUG=="1" ) debmes('!!!!!!!device_on','zigbee2mqtt');
+
+
+
+
+$cstate=SQLSelectOne('select * from zigbee2mqtt_devices where ID='.$id)['STATE'];
+
+if ($cstate=="0") { 	$this->setPropertyDevice($id, 'device_on_left');	$this->setPropertyDevice($id, 'device_on_right'); }
+else 
+{	$this->setPropertyDevice($id, 'device_off_left');
+        $this->setPropertyDevice($id, 'device_off_right');
+
+}
+
+
+
+
+   $this->redirect("?");
 }
 
 
@@ -2266,7 +2306,7 @@ $a.= $value;
 
 $a =  str_replace( array("\r\n","\r","\n") , '<br>' , $a);
 //$out['LOG']=$a;
-print_r($a);
+//print_r($a);
 echo $a;
 
 //print_r(time().": ". $fn);
@@ -2597,6 +2637,7 @@ function createdb()
  zigbee2mqtt_devices: SWBUILDID varchar(100) NOT NULL DEFAULT ''
  zigbee2mqtt_devices: MODELID varchar(100) NOT NULL DEFAULT ''
  zigbee2mqtt_devices: STATUS varchar(100) NOT NULL DEFAULT ''
+ zigbee2mqtt_devices: STATE varchar(100) NOT NULL DEFAULT ''
  zigbee2mqtt_devices: JOINTIME varchar(100) NOT NULL DEFAULT ''
  zigbee2mqtt_devices: DID varchar(100) NOT NULL DEFAULT ''
  zigbee2mqtt_devices: D_ID varchar(100) NOT NULL DEFAULT ''
