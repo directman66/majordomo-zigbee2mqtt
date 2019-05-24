@@ -993,7 +993,7 @@ $par2['zigbeeModel'] = 'WSDCGQ01LM';
 $par2['type'] = "sensor";
 $par2['state_topic'] =  "zigbee2mqtt/<FRIENDLY_NAME>";
 $par2['availability_topic'] = "zigbee2mqtt/bridge/state";
-$par2['unit_of_measurement'] = "Â°C";
+$par2['unit_of_measurement'] = "Г‚В°C";
 $par2['device_class'] = "temperature";
 $par2['value_template'] = "temperature";
 $par2['json_attributes'] = "" ;
@@ -1092,7 +1092,7 @@ $par2['zigbeeModel'] = 'WSDCGQ11LM';
 $par2['type'] = "sensor";
 $par2['state_topic'] =  "zigbee2mqtt/<FRIENDLY_NAME>";
 $par2['availability_topic'] = "zigbee2mqtt/bridge/state";
-$par2['unit_of_measurement'] = "Â°C";
+$par2['unit_of_measurement'] = "Г‚В°C";
 $par2['device_class'] = "";
 $par2['value_template'] = "temperature";
 $par2['json_attributes'] = "" ;
@@ -2957,6 +2957,27 @@ $par2['xy'] = "";
 $par2['command_value'] = "brightness";
 SQLInsert('zigbee2mqtt_devices_command', $par2);
 
+//LED1623G12;
+$par2['zigbeeModel'] = 'LED1623G12';
+$par2['type'] = "light";
+$par2['state_topic'] =  "zigbee2mqtt/<FRIENDLY_NAME>";
+$par2['availability_topic'] = "zigbee2mqtt/bridge/state";
+$par2['brightness'] = "";
+$par2['xy'] = "true";
+$par2['command_topic'] = "zigbee2mqtt/<FRIENDLY_NAME>/set"  ;
+$par2['payload_on'] = "ON";
+$par2['payload_off'] = "OFF";
+$par2['value_template'] = "state";
+$par2['json_attributes'] = "";
+$par2['device_class'] = "";
+$par2['unit_of_measurement'] = "";
+$par2['color_temp'] = "";
+$par2['command_value'] = "state";
+SQLInsert('zigbee2mqtt_devices_command', $par2);
+
+
+
+
 
 
 ////////////////////////////////////////////////
@@ -4176,7 +4197,7 @@ $par2['zigbeeModel'] = '9290012607';
 $par2['type'] = "sensor";
 $par2['state_topic'] =  "zigbee2mqtt/<FRIENDLY_NAME>";
 $par2['availability_topic'] = "zigbee2mqtt/bridge/state";
-$par2['unit_of_measurement'] = "Â°C";
+$par2['unit_of_measurement'] = "Г‚В°C";
 $par2['device_class'] = "temperature";
 $par2['value_template'] = "temperature";
 $par2['json_attributes'] = "linkquality,battery,voltage";
@@ -5401,7 +5422,7 @@ $par2['zigbeeModel'] = 'AC01353010G';
 $par2['type'] = "sensor";
 $par2['state_topic'] =  "zigbee2mqtt/<FRIENDLY_NAME>";
 $par2['availability_topic'] = "zigbee2mqtt/bridge/state";
-$par2['unit_of_measurement'] = "Â°C";
+$par2['unit_of_measurement'] = "Г‚В°C";
 $par2['device_class'] = "";
 $par2['value_template'] = "temperature";
 $par2['json_attributes'] = "";
@@ -7318,7 +7339,7 @@ $par2['zigbeeModel'] = '3326-L';
 $par2['type'] = "sensor";
 $par2['state_topic'] =  "zigbee2mqtt/<FRIENDLY_NAME>";
 $par2['availability_topic'] = "zigbee2mqtt/bridge/state";
-$par2['unit_of_measurement'] = "Â°C";
+$par2['unit_of_measurement'] = "Г‚В°C";
 $par2['device_class'] = "temperature";
 $par2['value_template'] = "temperature";
 $par2['json_attributes'] = "" ;
