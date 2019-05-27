@@ -65,6 +65,7 @@ DATASOURCE: [#DATA_SOURCE#]
 <li [#if TAB=="edit_device" #] class="active" [#endif#]><a href="?data_source=<#DATA_SOURCE#>&view_mode=view_mqtt&id=<#ID#>&tab=edit_device">Edit device</a> </li>
 <li [#if TAB=="edit_parametrs" #] class="active" [#endif#]><a href="?data_source=<#DATA_SOURCE#>&view_mode=view_mqtt&id=<#ID#>&tab=edit_parametrs">Parameters</a> </li>
 <li [#if TAB=="view_det" #] class="active" [#endif#]><a href="?data_source=<#DATA_SOURCE#>&view_mode=view_mqtt&id=<#ID#>&tab=view_det">Detail</a> </li>
+<li [#if TAB=="device_log" #] class="active" [#endif#]><a href="?data_source=<#DATA_SOURCE#>&view_mode=view_mqtt&id=<#ID#>&tab=device_log">Device log</a> </li>
 <!--<li [#if TAB=="edit_data" #] class="active" [#endif#]><a href="?data_source=<#DATA_SOURCE#>&view_mode=view_mqtt&id=<#ID#>&tab=edit_data">Data</a> </li> -->
 </ul>
  [#endif#]
@@ -78,6 +79,11 @@ DATASOURCE: [#DATA_SOURCE#]
   [#if TAB="view_det"#]
   [#inc view_det.html#]
   [#endif#]
+
+  [#if TAB="device_log"#]
+  [#inc device_log.html#]
+  [#endif#]
+
 
   [#if TAB="edit_parametrs"#]
   [#inc edit_parametrs.html#]
