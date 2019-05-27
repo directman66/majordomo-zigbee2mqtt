@@ -1,3 +1,4 @@
+
 <br>
 
 <form action="?" method="post" enctype="multipart/form-data" name="frmEdit" class="form-horizontal">
@@ -43,6 +44,35 @@
  </label>
  <div class="controls"><input type="text" name="mqtt_query" value="<#MQTT_QUERY#>" class="input"></div>
 </div>
+
+
+
+
+<div class="form-group">
+
+ <label class="control-label"[#if ERR_VIEW#] style="color:red;font-weight:bold"[#endif#]>
+ zigbee2mqtt view mode:
+ </label>
+
+
+
+<div class="col-md-1 input-group">
+
+
+     <select name="z2m_view" id="z2m_view" class="form-control">
+      <option value="container-fluid"[#if Z2M_VIEW="container-fluid"#] selected[#endif#]>container-fluid</option>
+      <option value="table"[#if Z2M_VIEW="table"#] selected[#endif#]>table(old)</option>
+     </select>
+
+
+
+
+
+
+</div>
+</div>
+
+
 
 
 <div class="form-group">
@@ -112,5 +142,3 @@
 </div>
 </fieldset>
 </form>
-
-
