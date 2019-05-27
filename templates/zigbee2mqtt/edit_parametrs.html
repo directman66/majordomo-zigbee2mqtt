@@ -111,11 +111,38 @@
 </small></small>
 
  </td>
-
+<!--
  <td >
   <span id="mqtt[#ID#]" class="mqtt_value">[#VALUE#]</span>
   [#if LINKED_OBJECT!=""#]([#LINKED_OBJECT#].[#LINKED_PROPERTY#])[#endif LINKED_OBJECT#]
- </td> <td>
+ </td> 
+-->
+
+
+<td>
+
+       <div id="prop[#ID#]_current" onClick="$('#prop[#ID#]_current').hide();$('#prop[#ID#]_edit').show();">
+
+    <pre>[#VALUE#]  [#if LINKED_OBJECT!=""#]([#LINKED_OBJECT#].[#LINKED_PROPERTY#])[#endif LINKED_OBJECT#]</pre>
+   </div>
+
+   <div id="prop[#ID#]_edit" style="display:none">
+ <form action="?" method="post">
+ <textarea name="value[#ID#]" rows=2 cols="50" class="span5">[#VALUE_HTML#]</textarea>
+ <br/>
+ <input type="submit" name="submit" value="<#LANG_UPDATE#>" class="btn btn-primary">
+ <a href="#" class="btn btn-default" onclick="$('#prop[#ID#]_edit').hide();$('#prop[#ID#]_current').show();return false;"><#LANG_CANCEL#></a>
+ <input type="hidden" name="view_mode" value="<#VIEW_MODE#>">
+ <input type="hidden" name="id" value="<#ID#>">
+ <input type="hidden" name="tab" value="<#TAB#>">
+ <input type="hidden" name="mode" value="update">
+ </form>
+
+   </div>
+
+</td>
+
+<td>
   [#if UPDATED!=""#]
    [#UPDATED#]
   [#else#]
@@ -154,6 +181,12 @@
 <div class="alert alert-danger"><#LANG_NO_RECORDS_FOUND#></div>
 </p>
 [#endif RESULT#]
+
+
+
+
+
+
 <!-- / results -->
 <script type="text/javascript">
  var valuesUpdateTimeout=0;
