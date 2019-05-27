@@ -1073,7 +1073,7 @@ $out['DEVICE_LIST']=$res;
 }
 
 
-     if ($this->tab=='edit_device'||$this->tab=='view_det'||$this->tab=='edit_parametrs') {
+     if ($this->tab=='edit_device'||$this->tab=='view_det'||$this->tab=='edit_parametrs' ||$this->tab=='device_log') {
 
 //if ( $this->TAB=='edit_device') {
 //$vm=$this->VIEW_MODE;
@@ -1192,6 +1192,19 @@ $out['SELECTTYPEARRAY']=$tmp;
 //if (ZMQTT_DEBUG=="1" ) debmes('location', 'zigbee2mqtt');
 //if (ZMQTT_DEBUG=="1" ) debmes($tmp, 'zigbee2mqtt');
 
+
+if ($this->tab=='device_log'){
+
+  $sql0='SELECT *  FROM zigbee2mqtt_log where TITLE like "%'.$res['IEEEADDR'].'%" order by FIND DESC LIMIT 100';
+
+debmes($sql0,'zigbee2mqtt');
+
+$ssql=SQLSelect($sql0);
+
+$out['LOG2']=$ssql;
+
+
+}
 
 
 
@@ -1559,6 +1572,119 @@ if (ZMQTT_DEBUG=="1" ) debmes('!!!!!!!device_off','zigbee2mqtt');
 }
 
 
+  if ($this->view_mode=='leftbutton_disable') {
+  $id=$this->id;
+
+$fn=SQLSelectOne('select * from zigbee2mqtt_devices where ID='.$id)['IEEEADDR'];
+
+$payload='
+{
+"operation_mode": {
+"button": "left",
+"state": "decoupled"
+}
+}';
+
+  $this->sendcommand('zigbee2mqtt/'.$fn.'/system/set', $payload);
+//  $this->redirect("?tab=service");
+  $this->redirect("?");
+}
+
+  if ($this->view_mode=='leftbutton_enable') {
+  $id=$this->id;
+
+$fn=SQLSelectOne('select * from zigbee2mqtt_devices where ID='.$id)['IEEEADDR'];
+
+$payload='
+{
+"operation_mode": {
+"button": "left",
+"state": "control_left_relay"
+}
+}';
+
+  $this->sendcommand('zigbee2mqtt/'.$fn.'/system/set', $payload);
+//  $this->redirect("?tab=service");
+  $this->redirect("?");
+}
+/////////////////////
+  if ($this->view_mode=='rightbutton_disable') {
+  $id=$this->id;
+
+$fn=SQLSelectOne('select * from zigbee2mqtt_devices where ID='.$id)['IEEEADDR'];
+
+$payload='
+{
+"operation_mode": {
+"button": "right",
+"state": "decoupled"
+}
+}';
+
+  $this->sendcommand('zigbee2mqtt/'.$fn.'/system/set', $payload);
+//  $this->redirect("?tab=service");
+  $this->redirect("?");
+}
+
+  if ($this->view_mode=='rightbutton_enable') {
+  $id=$this->id;
+
+$fn=SQLSelectOne('select * from zigbee2mqtt_devices where ID='.$id)['IEEEADDR'];
+
+$payload='
+{
+"operation_mode": {
+"button": "right",
+"state": "control_right_relay"
+}
+}';
+
+  $this->sendcommand('zigbee2mqtt/'.$fn.'/system/set', $payload);
+//  $this->redirect("?tab=service");
+  $this->redirect("?");
+}
+///////////////////////
+
+  if ($this->view_mode=='singlebutton_disable') {
+  $id=$this->id;
+
+$fn=SQLSelectOne('select * from zigbee2mqtt_devices where ID='.$id)['IEEEADDR'];
+
+$payload='
+{
+"operation_mode": {
+"button": "single",
+"state": "decoupled"
+}
+}';
+
+  $this->sendcommand('zigbee2mqtt/'.$fn.'/system/set', $payload);
+//  $this->redirect("?tab=service");
+  $this->redirect("?");
+}
+
+  if ($this->view_mode=='singlebutton_enable') {
+  $id=$this->id;
+
+$fn=SQLSelectOne('select * from zigbee2mqtt_devices where ID='.$id)['IEEEADDR'];
+
+$payload='
+{
+"operation_mode": {
+"button": "single",
+"state": "control_relay"
+}
+}';
+
+  $this->sendcommand('zigbee2mqtt/'.$fn.'/system/set', $payload);
+//  $this->redirect("?tab=service");
+  $this->redirect("?");
+}
+
+
+
+
+
 
 
 
@@ -1708,7 +1834,8 @@ $z2m->sendcommand("zigbee2mqtt/bridge/config/log_level", "'.$z2m_logmode2.'");
  }
 
 
- if ($this->data_source=='mqtt' || $this->data_source=='') {
+// if ($this->data_source=='mqtt' || $this->data_source==''|| $this->data_source=='multiple_z2m' ) {
+ if ($this->data_source=='mqtt' || $this->data_source=='' ) {
 //  if ($this->view_mode=='' || $this->view_mode=='search_mqtt') {
    $this->search_mqtt($out);
   }
@@ -1716,8 +1843,39 @@ $z2m->sendcommand("zigbee2mqtt/bridge/config/log_level", "'.$z2m_logmode2.'");
 
 
 
+  if ($this->view_mode=='multiple_z2m') {
+//echo "13";
+
+//$vm=$this->view_mode;
+// echo "<script type='text/javascript'>";
+// echo "alert('$vm');";
+// echo "</script>";
+
+
+global $location_id;
+$vm=$location_id;
+
+
+global $type_id;
+
+
+
+// echo "<script type='text/javascript'>";
+// echo "alert('$vm');";
+// echo "</script>";
+
+
+
+
+   $this->search_mqtt($out);
+   $this->redirect("?location=".$vm.'&type_id='.$type_id);
+
+  }
+
+
   if ($this->view_mode=='edit_mqtt') {
    $this->edit_mqtt($out, $this->id);
+
   }
 
 
