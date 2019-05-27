@@ -121,6 +121,8 @@
 
 <td>
 
+[#if !command_topic=""#]
+
        <div id="prop[#ID#]_current" onClick="$('#prop[#ID#]_current').hide();$('#prop[#ID#]_edit').show();">
 
     <pre>[#VALUE#]  [#if LINKED_OBJECT!=""#]([#LINKED_OBJECT#].[#LINKED_PROPERTY#])[#endif LINKED_OBJECT#]</pre>
@@ -139,6 +141,13 @@
  </form>
 
    </div>
+
+	
+[#else#]
+  <span id="mqtt[#ID#]" class="mqtt_value">[#VALUE#]</span>
+  [#if LINKED_OBJECT!=""#]([#LINKED_OBJECT#].[#LINKED_PROPERTY#])[#endif LINKED_OBJECT#]
+[#endif#]
+
 
 </td>
 
