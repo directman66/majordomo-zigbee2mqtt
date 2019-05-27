@@ -3,6 +3,16 @@
 * @version 0.1 (wizard)
 */
 
+//global $location_id;
+///$vm=$location_id;
+// echo "<script type='text/javascript'>";
+// echo "alert('$vm');";
+// echo "</script>";
+
+
+
+
+
 
  global $session;
   if ($this->owner->name=='panel') {
@@ -37,7 +47,21 @@
 //  $res=SQLSelect('SELECT *  FROM (select zigbee2mqtt_devices.ID DEVID, zigbee2mqtt_devices.* from zigbee2mqtt_devices  WHERE MODEL<>"" )zigbee2mqtt_devices LEFT JOIN zigbee2mqtt_devices_list ON zigbee2mqtt_devices_list.zigbeeModel=zigbee2mqtt_devices.MODELID order by 1' );
   //$res=SQLSelect('select zigbee2mqtt_devices.ID DEVID, zigbee2mqtt_devices.* from zigbee2mqtt_devices   order by MANUFACTURE' );
 //  $res=SQLSelect('select zigbee2mqtt_devices.ID DEVID, zigbee2mqtt_devices.*,LOCATION from zigbee2mqtt_devices, (select ID LOCID, TITLE LOCATION from locations) locations where locations.LOCID=zigbee2mqtt_devices.LOCATION_ID order by MANUFACTURE' );
-  $res=SQLSelect('select zigbee2mqtt_devices.ID DEVID, zigbee2mqtt_devices.*,LOCATION from zigbee2mqtt_devices  left join (select ID LOCID, TITLE LOCATION from locations) locations ON  zigbee2mqtt_devices.LOCATION_ID=locations.LOCID order by MANUFACTURE ' );
+//  $res=SQLSelect('select zigbee2mqtt_devices.ID DEVID, zigbee2mqtt_devices.*,LOCATION from zigbee2mqtt_devices  left join (select ID LOCID, TITLE LOCATION from locations) locations ON  zigbee2mqtt_devices.LOCATION_ID=locations.LOCID order by MANUFACTURE ' );
+//  $res=SQLSelect('select zigbee2mqtt_devices.ID DEVID, zigbee2mqtt_devices.*,LOCATION from zigbee2mqtt_devices  left join (select ID LOCID, TITLE LOCATION from locations) locations ON  zigbee2mqtt_devices.LOCATION_ID=locations.LOCID order by FIND  DESC' );
+
+
+if (isset($_GET['location'])) { 
+$location_id=$_GET['location'];
+$req_location=' and LOCATION_ID='.$location_id; }
+
+if (isset($_GET['type_id'])&&$_GET['type_id']<>'0') { 
+$type_id=$_GET['type_id'];
+$req_type=' and SELECTTYPE IN (select model from zigbee2mqtt_devices_list where type="'.$type_id.'")'; }
+
+
+
+  $res=SQLSelect('select zigbee2mqtt_devices.ID DEVID, zigbee2mqtt_devices.*,LOCATION from zigbee2mqtt_devices  left join (select ID LOCID, TITLE LOCATION from locations) locations ON  zigbee2mqtt_devices.LOCATION_ID=locations.LOCID  where  TITLE<>"bridge"  '.$req_location.' '. $req_type. ' order by FIND  DESC' );
 //  $res=SQLSelect('select zigbee2mqtt_devices.ID DEVID, zigbee2mqtt_devices.*,LOCATION from zigbee2mqtt_devices  left join (select ID LOCID, TITLE LOCATION from locations) locations ON  zigbee2mqtt_devices.LOCATION_ID=locations.LOCID where  TITLE<>"bridge" order by MANUFACTURE ' );
 
   
@@ -59,21 +83,53 @@ $lnk="";
 $bat="";
 //    if ($res[$i]['TITLE']==$res[$i]['PATH'] && !$out['TREE']) $res[$i]['PATH']='';
 
-$sql="SELECT *  FROM  zigbee2mqtt where LENGTH(LINKED_OBJECT)>2  and DEV_ID='".$res[$i]['DEVID']."'";
+
+$lnk="";
+$sql="SELECT *  FROM  zigbee2mqtt where LENGTH(LINKED_PROPERTY)>2  and DEV_ID='".$res[$i]['DEVID']."'";
 
   $res2=SQLSelect($sql);
    $total2=count($res2);
 
 //debmes($sql.'count : '.$total2,'zigbee2mqtt');
  for($j=0;$j<$total2;$j++) {
-$lnk.=$res2[$j]['LINKED_OBJECT'].'.'.$res2[$j]['LINKED_PROPERTY'].":".$res2[$j]['VALUE'].';  ';
+
+//if ($res2[$j]['LINKED_PROPERTY']) $prpr='.'.$res2[$j]['LINKED_PROPERTY']; else $prpr="";
+
+if ($res2[$j]['LINKED_PROPERTY']) $lnk.=$res2[$j]['VALUE'].';  ';
+
+//$lnk.=$res2[$j]['LINKED_OBJECT'].$prpr.":".$res2[$j]['VALUE'].';  ';
 
 if  ($res2[$j]['METRIKA']=='battery')   $bat= $res2[$j]['VALUE'];
 
 }
 
-if (strlen($lnk) >2) $lnk='('. substr($lnk, 0, -3).')';
+//if (strlen($lnk) >2) $lnk='('. substr($lnk, 0, -3).')';
 $res[$i]['LINKED']=$lnk;
+
+$lnk2="";
+
+$sql="SELECT *  FROM  zigbee2mqtt where LENGTH(LINKED_METHOD)>2  and DEV_ID='".$res[$i]['DEVID']."'";
+
+  $res2=SQLSelect($sql);
+   $total2=count($res2);
+
+//debmes($sql.'count : '.$total2,'zigbee2mqtt');
+ for($j=0;$j<$total2;$j++) {
+
+//if ($res2[$j]['LINKED_PROPERTY']) $prpr='.'.$res2[$j]['LINKED_PROPERTY']; else $prpr="";
+
+if ($res2[$j]['LINKED_METHOD']) $lnk2.=$res2[$j]['LINKED_METHOD'].';  ';
+
+//$lnk.=$res2[$j]['LINKED_OBJECT'].$prpr.":".$res2[$j]['VALUE'].';  ';
+
+
+
+}
+
+//if (strlen($lnk) >2) $lnk='('. substr($lnk, 0, -3).')';
+$res[$i]['METHOD']=$lnk2;
+
+
 
 
 
@@ -117,6 +173,11 @@ $basa=SQLSelectOne($sql);
  if ($basa['model']=='LLKZMK11LM')  $res[$i]['CHANGEABLE']='2';
 
 
+ if ($basa['model']=='QBKG03LM')  $res[$i]['DISABLERED']='2';
+
+ if ($basa['model']=='QBKG04LM')  $res[$i]['DISABLERED']='1';
+
+
 
 
 
@@ -130,7 +191,7 @@ $basa=SQLSelectOne($sql);
 
 //echo time().":".strtotime($res[$i]['FIND'])."=".time()-strtotime($res[$i]['FIND'])."<br>";
 
- if (time()-strtotime($res[$i]['FIND'])>3000) {
+ if (time()-strtotime($res[$i]['FIND'])>18000) {
   $res[$i]['LOST']='1';
 }
 //  $res[$i]['LOST']='1';
