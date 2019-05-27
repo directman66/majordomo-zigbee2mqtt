@@ -36,6 +36,8 @@
 .col-sm-6, .col-md-4, .col-lg-4 {padding-left:3px; padding-right:3px;}
 </style>
 
+<form action="?" method="post" name="frmList_mqtt" style="padding:0px" class="form">
+
 <table width=100% border=0><tr>
 <td valign=top>
 <!-- results -->
@@ -51,7 +53,45 @@
 
 -->
 
-<form action="?" method="post" name="frmList_dev_sonoff_devices" style="padding:0px">
+  <div class="col-md-3">
+  <select class="form-control" name="type_id">
+
+
+
+      <option value="0"><#LANG_FILTER_BY_TYPE#> (<#LANG_ALL#>)
+   [#begin ZIGBEE2MQTTTYPE#]
+   <option value="[#TYPE#]">[#TYPE#]
+   [#end ZIGBEE2MQTTTYPE#]
+  </select>
+  </div>
+
+
+
+  <div class="col-md-3">
+  <select class="form-control" name="location_id">
+   <option value="0"><#LANG_FILTER_BY_LOCATION#> (<#LANG_ALL#>)
+   [#begin LOCATIONS#]
+   <option value="[#ID#]"[#if ID="<#LOCATION_ID#>"#] selected[#endif#]>[#TITLE#]
+   [#end LOCATIONS#]
+  </select>
+  </div>
+
+
+
+
+<button type="submit" name="subm" value="Submit" class="btn btn-default"><#LANG_SEARCH#></button>
+<input type="hidden" name="data_source" value="<#DATA_SOURCE#>">
+<input type="hidden" name="view_mode" value="multiple_z2m">
+<input type="hidden" name="action" value="zigbee2mqtt">
+<input type="hidden" name="md" value="panel">
+</form>
+
+
+
+
+<hr>
+
+
 
 
 [#if  DEVICES#]  
@@ -148,10 +188,30 @@
             </a>        
             <ul class="dropdown-menu">
 
-
-              <li><a href="?view_mode=view_mqtt&id=[#DEVID#]&tab=edit_parametrs" title="Edit"><span class="glyphicon glyphicon-list-alt"></span>Данные</a></li>
+       
               <li><a href="?view_mode=view_mqtt&id=[#DEVID#]&tab=edit_device" title="Edit"><span class="glyphicon glyphicon-pencil"></span>Редактировать</a></li>
-              <li><a href="?view_mode=view_mqtt&id=[#DEVID#]&tab=view_det" title="Share"><span class="glyphicon glyphicon-tags"></span>Дополнительно</a></li>
+              <li><a href="?view_mode=view_mqtt&id=[#DEVID#]&tab=edit_parametrs" title="Data"><span class="glyphicon glyphicon-list-alt"></span>Данные</a></li>
+
+              <li><a href="?view_mode=view_mqtt&id=[#DEVID#]&tab=view_det" title="Properties"><span class="glyphicon glyphicon-tags"></span>Дополнительно</a></li>
+              <li><a href="?view_mode=view_mqtt&id=[#DEVID#]&tab=device_log" title="Properties"><span class="glyphicon glyphicon-calendar"></span>История</a></li>
+
+
+[#if DISABLERED="1"#]
+              <li class="divider"></li>
+              <li><a href="?view_mode=singlebutton_disable&id=[#DEVID#]&tab=" title="Disable single button"><span class="glyphicon glyphicon-tags"></span>Отвязать  кнопку от реле выключателя</a></li>
+              <li><a href="?view_mode=singlebutton_enable&id=[#DEVID#]&tab=" title="Enable single button"><span class="glyphicon glyphicon-tags"></span>Привязать  кнопку к реле  выключателя</a></li>
+
+[#endif#]
+
+[#if DISABLERED="2"#]
+              <li class="divider"></li>
+              <li><a href="?view_mode=leftbutton_disable&id=[#DEVID#]&tab=" title="Disable left button"><span class="glyphicon glyphicon-tags"></span>Отвязать левую кнопку от реле выключателя</a></li>
+              <li><a href="?view_mode=leftbutton_enable&id=[#DEVID#]&tab=" title="Enable left button"><span class="glyphicon glyphicon-tags"></span>Привязать левую кнопку к реле  выключателя</a></li>
+
+              <li><a href="?view_mode=rightbutton_disable&id=[#DEVID#]&tab=" title="Disable right button"><span class="glyphicon glyphicon-tags"></span>Отвязать левую кнопку от реле выключателя</a></li>
+              <li><a href="?view_mode=rightbutton_enable&id=[#DEVID#]&tab=" title="Enable right button"><span class="glyphicon glyphicon-tags"></span>Привязать левую кнопку к реле  выключателя</a></li>
+[#endif#]
+
               <li class="divider"></li>
               <li><a href="?view_mode=delete_dev&id=[#DEVID#]" onClick="return confirm('Are you sure? Please confirm.')" style="color: #a94442;"><span class="glyphicon glyphicon-trash"></span>Удалить из Majordomo</a></li>
               <li><a href="?view_mode=delete_dev_z2m&id=[#DEVID#]&ieee=[#IEEEADDR#]" onClick="return confirm('Are you sure? Please confirm.')" style="color: #a94442;"><span class="glyphicon glyphicon-trash"></span>Исключить из сети zigbee</a></li>
@@ -178,15 +238,17 @@
 
 
 
-[#if LINKED!=""#]
-<div class="pull-right">
-<small>[#LINKED#]</small>
+[#if METHOD!=""#]
+<div class="pull-right" [#if LOST#] style="color:lightgray;font-weight:bold[#endif#]">
+<small>[#METHOD#]</small>
 </div>
 [#else#]
 <div class="pull-right">
-&nbsp;
+&nbsp;<br><br>
 </div>
 [#endif#]
+
+
 
 [#if CHANGEABLE#]
 <a href="?view_mode=device_togle&id=[#DEVID#]&tab=" title="Переключить">
@@ -194,10 +256,17 @@
 [#else#]
 		<img class="card-img pull-left img-circle" src="../templates/zigbee2mqtt/img/[#SELECTTYPE#].jpg" alt="Device Logo">
 [#endif#]
-        <div class="caption">
+
+ <div class="caption">
 
 
-          <div style="color:#999;font-size: 12px;[#if LOST#] ;color:lightgray;font-weight:bold[#endif#]">Модель</div>
+
+          <div style="color:#999;font-size: 12px;[#if LOST#] ;color:lightgray;font-weight:bold[#endif#]">Модель[#if LOCATION#] ([#LOCATION#]) [#endif#]</div>
+
+          <div class="pull-right">
+            <div style="color:#999;font-size: 20px;[#if LOST#];color:lightgray; [#else#]color:black; [#endif#]">[#LINKED#]</div></div>
+
+
           <div style="font-size:20px[#if LOST#];color:lightgray;[#endif#]">  [#if SELECTTYPE!=""#]
 										   [#SELECTTYPE#]
 										  [#else#]
@@ -205,6 +274,11 @@
 
 
 										  [#endif#]</div>
+
+
+
+
+
           <div class="pull-right">
  [#if FIND!=""#]
             <div style="color:#999;font-size: 12px;[#if LOST#];color:lightgray;[#endif#]"><#LANG_UPDATED#>
@@ -217,18 +291,14 @@
 <!--				<div class="pull-right signal-level" style="background: linear-gradient(to right, [#RSSI_COLOR#] [#RSSI_LVL#]%,  #999 [#RSSI_LVL#]%);">
 				  <div class="glyphicon glyphicon-signal"></div>
 				</div>
-
 			  [#else#]
 <!--				<div class="pull-left">
 				  <span class="label label-danger"><#LANG_OFFLINE#></span>
 <!--				</div>
 			  [#endif#]
-
 -->
 </div>
             <p [#if LOST#]style=";color:lightgray;"[#endif#]> 
-
-
 
 
  [#if FIND!=""#]
@@ -255,9 +325,7 @@
 
 
 </div></div>
-<input type="hidden" name="data_source" value="<#DATA_SOURCE#>">
-<input type="hidden" name="view_mode" value="multiple_dev_sonoff_devices">
-</form>
+
 <!-- / search results (list) -->
 <!-- paging -->
 
