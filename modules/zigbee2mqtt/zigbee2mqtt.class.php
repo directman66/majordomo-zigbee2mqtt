@@ -1034,6 +1034,8 @@ define("ZMQTT_DEBUG", "1");
  $out['MQTT_HOST']=$this->config['MQTT_HOST'];
  $out['MQTT_PORT']=$this->config['MQTT_PORT'];
  $out['Z2M_LOGMODE']=$this->config['Z2M_LOGMODE'];
+ $out['Z2M_VIEW']=$this->config['Z2M_VIEW'];
+
 // $out['Z2M_LOGMODE']='deb';
 
  $out['ZIGBEE2MQTTPATH']=$this->config['ZIGBEE2MQTTPATH'];
@@ -1195,7 +1197,9 @@ $out['SELECTTYPEARRAY']=$tmp;
 
 if ($this->tab=='device_log'){
 
-  $sql0='SELECT *  FROM zigbee2mqtt_log where TITLE like "%'.$res['IEEEADDR'].'%" order by FIND DESC LIMIT 100';
+  $sql0='SELECT *  FROM zigbee2mqtt_log where TITLE like "%'.$res['IEEEADDR'].'%"  order by FIND DESC LIMIT 100';
+//  $sql0='SELECT *  FROM zigbee2mqtt_log where TITLE like "%'.$res['IEEEADDR'].'%" and TITLE not like "%'.$res['IEEEADDR'].'" order by FIND DESC LIMIT 100';
+//  $sql0='SELECT *  FROM zigbee2mqtt_log where TITLE not like "%'.$res['IEEEADDR'].'" order by FIND DESC LIMIT 100';
 
 debmes($sql0,'zigbee2mqtt');
 
@@ -1773,6 +1777,7 @@ $graphdata=$graph['VALUE'];
    global $z2m_logmode2;
    global $mqtt_query;
    global $zigbee2mqttpath;
+   global $z2m_view;
 //echo $zigbee2mqttpath;
 
 //$vm1=$this->view_mode;
@@ -1791,6 +1796,7 @@ $graphdata=$graph['VALUE'];
    $this->config['MQTT_PORT']=(int)$mqtt_port;
    $this->config['MQTT_QUERY']=trim($mqtt_query);
    $this->config['Z2M_LOGMODE']=trim($z2m_logmode2);
+   $this->config['Z2M_VIEW']=trim($z2m_view);
 
 
 // $this->sendcommand('zigbee2mqtt/bridge/config/log_level', $z2m_logmode);
