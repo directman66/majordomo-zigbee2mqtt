@@ -6,9 +6,8 @@ DATASOURCE: [#DATA_SOURCE#]
 
 <!-- table zwave_devices search -->
 
-
-	 <ul class="nav nav-tabs">
  [#if VIEW_MODE=""||VIEW_MODE="update_log"#]
+	 <ul class="nav nav-tabs">
 <li [#if TAB=="" || TAB=="indata" #] class="active" [#endif#]><a href="?data_source=<#DATA_SOURCE#>&view_mode=&id=<#ID#>&tab=devices">Devices</a> </li>
 <!-- <li [#if TAB=="table" #] class="active" [#endif#]><a href="?data_source=<#DATA_SOURCE#>&view_mode=&id=<#ID#>&tab=table">Devices table</a> </li>-->
 <li [#if TAB=="groups" #] class="active" [#endif#]><a href="?data_source=<#DATA_SOURCE#>&view_mode=&id=<#ID#>&tab=groups">Groups</a> </li>
@@ -19,7 +18,6 @@ DATASOURCE: [#DATA_SOURCE#]
 <li [#if TAB=="service" #] class="active" [#endif#]><a href="?data_source=<#DATA_SOURCE#>&view_mode=&id=<#ID#>&tab=service">Service</a> </li>
 <li [#if TAB=="help" #] class="active" [#endif#]><a href="?view_mode=<#VIEW_MODE#>&tab=help">Help</a> </li>	
 
-<li [#if TAB=="cicle" #] class="active" [#endif#]>
 
 	[#if CYCLERUN==1#]
 		<span class="label label-success" title="Статус цикла"><a href="?view_mode=cycle_start"  title="Restart  cycle" ><font color="white" >Цикл запущен</span></font></a>
