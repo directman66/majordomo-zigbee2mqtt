@@ -162,11 +162,11 @@
 [#endif#]
 
 [#if CHANGEABLE="2"#]
-   <a href="?view_mode=device_on&id=[#DEVID#]&tab="  class="btn btn-default btn-round" title="Включить"> 
+   <a href="?view_mode=device_on_left&id=[#DEVID#]&tab="  class="btn btn-default btn-round" title="Включить"> 
               <span class="glyphicon glyphicon-ok"></span>
 </a>
 
-   <a href="?view_mode=device_off&id=[#DEVID#]&tab=" class="btn btn-default btn-round"  title="Выключить">
+   <a href="?view_mode=device_off_left&id=[#DEVID#]&tab=" class="btn btn-default btn-round"  title="Выключить">
               <span class="glyphicon glyphicon-remove"></span>
  </a>
 |
@@ -175,6 +175,26 @@
 </a>
 
    <a href="?view_mode=device_off_right&id=[#DEVID#]&tab=" class="btn btn-default btn-round"  title="Выключить">
+              <span class="glyphicon glyphicon-remove"></span>
+ </a>
+&nbsp;
+[#endif#]
+
+
+[#if CHANGEABLE="3"#]
+   <a href="?view_mode=device_on_l1&id=[#DEVID#]&tab="  class="btn btn-default btn-round" title="Включить"> 
+              <span class="glyphicon glyphicon-ok"></span>
+</a>
+
+   <a href="?view_mode=device_off_l1&id=[#DEVID#]&tab=" class="btn btn-default btn-round"  title="Выключить">
+              <span class="glyphicon glyphicon-remove"></span>
+ </a>
+|
+   <a href="?view_mode=device_on_l2&id=[#DEVID#]&tab="  class="btn btn-default btn-round" title="Включить"> 
+              <span class="glyphicon glyphicon-ok"></span>
+</a>
+
+   <a href="?view_mode=device_off_l2&id=[#DEVID#]&tab=" class="btn btn-default btn-round"  title="Выключить">
               <span class="glyphicon glyphicon-remove"></span>
  </a>
 &nbsp;
