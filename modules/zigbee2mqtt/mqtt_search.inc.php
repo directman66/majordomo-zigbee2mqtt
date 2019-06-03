@@ -539,6 +539,38 @@ $zigbee2mqttpath=$this->config['ZIGBEE2MQTTPATH'];
 
                 }
 
+                if ($this->tab == 'bind') {
+
+ $res=SQLSelect('SELECT * FROM zigbee2mqtt_bind '); 
+
+$out['BIND'] =  $res;
+
+
+ $res=SQLSelect('SELECT * FROM zigbee2mqtt_devices WHERE SELECTTYPE IN (select model from zigbee2mqtt_devices_list where type="REMOTE")'); 
+
+$out['SOURCE'] =  $res;
+
+
+// $res=SQLSelect('SELECT * FROM zigbee2mqtt_devices WHERE SELECTTYPE IN (select model from zigbee2mqtt_devices_list where type="REMOTE")'); 
+$res=array("TITLE"=>"Single");
+$out['KEY'] =  $res;
+
+
+ $res=SQLSelect('SELECT * FROM zigbee2mqtt_devices WHERE SELECTTYPE IN (select model from zigbee2mqtt_devices_list where type="BULB")'); 
+
+$out['TARGET'] =  $res;
+
+$res=array();
+$res[]=array("TITLE"=>"Single");
+$res[]=array("TITLE"=>"Left")  ;
+$res[]=array("TITLE"=>"Right") ;
+
+$out['ENDPOINT'] =  $res;
+
+
+
+}
+
 
 
 ?>
