@@ -459,8 +459,32 @@ else
 
 */
 
-if  (($value=="device_on_left")&&(strpos($rec[$i]['METRIKA'],"tate")>0)) $json=array( $rec[$i]['COMMAND_VALUE']=> $rec[$i]['PAYLOAD_ON']);
-if (($value=="device_off_left")&&(strpos($rec[$i]['METRIKA'],"tate")>0))  $json=array( $rec[$i]['COMMAND_VALUE']=> $rec[$i]['PAYLOAD_OFF']);
+if  (($value=="device_on_single")&&(strpos($rec[$i]['METRIKA'],"tate")>0)) $json=array( $rec[$i]['COMMAND_VALUE']=> $rec[$i]['PAYLOAD_ON']);
+if (($value=="device_off_single")&&(strpos($rec[$i]['METRIKA'],"tate")>0))  $json=array( $rec[$i]['COMMAND_VALUE']=> $rec[$i]['PAYLOAD_OFF']);
+
+
+if  (($value=="device_on_l1")&&(strpos($rec[$i]['METRIKA'],"tate")>0)&&(strpos($rec[$i]['PATH_WRITE'],'l1')>0)) $json=array( $rec[$i]['COMMAND_VALUE']=> $rec[$i]['PAYLOAD_ON']);
+if (($value=="device_off_l1")&&(strpos($rec[$i]['METRIKA'],"tate")>0)&&(strpos($rec[$i]['PATH_WRITE'],'l1')>0))  $json=array( $rec[$i]['COMMAND_VALUE']=> $rec[$i]['PAYLOAD_OFF']);
+
+if  (($value=="device_on_l2")&&(strpos($rec[$i]['METRIKA'],"tate")>0)&&(strpos($rec[$i]['PATH_WRITE'],'l2')>0)) $json=array( $rec[$i]['COMMAND_VALUE']=> $rec[$i]['PAYLOAD_ON']);
+if (($value=="device_off_l2")&&(strpos($rec[$i]['METRIKA'],"tate")>0)&&(strpos($rec[$i]['PATH_WRITE'],'l2')>0))  $json=array( $rec[$i]['COMMAND_VALUE']=> $rec[$i]['PAYLOAD_OFF']);
+
+if  (($value=="device_on_l3")&&(strpos($rec[$i]['METRIKA'],"tate")>0)&&(strpos($rec[$i]['PATH_WRITE'],'l3')>0)) $json=array( $rec[$i]['COMMAND_VALUE']=> $rec[$i]['PAYLOAD_ON']);
+if (($value=="device_off_l3")&&(strpos($rec[$i]['METRIKA'],"tate")>0)&&(strpos($rec[$i]['PATH_WRITE'],'l3')>0))  $json=array( $rec[$i]['COMMAND_VALUE']=> $rec[$i]['PAYLOAD_OFF']);
+
+
+if  (($value=="device_on_l4")&&(strpos($rec[$i]['METRIKA'],"tate")>0)&&(strpos($rec[$i]['PATH_WRITE'],'l4')>0)) $json=array( $rec[$i]['COMMAND_VALUE']=> $rec[$i]['PAYLOAD_ON']);
+if (($value=="device_off_l4")&&(strpos($rec[$i]['METRIKA'],"tate")>0)&&(strpos($rec[$i]['PATH_WRITE'],'l4')>0))  $json=array( $rec[$i]['COMMAND_VALUE']=> $rec[$i]['PAYLOAD_OFF']);
+
+
+
+
+if  (($value=="device_on_left")&&(strpos($rec[$i]['METRIKA'],"tate")>0)&&(strpos($rec[$i]['PATH_WRITE'],'left')>0)) $json=array( $rec[$i]['COMMAND_VALUE']=> $rec[$i]['PAYLOAD_ON']);
+if (($value=="device_off_left")&&(strpos($rec[$i]['METRIKA'],"tate")>0)&&(strpos($rec[$i]['PATH_WRITE'],'left')>0))  $json=array( $rec[$i]['COMMAND_VALUE']=> $rec[$i]['PAYLOAD_OFF']);
+
+
+
+
 
 if  (($value=="device_on_right")&&(strpos($rec[$i]['METRIKA'],"tate")>0) &&(strpos($rec[$i]['PATH_WRITE'],'right')>0)) $json=array( $rec[$i]['COMMAND_VALUE']=> $rec[$i]['PAYLOAD_ON']);
 if (($value=="device_off_right")&&(strpos($rec[$i]['METRIKA'],"tate")>0) &&(strpos($rec[$i]['PATH_WRITE'],'right')>0)) $json=array( $rec[$i]['COMMAND_VALUE']=> $rec[$i]['PAYLOAD_OFF']);
@@ -1612,10 +1636,12 @@ if (ZMQTT_DEBUG=="1" ) debmes('!!!!!!!device_on','zigbee2mqtt');
 
 $cstate=SQLSelectOne('select * from zigbee2mqtt_devices where ID='.$id)['STATE'];
 
-if ($cstate=="0") { 	$this->setPropertyDevice($id, 'device_on_left');	$this->setPropertyDevice($id, 'device_on_right'); }
+if ($cstate=="0") { 	
+$this->setPropertyDevice($id, 'device_on_single');	
+}
 else 
-{	$this->setPropertyDevice($id, 'device_off_left');
-        $this->setPropertyDevice($id, 'device_off_right');
+{	$this->setPropertyDevice($id, 'device_off_single');
+
 
 }
 
@@ -1630,7 +1656,7 @@ else
 	$id=$this->id;
 //	$this->setProperty($mqtt_properties[$i]['ID'], $value);
 if (ZMQTT_DEBUG=="1" ) debmes('!!!!!!!device_on','zigbee2mqtt');
-	$this->setPropertyDevice($id, 'device_on_left');
+	$this->setPropertyDevice($id, 'device_on_single');
    $this->redirect("?");
 }
 
@@ -1638,7 +1664,7 @@ if (ZMQTT_DEBUG=="1" ) debmes('!!!!!!!device_on','zigbee2mqtt');
 	$id=$this->id;
 if (ZMQTT_DEBUG=="1" ) debmes('!!!!!!!device_off','zigbee2mqtt');
 //	$this->setProperty($mqtt_properties[$i]['ID'], $value);
-	$this->setPropertyDevice($id, 'device_off_left');
+	$this->setPropertyDevice($id, 'device_off_single');
    $this->redirect("?");
 }
 
@@ -1649,6 +1675,57 @@ if (ZMQTT_DEBUG=="1" ) debmes('!!!!!!!device_on','zigbee2mqtt');
 	$this->setPropertyDevice($id, 'device_on_right');
    $this->redirect("?");
 }
+
+
+ if ($this->view_mode=='device_on_left') {
+	$id=$this->id;
+//	$this->setProperty($mqtt_properties[$i]['ID'], $value);
+if (ZMQTT_DEBUG=="1" ) debmes('!!!!!!!device_on_left','zigbee2mqtt');
+	$this->setPropertyDevice($id, 'device_on_left');
+   $this->redirect("?");
+}
+
+
+ if ($this->view_mode=='device_on_l1') {
+	$id=$this->id;
+//	$this->setProperty($mqtt_properties[$i]['ID'], $value);
+if (ZMQTT_DEBUG=="1" ) debmes('!!!!!!!device_on_l1','zigbee2mqtt');
+	$this->setPropertyDevice($id, 'device_on_l1');
+   $this->redirect("?");
+}
+
+ if ($this->view_mode=='device_off_l1') {
+	$id=$this->id;
+//	$this->setProperty($mqtt_properties[$i]['ID'], $value);
+if (ZMQTT_DEBUG=="1" ) debmes('!!!!!!!device_off_l1','zigbee2mqtt');
+	$this->setPropertyDevice($id, 'device_off_l1');
+   $this->redirect("?");
+}
+
+ if ($this->view_mode=='device_on_l2') {
+	$id=$this->id;
+//	$this->setProperty($mqtt_properties[$i]['ID'], $value);
+if (ZMQTT_DEBUG=="1" ) debmes('!!!!!!!device_on_l2','zigbee2mqtt');
+	$this->setPropertyDevice($id, 'device_on_l2');
+   $this->redirect("?");
+}
+
+ if ($this->view_mode=='device_off_l2') {
+	$id=$this->id;
+//	$this->setProperty($mqtt_properties[$i]['ID'], $value);
+if (ZMQTT_DEBUG=="1" ) debmes('!!!!!!!device_off_l2','zigbee2mqtt');
+	$this->setPropertyDevice($id, 'device_off_l2');
+   $this->redirect("?");
+}
+
+ if ($this->view_mode=='device_off_left') {
+	$id=$this->id;
+//	$this->setProperty($mqtt_properties[$i]['ID'], $value);
+if (ZMQTT_DEBUG=="1" ) debmes('!!!!!!!device_off_left','zigbee2mqtt');
+	$this->setPropertyDevice($id, 'device_off_left');
+   $this->redirect("?");
+}
+
 
  if ($this->view_mode=='device_off_right') {
 	$id=$this->id;
