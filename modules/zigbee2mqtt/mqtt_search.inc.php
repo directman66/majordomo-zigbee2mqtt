@@ -170,7 +170,8 @@ $basa=SQLSelectOne($sql);
  if ($ttype=='bulb')  $res[$i]['CHANGEABLE']='1';
 
  if ($basa['model']=='KS-SM001')  $res[$i]['CHANGEABLE']='1';
- if ($basa['model']=='LLKZMK11LM')  $res[$i]['CHANGEABLE']='2';
+ if ($basa['model']=='LLKZMK11LM')  $res[$i]['CHANGEABLE']='3';
+
 
 
  if ($basa['model']=='QBKG03LM')  $res[$i]['DISABLERED']='2';
