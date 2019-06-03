@@ -1,0 +1,133 @@
+<link rel="stylesheet" href="../templates/zigbee2mqtt/css/bootstrap-select.min.css">
+
+<table width=100% border=0>
+<tr>
+<th> Пульт</th>
+<th> Кнопка пульта</th>
+<th> Управляемое устройство</th>
+<th> Конечная точка</th>
+<th> Добавлено</th>
+<th>
+<a href="https://www.zigbee2mqtt.io/information/binding.html" target="_blank">Help</a>
+</th>
+</tr>
+
+
+[#begin BIND#]
+<tr>
+<td>
+
+<img src='../templates/zigbee2mqtt/img/[#SOURCETYPE#].jpg' width='30' height='30'>
+ [#SOURCE#]</td>
+<td> [#KEYY#]</td>
+<td>
+<img src='../templates/zigbee2mqtt/img/[#TARGETTYPE#].jpg' width='30' height='30'>
+ [#TARGET#]</td>
+<td> [#TARGETENDPOINT#]</td>
+<td> [#ADDED#]</td>
+<td>
+   <a href="?view_mode=unbind&id=[#ID#]&tab=bind&target=[#TARGET#]&source=[#SOURCE#]" class="btn btn-default btn-sm" title="Unbind"><i class="glyphicon glyphicon-minus"></i></a>
+</td>
+</tr>
+[#end BIND#]
+
+
+
+
+
+
+<form action="?" method="post" enctype="multipart/form-data" name="frmEdit" class="form-horizontal">
+
+
+
+
+<tr>
+
+<td>
+
+
+<!-- <select name="source"  class="selectpicker show-tick form-control"> -->
+
+  <select class="form-control input-lg" name="source"  >        
+ [#begin SOURCE#]
+
+<option data-content="<img src='../templates/zigbee2mqtt/img/[#SELECTTYPE#].jpg' width='30' height='30'> [#TITLE#]" value="[#TITLE#]" >[#TITLE#]</option>
+ [#end SOURCE#] 
+ </select>
+
+
+
+
+</td>
+
+<td>
+  <select class="form-control input-lg" name="key"  >
+   [#begin KEY#]
+   <option value="[#TITLE#]">[#TITLE#] 
+   [#end KEY#]
+  </select>
+
+</td>
+
+<td>
+<!--
+  <select class="form-control" name="target">
+      <option value="0">Устройство (<#LANG_ALL#>)
+   [#begin TARGET#]
+   <option value="[#TYPE#]">[#TITLE#] ([#SELECTVENDOR#] [#SELECTTYPE#])
+   [#end TARGET#]
+  </select>
+
+-->
+
+
+
+<!-- <select name="target"  class="selectpicker show-tick form-control"> -->
+  <select class="form-control input-lg" name="target"  >        
+[#begin TARGET#]
+<option data-content="<img src='../templates/zigbee2mqtt/img/[#SELECTTYPE#].jpg' width='30' height='30'> [#TITLE#]" value="[#TITLE#]" hint="123">[#TITLE#]</option>
+ [#end TARGET#] 
+ </select>
+
+
+
+</td>
+
+<td>
+  <select class="form-control input-lg" name="endpoint"  >
+   [#begin ENDPOINT#]
+   <option value="[#TITLE#]">[#TITLE#] 
+   [#end ENDPOINT#]
+  </select>
+
+</td>
+
+<td>
+<div class="form-actions">
+
+<div class="col-md-2 input-group">
+<button type="submit" name="subm" value="Submit" class="form-control input-lg"><i class="glyphicon glyphicon-plus"></i></button>
+</div>
+<input type="hidden" name="view_mode" value="bind">
+<input type="hidden" name="mode" value="update">
+<input type="hidden" name="tab" value="bind">
+
+</div>
+</td>
+
+</tr>
+</table>
+
+</fieldset>
+</form>
+
+
+<script>
+var script = document.createElement('script');
+script.src = "../templates/zigbee2mqtt/css/bootstrap-select.min.js"
+document.body.appendChild(script);
+script.onload = function() {
+	$('.selectpicker').selectpicker('render');
+}
+
+</script>
