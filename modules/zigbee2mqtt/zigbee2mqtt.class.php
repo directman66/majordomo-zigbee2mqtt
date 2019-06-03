@@ -1857,6 +1857,66 @@ $graphdata=$graph['VALUE'];
 
 
 
+ if ($this->view_mode=='bind') {
+
+
+global $target;
+global $endpoint;
+
+//$target=$target1;
+
+//$target=$_POST['target1'];
+global $source;
+//$source=$source1;
+global $key;
+
+debmes('view_mode: '.$this->view_mode.' $id:'.$id." target: ".$target." source:".$source." key:".$key, 'zigbee2mqtt'); 
+
+$targettemp=SQLSelectOne('select * from zigbee2mqtt_devices where TITLE="'.$target.'"');
+$sourcetemp=SQLSelectOne('select * from zigbee2mqtt_devices where TITLE="'.$source.'"');
+
+
+$rec=SQLSelectOne('select * from zigbee2mqtt_bind where KEYY="123"' );
+
+$rec['SOURCE']=$source;
+$rec['SOURCETYPE']=$sourcetemp['SELECTTYPE'];
+
+$rec['TARGET']=$target;
+$rec['TARGETTYPE']=$targettemp['SELECTTYPE'];
+$rec['TARGETENDPOINT']=$endpoint;
+$rec['KEYY']=$key;
+$rec['ADDED']=date('Y-m-d H:i:s');
+if (!$rec['ID']) SQLInsert('zigbee2mqtt_bind', $rec);
+
+
+  $this->sendcommand('zigbee2mqtt/bridge/bind/'.$target, $source);
+
+
+  $this->redirect("?tab=bind");
+}
+
+ if ($this->view_mode=='unbind') {
+
+
+$id=$this->id;
+$target=$_POST['target'];
+$source=$_POST['source'];
+
+debmes('view_mode: '.$this->view_mode.' $id:'.$id." target: ".$target." source:".$source, 'zigbee2mqtt'); 
+
+
+  $this->sendcommand('zigbee2mqtt/bridge/unbind/'.$target, $source);
+
+
+sqlexec('delete from zigbee2mqtt_bind where ID='.$id);
+
+
+  $this->redirect("?tab=bind");
+
+}
+
+
+
 
 
 //$vm1=$this->view_mode;
@@ -2978,6 +3038,19 @@ function createdb()
  zigbee2mqtt_grouplist: Z2M_ID varchar(255) NOT NULL DEFAULT ''
  zigbee2mqtt_grouplist: TITLE varchar(255) NOT NULL DEFAULT ''
  zigbee2mqtt_grouplist: ADDED datetime
+
+
+ zigbee2mqtt_bind: ID int(10) unsigned NOT NULL auto_increment
+ zigbee2mqtt_bind: SOURCE varchar(255) NOT NULL DEFAULT ''
+ zigbee2mqtt_bind: SOURCETYPE varchar(255) NOT NULL DEFAULT ''
+ zigbee2mqtt_bind: KEYY varchar(255) NOT NULL DEFAULT ''
+ zigbee2mqtt_bind: TARGET varchar(255) NOT NULL DEFAULT ''
+ zigbee2mqtt_bind: TARGETTYPE varchar(255) NOT NULL DEFAULT ''
+ zigbee2mqtt_bind: TARGETENDPOINT varchar(255) NOT NULL DEFAULT ''
+
+ zigbee2mqtt_bind: ADDED datetime
+ zigbee2mqtt_bind: RESULT varchar(255) NOT NULL DEFAULT ''
+
 
 
 
