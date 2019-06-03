@@ -11,6 +11,7 @@ DATASOURCE: [#DATA_SOURCE#]
 <li [#if TAB=="" || TAB=="indata" #] class="active" [#endif#]><a href="?data_source=<#DATA_SOURCE#>&view_mode=&id=<#ID#>&tab=devices">Devices</a> </li>
 <!-- <li [#if TAB=="table" #] class="active" [#endif#]><a href="?data_source=<#DATA_SOURCE#>&view_mode=&id=<#ID#>&tab=table">Devices table</a> </li>-->
 <li [#if TAB=="groups" #] class="active" [#endif#]><a href="?data_source=<#DATA_SOURCE#>&view_mode=&id=<#ID#>&tab=groups">Groups</a> </li>
+<li [#if TAB=="bind" #] class="active" [#endif#]><a href="?data_source=<#DATA_SOURCE#>&view_mode=&id=<#ID#>&tab=bind">Bind</a> </li>
 <li [#if TAB=="settings" #] class="active" [#endif#]><a href="?data_source=<#DATA_SOURCE#>&view_mode=&id=<#ID#>&tab=settings">Settings</a> </li>
 <li [#if TAB=="map" #] class="active" [#endif#]><a href="?data_source=<#DATA_SOURCE#>&view_mode=&id=<#ID#>&tab=map">Map</a> </li>
 <li [#if TAB=="log" #] class="active" [#endif#]><a href="?data_source=<#DATA_SOURCE#>&view_mode=&id=<#ID#>&tab=log">Zigbee2mqtt Log</a> </li>
@@ -120,6 +121,7 @@ DATASOURCE: [#DATA_SOURCE#]
 [#if TAB="groups"#] [#inc groups.html#] [#endif#]
 [#if TAB="log"#] [#inc log.html#] [#endif#]
 [#if TAB="log2"#] [#inc log2.html#] [#endif#]
+[#if TAB="bind"#] [#inc bind.html#] [#endif#]
 [#if TAB="settings"#] [#inc settings.html#] [#endif#]
 [#if TAB="service"#] [#inc service.html#] [#endif#]
 [#if TAB="map"#] 
