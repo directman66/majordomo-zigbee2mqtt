@@ -55,17 +55,46 @@
 
 -->
 
+
+  <div class="col-md-3">
+  <select class="form-control" name="viewtype" onChange="document.frmList_mqtt.submit();">
+
+
+
+
+
+   <option value="[#ID#]">Устройства
+   <option value="[#ID#]">Группы
+
+  </select>
+  </div>
+
+
   <div class="col-md-3">
   <select class="form-control" name="type_id" onChange="document.frmList_mqtt.submit();">
 
 
 
-      <option value="0">Фильтр по типу (<#LANG_ALL#>)
+      <option value="0">Фильтр по типу устройств (<#LANG_ALL#>)
    [#begin ZIGBEE2MQTTTYPE#]
    <option value="[#ID#]" [#if ID="<#ZIGBEE2MQTTDEV#>"#] selected[#endif#]>[#TYPE#]
    [#end ZIGBEE2MQTTTYPE#]
   </select>
   </div>
+
+
+  <div class="col-md-3">
+  <select class="form-control" name="vendor_id" onChange="document.frmList_mqtt.submit();">
+
+
+
+      <option value="0">Фильтр производителю (<#LANG_ALL#>)
+   [#begin VENDORARRAY#]
+   <option value="[#ID#]" [#if ID="<#VENDOR#>"#] selected[#endif#]>[#TYPE#]
+   [#end VENDORARRAY#]
+  </select>
+  </div>
+
 
 
   <div class="col-md-3">
