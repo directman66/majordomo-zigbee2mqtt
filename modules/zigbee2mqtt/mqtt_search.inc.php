@@ -66,10 +66,12 @@ $vendor_name=SQLSelectOne('select * from ( SELECT @i:=@i+1 AS ID, t.* FROM (SELE
 $req_vendor=' and SELECTVENDOR="'.$vendor_name.'" '; 
 
 $out['VENDOR']=(int)$vendor_id;
+$out['VENDORNAME']=$vendor_name;
 } else 
 {
 $req_vendor=' '; 
 $out['VENDOR']='0';
+$out['VENDORNAME']='';
 
 }
 
