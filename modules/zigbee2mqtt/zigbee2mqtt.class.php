@@ -496,8 +496,8 @@ if (ZMQTT_DEBUG=="1" ) debmes('Подменяем '.$value. " на ". $rec[$i]['
 //if (($rec['PAYLOAD_ON'])&& ($value=="1"))  $json=array( $rec['METRIKA']=> $rec['PAYLOAD_ON']);
 //if (($rec['PAYLOAD_OFF'])&& ($value=="0"))  $json=array( $rec['METRIKA']=> $rec['PAYLOAD_OFF']);
 
-if  ($value=="1") $json=array( $rec[$i]['COMMAND_VALUE']=> $rec[$i]['PAYLOAD_ON']);
-if ($value=="0")  $json=array( $rec[$i]['COMMAND_VALUE']=> $rec[$i]['PAYLOAD_OFF']);
+if  ($value=="1") {$json=array( $rec[$i]['COMMAND_VALUE']=> $rec[$i]['PAYLOAD_ON']); SQLExec('update zigbee2mqtt_devices set state="1" where ID="'.$rec['DEV_ID'].'"');}
+if  ($value=="0") { $json=array( $rec[$i]['COMMAND_VALUE']=> $rec[$i]['PAYLOAD_OFF']); SQLExec('update zigbee2mqtt_devices set state="0" where ID="'.$rec['DEV_ID'].'"');}
 if (ZMQTT_DEBUG=="1" ) debmes('Заменили  '.$value. "  на ". $jsonvalue, 'zigbee2mqtt1');
 }
 
@@ -1646,9 +1646,11 @@ else
 }
 
 
+$location=$_GET['location'];
+$vendor_id=$_GET['vendor_id'];
+$type_id=$_GET['type_id'];
 
-
-   $this->redirect("?");
+$this->redirect("?&location=$location&type_id=$type_id&vendor_id=$vendor_id");
 }
 
 
@@ -1657,7 +1659,13 @@ else
 //	$this->setProperty($mqtt_properties[$i]['ID'], $value);
 if (ZMQTT_DEBUG=="1" ) debmes('!!!!!!!device_on','zigbee2mqtt');
 	$this->setPropertyDevice($id, 'device_on_single');
-   $this->redirect("?");
+
+$location=$_GET['location'];
+$vendor_id=$_GET['vendor_id'];
+$type_id=$_GET['type_id'];
+
+$this->redirect("?&location=$location&type_id=$type_id&vendor_id=$vendor_id");
+
 }
 
  if ($this->view_mode=='device_off') {
@@ -1665,7 +1673,12 @@ if (ZMQTT_DEBUG=="1" ) debmes('!!!!!!!device_on','zigbee2mqtt');
 if (ZMQTT_DEBUG=="1" ) debmes('!!!!!!!device_off','zigbee2mqtt');
 //	$this->setProperty($mqtt_properties[$i]['ID'], $value);
 	$this->setPropertyDevice($id, 'device_off_single');
-   $this->redirect("?");
+
+$location=$_GET['location'];
+$vendor_id=$_GET['vendor_id'];
+$type_id=$_GET['type_id'];
+
+$this->redirect("?&location=$location&type_id=$type_id&vendor_id=$vendor_id");
 }
 
  if ($this->view_mode=='device_on_right') {
@@ -1673,7 +1686,13 @@ if (ZMQTT_DEBUG=="1" ) debmes('!!!!!!!device_off','zigbee2mqtt');
 //	$this->setProperty($mqtt_properties[$i]['ID'], $value);
 if (ZMQTT_DEBUG=="1" ) debmes('!!!!!!!device_on','zigbee2mqtt');
 	$this->setPropertyDevice($id, 'device_on_right');
-   $this->redirect("?");
+
+$location=$_GET['location'];
+$vendor_id=$_GET['vendor_id'];
+$type_id=$_GET['type_id'];
+
+$this->redirect("?&location=$location&type_id=$type_id&vendor_id=$vendor_id");
+
 }
 
 
@@ -1682,7 +1701,12 @@ if (ZMQTT_DEBUG=="1" ) debmes('!!!!!!!device_on','zigbee2mqtt');
 //	$this->setProperty($mqtt_properties[$i]['ID'], $value);
 if (ZMQTT_DEBUG=="1" ) debmes('!!!!!!!device_on_left','zigbee2mqtt');
 	$this->setPropertyDevice($id, 'device_on_left');
-   $this->redirect("?");
+
+$location=$_GET['location'];
+$vendor_id=$_GET['vendor_id'];
+$type_id=$_GET['type_id'];
+
+$this->redirect("?&location=$location&type_id=$type_id&vendor_id=$vendor_id");
 }
 
 
@@ -1691,7 +1715,12 @@ if (ZMQTT_DEBUG=="1" ) debmes('!!!!!!!device_on_left','zigbee2mqtt');
 //	$this->setProperty($mqtt_properties[$i]['ID'], $value);
 if (ZMQTT_DEBUG=="1" ) debmes('!!!!!!!device_on_l1','zigbee2mqtt');
 	$this->setPropertyDevice($id, 'device_on_l1');
-   $this->redirect("?");
+
+$location=$_GET['location'];
+$vendor_id=$_GET['vendor_id'];
+$type_id=$_GET['type_id'];
+
+$this->redirect("?&location=$location&type_id=$type_id&vendor_id=$vendor_id");
 }
 
  if ($this->view_mode=='device_off_l1') {
@@ -1699,7 +1728,12 @@ if (ZMQTT_DEBUG=="1" ) debmes('!!!!!!!device_on_l1','zigbee2mqtt');
 //	$this->setProperty($mqtt_properties[$i]['ID'], $value);
 if (ZMQTT_DEBUG=="1" ) debmes('!!!!!!!device_off_l1','zigbee2mqtt');
 	$this->setPropertyDevice($id, 'device_off_l1');
-   $this->redirect("?");
+
+$location=$_GET['location'];
+$vendor_id=$_GET['vendor_id'];
+$type_id=$_GET['type_id'];
+
+$this->redirect("?&location=$location&type_id=$type_id&vendor_id=$vendor_id");
 }
 
  if ($this->view_mode=='device_on_l2') {
@@ -1707,7 +1741,12 @@ if (ZMQTT_DEBUG=="1" ) debmes('!!!!!!!device_off_l1','zigbee2mqtt');
 //	$this->setProperty($mqtt_properties[$i]['ID'], $value);
 if (ZMQTT_DEBUG=="1" ) debmes('!!!!!!!device_on_l2','zigbee2mqtt');
 	$this->setPropertyDevice($id, 'device_on_l2');
-   $this->redirect("?");
+
+$location=$_GET['location'];
+$vendor_id=$_GET['vendor_id'];
+$type_id=$_GET['type_id'];
+$this->redirect("?&location=$location&type_id=$type_id&vendor_id=$vendor_id");
+
 }
 
  if ($this->view_mode=='device_off_l2') {
@@ -1715,7 +1754,12 @@ if (ZMQTT_DEBUG=="1" ) debmes('!!!!!!!device_on_l2','zigbee2mqtt');
 //	$this->setProperty($mqtt_properties[$i]['ID'], $value);
 if (ZMQTT_DEBUG=="1" ) debmes('!!!!!!!device_off_l2','zigbee2mqtt');
 	$this->setPropertyDevice($id, 'device_off_l2');
-   $this->redirect("?");
+
+$location=$_GET['location'];
+$vendor_id=$_GET['vendor_id'];
+$type_id=$_GET['type_id'];
+$this->redirect("?&location=$location&type_id=$type_id&vendor_id=$vendor_id");
+
 }
 
  if ($this->view_mode=='device_off_left') {
@@ -1723,7 +1767,12 @@ if (ZMQTT_DEBUG=="1" ) debmes('!!!!!!!device_off_l2','zigbee2mqtt');
 //	$this->setProperty($mqtt_properties[$i]['ID'], $value);
 if (ZMQTT_DEBUG=="1" ) debmes('!!!!!!!device_off_left','zigbee2mqtt');
 	$this->setPropertyDevice($id, 'device_off_left');
-   $this->redirect("?");
+$location=$_GET['location'];
+$vendor_id=$_GET['vendor_id'];
+$type_id=$_GET['type_id'];
+
+$this->redirect("?&location=$location&type_id=$type_id&vendor_id=$vendor_id");
+
 }
 
 
@@ -1740,19 +1789,34 @@ if (ZMQTT_DEBUG=="1" ) debmes('!!!!!!!device_off','zigbee2mqtt');
   if ($this->view_mode=='startpairing') {
   $this->sendcommand('zigbee2mqtt/bridge/config/permit_join', 'true');
 //  $this->redirect("?tab=service");
-  $this->redirect("?");
+$location=$_GET['location'];
+$vendor_id=$_GET['vendor_id'];
+$type_id=$_GET['type_id'];
+
+$this->redirect("?&location=$location&type_id=$type_id&vendor_id=$vendor_id");
+
 }
 
   if ($this->view_mode=='stoppairing') {
   $this->sendcommand('zigbee2mqtt/bridge/config/permit_join', 'false');
 //  $this->redirect("?tab=service");
-  $this->redirect("?");
+$location=$_GET['location'];
+$vendor_id=$_GET['vendor_id'];
+$type_id=$_GET['type_id'];
+
+$this->redirect("?&location=$location&type_id=$type_id&vendor_id=$vendor_id");
+
 }
 
   if ($this->view_mode=='resetznp') {
   $this->sendcommand('zigbee2mqtt/bridge/config/reset', '');
 //  $this->redirect("?tab=service");
-  $this->redirect("?");
+$location=$_GET['location'];
+$vendor_id=$_GET['vendor_id'];
+$type_id=$_GET['type_id'];
+
+$this->redirect("?&location=$location&type_id=$type_id&vendor_id=$vendor_id");
+
 }
 
 
@@ -1789,7 +1853,12 @@ $payload='
 
   $this->sendcommand('zigbee2mqtt/'.$fn.'/system/set', $payload);
 //  $this->redirect("?tab=service");
-  $this->redirect("?");
+$location=$_GET['location'];
+$vendor_id=$_GET['vendor_id'];
+$type_id=$_GET['type_id'];
+
+$this->redirect("?&location=$location&type_id=$type_id&vendor_id=$vendor_id");
+
 }
 /////////////////////
   if ($this->view_mode=='rightbutton_disable') {
@@ -1807,7 +1876,11 @@ $payload='
 
   $this->sendcommand('zigbee2mqtt/'.$fn.'/system/set', $payload);
 //  $this->redirect("?tab=service");
-  $this->redirect("?");
+$location=$_GET['location'];
+$vendor_id=$_GET['vendor_id'];
+$type_id=$_GET['type_id'];
+
+$this->redirect("?&location=$location&type_id=$type_id&vendor_id=$vendor_id");
 }
 
   if ($this->view_mode=='rightbutton_enable') {
@@ -1825,7 +1898,11 @@ $payload='
 
   $this->sendcommand('zigbee2mqtt/'.$fn.'/system/set', $payload);
 //  $this->redirect("?tab=service");
-  $this->redirect("?");
+$location=$_GET['location'];
+$vendor_id=$_GET['vendor_id'];
+$type_id=$_GET['type_id'];
+
+$this->redirect("?&location=$location&type_id=$type_id&vendor_id=$vendor_id");
 }
 ///////////////////////
 
@@ -1844,7 +1921,11 @@ $payload='
 
   $this->sendcommand('zigbee2mqtt/'.$fn.'/system/set', $payload);
 //  $this->redirect("?tab=service");
-  $this->redirect("?");
+$location=$_GET['location'];
+$vendor_id=$_GET['vendor_id'];
+$type_id=$_GET['type_id'];
+
+$this->redirect("?&location=$location&type_id=$type_id&vendor_id=$vendor_id");
 }
 
   if ($this->view_mode=='singlebutton_enable') {
@@ -1862,7 +1943,11 @@ $payload='
 
   $this->sendcommand('zigbee2mqtt/'.$fn.'/system/set', $payload);
 //  $this->redirect("?tab=service");
-  $this->redirect("?");
+$location=$_GET['location'];
+$vendor_id=$_GET['vendor_id'];
+$type_id=$_GET['type_id'];
+
+$this->redirect("?&location=$location&type_id=$type_id&vendor_id=$vendor_id");
 }
 
 
@@ -2105,6 +2190,7 @@ $vm=$location_id;
 
 
 global $type_id;
+global $vendor_id;
 
 
 
@@ -2116,7 +2202,7 @@ global $type_id;
 
 
    $this->search_mqtt($out);
-   $this->redirect("?location=".$vm.'&type_id='.$type_id);
+   $this->redirect("?location=".$vm.'&type_id='.$type_id.'&vendor_id='.$vendor_id);
 
   }
 
