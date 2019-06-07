@@ -1,57 +1,89 @@
 <br>
 
-<form action="?" method="get" name="frmFilter">
+<form action="?" method="post" name="frmList_mqtt" style="padding:0px" class="form">
 
- <div class="row">
+<table width=100% border=0>
+<tr>
+<td valign=top>
+<!-- results -->
+
+<!-- paging -->
 
 
-<!--
+<!-- / paging -->
+<!-- search results (list) -->
+
+<!--[#ACTION#]
+<#SETTINGS_THEME#>
+
+-->
+
+
   <div class="col-md-3">
-  <select class="form-control" name="dev_id">
+  <select class="form-control" name="viewtype" onChange="document.frmList_mqtt.submit();">
 
 
-   [#begin ZIGBEE2MQTTDEV#]
 
-   <option value="[#TITLE#]"[#if ID="<#LOCATION_ID#>"#] selected[#endif#]>[#TITLE#]
-   [#end ZIGBEE2MQTTDEV#]
+
+
+   <option value="[#ID#]">Устройства
+   <option value="[#ID#]">Группы
+
+  </select>
+  </div>
+
+
+  <div class="col-md-3">
+  <select class="form-control" name="type_id" onChange="document.frmList_mqtt.submit();">
+
+
+
+      <option value="0">Фильтр по типу устройств (<#LANG_ALL#>)
+   [#begin ZIGBEE2MQTTTYPE#]
+   <option value="[#ID#]" [#if ID="<#ZIGBEE2MQTTDEV#>"#] selected[#endif#]>[#TYPE#]
+   [#end ZIGBEE2MQTTTYPE#]
+  </select>
+  </div>
+
+
+  <div class="col-md-3">
+  <select class="form-control" name="vendor_id" onChange="document.frmList_mqtt.submit();">
+
+
+
+      <option value="0">Фильтр производителю (<#LANG_ALL#>)
+   [#begin VENDORARRAY#]
+   <option value="[#ID#]" [#if ID="<#VENDOR#>"#] selected[#endif#]>[#TYPE#]
+   [#end VENDORARRAY#]
   </select>
   </div>
 
 
 
   <div class="col-md-3">
-  <select class="form-control" name="location_id">
+
+  <select class="form-control" name="location_id" onChange="document.frmList_mqtt.submit();">
    <option value="0"><#LANG_FILTER_BY_LOCATION#> (<#LANG_ALL#>)
    [#begin LOCATIONS#]
    <option value="[#ID#]"[#if ID="<#LOCATION_ID#>"#] selected[#endif#]>[#TITLE#]
    [#end LOCATIONS#]
   </select>
   </div>
--->
-<!--  <div class="col-md-3" size="2">
-<input type="text"  name="title" value="<#TITLE#>" class="form-control" placeholder="<#LANG_SEARCH#>">
-  </div>
 
 
-  <div class="col-md-2">
-    <input type="submit" name="submit" value="<#LANG_SEARCH#>" class="btn btn-default">
-  </div>
 
 
-  <div class="col-md-2">
-   <a href="?view_mode=refresh_db" class="btn btn-default" title="Refresh config" ><i class="glyphicon glyphicon-refresh"></i> </a>
-  </div>
--->
-<!--
-  <div class="col-md-2">
-   <a href="?view_mode=clear_trash" class="btn btn-default" title="Delete not linked topics."><i class="glyphicon glyphicon-floppy-remove"></i></a>
-  </div>
-
--->
-
-
- </div>
+<!--<button type="submit" name="subm" value="Submit" class="btn btn-default"><#LANG_SEARCH#></button> -->
+<input type="hidden" name="data_source" value="<#DATA_SOURCE#>">
+<input type="hidden" name="view_mode" value="multiple_z2m">
+<input type="hidden" name="action" value="zigbee2mqtt">
+<input type="hidden" name="md" value="panel">
 </form>
+
+
+
+
+<hr>
 
 <br>
 
@@ -206,9 +238,6 @@
 [#end DEVICES#]
 </tbody>
 </table>
-<input type="hidden" name="data_source" value="<#DATA_SOURCE#>">
-<input type="hidden" name="view_mode" value="multiple_mqtt">
-</form>
 <!-- / search results (list) -->
 <!-- paging -->
 [#if PAGES#]
