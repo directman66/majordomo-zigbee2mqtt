@@ -137,7 +137,20 @@ $sql="SELECT *  FROM  zigbee2mqtt where LENGTH(LINKED_PROPERTY)>2  and DEV_ID='"
 
 //if ($res2[$j]['LINKED_PROPERTY']) $prpr='.'.$res2[$j]['LINKED_PROPERTY']; else $prpr="";
 
-if ($res2[$j]['LINKED_PROPERTY']) $lnk.=$res2[$j]['VALUE'].';  ';
+if (
+($res2[$j]['METRIKA']=='state')||
+($res2[$j]['METRIKA']=='occupancy')||
+($res2[$j]['METRIKA']=='brightness')||
+($res2[$j]['METRIKA']=='click')||
+($res2[$j]['METRIKA']=='action')||
+($res2[$j]['METRIKA']=='state_left')||
+($res2[$j]['METRIKA']=='state_right')||
+($res2[$j]['METRIKA']=='contact')||
+($res2[$j]['METRIKA']=='temperature')||
+($res2[$j]['METRIKA']=='humidity')
+)
+
+ if ($res2[$j]['LINKED_PROPERTY']) $lnk.=$res2[$j]['VALUE'].';  ';
 
 //$lnk.=$res2[$j]['LINKED_OBJECT'].$prpr.":".$res2[$j]['VALUE'].';  ';
 
