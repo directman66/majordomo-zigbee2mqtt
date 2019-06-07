@@ -8047,14 +8047,14 @@ SQLInsert('zigbee2mqtt_devices_command', $par2);
 
 //livolo ;
 $par2['zigbeeModel'] = 'TI0001';
-$par2['type'] = "right";
+$par2['type'] = "light";
 $par2['state_topic'] =  "zigbee2mqtt/<FRIENDLY_NAME>";
 $par2['availability_topic'] = "zigbee2mqtt/bridge/state";
 $par2['brightness'] = "";
 $par2['command_topic'] = "zigbee2mqtt/<FRIENDLY_NAME>/right/set" ;
 $par2['payload_on'] = "ON";
 $par2['payload_off'] = "OFF";
-$par2['value_template'] = "right_left";
+$par2['value_template'] = "state_right";
 $par2['json_attributes'] = "";
 $par2['device_class'] = "";
 $par2['unit_of_measurement'] = "";
