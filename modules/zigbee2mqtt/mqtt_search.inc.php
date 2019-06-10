@@ -147,7 +147,12 @@ if (
 ($res2[$j]['METRIKA']=='state_right')||
 ($res2[$j]['METRIKA']=='contact')||
 ($res2[$j]['METRIKA']=='temperature')||
-($res2[$j]['METRIKA']=='humidity')
+($res2[$j]['METRIKA']=='humidity')||
+($res2[$j]['METRIKA']=='state_l1')||
+($res2[$j]['METRIKA']=='state_l2')
+
+
+
 )
 
  if ($res2[$j]['LINKED_PROPERTY']) $lnk.=$res2[$j]['VALUE'].';  ';
@@ -223,6 +228,7 @@ $basa=SQLSelectOne($sql);
 //echo "1".$ttype;
 
  if ($ttype=='bulb')  $res[$i]['CHANGEABLE']='1';
+ if ( ($ttype=='relay')) $res[$i]['CHANGEABLE']='1';
  if ( ($ttype=='switch') && (strpos($basa['description'],'double')>0)) $res[$i]['CHANGEABLE']='2';
  if ( ($ttype=='switch')) $res[$i]['CHANGEABLE']='1';
 
