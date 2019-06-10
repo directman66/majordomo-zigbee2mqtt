@@ -264,8 +264,9 @@
 [#endif#]
 
               <li class="divider"></li>
+              <li><a href="?view_mode=delete_dev_z2m&id=[#DEVID#]&ieee=[#IEEEADDR#]&location=<#LOCATION_ID#>&type_id=<#ZIGBEE2MQTTDEV#>&vendor_id=<#VENDOR#>" onClick="return confirm('Are you sure? Please confirm.')" style="color: #a94442;"><span class="glyphicon glyphicon-trash"></span>Исключить из сети zigbee и удалить из Majordomo</a></li>
               <li><a href="?view_mode=delete_dev&id=[#DEVID#]&location=<#LOCATION_ID#>&type_id=<#ZIGBEE2MQTTDEV#>&vendor_id=<#VENDOR#>" onClick="return confirm('Are you sure? Please confirm.')" style="color: #a94442;"><span class="glyphicon glyphicon-trash"></span>Удалить из Majordomo</a></li>
-              <li><a href="?view_mode=delete_dev_z2m&id=[#DEVID#]&ieee=[#IEEEADDR#]&location=<#LOCATION_ID#>&type_id=<#ZIGBEE2MQTTDEV#>&vendor_id=<#VENDOR#>" onClick="return confirm('Are you sure? Please confirm.')" style="color: #a94442;"><span class="glyphicon glyphicon-trash"></span>Исключить из сети zigbee</a></li>
+              <li><a href="?view_mode=delete_dev_z2m_only&id=[#DEVID#]&ieee=[#IEEEADDR#]&location=<#LOCATION_ID#>&type_id=<#ZIGBEE2MQTTDEV#>&vendor_id=<#VENDOR#>" onClick="return confirm('Are you sure? Please confirm.')" style="color: #a94442;"><span class="glyphicon glyphicon-trash"></span>Исключить из сети zigbee</a></li>
             </ul>             
           </div>
           <h3 class="panel-title" [#if LOST#]style="color:lightgray;"[#endif#]>[#TITLE#]
