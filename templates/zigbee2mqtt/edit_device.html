@@ -117,7 +117,11 @@ GROUP (SELECT):
   [#begin SELECTVENDORARRAY#]
 
 <!--<option data-content="<img src='../templates/zigbee2mqtt/img/[#model#].jpg' width='40' height='40'> [#vendor#]: [#model#]" value="[#model#]" [#if DEVICE_TYPE="<#SELECTTYPE#>"#] selected[#endif#]></option>-->
+
+
+
 <option data-content="<img src='../templates/zigbee2mqtt/img/[#vendor#].jpg'  height='40'> [#vendor#] " value="[#vendor#]" ></option>
+
 
  [#end SELECTVENDORARRAY#] 
 
@@ -216,7 +220,9 @@ GROUP (SELECT):
 
 
 [#if MODELNAME#]
+<a href="https://www.zigbee2mqtt.io/devices/[#SELECTTYPE#]">
 <img src="../templates/zigbee2mqtt/img/[#SELECTTYPE#].jpg"   class="img-rounded" height="300" width="300">
+</a>
 [#endif#]
 <!--
 [#if TITLE="bridge"#]
@@ -252,7 +258,7 @@ script.src = "../templates/zigbee2mqtt/css/bootstrap-select.min.js"
 document.body.appendChild(script);
 
 script.onload = function() {
-	// Р С—Р С•РЎРѓР В»Р Вµ Р С—Р С•Р Т‘Р С–РЎР‚РЎС“Р В·Р С”Р С‘ js-РЎвЂћР В°Р в„–Р В»Р В° Р С—Р ВµРЎР‚Р ВµРЎР‚Р С‘РЎРѓРЎС“Р ВµР С РЎРЊР В»Р ВµР СР ВµР Р…РЎвЂљ select
+	// ╨а┬а╨бтАФ╨а┬а╨бтАв╨а╨О╨а╤У╨а┬а╨Т┬╗╨а┬а╨Т┬╡ ╨а┬а╨бтАФ╨а┬а╨бтАв╨а┬а╨втАШ╨а┬а╨бтАУ╨а╨О╨атАЪ╨а╨О╨бтАЬ╨а┬а╨Т┬╖╨а┬а╨бтАЭ╨а┬а╨бтАШ js-╨а╨О╨▓╨В╤Ы╨а┬а╨Т┬░╨а┬а╨▓тАЮтАУ╨а┬а╨Т┬╗╨а┬а╨Т┬░ ╨а┬а╨бтАФ╨а┬а╨Т┬╡╨а╨О╨атАЪ╨а┬а╨Т┬╡╨а╨О╨атАЪ╨а┬а╨бтАШ╨а╨О╨а╤У╨а╨О╨бтАЬ╨а┬а╨Т┬╡╨а┬а╨б┬Ш ╨а╨О╨а╨К╨а┬а╨Т┬╗╨а┬а╨Т┬╡╨а┬а╨б┬Ш╨а┬а╨Т┬╡╨а┬а╨атАж╨а╨О╨▓╨В╤Щ select
 	$('.selectpicker').selectpicker('render');
 }
 
