@@ -1598,6 +1598,31 @@ $this->redirect("?view_mode=view_mqtt&id=".$id."&tab=edit_parametrs");
 
 
 
+
+
+
+ if (substr($this->view_mode,0,11)=='setcolorhex') {
+
+
+$id=$this->id;
+$hex=substr($this->view_mode,12);
+
+//$rec=SQLSelectOne('select * from zigbee2mqtt where dev_id='.$id.' and metrika="color"')
+$rec=SQLSelectOne('select * from zigbee2mqtt where dev_id='.$id.' and metrika="state"');
+
+$mqttsendpath=$rec['PATH_WRITE'];
+
+
+$mqttsendvalue='{"state": "ON",  "brightness": 255,  "color": {"hex": "#'.$hex.'"}}';
+
+
+  $this->sendcommand($mqttsendpath, $mqttsendvalue);
+$this->redirect("?");
+
+
+}
+
+
  if ($this->view_mode=='send_test_mqtt') {
 
 
