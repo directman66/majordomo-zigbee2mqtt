@@ -1207,8 +1207,11 @@ $par2['zigbeeModel'] = 'RTCGQ01LM';
 $par2['type'] = "binary_sensor";
 $par2['state_topic'] =  "zigbee2mqtt/<FRIENDLY_NAME>";
 $par2['availability_topic'] = "zigbee2mqtt/bridge/state";
-$par2['payload_on'] = "true";
-$par2['payload_off'] = "false";
+$par2['payload_on'] = "";
+$par2['payload_off'] = "";
+$par2['payload_true'] = "true";
+$par2['payload_false'] = "false";
+
 $par2['value_template'] = "occupancy";
 $par2['device_class'] = "";
 $par2['command_topic'] = "";
@@ -1232,6 +1235,9 @@ $par2['json_attributes'] = "" ;
 $par2['command_topic'] = "";
 $par2['payload_on'] = "";
 $par2['payload_off'] = "";
+$par2['payload_true'] = "";
+$par2['payload_false'] = "";
+
 $par2['unit_of_measurement'] = "";
 $par2['brightness'] = "";
 $par2['color_temp'] = "";
@@ -1322,8 +1328,10 @@ $par2['zigbeeModel'] = 'RTCGQ11LM';
 $par2['type'] = "binary_sensor";
 $par2['state_topic'] =  "zigbee2mqtt/<FRIENDLY_NAME>";
 $par2['availability_topic'] = "zigbee2mqtt/bridge/state";
-$par2['payload_on'] = "true";
-$par2['payload_off'] = "false";
+$par2['payload_on'] = "";
+$par2['payload_off'] = "";
+$par2['payload_true'] = "true";
+$par2['payload_false'] = "false";
 $par2['value_template'] = "occupancy";
 $par2['device_class'] = "";
 $par2['command_topic'] = "";
@@ -1348,6 +1356,7 @@ $par2['json_attributes'] = "";
 $par2['command_topic'] = "";
 $par2['payload_on'] = "";
 $par2['payload_off'] = "";
+
 $par2['brightness'] = "";
 $par2['color_temp'] = "";
 $par2['xy'] = "";
@@ -1460,8 +1469,12 @@ $par2['zigbeeModel'] = 'MCCGQ01LM';
 $par2['type'] = "binary_sensor";
 $par2['state_topic'] =  "zigbee2mqtt/<FRIENDLY_NAME>";
 $par2['availability_topic'] = "zigbee2mqtt/bridge/state";
-$par2['payload_on'] = "false";
-$par2['payload_off'] = "true";
+$par2['payload_on'] = "";
+$par2['payload_off'] = "";
+$par2['payload_true'] = "true";
+$par2['payload_false'] = "false";
+
+
 $par2['value_template'] = "contact";
 $par2['device_class'] = "door";
 $par2['command_topic'] = "";    ;
@@ -1485,6 +1498,8 @@ $par2['json_attributes'] = "" ;
 $par2['command_topic'] = "";
 $par2['payload_on'] = "";
 $par2['payload_off'] = "";    ;
+$par2['payload_true'] = "";
+$par2['payload_false'] = "";
 $par2['unit_of_measurement'] = "";
 $par2['brightness'] = "";
 $par2['color_temp'] = "";
@@ -6899,17 +6914,20 @@ $par2['type'] = "light";
 $par2['state_topic'] =  "zigbee2mqtt/<FRIENDLY_NAME>";
 $par2['availability_topic'] = "zigbee2mqtt/bridge/state";
 $par2['brightness'] = "true";
-$par2['color_temp'] = "true";
 $par2['xy'] = "true";
 $par2['command_topic'] = "zigbee2mqtt/<FRIENDLY_NAME>/set"  ;
-$par2['payload_on'] = "ON";
-$par2['payload_off'] = "OFF";
-$par2['value_template'] = "";
+$par2['payload_on'] = "";
+$par2['payload_off'] = "";
+$par2['value_template'] = "state";
 $par2['json_attributes'] = "";
 $par2['device_class'] = "";
 $par2['unit_of_measurement'] = "";
+$par2['color_temp'] = "";
 $par2['command_value'] = "state";
 SQLInsert('zigbee2mqtt_devices_command', $par2);
+
+
+
 
 //GL-C-008;
 $par2['zigbeeModel'] = 'GL-C-008';
@@ -6940,11 +6958,48 @@ $par2['xy'] = "true";
 $par2['command_topic'] = "zigbee2mqtt/<FRIENDLY_NAME>/set"  ;
 $par2['payload_on'] = "";
 $par2['payload_off'] = "";
-$par2['value_template'] = "";
+$par2['value_template'] = "brightness";
 $par2['json_attributes'] = "";
 $par2['device_class'] = "";
 $par2['unit_of_measurement'] = "";
-$par2['command_value'] = "brithness";
+$par2['command_value'] = "brightness";
+SQLInsert('zigbee2mqtt_devices_command', $par2);
+
+
+//GL-C-008;
+$par2['zigbeeModel'] = 'GL-C-008';
+$par2['type'] = "light";
+$par2['state_topic'] =  "zigbee2mqtt/<FRIENDLY_NAME>";
+$par2['availability_topic'] = "zigbee2mqtt/bridge/state";
+$par2['brightness'] = "true";
+$par2['color_temp'] = "true";
+$par2['xy'] = "true";
+$par2['command_topic'] = "zigbee2mqtt/<FRIENDLY_NAME>/set"  ;
+$par2['payload_on'] = "";
+$par2['payload_off'] = "";
+$par2['value_template'] = "color_temp";
+$par2['json_attributes'] = "";
+$par2['device_class'] = "";
+$par2['unit_of_measurement'] = "";
+$par2['command_value'] = "color_temp";
+SQLInsert('zigbee2mqtt_devices_command', $par2);
+
+//GL-C-008;
+$par2['zigbeeModel'] = 'GL-C-008';
+$par2['type'] = "light";
+$par2['state_topic'] =  "zigbee2mqtt/<FRIENDLY_NAME>";
+$par2['availability_topic'] = "zigbee2mqtt/bridge/state";
+$par2['brightness'] = "true";
+$par2['color_temp'] = "true";
+$par2['xy'] = "true";
+$par2['command_topic'] = "zigbee2mqtt/<FRIENDLY_NAME>/set"  ;
+$par2['payload_on'] = "";
+$par2['payload_off'] = "";
+$par2['value_template'] = "xy";
+$par2['json_attributes'] = "";
+$par2['device_class'] = "";
+$par2['unit_of_measurement'] = "";
+$par2['command_value'] = "xy";
 SQLInsert('zigbee2mqtt_devices_command', $par2);
 
 
