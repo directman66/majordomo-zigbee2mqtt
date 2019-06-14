@@ -19,18 +19,17 @@
 -->
 
 
+
+
   <div class="col-md-3">
-  <select class="form-control" name="viewtype" onChange="document.frmList_mqtt.submit();">
-
-
-
-
-
-   <option value="[#ID#]">Устройства
-   <option value="[#ID#]">Группы
+  <select class="form-control" name="vid_id" onChange="document.frmList_mqtt.submit();">
+   <option value="0"[#if VID="0"#] selected[#endif#]>Фильтр по типу устройств (<#LANG_ALL#>)
+   <option value="1"[#if VID="1"#] selected[#endif#]>Устройства
+   <option value="2"[#if VID="2"#] selected[#endif#]>Группы
 
   </select>
   </div>
+
 
 
   <div class="col-md-3">
@@ -161,8 +160,8 @@
 [#if CHANGEABLE="1"#]
 <br>
 <left><small> 
-   <a href="?view_mode=device_on&id=[#DEVID#]&tab=&location=<#LOCATION_ID#>&type_id=<#ZIGBEE2MQTTDEV#>&vendor_id=<#VENDOR#>"  title="<#LANG_EDIT#>"> ON </a>
-   <a href="?view_mode=device_off&id=[#DEVID#]&tab=&location=<#LOCATION_ID#>&type_id=<#ZIGBEE2MQTTDEV#>&vendor_id=<#VENDOR#>"  title="<#LANG_EDIT#>"> OFF </a>
+   <a href="?view_mode=device_on&id=[#DEVID#]&tab=&location=<#LOCATION_ID#>&type_id=<#ZIGBEE2MQTTDEV#>&vendor_id=<#VENDOR#>&vid_id=<#VID#>"  title="<#LANG_EDIT#>"> ON </a>
+   <a href="?view_mode=device_off&id=[#DEVID#]&tab=&location=<#LOCATION_ID#>&type_id=<#ZIGBEE2MQTTDEV#>&vendor_id=<#VENDOR#>&vid_id=<#VID#>"  title="<#LANG_EDIT#>"> OFF </a>
 
 </small></left>
 [#endif#]
@@ -170,11 +169,11 @@
 [#if CHANGEABLE="2"#]
 <br>
 <left><small> 
-   <a href="?view_mode=device_on&id=[#DEVID#]&tab=&location=<#LOCATION_ID#>&type_id=<#ZIGBEE2MQTTDEV#>&vendor_id=<#VENDOR#>"  title="<#LANG_EDIT#>"> ON </a>
-   <a href="?view_mode=device_off&id=[#DEVID#]&tab=&location=<#LOCATION_ID#>&type_id=<#ZIGBEE2MQTTDEV#>&vendor_id=<#VENDOR#>"  title="<#LANG_EDIT#>"> OFF </a>
+   <a href="?view_mode=device_on&id=[#DEVID#]&tab=&location=<#LOCATION_ID#>&type_id=<#ZIGBEE2MQTTDEV#>&vendor_id=<#VENDOR#>&vid_id=<#VID#>"  title="<#LANG_EDIT#>"> ON </a>
+   <a href="?view_mode=device_off&id=[#DEVID#]&tab=&location=<#LOCATION_ID#>&type_id=<#ZIGBEE2MQTTDEV#>&vendor_id=<#VENDOR#>&vid_id=<#VID#>"  title="<#LANG_EDIT#>"> OFF </a>
 |
-   <a href="?view_mode=device_on_right&id=[#DEVID#]&tab=&location=<#LOCATION_ID#>&type_id=<#ZIGBEE2MQTTDEV#>&vendor_id=<#VENDOR#>"  title="<#LANG_EDIT#>"> ON </a>
-   <a href="?view_mode=device_off_right&id=[#DEVID#]&tab=&location=<#LOCATION_ID#>&type_id=<#ZIGBEE2MQTTDEV#>&vendor_id=<#VENDOR#>"  title="<#LANG_EDIT#>"> OFF </a>
+   <a href="?view_mode=device_on_right&id=[#DEVID#]&tab=&location=<#LOCATION_ID#>&type_id=<#ZIGBEE2MQTTDEV#>&vendor_id=<#VENDOR#>&vid_id=<#VID#>"  title="<#LANG_EDIT#>"> ON </a>
+   <a href="?view_mode=device_off_right&id=[#DEVID#]&tab=&location=<#LOCATION_ID#>&type_id=<#ZIGBEE2MQTTDEV#>&vendor_id=<#VENDOR#>&vid_id=<#VID#>"  title="<#LANG_EDIT#>"> OFF </a>
 
 </small></left>
 [#endif#]
