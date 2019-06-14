@@ -1188,7 +1188,7 @@ $out['NEEDSAVETYPE']="1";
 }
 
 
-$out['VENDOR']=$res1['vendor'];
+$out['VENDOR']=str_replace($res1['vendor'], '/', '-');
 $out['DESCRIPTION']=$res1['description'];
 
 //$out['DESCRIPTION']=SQLSelectOne("SELECT * FROM zigbee2mqtt_devices_list where zigbeeModel='".$res['MODELID']."'");
@@ -1199,6 +1199,7 @@ $out['FROMZIGBEE']=$res1['fromZigbee'];
 $out['TOZIGBEE']=$res1['toZigbee'];
 
 
+//$tmp=SQLSelect("SELECT distinct replace(vendor,'/','-') vendor FROM zigbee2mqtt_devices_list ");
 $tmp=SQLSelect("SELECT distinct vendor FROM zigbee2mqtt_devices_list ");
 $out['SELECTVENDORARRAY']=$tmp;
 
@@ -1623,6 +1624,64 @@ $this->redirect("?");
 }
 
 
+ if ($this->view_mode=='updatevalues') {
+
+
+$id=$this->id;
+
+$rec=SQLSelectOne('select * from zigbee2mqtt_devices where id='.$id);
+
+$fn=$rec['IEEEADDR'];
+
+$mqttsendvalue='';
+
+
+  $this->sendcommand('zigbee2mqtt/'.$fn, $mqttsendvalue);
+
+$this->redirect("?view_mode=view_mqtt&id=".$id."&tab=edit_parametrs");
+
+
+
+}
+
+
+
+
+ if (substr($this->view_mode,0,12)=='setcolortemp') {
+
+
+$id=$this->id;
+$temp=substr($this->view_mode,13);
+
+	switch   ($temp)
+{
+	case 'hot':
+         $itemp=500; break;
+	case 'deff':      
+   $itemp=255; break;
+	case 'cold':   
+      $itemp=0; break;
+}
+
+//$rec=SQLSelectOne('select * from zigbee2mqtt where dev_id='.$id.' and metrika="color"')
+$rec=SQLSelectOne('select * from zigbee2mqtt where dev_id='.$id.' and metrika="state"');
+
+$mqttsendpath=$rec['PATH_WRITE'];
+
+//color_mode 
+//$mqttsendvalue='{"state": "ON",  "brightness": 255,  "color_temp":'.$itemp.' }';
+$mqttsendvalue='{"state": "ON",  "color_mode":3, "brightness": 255,  "color_temp":'.$itemp.' }';
+
+
+  $this->sendcommand($mqttsendpath, $mqttsendvalue);
+$this->redirect("?");
+
+
+}
+
+
+
+
  if ($this->view_mode=='send_test_mqtt') {
 
 
@@ -1700,8 +1759,9 @@ else
 $location=$_GET['location'];
 $vendor_id=$_GET['vendor_id'];
 $type_id=$_GET['type_id'];
+$vid_id=$_GET['vid_id'];
 
-$this->redirect("?&location=$location&type_id=$type_id&vendor_id=$vendor_id");
+$this->redirect("?&location=$location&type_id=$type_id&vendor_id=$vendor_id&vid_id=$vid_id");
 }
 
 
@@ -1714,8 +1774,9 @@ if (ZMQTT_DEBUG=="1" ) debmes('!!!!!!!device_on','zigbee2mqtt');
 $location=$_GET['location'];
 $vendor_id=$_GET['vendor_id'];
 $type_id=$_GET['type_id'];
+$vid_id=$_GET['vid_id'];
 
-$this->redirect("?&location=$location&type_id=$type_id&vendor_id=$vendor_id");
+$this->redirect("?&location=$location&type_id=$type_id&vendor_id=$vendor_id&vid_id=$vid_id");
 
 }
 
@@ -1728,8 +1789,9 @@ if (ZMQTT_DEBUG=="1" ) debmes('!!!!!!!device_off','zigbee2mqtt');
 $location=$_GET['location'];
 $vendor_id=$_GET['vendor_id'];
 $type_id=$_GET['type_id'];
+$vid_id=$_GET['vid_id'];
 
-$this->redirect("?&location=$location&type_id=$type_id&vendor_id=$vendor_id");
+$this->redirect("?&location=$location&type_id=$type_id&vendor_id=$vendor_id&vid_id=$vid_id");
 }
 
  if ($this->view_mode=='device_on_right') {
@@ -1741,8 +1803,9 @@ if (ZMQTT_DEBUG=="1" ) debmes('!!!!!!!device_on','zigbee2mqtt');
 $location=$_GET['location'];
 $vendor_id=$_GET['vendor_id'];
 $type_id=$_GET['type_id'];
+$vid_id=$_GET['vid_id'];
 
-$this->redirect("?&location=$location&type_id=$type_id&vendor_id=$vendor_id");
+$this->redirect("?&location=$location&type_id=$type_id&vendor_id=$vendor_id&vid_id=$vid_id");
 
 }
 
@@ -1756,8 +1819,9 @@ if (ZMQTT_DEBUG=="1" ) debmes('!!!!!!!device_on_left','zigbee2mqtt');
 $location=$_GET['location'];
 $vendor_id=$_GET['vendor_id'];
 $type_id=$_GET['type_id'];
+$vid_id=$_GET['vid_id'];
 
-$this->redirect("?&location=$location&type_id=$type_id&vendor_id=$vendor_id");
+$this->redirect("?&location=$location&type_id=$type_id&vendor_id=$vendor_id&vid_id=$vid_id");
 }
 
 
@@ -1770,8 +1834,9 @@ if (ZMQTT_DEBUG=="1" ) debmes('!!!!!!!device_on_l1','zigbee2mqtt');
 $location=$_GET['location'];
 $vendor_id=$_GET['vendor_id'];
 $type_id=$_GET['type_id'];
+$vid_id=$_GET['vid_id'];
 
-$this->redirect("?&location=$location&type_id=$type_id&vendor_id=$vendor_id");
+$this->redirect("?&location=$location&type_id=$type_id&vendor_id=$vendor_id&vid_id=$vid_id");
 }
 
  if ($this->view_mode=='device_off_l1') {
@@ -1783,8 +1848,9 @@ if (ZMQTT_DEBUG=="1" ) debmes('!!!!!!!device_off_l1','zigbee2mqtt');
 $location=$_GET['location'];
 $vendor_id=$_GET['vendor_id'];
 $type_id=$_GET['type_id'];
+$vid_id=$_GET['vid_id'];
 
-$this->redirect("?&location=$location&type_id=$type_id&vendor_id=$vendor_id");
+$this->redirect("?&location=$location&type_id=$type_id&vendor_id=$vendor_id&vid_id=$vid_id");
 }
 
  if ($this->view_mode=='device_on_l2') {
@@ -1796,7 +1862,9 @@ if (ZMQTT_DEBUG=="1" ) debmes('!!!!!!!device_on_l2','zigbee2mqtt');
 $location=$_GET['location'];
 $vendor_id=$_GET['vendor_id'];
 $type_id=$_GET['type_id'];
-$this->redirect("?&location=$location&type_id=$type_id&vendor_id=$vendor_id");
+$vid_id=$_GET['vid_id'];
+
+$this->redirect("?&location=$location&type_id=$type_id&vendor_id=$vendor_id&vid_id=$vid_id");
 
 }
 
@@ -1809,7 +1877,7 @@ if (ZMQTT_DEBUG=="1" ) debmes('!!!!!!!device_off_l2','zigbee2mqtt');
 $location=$_GET['location'];
 $vendor_id=$_GET['vendor_id'];
 $type_id=$_GET['type_id'];
-$this->redirect("?&location=$location&type_id=$type_id&vendor_id=$vendor_id");
+$this->redirect("?&location=$location&type_id=$type_id&vendor_id=$vendor_id&vid_id=$vid_id");
 
 }
 
@@ -1821,8 +1889,10 @@ if (ZMQTT_DEBUG=="1" ) debmes('!!!!!!!device_off_left','zigbee2mqtt');
 $location=$_GET['location'];
 $vendor_id=$_GET['vendor_id'];
 $type_id=$_GET['type_id'];
+$vid_id=$_GET['vid_id'];
 
-$this->redirect("?&location=$location&type_id=$type_id&vendor_id=$vendor_id");
+
+$this->redirect("?&location=$location&type_id=$type_id&vendor_id=$vendor_id&vid_id=$vid_id");
 
 }
 
@@ -1832,7 +1902,13 @@ $this->redirect("?&location=$location&type_id=$type_id&vendor_id=$vendor_id");
 if (ZMQTT_DEBUG=="1" ) debmes('!!!!!!!device_off','zigbee2mqtt');
 //	$this->setProperty($mqtt_properties[$i]['ID'], $value);
 	$this->setPropertyDevice($id, 'device_off_right');
-   $this->redirect("?");
+
+$location=$_GET['location'];
+$vendor_id=$_GET['vendor_id'];
+$type_id=$_GET['type_id'];
+$vid_id=$_GET['vid_id'];
+
+$this->redirect("?&location=$location&type_id=$type_id&vendor_id=$vendor_id&vid_id=$vid_id");
 }
 
 
@@ -1843,8 +1919,9 @@ if (ZMQTT_DEBUG=="1" ) debmes('!!!!!!!device_off','zigbee2mqtt');
 $location=$_GET['location'];
 $vendor_id=$_GET['vendor_id'];
 $type_id=$_GET['type_id'];
+$vid_id=$_GET['vid_id'];
 
-$this->redirect("?&location=$location&type_id=$type_id&vendor_id=$vendor_id");
+$this->redirect("?&location=$location&type_id=$type_id&vendor_id=$vendor_id&vid_id=$vid_id");
 
 }
 
@@ -1854,8 +1931,9 @@ $this->redirect("?&location=$location&type_id=$type_id&vendor_id=$vendor_id");
 $location=$_GET['location'];
 $vendor_id=$_GET['vendor_id'];
 $type_id=$_GET['type_id'];
+$vid_id=$_GET['vid_id'];
 
-$this->redirect("?&location=$location&type_id=$type_id&vendor_id=$vendor_id");
+$this->redirect("?&location=$location&type_id=$type_id&vendor_id=$vendor_id&vid_id=$vid_id");
 
 }
 
@@ -1865,8 +1943,9 @@ $this->redirect("?&location=$location&type_id=$type_id&vendor_id=$vendor_id");
 $location=$_GET['location'];
 $vendor_id=$_GET['vendor_id'];
 $type_id=$_GET['type_id'];
+$vid_id=$_GET['vid_id'];
 
-$this->redirect("?&location=$location&type_id=$type_id&vendor_id=$vendor_id");
+$this->redirect("?&location=$location&type_id=$type_id&vendor_id=$vendor_id&vid_id=$vid_id");
 
 }
 
@@ -1907,8 +1986,9 @@ $payload='
 $location=$_GET['location'];
 $vendor_id=$_GET['vendor_id'];
 $type_id=$_GET['type_id'];
+$vid_id=$_GET['vid_id'];
 
-$this->redirect("?&location=$location&type_id=$type_id&vendor_id=$vendor_id");
+$this->redirect("?&location=$location&type_id=$type_id&vendor_id=$vendor_id&vid_id=$vid_id");
 
 }
 /////////////////////
@@ -1930,8 +2010,9 @@ $payload='
 $location=$_GET['location'];
 $vendor_id=$_GET['vendor_id'];
 $type_id=$_GET['type_id'];
+$vid_id=$_GET['vid_id'];
 
-$this->redirect("?&location=$location&type_id=$type_id&vendor_id=$vendor_id");
+$this->redirect("?&location=$location&type_id=$type_id&vendor_id=$vendor_id&vid_id=$vid_id");
 }
 
   if ($this->view_mode=='rightbutton_enable') {
@@ -1952,8 +2033,9 @@ $payload='
 $location=$_GET['location'];
 $vendor_id=$_GET['vendor_id'];
 $type_id=$_GET['type_id'];
+$vid_id=$_GET['vid_id'];
 
-$this->redirect("?&location=$location&type_id=$type_id&vendor_id=$vendor_id");
+$this->redirect("?&location=$location&type_id=$type_id&vendor_id=$vendor_id&vid_id=$vid_id");
 }
 ///////////////////////
 
@@ -1975,8 +2057,9 @@ $payload='
 $location=$_GET['location'];
 $vendor_id=$_GET['vendor_id'];
 $type_id=$_GET['type_id'];
+$vid_id=$_GET['vid_id'];
 
-$this->redirect("?&location=$location&type_id=$type_id&vendor_id=$vendor_id");
+$this->redirect("?&location=$location&type_id=$type_id&vendor_id=$vendor_id&vid_id=$vid_id");
 }
 
   if ($this->view_mode=='singlebutton_enable') {
@@ -1997,8 +2080,9 @@ $payload='
 $location=$_GET['location'];
 $vendor_id=$_GET['vendor_id'];
 $type_id=$_GET['type_id'];
+$vid_id=$_GET['vid_id'];
 
-$this->redirect("?&location=$location&type_id=$type_id&vendor_id=$vendor_id");
+$this->redirect("?&location=$location&type_id=$type_id&vendor_id=$vendor_id&vid_id=$vid_id");
 }
 
 
@@ -2242,7 +2326,7 @@ $vm=$location_id;
 
 global $type_id;
 global $vendor_id;
-
+global $vid_id;
 
 
 // echo "<script type='text/javascript'>";
@@ -2253,7 +2337,7 @@ global $vendor_id;
 
 
    $this->search_mqtt($out);
-   $this->redirect("?location=".$vm.'&type_id='.$type_id.'&vendor_id='.$vendor_id);
+   $this->redirect("?location=".$vm.'&type_id='.$type_id.'&vendor_id='.$vendor_id.'&vid_id='.$vid_id);
 
   }
 
