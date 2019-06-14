@@ -98,7 +98,7 @@ GROUP (SELECT):
 <div class="form-group">
 
  <label class="control-label"[#if NEEDSAVEVENDOR="1"#] style="color:red;font-weight:bold"[#endif#]>
- SELECTVENDOR:
+ SELECTVENDOR: <#SELECTVENDOR#>
  </label>
 
 
@@ -110,17 +110,19 @@ GROUP (SELECT):
  <select name="selectvendor"  class="selectpicker show-tick form-control">
 [#if SELECTVENDOR=""#]
 <option ></option > [#else#]
-<option data-content="<img src='../templates/zigbee2mqtt/img/[#SELECTVENDOR#].jpg'  height='40'> [#SELECTVENDOR#]" value="[#SELECTVENDOR#]" ></option>
+<!--<option data-content="<img src='../templates/zigbee2mqtt/img/[#SELECTVENDOR#].jpg'  height='40' onerror="this.style.visibility = 'hidden'"> [#SELECTVENDOR#]" value="[#SELECTVENDOR#]" ></option>
+-->
 
 [#endif#]
 
   [#begin SELECTVENDORARRAY#]
 
-<!--<option data-content="<img src='../templates/zigbee2mqtt/img/[#model#].jpg' width='40' height='40'> [#vendor#]: [#model#]" value="[#model#]" [#if DEVICE_TYPE="<#SELECTTYPE#>"#] selected[#endif#]></option>-->
+<!--<option data-content="<img src='../templates/zigbee2mqtt/img/[#model#].jpg' width='40' height='40'> [#vendor#]: [#model#]" value="[#model#]" [#if DEVICE_TYPE="<#SELECTTYPE#>"#] selected[#endif#]></option>
+-->
 
 
 
-<option data-content="<img src='../templates/zigbee2mqtt/img/[#vendor#].jpg'  height='40'> [#vendor#] " value="[#vendor#]" ></option>
+<option data-content="<img src='../templates/zigbee2mqtt/img/[#vendor#].jpg'  height='40' >[#vendor#]" value="[#vendor#]" [#if vendor="<#SELECTVENDOR#>"#] selected[#endif#]></option>
 
 
  [#end SELECTVENDORARRAY#] 
@@ -134,7 +136,7 @@ GROUP (SELECT):
 <!----------------------------------------->
 <div class="form-group">
  <label class="control-label"[#if NEEDSAVETYPE="1"#] style="color:red;font-weight:bold"[#endif#]>
- SELECTTYPE:
+ SELECTTYPE: <#SELECTTYPE#>
  </label>
 
 
@@ -144,19 +146,21 @@ GROUP (SELECT):
 
 
  <select name="selecttype"  class="selectpicker show-tick form-control">
+<!--
 [#if SELECTTYPE=""#]
 <option ></option > [#else#]
 <option data-content="<img src='../templates/zigbee2mqtt/img/[#SELECTTYPE#].jpg' width='40' height='40'> [#SELECTVENDOR#]: [#SELECTTYPE#]" value="[#SELECTTYPE#]" ></option>
 <optgroup label="Zigbee">
 [#endif#]
-
+-->
   [#begin SELECTTYPEARRAY#]
 
 <!--<option data-content="<img src='../templates/zigbee2mqtt/img/[#model#].jpg' width='40' height='40'> [#vendor#]: [#model#]" value="[#model#]" [#if DEVICE_TYPE="<#SELECTTYPE#>"#] selected[#endif#]></option>-->
-<option data-content="<img src='../templates/zigbee2mqtt/img/[#model#].jpg' width='40' height='40'> [#vendor#]: [#model#]" value="[#model#]" ></option>
+<option data-content="<img src='../templates/zigbee2mqtt/img/[#model#].jpg' width='40' height='40'>[#model#]" value="[#model#]" [#if model="<#SELECTTYPE#>"#] selected[#endif#]></option>
+
 
  [#end SELECTTYPEARRAY#] 
-</optgroup>
+<!--</optgroup> -->
  </select>
 </div>
 </div>
