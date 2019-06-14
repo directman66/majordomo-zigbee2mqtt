@@ -253,11 +253,14 @@
 
 [#if COLOR_TEMP="1"#]
               <li class="divider"></li>
-              <li class="divider"></li>
+
+
               <li>              
-<a href="?view_mode=setcolortemp_hot&id=[#DEVID#]&tab=&location=<#LOCATION_ID#>&type_id=<#ZIGBEE2MQTTDEV#>&vendor_id=<#VENDOR#>" class="btn btn-warning"  title="Сменить цвет на красный">теплый</a> 
-<a href="?view_mode=setcolortemp_deff&id=[#DEVID#]&tab=&location=<#LOCATION_ID#>&type_id=<#ZIGBEE2MQTTDEV#>&vendor_id=<#VENDOR#>" class="btn btn-default" title="Сменить цвет на зеленый">нейтральный</a> 
-<a href="?view_mode=setcolortemp_cold&id=[#DEVID#]&tab=&location=<#LOCATION_ID#>&type_id=<#ZIGBEE2MQTTDEV#>&vendor_id=<#VENDOR#>" class="btn btn-info" title="Сменить цвет на зеленый">холодный</a> 
+<table align="center"><tr><td>
+<a href="?view_mode=setcolortemp_hot&id=[#DEVID#]&tab=&location=<#LOCATION_ID#>&type_id=<#ZIGBEE2MQTTDEV#>&vendor_id=<#VENDOR#>" class="btn btn-warning"  title="Сменить цвет на теплый">теплый</a> </td><td>
+<a href="?view_mode=setcolortemp_deff&id=[#DEVID#]&tab=&location=<#LOCATION_ID#>&type_id=<#ZIGBEE2MQTTDEV#>&vendor_id=<#VENDOR#>" class="btn btn-default" title="Сменить цвет на нейтральный">нейтральный</a> </td><td>
+<a href="?view_mode=setcolortemp_cold&id=[#DEVID#]&tab=&location=<#LOCATION_ID#>&type_id=<#ZIGBEE2MQTTDEV#>&vendor_id=<#VENDOR#>" class="btn btn-info" title="Сменить цвет на холодный">холодный</a> 
+</td></tr></table>
 </li>
               <li class="divider"></li>                            
 
@@ -266,17 +269,19 @@
 
 [#if XY="1"#]
               <li class="divider"></li>
-              <li class="divider"></li>
               <li>
-<a href="?view_mode=setcolorhex_ff0000&id=[#DEVID#]&tab=&location=<#LOCATION_ID#>&type_id=<#ZIGBEE2MQTTDEV#>&vendor_id=<#VENDOR#>" class="btn btn-danger"  title="Сменить цвет на красный">красный</a> 
-<a href="?view_mode=setcolorhex_00ff00&id=[#DEVID#]&tab=&location=<#LOCATION_ID#>&type_id=<#ZIGBEE2MQTTDEV#>&vendor_id=<#VENDOR#>" class="btn btn-success" title="Сменить цвет на зеленый">зеленый</a> 
-<a href="?view_mode=setcolorhex_0000ff&id=[#DEVID#]&tab=&location=<#LOCATION_ID#>&type_id=<#ZIGBEE2MQTTDEV#>&vendor_id=<#VENDOR#>" class="btn btn-primary" title="Сменить цвет на синий">синий</a> 
-<a href="?view_mode=setcolorhex_ffffff&id=[#DEVID#]&tab=&location=<#LOCATION_ID#>&type_id=<#ZIGBEE2MQTTDEV#>&vendor_id=<#VENDOR#>" class="btn btn-default" title="Сменить цвет на белый">белый</a> 
-<a href="?view_mode=setcolorhex_ffff00&id=[#DEVID#]&tab=&location=<#LOCATION_ID#>&type_id=<#ZIGBEE2MQTTDEV#>&vendor_id=<#VENDOR#>" class="btn btn-warning" title="Сменить цвет на желтый">желтый</a> 
-<a href="?view_mode=setcolorhex_00ffff&id=[#DEVID#]&tab=&location=<#LOCATION_ID#>&type_id=<#ZIGBEE2MQTTDEV#>&vendor_id=<#VENDOR#>" class="btn btn-info"  title="Сменить цвет на голубой">голубой</a> 
+<table align="center"><tr><td>
+<a href="?view_mode=setcolorhex_ff0000&id=[#DEVID#]&tab=&location=<#LOCATION_ID#>&type_id=<#ZIGBEE2MQTTDEV#>&vendor_id=<#VENDOR#>" class="btn btn-danger"  title="Сменить цвет на красный">красный</a> </td><td>
+<a href="?view_mode=setcolorhex_00ff00&id=[#DEVID#]&tab=&location=<#LOCATION_ID#>&type_id=<#ZIGBEE2MQTTDEV#>&vendor_id=<#VENDOR#>" class="btn btn-success" title="Сменить цвет на зеленый">зеленый</a> </td><td>
+<a href="?view_mode=setcolorhex_0000ff&id=[#DEVID#]&tab=&location=<#LOCATION_ID#>&type_id=<#ZIGBEE2MQTTDEV#>&vendor_id=<#VENDOR#>" class="btn btn-primary" title="Сменить цвет на синий">   &nbsp;синий&nbsp;&nbsp;</a> </td></tr><tr><td>
+<a href="?view_mode=setcolorhex_ffffff&id=[#DEVID#]&tab=&location=<#LOCATION_ID#>&type_id=<#ZIGBEE2MQTTDEV#>&vendor_id=<#VENDOR#>" class="btn btn-default" title="Сменить цвет на белый">&nbsp;&nbsp;белый&nbsp;&nbsp;</a> </td><td>
+<a href="?view_mode=setcolorhex_ffff00&id=[#DEVID#]&tab=&location=<#LOCATION_ID#>&type_id=<#ZIGBEE2MQTTDEV#>&vendor_id=<#VENDOR#>" class="btn btn-warning" title="Сменить цвет на желтый">&nbsp;желтый&nbsp;</a> </td><td>
+<a href="?view_mode=setcolorhex_00ffff&id=[#DEVID#]&tab=&location=<#LOCATION_ID#>&type_id=<#ZIGBEE2MQTTDEV#>&vendor_id=<#VENDOR#>" class="btn btn-info"  title="Сменить цвет на голубой">голубой</a> </td><td>
+</td></tr></table>
+</li>
               <li class="divider"></li>
 
-</li>
+
 
 [#endif#]
 
