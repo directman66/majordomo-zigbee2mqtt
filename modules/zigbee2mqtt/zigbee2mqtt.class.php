@@ -203,13 +203,38 @@ define("ZMQTT_DEBUG", "1");
 * @access public
 */
  function setProperty($id, $value, $set_linked=0) {
-if (ZMQTT_DEBUG=="1" ) if (ZMQTT_DEBUG=="1" ) debmes('Нужно изменить значение id='.$id.' на '.$value, 'zigbee2mqtt');
+ debmes('Нужно изменить значение id='.$id.' на '.$value, 'zigbee2mqtt_setproperty');
 
-if (ZMQTT_DEBUG=="1" ) debmes("SELECT * FROM zigbee2mqtt WHERE ID='".$id."'", 'zigbee2mqtt');
+//debmes("SELECT * FROM zigbee2mqtt WHERE ID='".$id."'", 'zigbee2mqtt_setproperty');
   $rec=SQLSelectOne("SELECT * FROM zigbee2mqtt WHERE ID='".$id."'");
 
+$rec2=SQLSelectOne('select * from zigbee2mqtt where dev_id='.$rec['DEV_ID'].' and metrika="state"');
+
+
+ debmes('Нужно изменить значение id='.$id.' на '.$value .' для устройства DEV_ID='.$rec['DEV_ID']. '('.$rec2['TITLE'].')', 'zigbee2mqtt_setproperty');
+
+
+  if ($rec['ID'] && $rec['METRIKA']=='rgbcolor') {
+
+$rec2=SQLSelectOne('select * from zigbee2mqtt where dev_id='.$rec['DEV_ID'].' and metrika="state"');
+$mqttsendpath=$rec2['PATH_WRITE'];
+
+//if ($value='000000' ) {$br=0;} else {$br=255; }
+$br=255; 
+
+if ($value=='000000' ) {
+
+//$st='OFF';
+$mqttsendvalue='{"state": "OFF"}';
+
+} else {$mqttsendvalue='{"state": "'.$st.'",  "brightness": '.$br.',  "color": {"hex": "#'.$value.'"}}';}
+debmes("публикую ".$mqttsendpath.' '.$mqttsendvalue, 'zigbee2mqtt_setproperty');
+  $this->sendcommand($mqttsendpath, $mqttsendvalue);
+}
+
+
   if (!$rec['ID'] || !$rec['PATH']) {
-if (ZMQTT_DEBUG=="1" ) debmes('Не хватает данных', 'zigbee2mqtt');
+debmes('Не хватает данных', 'zigbee2mqtt_setproperty');
    return 0;
   }
 
@@ -275,7 +300,7 @@ if (ZMQTT_DEBUG=="1" ) debmes('Не хватает данных', 'zigbee2mqtt')
 
    if(!$mqtt_client->connect(true, NULL,$username,$password))
    {
-if (ZMQTT_DEBUG=="1" ) debmes('Ошибка подключения к mqtt', 'zigbee2mqtt');
+debmes('Ошибка подключения к mqtt', 'zigbee2mqtt');
     return 0;
    }
 
@@ -289,7 +314,7 @@ $jsonvalue=json_encode($json) ;
 
 
 if (($rec['PAYLOAD_ON'])||$rec['PAYLOAD_OFF']) {
-if (ZMQTT_DEBUG=="1" ) debmes('Подменяем '.$value. " на ". $rec['PAYLOAD_ON']."/".$rec['PAYLOAD_OFF'], 'zigbee2mqtt');
+debmes('Подменяем '.$value. " на ". $rec['PAYLOAD_ON']."/".$rec['PAYLOAD_OFF'], 'zigbee2mqtt');
 
 //if (($rec['PAYLOAD_ON'])&& ($value=="1"))  $json=array( $rec['METRIKA']=> $rec['PAYLOAD_ON']);
 //if (($rec['PAYLOAD_OFF'])&& ($value=="0"))  $json=array( $rec['METRIKA']=> $rec['PAYLOAD_OFF']);
@@ -905,6 +930,85 @@ if (ZMQTT_DEBUG=="1" ) debmes('Вызываю setglobal: value:'.$rec['LINKED_OB
      if ($rec['LINKED_OBJECT'] && $rec['LINKED_METHOD']) {
        callMethod($rec['LINKED_OBJECT'] . '.' . $rec['LINKED_METHOD'], $rec['VALUE']);
      }
+
+//сюда пишем обработчик xy color
+
+//////////////////////////////////////////////////
+//////////////////////////////////////////////////
+
+
+if ((substr($path,strrpos($path,'/')+1)=='color'))
+{
+debmes('получено сообщение '.substr($path,strrpos($path,'/')+1).' '.$value.' от rgb устройства, разберем возможные варианты','zigbee2mqtt');
+$ar=json_decode($value);
+$x=$ar->{'x'};
+$y=$ar->{'y'};
+$br=255;
+
+debmes('x:'.$x.', y:'.$y, 'zigbee2mqtt');
+$hex=$this->xyBriToRgb($x,$y, $br);
+
+$npath=substr($path,0,strrpos($path,'/'));
+$metrika='rgbcolor';
+$sql="SELECT * FROM zigbee2mqtt WHERE PATH LIKE '%$npath%' and METRIKA='$metrika'" ;
+
+debmes($sql, 'zigbee2mqtt');
+
+   $rec1=SQLSelectOne($sql);
+   $newvalue=$hex;
+
+
+   if(!$rec1['ID']){ /* If 'PATH' not found in db */
+//     if (ZMQTT_DEBUG=="1" ) 
+
+
+     $rec1['PATH']=$path;
+     $rec1['METRIKA']=$metrika;
+     $rec1['DEV_ID']=$dev_id;
+     $rec1['TITLE']=$path;
+     $rec1['VALUE']=$newvalue;
+     $rec1['UPDATED']=date('Y-m-d H:i:s');
+     $rec1['ID']=null;
+debmes(   'SQLInsert zigbee2mqtt', 'zigbee2mqtt');
+SQLInsert('zigbee2mqtt', $rec1);
+   }
+else
+{
+//     if (ZMQTT_DEBUG=="1" ) 
+
+     $rec1['METRIKA']=$metrika;
+//     $rec1['METRIKA']=$newvalue;
+     $rec1['VALUE']=$newvalue;
+//     $rec1['VALUE']=$value;
+     $rec1['DEV_ID']=$dev_id;
+     $rec1['UPDATED']=date('Y-m-d H:i:s');
+debmes(   'SQLUpdate zigbee2mqtt', 'zigbee2mqtt');
+debmes(   $rec1, 'zigbee2mqtt');
+
+     SQLUpdate('zigbee2mqtt', $rec1);
+
+}
+debmes('Проверяем, нужно ли вызвать setglobal: '.$rec1['LINKED_OBJECT'].'.'.$rec1['LINKED_PROPERTY'].' value:'. $newvalue,'zigbee2mqtt');
+
+
+     if($rec1['LINKED_OBJECT'] && $rec1['LINKED_PROPERTY']) {
+debmes('Вызываю setglobal: value:'.$rec1['LINKED_OBJECT'].'.'.$rec1['LINKED_PROPERTY'].' value:'. $newvalue,'zigbee2mqtt');
+setGlobal($rec1['LINKED_OBJECT'].'.'.$rec1['LINKED_PROPERTY'], $newvalue, array('zigbee2mqtt'=>'0'));
+     }
+debmes('Проверяем, нужно ли вызвать метод : '.$rec1['LINKED_OBJECT'].'.'.$rec1['LINKED_METHOD'].' value:'. $newvalue,'zigbee2mqtt');
+
+     if ($rec1['LINKED_OBJECT'] && $rec1['LINKED_METHOD']) {
+
+debmes('выполним метод '.$rec1['LINKED_OBJECT'] . '.' . $rec1['LINKED_METHOD'],'zigbee2mqtt');
+//       callMethod($rec1['LINKED_OBJECT'] . '.' . $rec1['LINKED_METHOD'], $rec1['VALUE']);
+       callMethod($rec1['LINKED_OBJECT'] . '.' . $rec1['LINKED_METHOD']);
+     }
+}
+
+
+
+
+
 
 //сюда пишем обработчик click
 
@@ -1645,6 +1749,28 @@ $this->redirect("?view_mode=view_mqtt&id=".$id."&tab=edit_parametrs");
 }
 
 
+ if ($this->view_mode=='getdevicegroup') {
+
+
+$id=$this->id;
+
+$rec=SQLSelectOne('select * from zigbee2mqtt_devices where id='.$id);
+
+$fn=$rec['IEEEADDR'];
+
+$mqttsendvalue='';
+
+
+  $this->sendcommand('zigbee2mqtt/bridge/device/'.$fn.'/get_group_membership', $mqttsendvalue);
+
+$this->redirect("?view_mode=view_mqtt&id=".$id."&tab=edit_parametrs");
+
+
+
+}
+
+
+
 
 
  if (substr($this->view_mode,0,12)=='setcolortemp') {
@@ -2377,7 +2503,13 @@ if (ZMQTT_DEBUG=="1" ) debmes('creategroup id:'.$this->id.' group:'.$this->group
 
 
   if ($this->view_mode=='delete_group') {
-  //$this->sendcommand('zigbee2mqtt/bridge/config/remove', $this->ieee);
+
+$rec=SQLSElectOne('select * from zigbee2mqtt_grouplist where ID=$this->id');
+$fn=$rec['TITLE'];
+
+
+//$this->sendcommand('zigbee2mqtt/bridge/group/'.$fn.'/remove', $this->ieee);
+
   SQLExec("DELETE FROM zigbee2mqtt_grouplist WHERE ID='".$this->id."'");
    $this->redirect("?tab=groups");
   }
@@ -2980,18 +3112,18 @@ echo $a;
 
  function propertySetHandle($object, $property, $value) {
 
-if (ZMQTT_DEBUG=="1" ) debmes('Сработал propertySetHandle object:'.$object." property:". $property." value:". $value,  'zigbee2mqtt');
+ debmes('Сработал propertySetHandle object:'.$object." property:". $property." value:". $value,  'zigbee2mqtt_sethandle');
 $sql="SELECT * FROM zigbee2mqtt WHERE LINKED_OBJECT LIKE '".DBSafe($object)."' AND LINKED_PROPERTY LIKE '".DBSafe($property)."'";
-if (ZMQTT_DEBUG=="1" ) debmes($sql, 'zigbee2mqtt');
+ debmes($sql, 'zigbee2mqtt_sethandle');
 
 
    $mqtt_properties=SQLSelect($sql);
    $total=count($mqtt_properties);
-if (ZMQTT_DEBUG=="1" ) debmes($object.":". $property.":". $value. ' найдено результатов '. $total, 'zigbee2mqtt');
+ debmes($object.":". $property.":". $value. ' найдено результатов '. $total, 'zigbee2mqtt_sethandle');
 
    if ($total) {
     for($i=0;$i<$total;$i++) {
-     if (ZMQTT_DEBUG=="1" ) debmes('Запускаем setProperty '. $mqtt_properties[$i]['ID'].":".$value, 'zigbee2mqtt');
+debmes('Запускаем setProperty '. $mqtt_properties[$i]['ID'].":".$value, 'zigbee2mqtt_sethandle');
      $this->setProperty($mqtt_properties[$i]['ID'], $value);
     }
    }  
@@ -3237,6 +3369,42 @@ $this->createdb();
 
 }
 
+
+function xyBriToRgb($x,$y,$bri)
+{
+    $z = 1.0 - $x - $y;
+    $Y = $bri / 255.0;
+    $X = ($Y / $y) * $x;
+    $Z = ($Y / $y) * $z;
+
+    $r = $X * 1.612 - $Y * 0.203 - $Z * 0.302;
+    $g = ($X * -1) * 0.509 + $Y * 1.412 + $Z * 0.066;
+    $b = $X * 0.026 - $Y * 0.072 + $Z * 0.962;
+
+    $r = $r <= 0.0031308 ? 12.92 * $r : (1.0 + 0.055) * pow($r, (1.0 / 2.4)) - 0.055;
+    $g = $g <= 0.0031308 ? 12.92 * $g : (1.0 + 0.055) * pow($g, (1.0 / 2.4)) - 0.055;
+    $b = $b <= 0.0031308 ? 12.92 * $b : (1.0 + 0.055) * pow($b, (1.0 / 2.4)) - 0.055;
+
+    $maxValue = max( $r , $g, $b );
+
+    $r = $r / $maxValue;
+    $g = $g / $maxValue;
+    $b = $b / $maxValue;
+
+    $r = $r * 255; if ($r < 0) $r = 255;
+    $g = $g * 255; if ($g < 0) $g = 255;
+    $b = $b * 255; if ($b < 0) $b = 255;
+
+    $r = dechex(round($r));
+    $g = dechex(round($g));
+    $b = dechex(round($b));
+
+    if (strlen($r) < 2)     $r = "0" + $r;
+    if (strlen($g) < 2)     $g = "0" + $g;
+    if (strlen($b) < 2)     $b = "0" + $b;
+
+    return $r.$g.$b;
+}
 
 function createdb()
 {
