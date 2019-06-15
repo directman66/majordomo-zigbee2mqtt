@@ -156,7 +156,7 @@ GROUP (SELECT):
   [#begin SELECTTYPEARRAY#]
 
 <!--<option data-content="<img src='../templates/zigbee2mqtt/img/[#model#].jpg' width='40' height='40'> [#vendor#]: [#model#]" value="[#model#]" [#if DEVICE_TYPE="<#SELECTTYPE#>"#] selected[#endif#]></option>-->
-<option data-content="<img src='../templates/zigbee2mqtt/img/[#model#].jpg' width='40' height='40'>[#model#]" value="[#model#]" [#if model="<#SELECTTYPE#>"#] selected[#endif#]></option>
+<option [#if model#] data-content="<img src='../templates/zigbee2mqtt/img/[#model#].jpg' width='40' height='40'>[#model#]" [#endif#] value="[#model#]" [#if model="<#SELECTTYPE#>"#] selected[#endif#]></option>
 
 
  [#end SELECTTYPEARRAY#] 
@@ -262,7 +262,7 @@ script.src = "../templates/zigbee2mqtt/css/bootstrap-select.min.js"
 document.body.appendChild(script);
 
 script.onload = function() {
-	// ╨а┬а╨бтАФ╨а┬а╨бтАв╨а╨О╨а╤У╨а┬а╨Т┬╗╨а┬а╨Т┬╡ ╨а┬а╨бтАФ╨а┬а╨бтАв╨а┬а╨втАШ╨а┬а╨бтАУ╨а╨О╨атАЪ╨а╨О╨бтАЬ╨а┬а╨Т┬╖╨а┬а╨бтАЭ╨а┬а╨бтАШ js-╨а╨О╨▓╨В╤Ы╨а┬а╨Т┬░╨а┬а╨▓тАЮтАУ╨а┬а╨Т┬╗╨а┬а╨Т┬░ ╨а┬а╨бтАФ╨а┬а╨Т┬╡╨а╨О╨атАЪ╨а┬а╨Т┬╡╨а╨О╨атАЪ╨а┬а╨бтАШ╨а╨О╨а╤У╨а╨О╨бтАЬ╨а┬а╨Т┬╡╨а┬а╨б┬Ш ╨а╨О╨а╨К╨а┬а╨Т┬╗╨а┬а╨Т┬╡╨а┬а╨б┬Ш╨а┬а╨Т┬╡╨а┬а╨атАж╨а╨О╨▓╨В╤Щ select
+	// Р С—Р С•РЎРѓР В»Р Вµ Р С—Р С•Р Т‘Р С–РЎР‚РЎС“Р В·Р С”Р С‘ js-РЎвЂћР В°Р в„–Р В»Р В° Р С—Р ВµРЎР‚Р ВµРЎР‚Р С‘РЎРѓРЎС“Р ВµР С РЎРЊР В»Р ВµР СР ВµР Р…РЎвЂљ select
 	$('.selectpicker').selectpicker('render');
 }
 
