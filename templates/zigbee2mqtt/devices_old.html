@@ -23,9 +23,9 @@
 
   <div class="col-md-3">
   <select class="form-control" name="vid_id" onChange="document.frmList_mqtt.submit();">
-   <option value="0"[#if VID="0"#] selected[#endif#]>Фильтр по типу устройств (<#LANG_ALL#>)
-   <option value="1"[#if VID="1"#] selected[#endif#]>Устройства
-   <option value="2"[#if VID="2"#] selected[#endif#]>Группы
+   <option value="0"[#if VID="0"#] selected[#endif#]>Р¤РёР»СЊС‚СЂ РїРѕ С‚РёРїСѓ СѓСЃС‚СЂРѕР№СЃС‚РІ (<#LANG_ALL#>)
+   <option value="1"[#if VID="1"#] selected[#endif#]>РЈСЃС‚СЂРѕР№СЃС‚РІР°
+   <option value="2"[#if VID="2"#] selected[#endif#]>Р“СЂСѓРїРїС‹
 
   </select>
   </div>
@@ -37,7 +37,7 @@
 
 
 
-      <option value="0">Фильтр по типу устройств (<#LANG_ALL#>)
+      <option value="0">Р¤РёР»СЊС‚СЂ РїРѕ С‚РёРїСѓ СѓСЃС‚СЂРѕР№СЃС‚РІ (<#LANG_ALL#>)
    [#begin ZIGBEE2MQTTTYPE#]
    <option value="[#ID#]" [#if ID="<#ZIGBEE2MQTTDEV#>"#] selected[#endif#]>[#TYPE#]
    [#end ZIGBEE2MQTTTYPE#]
@@ -50,7 +50,7 @@
 
 
 
-      <option value="0">Фильтр производителю (<#LANG_ALL#>)
+      <option value="0">Р¤РёР»СЊС‚СЂ РїСЂРѕРёР·РІРѕРґРёС‚РµР»СЋ (<#LANG_ALL#>)
    [#begin VENDORARRAY#]
    <option value="[#ID#]" [#if ID="<#VENDOR#>"#] selected[#endif#]>[#TYPE#]
    [#end VENDORARRAY#]
