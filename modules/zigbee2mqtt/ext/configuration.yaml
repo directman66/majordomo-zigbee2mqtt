@@ -1,15 +1,18 @@
-homeassistant: false
+homeassistant: true
 permit_join: true
 advanced:
   channel: 26
+  soft_reset_timeout: 3000
   log_level: debug
-  soft_reset_timeout: 3600
+  report: true
 mqtt:
   base_topic: zigbee2mqtt
-  server: 'mqtt://192.168.1.39'
+  server: 'mqtt://192.168.1.39:1883'
 serial:
   port: /dev/ttyACM1
+experimental:
+  livolo: true
 devices:
-  '0x00158d0002c65d56':
-    friendly_name: '0x00158d0002c65d56'
+  '0x01124b001baea534':
+    friendly_name: '0x01124b001baea534'
     retain: false
