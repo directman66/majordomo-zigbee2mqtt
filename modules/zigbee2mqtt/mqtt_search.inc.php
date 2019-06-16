@@ -259,6 +259,10 @@ $basa=SQLSelectOne($sql);
 
  if ($basa['model']=='QBKG03LM')  $res[$i]['DISABLERED']='2';
  if ($basa['model']=='QBKG04LM')  $res[$i]['DISABLERED']='1';
+ if ($basa['model']=='QBKG12LM')  $res[$i]['DISABLERED']='2';
+ if ($basa['model']=='QBKG11LM')  $res[$i]['DISABLERED']='1';
+
+
 
 
 
