@@ -23,11 +23,19 @@
 		<div class="panel-body collapse" id="nach">
 		<p>
 Для работы c zigbee2mqtt нужен прошитый стик и компьютер на линукс (подойдет любой одноплатник типа малины)<br>
-Стики можно заказать тут (проверенный продавец) <br>
+
+<h3>
+<a href="https://www.avito.ru/ekaterinburg/tovary_dlya_kompyutera/zigbee_shlyuz_-_usb_stik_cc2531_1024727941" target="_blank">Готовый прошитый последней девелоперской прошивкой стик можно заказать по цене 1000 руб + стоимость доставки по РФ (около 150 руб)</a><br>
+</h3>
+
+Разработка данного модуля осуществляется на общественных началах и требует значительных временных затрат. Покупка прошитого стика сс2531  у автора модуля также является элементом стимулирования развития проекта. 
+<br>
+
+Также все необходимое оборудование можно заказать на aliexpress(проверенный продавец) <br><br>
 
 <a href="https://ru.aliexpress.com/store/product/Wireless-Zigbee-CC2531-Sniffer-Bare-Board-Packet-Protocol-Analyzer-Module-USB-Interface-Dongle-Capture-Packet-Module/2182011_32852226435.html" target="_blank">
 стик:
-<img src="../templates/zigbee2mqtt/img/cc2531.jpg"   class="img-rounded" height="150" width="150">
+<img src="../templates/zigbee2mqtt/img/cc25311.jpg"   class="img-rounded" height="150" width="150">
 </a><br>
 <a href="https://ru.aliexpress.com/store/product/Smart-RF04E-Smart-RF04EB-CC1110-CC2530-CC2531-CC2540-ZigBee-Module-Target-Zigbee-Emulator-CC-Debugger-Bluetooth/2182011_32950422195.html" target="_blank">дебаггер:
 
@@ -37,7 +45,8 @@
 <img src="../templates/zigbee2mqtt/img/downloader_cable.png"   class="img-rounded" height="150" width="150">
 </a><br>
 <br><br>
-Желательно все сразу заказать у одного продавца, тогда будет один трек на все товары. Я имел неосторожность заказать у разных продавцов, в итоге шнурок ждал около 3 месяцев без пробивания трека.
+Желательно все сразу заказать у одного продавца, тогда будет один трек на все товары. Я имел неосторожность заказать у разных продавцов, в итоге кабель для прошивки  ждал около 3 месяцев.
+<br>
 
 
 
@@ -49,7 +58,7 @@
 		<a data-toggle="collapse" data-parent="#accordion" href="#vozm">Прошивка стика</a>
 		</div>
 		<div class="panel-body collapse" id="vozm">
-<a href="https://koenkk.github.io/zigbee2mqtt/getting_started/flashing_the_cc2531.html" target="_blank">Подробная инструкция на англ. языке с картинками
+<a href="https://www.zigbee2mqtt.io/getting_started/flashing_the_cc2531.html" target="_blank">Подробная инструкция на англ. языке с картинками
 </a><br>
 <br>
 <a href="https://yadi.sk/d/RxIVtu3YTCBDyw" target="_blank">Прошивальщик без регистрации можно скачать тут
@@ -120,21 +129,13 @@ added 383 packages in 111.613s
 <code><b>
 nano /opt/zigbee2mqtt/data/configuration.yaml<br>
 </code></b>
-<br>
-Пример файла конфигурации:<br>
-<code><b>
-homeassistant: false<br>
-permit_join: true<br>
-advanced:<br>
-&nbsp;&nbsp;channel: 26<br>
-&nbsp;&nbsp;log_level: debug<br>
-mqtt:<br>
-&nbsp;&nbsp;base_topic: zigbee2mqtt<br>
-&nbsp;&nbsp; #   server: 'mqtt://192.168.178.32:1900'<br>
-&nbsp;&nbsp;&nbsp;server: 'mqtt://192.168.1.39'<br>
-serial:<br>
-  port: /dev/ttyACM1<br>
-</code></b><br>
+
+<a href="https://github.com/directman66/majordomo-zigbee2mqtt/blob/master/modules/zigbee2mqtt/ext/configuration.yaml" target="_blank">Актуальный пример файла конфигурации:
+</a>
+
+
+<br><br><br>
+
 
 <b>Запуск сервиса <br></b>
 <code><b>
