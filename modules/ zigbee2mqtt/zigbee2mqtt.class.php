@@ -2047,7 +2047,8 @@ $vendor_id=$_GET['vendor_id'];
 $type_id=$_GET['type_id'];
 $vid_id=$_GET['vid_id'];
 
-$this->redirect("?&location=$location&type_id=$type_id&vendor_id=$vendor_id&vid_id=$vid_id");
+//$this->redirect("?&location=$location&type_id=$type_id&vendor_id=$vendor_id&vid_id=$vid_id");
+$this->redirect("?");
 
 }
 
@@ -2059,7 +2060,8 @@ $vendor_id=$_GET['vendor_id'];
 $type_id=$_GET['type_id'];
 $vid_id=$_GET['vid_id'];
 
-$this->redirect("?&location=$location&type_id=$type_id&vendor_id=$vendor_id&vid_id=$vid_id");
+//$this->redirect("?&location=$location&type_id=$type_id&vendor_id=$vendor_id&vid_id=$vid_id");
+$this->redirect("?");
 
 }
 
@@ -3460,10 +3462,10 @@ function createdb()
  zigbee2mqtt_devices: DID varchar(100) NOT NULL DEFAULT ''
  zigbee2mqtt_devices: D_ID varchar(100) NOT NULL DEFAULT ''
  zigbee2mqtt_devices: FIND datetime
- zigbee2mqtt_devices: LOCATION_ID int(10) NOT NULL DEFAULT '0'
+ zigbee2mqtt_devices: LOCATION_ID varchar(4) NOT NULL DEFAULT '0'
 
  zigbee2mqtt_devices_list: ID int(10) unsigned NOT NULL auto_increment
- zigbee2mqtt_devices_list: zigbeeModel varchar(100) NOT NULL DEFAULT ''
+ zigbee2mqtt_devices_list: zigbeeModel varchar(255) NOT NULL DEFAULT ''
  zigbee2mqtt_devices_list: model varchar(100) NOT NULL DEFAULT ''
  zigbee2mqtt_devices_list: vendor varchar(100) NOT NULL DEFAULT ''
  zigbee2mqtt_devices_list: type varchar(100) NOT NULL DEFAULT ''
