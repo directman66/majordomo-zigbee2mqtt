@@ -2504,15 +2504,32 @@ if (ZMQTT_DEBUG=="1" ) debmes('creategroup id:'.$this->id.' group:'.$this->group
 
   if ($this->view_mode=='delete_group') {
 
-$rec=SQLSElectOne('select * from zigbee2mqtt_grouplist where ID=$this->id');
+$rec=SQLSElectOne('select * from zigbee2mqtt_grouplist where ID='.$this->id);
 $fn=$rec['TITLE'];
+$id=$this->id;
 
+$this->sendcommand('zigbee2mqtt/bridge/group/'.$fn.'/remove', $this->ieee);
 
-//$this->sendcommand('zigbee2mqtt/bridge/group/'.$fn.'/remove', $this->ieee);
-
-  SQLExec("DELETE FROM zigbee2mqtt_grouplist WHERE ID='".$this->id."'");
+  SQLExec("DELETE FROM zigbee2mqtt_grouplist WHERE ID='".$id."'");
    $this->redirect("?tab=groups");
   }
+
+
+  if ($this->view_mode=='deletefromallgroup') {
+$id=$this->id;
+//$rec=SQLSElectOne('select * from zigbee2mqtt_grouplist where ID='.$id);
+$rec=SQLSElectOne('select * from zigbee2mqtt_devices where ID='.$id);
+$fn=$rec['IEEEADDR'];
+
+
+$this->sendcommand('zigbee2mqtt/bridge/group/remove_all', $this->ieee);
+
+   $this->redirect("?view_mode=view_mqtt&id=$id&tab=edit_parametrs");
+  }
+
+
+
+
 
 
   if ($this->view_mode=='delete_mqtt') {
