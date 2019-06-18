@@ -3365,6 +3365,11 @@ if (ZMQTT_DEBUG=="1" ) debmes('Запрашиваем '.$topic.' '.$command, 'zi
   SQLExec('DROP TABLE IF EXISTS zigbee2mqtt_devices');
   SQLExec('DROP TABLE IF EXISTS zigbee2mqtt_devices_list');
   SQLExec('DROP TABLE IF EXISTS zigbee2mqtt_devices_command');
+  SQLExec('DROP TABLE IF EXISTS zigbee2mqtt_bind');
+  SQLExec('DROP TABLE IF EXISTS zigbee2mqtt_grouplist');
+  SQLExec('DROP TABLE IF EXISTS zigbee2mqtt_log');
+
+
    
   parent::uninstall();
  }
