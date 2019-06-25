@@ -61,7 +61,7 @@ if (isset($_GET['vendor_id'])&&$_GET['vendor_id']<>'0') {
 
 $vendor_id=$_GET['vendor_id'];
 
-$vendor_name=SQLSelectOne('select * from ( SELECT @i:=@i+1 AS ID, t.* FROM (SELECT distinct VENDOR "TYPE" FROM zigbee2mqtt_devices_list, zigbee2mqtt_devices where zigbee2mqtt_devices.SELECTVENDOR=zigbee2mqtt_devices_list.vendor ) AS t, (SELECT @i:=0) AS foo ) a where a.ID='.$vendor_id)['TYPE'];
+if (!$vendor_id) $vendor_name=SQLSelectOne('select * from ( SELECT @i:=@i+1 AS ID, t.* FROM (SELECT distinct VENDOR "TYPE" FROM zigbee2mqtt_devices_list, zigbee2mqtt_devices where zigbee2mqtt_devices.SELECTVENDOR=zigbee2mqtt_devices_list.vendor ) AS t, (SELECT @i:=0) AS foo ) a where a.ID='.$vendor_id)['TYPE'];
 
 $req_vendor=' and SELECTVENDOR="'.$vendor_name.'" '; 
 
@@ -75,6 +75,9 @@ $out['VENDORNAME']='';
 
 }
 
+$this->getConfig();
+if ($this->config['VID_ID']) {}
+
 
 if (isset($_GET['vid_id'])&&$_GET['vid_id']<>'0') { 
 $vid_id=$_GET['vid_id'];
@@ -84,6 +87,9 @@ $vid_id=$_GET['vid_id'];
 if ($vid_id==1) $req_vid=' and TYPE <>"" '; 
 if ($vid_id==2)  $req_vid=' and TYPE ="" '; 
 
+
+$this->config['VID_ID']=$vid_id;
+$this->saveConfig();
 
 $out['VID']=(int)$vid_id;
 } else 
@@ -250,11 +256,13 @@ $basa=SQLSelectOne($sql);
  if ( ($ttype=='switch') && (strpos($basa['description'],'double')>0)) $res[$i]['CHANGEABLE']='2';
  if ( ($ttype=='switch')) $res[$i]['CHANGEABLE']='1';
 
- if ($basa['model']=='KS-SM001')  $res[$i]['CHANGEABLE']='1';
- if ($basa['model']=='GL-C-008')  $res[$i]['CHANGEABLE']='1';
- if ($basa['model']=='LLKZMK11LM')  $res[$i]['CHANGEABLE']='3';
- if ($basa['model']=='TI0001')  $res[$i]['CHANGEABLE']='2';
- if ($basa['model']=='QBKG03LM')  $res[$i]['CHANGEABLE']='2';
+ if ($basa['model']=='KS-SM001')   $res[$i]['CHANGEABLE']='1';
+ if ($basa['model']=='GL-C-008')   $res[$i]['CHANGEABLE']='1';
+ if ($basa['model']=='LLKZMK11LM') $res[$i]['CHANGEABLE']='3';
+ if ($basa['model']=='TI0001')     $res[$i]['CHANGEABLE']='2';
+ if ($basa['model']=='QBKG12LM')   $res[$i]['CHANGEABLE']='2';
+ if ($basa['model']=='QBKG11LM')   $res[$i]['CHANGEABLE']='1';
+ if ($basa['model']=='QBKG03LM')   $res[$i]['CHANGEABLE']='2';
 
 
  if ($basa['model']=='QBKG03LM')  $res[$i]['DISABLERED']='2';
@@ -338,6 +346,8 @@ $basa=SQLSelectOne($sql);
   if ($dev_id!='') {
    $qry.=" AND (TITLE LIKE '%".DBSafe($dev_id)."%' OR VALUE LIKE '%".DBSafe($dev_id)."%' OR PATH LIKE '%".DBSafe($dev_id)."%')";
    $out['ZIGBEE2MQTTDEV']=$dev_id;
+
+
   }
 
 
@@ -397,6 +407,7 @@ $basa=SQLSelectOne($sql);
    $tree=(int)$_GET['tree'];
    $this->config['TREE_VIEW']=$tree;
    $this->saveConfig();
+
   } else {
    $tree = $this->config['TREE_VIEW'];
   }
