@@ -252,7 +252,8 @@ debmes('Не хватает данных', 'zigbee2mqtt_setproperty');
      }
   //if ($new_connection) {
 
-  include_once("./lib/mqtt/phpMQTT.php");
+//  include_once("./lib/mqtt/phpMQTT.php");
+  include_once(ROOT . "3rdparty/phpmqtt/phpMQTT.php");
 
    $this->getConfig();
    if ($mqtt->config['MQTT_CLIENT']) {
@@ -296,7 +297,8 @@ debmes('Не хватает данных', 'zigbee2mqtt_setproperty');
 //   }
 
 
-   $mqtt_client = new phpMQTT($host, $port, $client_name.' Client');
+//      $mqtt_client = new phpMQTT($host, $port, $client_name.' Client');
+        $mqtt_client = new Bluerhinos\phpMQTT($host, $port, $client_name . ' Client');
 
    if(!$mqtt_client->connect(true, NULL,$username,$password))
    {
@@ -408,7 +410,8 @@ if (ZMQTT_DEBUG=="1" ) debmes('Поехали дальше', 'zigbee2mqtt');
      }
   //if ($new_connection) {
 
-  include_once("./lib/mqtt/phpMQTT.php");
+//  include_once("./lib/mqtt/phpMQTT.php");
+        include_once(ROOT . "3rdparty/phpmqtt/phpMQTT.php");
 
    $this->getConfig();
    if ($mqtt->config['MQTT_CLIENT']) {
@@ -451,7 +454,8 @@ if (ZMQTT_DEBUG=="1" ) debmes('Поехали дальше', 'zigbee2mqtt');
    }
 
 
-   $mqtt_client = new phpMQTT($host, $port, $client_name.' Client');
+//   $mqtt_client = new phpMQTT($host, $port, $client_name.' Client');
+   $mqtt_client = new Bluerhinos\phpMQTT($host, $port, $client_name . ' Client');
 
    if(!$mqtt_client->connect(true, NULL,$username,$password))
    {
@@ -1641,7 +1645,8 @@ $topik=$rec['PATH_WRITE'];
 
 
 
-  include_once("./lib/mqtt/phpMQTT.php");
+//  include_once("./lib/mqtt/phpMQTT.php");
+        include_once(ROOT . "3rdparty/phpmqtt/phpMQTT.php");
 
    $this->getConfig();
    if ($mqtt->config['MQTT_CLIENT']) {
@@ -1684,7 +1689,8 @@ $topik=$rec['PATH_WRITE'];
    }
 
 
-   $mqtt_client = new phpMQTT($host, $port, $client_name.' Client');
+//   $mqtt_client = new phpMQTT($host, $port, $client_name.' Client');
+   $mqtt_client = new Bluerhinos\phpMQTT($host, $port, $client_name . ' Client');
 
    if(!$mqtt_client->connect(true, NULL,$username,$password))
    {
@@ -3237,7 +3243,8 @@ debmes('Запускаем setProperty '. $mqtt_properties[$i]['ID'].":".$value,
 
 
 function get_map(){
-  include_once("./lib/mqtt/phpMQTT.php");
+//  include_once("./lib/mqtt/phpMQTT.php");
+        include_once(ROOT . "3rdparty/phpmqtt/phpMQTT.php");
 
    $this->getConfig();
    if ($mqtt->config['MQTT_CLIENT']) {
@@ -3268,7 +3275,8 @@ function get_map(){
     $port=1883;
    }
 
-   $mqtt_client = new phpMQTT($host, $port, $client_name.' Client');
+//      $mqtt_client = new phpMQTT($host, $port, $client_name.' Client');
+        $mqtt_client = new Bluerhinos\phpMQTT($host, $port, $client_name . ' Client');
 
    if(!$mqtt_client->connect(true, NULL,$username,$password))
    {
@@ -3290,7 +3298,8 @@ if (ZMQTT_DEBUG=="1" ) debmes('Запрашиваем карту ', 'zigbee2mqtt
 }
 
 function get_map_graphwiz(){
-  include_once("./lib/mqtt/phpMQTT.php");
+//  include_once("./lib/mqtt/phpMQTT.php");
+        include_once(ROOT . "3rdparty/phpmqtt/phpMQTT.php");
 
    $this->getConfig();
    if ($mqtt->config['MQTT_CLIENT']) {
@@ -3321,7 +3330,8 @@ function get_map_graphwiz(){
     $port=1883;
    }
 
-   $mqtt_client = new phpMQTT($host, $port, $client_name.' Client');
+//   $mqtt_client = new phpMQTT($host, $port, $client_name.' Client');
+     $mqtt_client = new Bluerhinos\phpMQTT($host, $port, $client_name . ' Client');
 
    if(!$mqtt_client->connect(true, NULL,$username,$password))
    {
@@ -3345,7 +3355,8 @@ if (ZMQTT_DEBUG=="1" ) debmes('Запрашиваем карту ', 'zigbee2mqtt
 
 
 function sendcommand($topic, $command){
-  include_once("./lib/mqtt/phpMQTT.php");
+//  include_once("./lib/mqtt/phpMQTT.php");
+        include_once(ROOT . "3rdparty/phpmqtt/phpMQTT.php");
 
    $this->getConfig();
    if ($mqtt->config['MQTT_CLIENT']) {
@@ -3378,7 +3389,8 @@ function sendcommand($topic, $command){
     $port=1883;
    }
 
-   $mqtt_client = new phpMQTT($host, $port, $client_name.' Client');
+//   $mqtt_client = new phpMQTT($host, $port, $client_name.' Client');
+   $mqtt_client = new Bluerhinos\phpMQTT($host, $port, $client_name . ' Client');
 
    if(!$mqtt_client->connect(true, NULL,$username,$password))
    {
