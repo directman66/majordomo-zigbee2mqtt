@@ -2456,7 +2456,7 @@ SQLInsert('zigbee2mqtt_devices_list', $par1);
 //LXZB-02A
 $par1['zigbeeModel'] = "LXN56-DC27LX1.1";
 $par1['model'] = "LXZB-02A";
-$par1['vendor'] = "Nue / 3A";
+$par1['vendor'] = "Nue - 3A";
 $par1['type'] = "relay";
 $par1['description'] = "Nue / 3A Smart light controller (on/off, brightness)";
 $par1['supports'] = "";
@@ -2464,6 +2464,19 @@ $par1['extend'] = "";
 $par1['fromZigbee'] = "";
 $par1['toZigbee'] = "";
 SQLInsert('zigbee2mqtt_devices_list', $par1);
+
+//LXZB-02A
+$par1['zigbeeModel'] = "LXN56-DC27LX1.1";
+$par1['model'] = "V3-BTZB";
+$par1['vendor'] = "Danalock";
+$par1['type'] = "door_lock";
+$par1['description'] = "BT/ZB smartlock";
+$par1['supports'] = "";
+$par1['extend'] = "";
+$par1['fromZigbee'] = "";
+$par1['toZigbee'] = "";
+SQLInsert('zigbee2mqtt_devices_list', $par1);
+
 
 
 }
