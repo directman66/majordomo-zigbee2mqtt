@@ -635,16 +635,19 @@ unset($msgtype);
 
 if (strpos($path,'igbee2mqtt/0x')>0) {$msgtype='device_state';}
 if (strpos($path,'igbee2mqtt/bridge/state')>0) {$msgtype='bridge_state';}
+if (strpos($path,'igbee2mqtt/bridge/networkmap/raw')>0) {$msgtype='raw_map';}
+if (strpos($path,'igbee2mqtt/bridge/networkmap')>0) {$msgtype='graphwiz';}
 
 
 //if ($path=='zigbee2mqtt/bridge/log') {$msgtype=$json->{'type'};}
 
 
 
-if (($path=='zigbee2mqtt/bridge/log')||($msgtype))
+//if (($path=='zigbee2mqtt/bridge/log')||($msgtype))
+//if ($msgtype)
 //if ($path=='zigbee2mqtt/bridge/state')
 
-{
+if (($msgtype)&&($this->isJSON($value))){
 $json=json_decode($value);
 $msgtype=$json->{'type'};
 
@@ -654,7 +657,7 @@ debmes('Пришло важное сообщение, поместим его в
 //{"type":"groups","message":{"1":{"friendly_name":"232323"},"2":{"friendly_name":"group1"},"3":{"friendly_name":"group1"},"4":{"friendly_name":"group1"}}}
 $arr=sqlselectone('select * from  zigbee2mqtt_log  where TITLE="dummy"');
 $arr['TITLE']= $path;
-if ($msgtype=='device_state') {$arr['MESSAGE']= $path.":".$value; } else  {$arr['MESSAGE']= $value;}
+if ($msgtype=='device_state'||$msgtype=='raw') {$arr['MESSAGE']= $path.":".$value; } else  {$arr['MESSAGE']= $value;}
 $arr['TYPE']= $msgtype;
 $arr['FIND']= date('Y-m-d H:i:s');
 
@@ -695,7 +698,10 @@ $dev_title=explode('/',$path)[1];
 
 if (ZMQTT_DEBUG=="1" ) debmes('$dev_title='.$dev_title,'zigbee2mqtt') ;
 
-
+//////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////
 
 //if ($dev_title=='bridge')  {
 
@@ -718,6 +724,24 @@ if (ZMQTT_DEBUG=="1" ) debmes('путь содержит set, его мы зап
 }
 else 
 {
+
+$this->update_default($path, $value);
+
+
+
+
+}
+
+
+}
+
+////////////////////////////////////////////////////
+
+function update_default($path, $value){
+
+$dev_title=explode('/',$path)[1];
+
+
      $sql="SELECT * FROM zigbee2mqtt_devices WHERE IEEEADDR LIKE '%".DBSafe($dev_title)."%'";
      $rec=SQLSelectOne($sql);
 
@@ -1075,9 +1099,6 @@ debmes('выполним метод '.$rec1['LINKED_OBJECT'] . '.' . $rec1['LINK
 
 
    }
-
-}
-
 
 
 
@@ -1516,7 +1537,31 @@ $cnt=count($files);
 if (ZMQTT_DEBUG=="1" ) debmes($files[$cnt-1]['TITLE'],'zigbee2mqtt');
 
 $lastfile=$files[$cnt-1]['TITLE'];
-$filename=$zigbee2mqttpath.'/data/log/'.$lastfile.'/log.txt';
+
+
+
+
+            if ($handle = opendir($zigbee2mqttpath.'/data/log/'.$lastfile)) {
+                $files = array();
+
+                while (false !== ($entry = readdir($handle))) {
+                    if ($entry == '.' || $entry == '..')
+                        continue;
+
+                    $files2[] = array('TITLE' => $entry);
+                }
+
+                sort($files2);
+            }
+
+
+$i=count($files2)-1;
+debmes($i, 'z2m');
+debmes($files2, 'z2m');
+debmes($files2[$i]['TITLE'], 'z2m');
+//$filename=$zigbee2mqttpath.'/data/log/'.$lastfile.'/log8.txt';
+$filename=$zigbee2mqttpath.'/data/log/'.$lastfile.'/'.$files2[$i]['TITLE'];
+
 
 
 } 
@@ -2351,6 +2396,21 @@ sqlexec('delete from zigbee2mqtt_log where TITLE like "%'.$ieee.'%"');
 debmes('delete from zigbee2mqtt_log where TITLE like "%'.$ieee.'%"', 'z2m');
 
   $this->redirect("?view_mode=view_mqtt&id=".$id."&tab=device_log");
+
+
+}
+
+ if ($this->view_mode=='clearlog') {
+
+
+
+
+
+
+sqlexec('delete from zigbee2mqtt_log where TITLE like "%'.$ieee.'%"');
+
+
+  $this->redirect("?view_mode=&id=".$id."&tab=log2");
 
 
 }
@@ -3243,6 +3303,10 @@ debmes('Запускаем setProperty '. $mqtt_properties[$i]['ID'].":".$value,
 
 
 function get_map(){
+
+
+SQLExec('update zigbee2mqtt_devices set PARRENTIEEEADDR="", LQI="", STATUS="" ');
+
 //  include_once("./lib/mqtt/phpMQTT.php");
         include_once(ROOT . "3rdparty/phpmqtt/phpMQTT.php");
 
@@ -3603,6 +3667,11 @@ EOD;
   require(DIR_MODULES.$this->name.'/database1.inc.php');
   require(DIR_MODULES.$this->name.'/database2.inc.php');
 
+}
+
+
+function isJSON($string) {
+    return ((is_string($string) && (is_object(json_decode($string)) || is_array(json_decode($string))))) ? true : false;
 }
 
 

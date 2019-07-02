@@ -2182,7 +2182,7 @@ SQLInsert('zigbee2mqtt_devices_list', $par1);
 $par1['zigbeeModel'] = "Lamp_01";
 $par1['model'] = "KS-SM001";
 $par1['vendor'] = "Ksentry Electronics";
-$par1['type'] = "controller";
+$par1['type'] = "relay";
 $par1['description'] = "[Zigbee OnOff Controller](http://ksentry.manufacturer.globalsources.com/si/6008837134660/pdtl/ZigBee-module/1162731630/zigbee-on-off-controller-modules.htm)";
 $par1['supports'] = "on/off";
 $par1['fromZigbee'] = "fz.generic_state_change";
