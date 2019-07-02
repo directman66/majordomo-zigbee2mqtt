@@ -643,10 +643,11 @@ if (strpos($path,'igbee2mqtt/bridge/networkmap')>0) {$msgtype='graphwiz';}
 
 
 
-if (($path=='zigbee2mqtt/bridge/log')||($msgtype))
+//if (($path=='zigbee2mqtt/bridge/log')||($msgtype))
+//if ($msgtype)
 //if ($path=='zigbee2mqtt/bridge/state')
 
-{
+if (($msgtype)&&($this->isJSON($value))){
 $json=json_decode($value);
 $msgtype=$json->{'type'};
 
@@ -656,7 +657,7 @@ debmes('Пришло важное сообщение, поместим его в
 //{"type":"groups","message":{"1":{"friendly_name":"232323"},"2":{"friendly_name":"group1"},"3":{"friendly_name":"group1"},"4":{"friendly_name":"group1"}}}
 $arr=sqlselectone('select * from  zigbee2mqtt_log  where TITLE="dummy"');
 $arr['TITLE']= $path;
-if ($msgtype=='device_state') {$arr['MESSAGE']= $path.":".$value; } else  {$arr['MESSAGE']= $value;}
+if ($msgtype=='device_state'||$msgtype=='raw') {$arr['MESSAGE']= $path.":".$value; } else  {$arr['MESSAGE']= $value;}
 $arr['TYPE']= $msgtype;
 $arr['FIND']= date('Y-m-d H:i:s');
 
@@ -2399,6 +2400,21 @@ debmes('delete from zigbee2mqtt_log where TITLE like "%'.$ieee.'%"', 'z2m');
 
 }
 
+ if ($this->view_mode=='clearlog') {
+
+
+
+
+
+
+sqlexec('delete from zigbee2mqtt_log where TITLE like "%'.$ieee.'%"');
+
+
+  $this->redirect("?view_mode=&id=".$id."&tab=log2");
+
+
+}
+
 
  if ($this->view_mode=='unbind') {
 
@@ -3651,6 +3667,11 @@ EOD;
   require(DIR_MODULES.$this->name.'/database1.inc.php');
   require(DIR_MODULES.$this->name.'/database2.inc.php');
 
+}
+
+
+function isJSON($string) {
+    return ((is_string($string) && (is_object(json_decode($string)) || is_array(json_decode($string))))) ? true : false;
 }
 
 
