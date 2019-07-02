@@ -635,6 +635,8 @@ unset($msgtype);
 
 if (strpos($path,'igbee2mqtt/0x')>0) {$msgtype='device_state';}
 if (strpos($path,'igbee2mqtt/bridge/state')>0) {$msgtype='bridge_state';}
+if (strpos($path,'igbee2mqtt/bridge/networkmap/raw')>0) {$msgtype='raw_map';}
+if (strpos($path,'igbee2mqtt/bridge/networkmap')>0) {$msgtype='graphwiz';}
 
 
 //if ($path=='zigbee2mqtt/bridge/log') {$msgtype=$json->{'type'};}
@@ -695,7 +697,10 @@ $dev_title=explode('/',$path)[1];
 
 if (ZMQTT_DEBUG=="1" ) debmes('$dev_title='.$dev_title,'zigbee2mqtt') ;
 
-
+//////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////
 
 //if ($dev_title=='bridge')  {
 
@@ -718,6 +723,24 @@ if (ZMQTT_DEBUG=="1" ) debmes('путь содержит set, его мы зап
 }
 else 
 {
+
+$this->update_default($path, $value);
+
+
+
+
+}
+
+
+}
+
+////////////////////////////////////////////////////
+
+function update_default($path, $value){
+
+$dev_title=explode('/',$path)[1];
+
+
      $sql="SELECT * FROM zigbee2mqtt_devices WHERE IEEEADDR LIKE '%".DBSafe($dev_title)."%'";
      $rec=SQLSelectOne($sql);
 
@@ -1075,9 +1098,6 @@ debmes('выполним метод '.$rec1['LINKED_OBJECT'] . '.' . $rec1['LINK
 
 
    }
-
-}
-
 
 
 
@@ -3267,6 +3287,10 @@ debmes('Запускаем setProperty '. $mqtt_properties[$i]['ID'].":".$value,
 
 
 function get_map(){
+
+
+SQLExec('update zigbee2mqtt_devices set PARRENTIEEEADDR="", LQI="", STATUS="" ');
+
 //  include_once("./lib/mqtt/phpMQTT.php");
         include_once(ROOT . "3rdparty/phpmqtt/phpMQTT.php");
 
