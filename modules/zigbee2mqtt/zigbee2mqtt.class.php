@@ -1516,7 +1516,31 @@ $cnt=count($files);
 if (ZMQTT_DEBUG=="1" ) debmes($files[$cnt-1]['TITLE'],'zigbee2mqtt');
 
 $lastfile=$files[$cnt-1]['TITLE'];
-$filename=$zigbee2mqttpath.'/data/log/'.$lastfile.'/log.txt';
+
+
+
+
+            if ($handle = opendir($zigbee2mqttpath.'/data/log/'.$lastfile)) {
+                $files = array();
+
+                while (false !== ($entry = readdir($handle))) {
+                    if ($entry == '.' || $entry == '..')
+                        continue;
+
+                    $files2[] = array('TITLE' => $entry);
+                }
+
+                sort($files2);
+            }
+
+
+$i=count($files2)-1;
+debmes($i, 'z2m');
+debmes($files2, 'z2m');
+debmes($files2[$i]['TITLE'], 'z2m');
+//$filename=$zigbee2mqttpath.'/data/log/'.$lastfile.'/log8.txt';
+$filename=$zigbee2mqttpath.'/data/log/'.$lastfile.'/'.$files2[$i]['TITLE'];
+
 
 
 } 
