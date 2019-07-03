@@ -3065,7 +3065,7 @@ if (ZMQTT_DEBUG=="1" ) debmes($rec4[$ij], 'z2m');
 SQLUpdate(  'zigbee2mqtt_devices',$rec4[$ij]); 
 }
 
-
+$allieee="";
 $maparray=SQLSelectOne ('select * from zigbee2mqtt where TITLE="zigbee2mqtt/bridge/networkmap/raw"');
 $map=$maparray['VALUE'];
 if (ZMQTT_DEBUG=="1" ) debmes($map, 'zigbee2mqtt');
@@ -3099,10 +3099,13 @@ $rec3['PARRENTIEEEADDR']=$parent;
 $rec3['LQI']=$lqi;
 $rec3['STATUS']=$status;
 $rec3['NWKADDR']=$nwkAddr;
-SQLUpdate(  'zigbee2mqtt_devices',$rec3); 
+if (strpos($allieee,$ieeeAddr)==0)  SQLUpdate(  'zigbee2mqtt_devices',$rec3); 
 
 
 }
+
+$allieee.=$ieeeAddr.";";
+
 
 //var_dump( $str);
 // $json3= json_decode  ($str,true);
@@ -3636,7 +3639,7 @@ function createdb()
 
  zigbee2mqtt_log: ID int(10) unsigned NOT NULL auto_increment
  zigbee2mqtt_log: TITLE varchar(255) NOT NULL DEFAULT ''
- zigbee2mqtt_log: MESSAGE varchar(255) NOT NULL DEFAULT ''
+ zigbee2mqtt_log: MESSAGE longtext NOT NULL DEFAULT ''
  zigbee2mqtt_log: TYPE varchar(255) NOT NULL DEFAULT ''
  zigbee2mqtt_log: FIND datetime
 
