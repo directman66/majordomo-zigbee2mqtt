@@ -5,19 +5,19 @@
 	</div>
 	
   <div class="form-group">
-    <label class="col-sm-3 control-label" [#if ERR_MQTT_CLIENT#] style="color:red;font-weight:bold"[#endif#]>Client name:</label>
+    <label class="col-sm-3 control-label" [#if ERR_MQTT_CLIENT#] style="color:red;font-weight:bold"[#endif#]><#LANG_SYSTEM_NAME#>:</label>
     <div class="col-sm-9">
       <input class="form-control" type="text" name="mqtt_client" value="<#MQTT_CLIENT#>">
     </div>
   </div>
   <div class="form-group">
-    <label class="col-sm-3 control-label" [#if ERR_MQTT_HOST#] style="color:red;font-weight:bold"[#endif#]>Hostname: (*)</label>
+    <label class="col-sm-3 control-label" [#if ERR_MQTT_HOST#] style="color:red;font-weight:bold"[#endif#]><#LANG_HOSTNAME#>: (*)</label>
     <div class="col-sm-9">
       <input class="form-control" type="text" name="mqtt_host" value="<#MQTT_HOST#>">
     </div>
   </div>
   <div class="form-group">
-    <label class="col-sm-3 control-label" [#if ERR_MQTT_PORT#] style="color:red;font-weight:bold"[#endif#]>Port: (*)</label>
+    <label class="col-sm-3 control-label" [#if ERR_MQTT_PORT#] style="color:red;font-weight:bold"[#endif#]><#LANG_PORT#>: (*)</label>
     <div class="col-sm-9">
       <input class="form-control" type="text" name="mqtt_port" value="<#MQTT_PORT#>">
     </div>
@@ -31,7 +31,7 @@
   
 	<div class="form-group">
 	 <div class="controls">
-	 <label><input type="checkbox" name="mqtt_auth" value="1"[#if MQTT_AUTH="1"#] checked[#endif#]> authorization required</label>
+	 <label><input type="checkbox" name="mqtt_auth" value="1"[#if MQTT_AUTH="1"#] checked[#endif#]> <#LANG_AUTHORIZATION_REQUIRED#></label>
 	 </div>
 	</div>  
   
