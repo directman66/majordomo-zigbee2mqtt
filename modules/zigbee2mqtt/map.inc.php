@@ -18,7 +18,8 @@ if (!$maparray[$i]['IEEEADDR']) {$idd=$defaultiee;} else {$idd=$maparray[$i]['IE
 if (!$maparray[$i]['PARRENTIEEEADDR']) {$parrentieee=$defaultiee;} else {$parrentieee=$maparray[$i]['PARRENTIEEEADDR'];}
 
 //   $nodes.= "{id: ".$idd.", font:{size:10}, size:40,   label: '".$maparray[$i]['description']."',  group: 0,  shape: 'circularImage', image: '/templates/zigbee2mqtt/img/".$maparray[$i]['model'].".jpg', },";
-   $nodes.= "{id: ".$idd.",  size:40, color:'white', font:{color:'black', size:10},  label: '".$maparray[$i]['TITLE']."',  group: 0,  shape: 'image', image: '/templates/zigbee2mqtt/img/".$maparray[$i]['SELECTTYPE'].".jpg', },";
+if ($maparray[$i]['STATUS']) {$status=" (".$maparray[$i]['STATUS'].")";} else  {$status="";} 
+   $nodes.= "{id: ".$idd.",  size:40, color:'white', font:{color:'black', size:10},  label: '".$maparray[$i]['TITLE'].$status. "',  group: 0,  shape: 'image', image: '/templates/zigbee2mqtt/img/".$maparray[$i]['SELECTTYPE'].".jpg', },";
 
 
 
