@@ -1,144 +1,101 @@
-
-<br>
-
 <form action="?" method="post" enctype="multipart/form-data" name="frmEdit" class="form-horizontal">
 <fieldset>
+	<div class="form-group">
+		<h3 class="controls" style="padding-top:0.5em">MQTT settings</h3>
+	</div>
+	
+  <div class="form-group">
+    <label class="col-sm-3 control-label" [#if ERR_MQTT_CLIENT#] style="color:red;font-weight:bold"[#endif#]>Client name:</label>
+    <div class="col-sm-9">
+      <input class="form-control" type="text" name="mqtt_client" value="<#MQTT_CLIENT#>">
+    </div>
+  </div>
+  <div class="form-group">
+    <label class="col-sm-3 control-label" [#if ERR_MQTT_HOST#] style="color:red;font-weight:bold"[#endif#]>Hostname: (*)</label>
+    <div class="col-sm-9">
+      <input class="form-control" type="text" name="mqtt_host" value="<#MQTT_HOST#>">
+    </div>
+  </div>
+  <div class="form-group">
+    <label class="col-sm-3 control-label" [#if ERR_MQTT_PORT#] style="color:red;font-weight:bold"[#endif#]>Port: (*)</label>
+    <div class="col-sm-9">
+      <input class="form-control" type="text" name="mqtt_port" value="<#MQTT_PORT#>">
+    </div>
+  </div>
+  <div class="form-group">
+    <label class="col-sm-3 control-label" [#if ERR_MQTT_QUERY#] style="color:red;font-weight:bold"[#endif#]>Subscription path: (*)</label>
+    <div class="col-sm-9">
+      <input class="form-control" type="text" name="mqtt_query" value="<#MQTT_QUERY#>">
+    </div>
+  </div>  
+  
+	<div class="form-group">
+	 <div class="controls">
+	 <label><input type="checkbox" name="mqtt_auth" value="1"[#if MQTT_AUTH="1"#] checked[#endif#]> authorization required</label>
+	 </div>
+	</div>  
+  
+  <div class="form-group">
+    <label class="col-sm-3 control-label" [#if ERR_MQTT_QUERY#] style="color:red;font-weight:bold"[#endif#]>Authorization:</label>
+    <div class="col-sm-9">
+      <div class="form-inline form-group">
+		  <div class="input-group col-sm-6">
+			<span class="input-group-addon"><span class="glyphicon glyphicon-user"></span></span>
+			<input type="text" name="mqtt_username" value="<#MQTT_USERNAME#>" class="form-control" placeholder="Login">
+		  </div>
+		  <div class="input-group col-sm-6">
+			<span class="input-group-addon"><span class="glyphicon glyphicon-lock"></span></span>
+			<input type="password" name="mqtt_password" value="<#MQTT_PASSWORD#>" class="form-control" placeholder="Password">
+		  </div>	  
+	  </div>
+    </div>
+  </div>  
 
-<div class="form-group">
- <label class="control-label"[#if ERR_MQTT_CLIENT#] style="color:red;font-weight:bold"[#endif#]>
- MajorDoMo Client:
- </label>
- <div class="controls"><input type="text" name="mqtt_client" value="<#MQTT_CLIENT#>" class="input"></div>
-</div>
-
-
-<div class="form-group">
- <label class="control-label"[#if ERR_zigbee2mqttpath#] style="color:red;font-weight:bold"[#endif#]>
- Zigbee2mqtt path:
- (*)
- </label>
- <div class="controls"><input type="text" name="zigbee2mqttpath" value="<#ZIGBEE2MQTTPATH#>" class="input"></div>
-</div>
-
-
-<div class="form-group">
- <label class="control-label"[#if ERR_MQTT_HOST#] style="color:red;font-weight:bold"[#endif#]>
- Hostname:
- (*)
- </label>
- <div class="controls"><input type="text" name="mqtt_host" value="<#MQTT_HOST#>" class="input"></div>
-</div>
-
-<div class="form-group">
- <label class="control-label"[#if ERR_MQTT_PORT#] style="color:red;font-weight:bold"[#endif#]>
- Port:
- (*)
- </label>
- <div class="controls"><input type="text" name="mqtt_port" value="<#MQTT_PORT#>" class="input"></div>
-</div>
-
-<div class="form-group">
- <label class="control-label"[#if ERR_MQTT_QUERY#] style="color:red;font-weight:bold"[#endif#]>
- Subscription path:
- (*)
- </label>
- <div class="controls"><input type="text" name="mqtt_query" value="<#MQTT_QUERY#>" class="input"></div>
-</div>
-
-
-
-
-<div class="form-group">
-
- <label class="control-label"[#if ERR_VIEW#] style="color:red;font-weight:bold"[#endif#]>
- zigbee2mqtt view mode:
- </label>
-
-
-
-<div class="col-md-1 input-group">
-
-
-     <select name="z2m_view" id="z2m_view" class="form-control">
-      <option value="container-fluid"[#if Z2M_VIEW="container-fluid"#] selected[#endif#]>container-fluid</option>
-      <option value="table"[#if Z2M_VIEW="table"#] selected[#endif#]>table(old)</option>
-     </select>
-
-
-
-
-
-
-</div>
-</div>
-
-
-
-
-<div class="form-group">
-
- <label class="control-label"[#if ERR_Z2M_LOGMODE#] style="color:red;font-weight:bold"[#endif#]>
- zigbee2mqtt log level
-[#Z2M_LOGMODE#]
-:
- (*)
- </label>
-
-
-
-<div class="col-md-1 input-group">
-
-
+ 	<div class="form-group">
+		<h3 class="controls">Zigbee2MQTT settings</h3>
+	</div> 
+	
+	
+	
+  <div class="form-group">
+    <label class="col-sm-3 control-label" [#if ERR_MQTT_QUERY#] style="color:red;font-weight:bold"[#endif#]>Folder path:</label>
+    <div class="col-sm-9">
+      <input class="form-control" type="text" name="zigbee2mqttpath" value="<#ZIGBEE2MQTTPATH#>">
+    </div>
+  </div> 
+  <div class="form-group">
+    <label class="col-sm-3 control-label" [#if ERR_VIEW#] style="color:red;font-weight:bold"[#endif#]>View mode:</label>
+    <div class="col-sm-9">
+		 <select name="z2m_view" id="z2m_view" class="form-control">
+		  <option value="container-fluid"[#if Z2M_VIEW="container-fluid"#] selected[#endif#]>tiles</option>
+		  <option value="table"[#if Z2M_VIEW="table"#] selected[#endif#]>table (old)</option>
+		 </select>
+    </div>
+  </div> 
+  <div class="form-group">
+    <label class="col-sm-3 control-label" [#if ERR_Z2M_LOGMODE#] style="color:red;font-weight:bold"[#endif#]>Log level [#Z2M_LOGMODE#]:</label>
+    <div class="col-sm-9">
      <select name="z2m_logmode2" id="z2m_logmode2" class="form-control">
       <option value="debug"[#if Z2M_LOGMODE="debug"#] selected[#endif#]>debug</option>
       <option value="info"[#if Z2M_LOGMODE="info"#] selected[#endif#]>info</option>
       <option value="warn"[#if Z2M_LOGMODE="warn"#] selected[#endif#]>warn</option>
       <option value="error"[#if Z2M_LOGMODE="error"#] selected[#endif#]>error</option>
      </select>
-
-
-
-
-
-
-</div>
-</div>
-
-
-<div class="form-group">
- <div class="controls">
- <label><input type="checkbox" name="mqtt_debug" value="1"[#if MQTT_DEBUG="1"#] checked[#endif#]> enable  debmes message [#ZMQTT_DEBUG#]</label>
- </div>
-</div>
-
-
-<div class="form-group">
- <div class="controls">
- <label><input type="checkbox" name="mqtt_auth" value="1"[#if MQTT_AUTH="1"#] checked[#endif#]> authorization required</label>
- </div>
-</div>
-
-
-<div class="form-group">
- <label class="control-label"[#if ERR_MQTT_USERNAME#] style="color:red;font-weight:bold"[#endif#]>
- Username:
- </label>
- <div class="controls"><input type="text" name="mqtt_username" value="<#MQTT_USERNAME#>" class="input"></div>
-</div>
-
-<div class="form-group">
- <label class="control-label"[#if ERR_MQTT_PASSWORD#] style="color:red;font-weight:bold"[#endif#]>
- Password:
- </label>
- <div class="controls"><input type="password" name="mqtt_password" value="<#MQTT_PASSWORD#>" class="input"></div>
-</div>
-
-
+    </div>
+  </div>
+  
+	<div class="form-group">
+	 <div class="controls">
+	 <label><input type="checkbox" name="mqtt_debug" value="1"[#if MQTT_DEBUG="1"#] checked[#endif#]> enable  debmes message [#ZMQTT_DEBUG#]</label>
+	 </div>
+	</div> 
+ 
 <div class="form-actions">
 <button type="submit" name="subm" value="Submit" class="btn btn-primary"><#LANG_UPDATE#></button>
 <input type="hidden" name="view_mode" value="update_settings">
 <input type="hidden" name="mode" value="update">
 <input type="hidden" name="tab" value="settings">
-</div>
+</div>  
 </fieldset>
 </form>
+
