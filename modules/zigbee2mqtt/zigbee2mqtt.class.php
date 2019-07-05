@@ -647,7 +647,12 @@ if (strpos($path,'igbee2mqtt/bridge/networkmap')>0) {$msgtype='graphwiz';}
 //if ($msgtype)
 //if ($path=='zigbee2mqtt/bridge/state')
 
-if (($msgtype)&&($this->isJSON($value))){
+if (($msgtype)&&($this->isJSON22($value))
+||$path=='zigbee2mqtt/bridge/log'
+||$path=='zigbee2mqtt/bridge/networkmap'
+||$path=='zigbee2mqtt/bridge/networkmap/raw'
+)
+{
 $json=json_decode($value);
 $msgtype=$json->{'type'};
 
@@ -657,13 +662,15 @@ debmes('Пришло важное сообщение, поместим его в
 //{"type":"groups","message":{"1":{"friendly_name":"232323"},"2":{"friendly_name":"group1"},"3":{"friendly_name":"group1"},"4":{"friendly_name":"group1"}}}
 $arr=sqlselectone('select * from  zigbee2mqtt_log  where TITLE="dummy"');
 $arr['TITLE']= $path;
-if ($msgtype=='device_state'||$msgtype=='raw') {$arr['MESSAGE']= $path.":".$value; } else  {$arr['MESSAGE']= $value;}
+if ($msgtype=='device_state'||$msgtype=='raw2') {$arr['MESSAGE']= $path.":".$value; } else  {$arr['MESSAGE']= $value;}
 $arr['TYPE']= $msgtype;
 $arr['FIND']= date('Y-m-d H:i:s');
 
 if (ZMQTT_DEBUG=="1" ) debmes($arr , 'zigbee2mqtt');
 
 $ok=SQLInsert('zigbee2mqtt_log', $arr);
+
+}
 
 if (ZMQTT_DEBUG=="1" ) debmes('Поместили '.$ok , 'zigbee2mqtt');
 //раскодируем
@@ -681,12 +688,7 @@ if (ZMQTT_DEBUG=="1" ) debmes('справочник устройств:','zigbee
 $this->parse_deviceinfo($json);
 }
 
-if ($json->{'type'}=='groups') {
-
-$this->update_groups($json);
-
-}
-}
+if ($json->{'type'}=='groups') {$this->update_groups($json);}
 
 //добавляем в справочник устройств zigbee2mqtt_devices
 
@@ -698,38 +700,12 @@ $dev_title=explode('/',$path)[1];
 
 if (ZMQTT_DEBUG=="1" ) debmes('$dev_title='.$dev_title,'zigbee2mqtt') ;
 
-//////////////////////////////////////////////////////////////
-//////////////////////////////////////////////////////////////
-//////////////////////////////////////////////////////////////
-//////////////////////////////////////////////////////////////
 
-//if ($dev_title=='bridge')  {
-
-//arr=sqlselectone('select * from  zigbee2mqtt_devices where TITLE="bridge"');
-
-//if ($arr['IEEEADDR']) {$dev_title=$arr['IEEEADDR'];} else  {$dev_title='bridge';}
-
-//}
-//echo $path.":".$dev_title."<br>";
-
-//if (strpos($dev_title,"/set/")==0)
-
-//если нет в пути параметра set, управляющие свои значения нам не нужны
-//if (strpos($path,"set")===false)
-
-//if (ZMQTT_DEBUG=="1" ) debmes($path.' strpos:'. strpos($path,"set"), 'zigbee2mqtt');
-if (strpos($path,"set")>0)
-{
-if (ZMQTT_DEBUG=="1" ) debmes('путь содержит set, его мы записывать не будем, чтобы не было колизии', 'zigbee2mqtt');
-}
+if (strpos($path,"set")>0) {if (ZMQTT_DEBUG=="1" ) debmes('путь содержит set, его мы записывать не будем, чтобы не было колизии', 'zigbee2mqtt'); }
 else 
 {
-
+////основной запрос
 $this->update_default($path, $value);
-
-
-
-
 }
 
 
@@ -756,7 +732,8 @@ if (ZMQTT_DEBUG=="1" ) debmes('апдейтим zigbee2mqtt_devices: '.$sql, 'zi
      $rec['IEEEADDR']=$dev_title;
      $rec['FIND']=date('Y-m-d H:i:s');
 
-                    if ($dev_title=='bridge' ){
+                    if ($dev_title=='bridge' )
+			{
                     if (ZMQTT_DEBUG=="1" ) debmes('это шлюз',zigbee2mqtt);
 
                     $cnt=SQLSelectOne("SELECT count(*) cnt FROM zigbee2mqtt_devices WHERE TITLE ='bridge'")['cnt'];
@@ -766,7 +743,9 @@ if (ZMQTT_DEBUG=="1" ) debmes('апдейтим zigbee2mqtt_devices: '.$sql, 'zi
                     if ($cnt==0) {SQLInsert('zigbee2mqtt_devices', $rec);} else 
                         {SQLUpdate('zigbee2mqtt_devices', $rec);}
 //                       break;
-} else { 
+			} 
+///не бридж
+else { 
 
      if(!$rec['ID']) { /* If path_write foud in db */
 
@@ -3673,7 +3652,7 @@ EOD;
 }
 
 
-function isJSON($string) {
+function isJSON22($string) {
     return ((is_string($string) && (is_object(json_decode($string)) || is_array(json_decode($string))))) ? true : false;
 }
 
