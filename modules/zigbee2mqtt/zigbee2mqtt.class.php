@@ -3618,7 +3618,7 @@ function createdb()
  zigbee2mqtt: TITLE varchar(255) NOT NULL DEFAULT ''
  zigbee2mqtt: LOCATION_ID int(10) NOT NULL DEFAULT '0'
  zigbee2mqtt: UPDATED datetime
- zigbee2mqtt: VALUE longtext NOT NULL DEFAULT ''
+ zigbee2mqtt: VALUE longtext 
  zigbee2mqtt: PATH varchar(255) NOT NULL DEFAULT ''
  zigbee2mqtt: METRIKA varchar(255) NOT NULL DEFAULT ''
  zigbee2mqtt: PATH_WRITE varchar(255) NOT NULL DEFAULT ''
@@ -3639,7 +3639,7 @@ function createdb()
 
  zigbee2mqtt_log: ID int(10) unsigned NOT NULL auto_increment
  zigbee2mqtt_log: TITLE varchar(255) NOT NULL DEFAULT ''
- zigbee2mqtt_log: MESSAGE longtext NOT NULL DEFAULT ''
+ zigbee2mqtt_log: MESSAGE longtext 
  zigbee2mqtt_log: TYPE varchar(255) NOT NULL DEFAULT ''
  zigbee2mqtt_log: FIND datetime
 
