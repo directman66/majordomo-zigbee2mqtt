@@ -57,6 +57,8 @@
 
 
 
+
+
 if (isset($_GET['vendor_id'])&&$_GET['vendor_id']<>'0') { 
 
 $vendor_id=$_GET['vendor_id'];
@@ -74,6 +76,7 @@ $req_vendor=' ';
 $out['VENDOR']='0';
 $out['VENDORNAME']='';
 $req_vendor=' '; 
+$req_vid=' and SELECTVENDOR <>"group" '; 
 
 }
 /*
@@ -98,6 +101,7 @@ $out['VID']=(int)$vid_id;
 {
 $req_vid=' '; 
 $out['VID']='0';
+$req_vid=' and SELECTVENDOR <>"group" '; 
 
 }
 
