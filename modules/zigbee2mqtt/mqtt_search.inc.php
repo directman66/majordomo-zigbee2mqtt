@@ -76,14 +76,14 @@ $req_vendor=' ';
 $out['VENDOR']='0';
 $out['VENDORNAME']='';
 $req_vendor=' '; 
-$req_vid=' and SELECTVENDOR <>"group" '; 
+
 
 }
 /*
 $this->getConfig();
 if ($this->config['VID_ID']) {}
 */
-
+/*
 if (isset($_GET['vid_id'])&&$_GET['vid_id']<>'0') { 
 $vid_id=$_GET['vid_id'];
 //if ($vid_id==1) $	req_vid=' and TITLE not like "%group%"'; 
@@ -101,9 +101,11 @@ $out['VID']=(int)$vid_id;
 {
 $req_vid=' '; 
 $out['VID']='0';
-$req_vid=' and SELECTVENDOR <>"group" '; 
+//$req_vid=' and SELECTVENDOR <>"group" '; 
 
 }
+
+*/
 
 
 if (isset($_GET['location'])&&$_GET['location']<>'0') { 
@@ -126,10 +128,17 @@ $type_name=SQLSelectOne('select * from ( SELECT @i:=@i+1 AS ID, t.* FROM (SELECT
 $req_type=' and SELECTTYPE IN (select model from zigbee2mqtt_devices_list where type="'.$type_name.'")'; 
    $out['ZIGBEE2MQTTDEV']=$type_id;
 } else 
-{$req_type='';   $out['ZIGBEE2MQTTDEV']='0'; }
+{
+$req_type=' ';   
+$out['ZIGBEE2MQTTDEV']='0'; 
+}
 
 
 
+
+
+//if (($req_type=' ')&&($req_vendor=' '))    $req_vid=' and SELECTVENDOR <>"group" '; 
+if (($req_type==' ')&&($req_vendor==' '))    $req_vid=' and SELECTVENDOR <>"group" '; 
 
 //  $res=SQLSelect('select zigbee2mqtt_devices.ID DEVID, zigbee2mqtt_devices.*,LOCATION from zigbee2mqtt_devices  left join (select ID LOCID, TITLE LOCATION from locations) locations ON  zigbee2mqtt_devices.LOCATION_ID=locations.LOCID  where  TITLE<>"bridge"  '.$req_location.' '. $req_type. ' order by  FIND  DESC' );
 $sql='select zigbee2mqtt_devices.ID DEVID, zigbee2mqtt_devices.TYPE , zigbee2mqtt_devices.*,LOCATION from zigbee2mqtt_devices  left join (select ID LOCID, TITLE LOCATION from locations) locations ON  zigbee2mqtt_devices.LOCATION_ID=locations.LOCID  where  TITLE<>"bridge" and selecttype<>"cc2531" '.$req_location.' '. $req_type.' '.$req_vendor. ' '.$req_vid. ' order by  DATE(FIND) DESC, SELECTVENDOR ';
