@@ -2,7 +2,7 @@
 //$maparray=SQLSelectOne ('select * from zigbee2mqtt where value like "digraph%"');
 //$maparray=SQLSelect('SELECT *  FROM (select zigbee2mqtt_devices.ID DEVID, zigbee2mqtt_devices.* from zigbee2mqtt_devices )zigbee2mqtt_devices LEFT JOIN zigbee2mqtt_devices_list ON zigbee2mqtt_devices_list.zigbeeModel=zigbee2mqtt_devices.MODEL ');
 //$maparray=SQLSelect("SELECT * FROM (select zigbee2mqtt_devices.ID DEVID, zigbee2mqtt_devices.* from zigbee2mqtt_devices )zigbee2mqtt_devices LEFT JOIN zigbee2mqtt_devices_list ON zigbee2mqtt_devices_list.zigbeeModel like concat('%',zigbee2mqtt_devices.MODEL,'%') ");
-$maparray=SQLSelect("select * from zigbee2mqtt_devices  where LENGTH(TITLE)>0 and LENGTH(SELECTTYPE)>0 ");
+$maparray=SQLSelect("select * from zigbee2mqtt_devices  where LENGTH(TITLE)>0 and LENGTH(SELECTTYPE)>0 and SELECTTYPE<>'group'");
 
 
 
