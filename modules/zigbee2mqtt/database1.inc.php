@@ -2478,6 +2478,20 @@ $par1['toZigbee'] = "";
 SQLInsert('zigbee2mqtt_devices_list', $par1);
 
 
+//LXZB-02A
+$par1['zigbeeModel'] = "group";
+$par1['model'] = "group";
+$par1['vendor'] = "group";
+$par1['type'] = "group";
+$par1['description'] = "group";
+$par1['supports'] = "";
+$par1['extend'] = "";
+$par1['fromZigbee'] = "";
+$par1['toZigbee'] = "";
+SQLInsert('zigbee2mqtt_devices_list', $par1);
+
+
+
 
 }
 
