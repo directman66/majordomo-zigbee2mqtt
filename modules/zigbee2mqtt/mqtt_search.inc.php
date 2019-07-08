@@ -61,7 +61,8 @@ if (isset($_GET['vendor_id'])&&$_GET['vendor_id']<>'0') {
 
 $vendor_id=$_GET['vendor_id'];
 
-if (!$vendor_id) $vendor_name=SQLSelectOne('select * from ( SELECT @i:=@i+1 AS ID, t.* FROM (SELECT distinct VENDOR "TYPE" FROM zigbee2mqtt_devices_list, zigbee2mqtt_devices where zigbee2mqtt_devices.SELECTVENDOR=zigbee2mqtt_devices_list.vendor ) AS t, (SELECT @i:=0) AS foo ) a where a.ID='.$vendor_id)['TYPE'];
+if ($vendor_id) 
+$vendor_name=SQLSelectOne('select * from ( SELECT @i:=@i+1 AS ID, t.* FROM (SELECT distinct VENDOR "TYPE" FROM zigbee2mqtt_devices_list, zigbee2mqtt_devices where zigbee2mqtt_devices.SELECTVENDOR=zigbee2mqtt_devices_list.vendor ) AS t, (SELECT @i:=0) AS foo ) a where a.ID='.$vendor_id)['TYPE'];
 
 $req_vendor=' and SELECTVENDOR="'.$vendor_name.'" '; 
 
@@ -72,20 +73,21 @@ $out['VENDORNAME']=$vendor_name;
 $req_vendor=' '; 
 $out['VENDOR']='0';
 $out['VENDORNAME']='';
+$req_vendor=' '; 
 
 }
-
+/*
 $this->getConfig();
 if ($this->config['VID_ID']) {}
-
+*/
 
 if (isset($_GET['vid_id'])&&$_GET['vid_id']<>'0') { 
 $vid_id=$_GET['vid_id'];
 //if ($vid_id==1) $	req_vid=' and TITLE not like "%group%"'; 
 //if ($vid_id==2) $req_vid=' and TITLE like "%group%"'; 
 
-if ($vid_id==1) $req_vid=' and TYPE <>"" '; 
-if ($vid_id==2)  $req_vid=' and TYPE ="" '; 
+if ($vid_id==1)  $req_vid=' and SELECTVENDOR <>"group" '; 
+if ($vid_id==2)  $req_vid=' and SELECTVENDOR ="group" '; 
 
 
 $this->config['VID_ID']=$vid_id;
@@ -126,7 +128,9 @@ $req_type=' and SELECTTYPE IN (select model from zigbee2mqtt_devices_list where 
 
 
 //  $res=SQLSelect('select zigbee2mqtt_devices.ID DEVID, zigbee2mqtt_devices.*,LOCATION from zigbee2mqtt_devices  left join (select ID LOCID, TITLE LOCATION from locations) locations ON  zigbee2mqtt_devices.LOCATION_ID=locations.LOCID  where  TITLE<>"bridge"  '.$req_location.' '. $req_type. ' order by  FIND  DESC' );
-  $res=SQLSelect('select zigbee2mqtt_devices.ID DEVID, zigbee2mqtt_devices.TYPE , zigbee2mqtt_devices.*,LOCATION from zigbee2mqtt_devices  left join (select ID LOCID, TITLE LOCATION from locations) locations ON  zigbee2mqtt_devices.LOCATION_ID=locations.LOCID  where  TITLE<>"bridge" and selecttype<>"cc2531" '.$req_location.' '. $req_type.' '.$req_vendor. ' '.$req_vid. ' order by  DATE(FIND) DESC, SELECTVENDOR ' );
+$sql='select zigbee2mqtt_devices.ID DEVID, zigbee2mqtt_devices.TYPE , zigbee2mqtt_devices.*,LOCATION from zigbee2mqtt_devices  left join (select ID LOCID, TITLE LOCATION from locations) locations ON  zigbee2mqtt_devices.LOCATION_ID=locations.LOCID  where  TITLE<>"bridge" and selecttype<>"cc2531" '.$req_location.' '. $req_type.' '.$req_vendor. ' '.$req_vid. ' order by  DATE(FIND) DESC, SELECTVENDOR ';
+debmes($sql, 'zigbee2mqtt');
+  $res=SQLSelect( $sql);
 
 //  $res=SQLSelect('select zigbee2mqtt_devices.ID DEVID, zigbee2mqtt_devices.*,LOCATION from zigbee2mqtt_devices  left join (select ID LOCID, TITLE LOCATION from locations) locations ON  zigbee2mqtt_devices.LOCATION_ID=locations.LOCID where  TITLE<>"bridge" order by MANUFACTURE ' );
 
