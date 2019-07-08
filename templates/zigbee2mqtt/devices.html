@@ -98,9 +98,9 @@
 
   <select class="form-control" name="group_list_id" onChange="document.frmList_mqtt.submit();">
    <option value="0">Устройства (Без групп) 
-   <option value="100500"[#if ID="<#ID#>"#] selected[#endif#]>Группы  (Без устройств)
+   <option value="100500">Группы  (Без устройств)
    [#begin GROUP_LISTS#]
-   <option value="[#Z2M_ID#]"[#if ID="<#ID#>"#] selected[#endif#]>[#TITLE#]
+   <option value="[#Z2M_ID#]"[#if Z2M_ID="<#group_list_id#>"#] selected[#endif#]>[#TITLE#]
    [#end GROUP_LISTS#]
   </select>
   </div>
