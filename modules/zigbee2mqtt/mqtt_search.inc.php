@@ -28,11 +28,12 @@
   }
 
   $out['LOCATIONS']=SQLSelect("SELECT * FROM locations ORDER BY TITLE");
+  $out['GROUP_LISTS']=SQLSelect("SELECT * FROM zigbee2mqtt_grouplist ORDER BY TITLE");
 
 //  $out['ZIGBEE2MQTTTYPE']=SQLSelect("SELECT distinct TYPE 'TYPE' FROM zigbee2mqtt_devices_list");
-  $out['ZIGBEE2MQTTTYPE']=SQLSelect("SELECT @i:=@i+1 AS ID, t.* FROM (SELECT distinct TYPE 'TYPE' FROM zigbee2mqtt_devices_list) AS t, (SELECT @i:=0) AS foo");
+  $out['ZIGBEE2MQTTTYPE']=SQLSelect("SELECT @i:=@i+1 AS ID, t.* FROM (SELECT distinct TYPE 'TYPE' FROM zigbee2mqtt_devices_list where TYPE<>'group') AS t, (SELECT @i:=0) AS foo");
 
-  $out['VENDORARRAY']=SQLSelect("SELECT @i:=@i+1 AS ID, t.* FROM (SELECT distinct VENDOR 'TYPE' FROM zigbee2mqtt_devices_list, zigbee2mqtt_devices where zigbee2mqtt_devices.SELECTVENDOR=zigbee2mqtt_devices_list.vendor ) AS t, (SELECT @i:=0) AS foo");
+  $out['VENDORARRAY']=SQLSelect("SELECT @i:=@i+1 AS ID, t.* FROM (SELECT distinct VENDOR 'TYPE' FROM zigbee2mqtt_devices_list, zigbee2mqtt_devices where zigbee2mqtt_devices.SELECTVENDOR=zigbee2mqtt_devices_list.vendor and VENDOR<>'group' ) AS t, (SELECT @i:=0) AS foo");
 
 
 
@@ -54,6 +55,43 @@
 //  $res=SQLSelect('select zigbee2mqtt_devices.ID DEVID, zigbee2mqtt_devices.*,LOCATION from zigbee2mqtt_devices, (select ID LOCID, TITLE LOCATION from locations) locations where locations.LOCID=zigbee2mqtt_devices.LOCATION_ID order by MANUFACTURE' );
 //  $res=SQLSelect('select zigbee2mqtt_devices.ID DEVID, zigbee2mqtt_devices.*,LOCATION from zigbee2mqtt_devices  left join (select ID LOCID, TITLE LOCATION from locations) locations ON  zigbee2mqtt_devices.LOCATION_ID=locations.LOCID order by MANUFACTURE ' );
 //  $res=SQLSelect('select zigbee2mqtt_devices.ID DEVID, zigbee2mqtt_devices.*,LOCATION from zigbee2mqtt_devices  left join (select ID LOCID, TITLE LOCATION from locations) locations ON  zigbee2mqtt_devices.LOCATION_ID=locations.LOCID order by FIND  DESC' );
+
+
+
+
+
+
+
+if (!isset($_GET['group_list_id'])) { 
+$req_vid=' and SELECTVENDOR <>"group" '; 
+}
+
+
+
+if (isset($_GET['group_list_id'])&&($_GET['group_list_id']<>'100500')) { 
+
+$group_list_id=$_GET['group_list_id'];
+
+if ($group_list_id) 
+{
+$req_group=" and GROUPLIST RLIKE  \"^$group_list_id$|^$group_list_id,|,$group_list_id,|,$group_list_id$\"" ; 
+$out['group_list_id']=(int)$group_list_id;
+//  '^1$|^1,|,1,|,1$'
+
+} else 
+{
+$req_group=" ";
+$out['group_list_id']=(int)$group_list_id;
+$req_vid=' and SELECTVENDOR <>"group" '; 
+
+}
+}
+
+if (isset($_GET['group_list_id'])&&$_GET['group_list_id']=='100500') { 
+$group_list_id=$_GET['group_list_id'];
+$req_vid=' and SELECTVENDOR ="group" '; 
+$out['group_list_id']=(int)$group_list_id;
+}
 
 
 
@@ -138,10 +176,10 @@ $out['ZIGBEE2MQTTDEV']='0';
 
 
 //if (($req_type=' ')&&($req_vendor=' '))    $req_vid=' and SELECTVENDOR <>"group" '; 
-if (($req_type==' ')&&($req_vendor==' '))    $req_vid=' and SELECTVENDOR <>"group" '; 
+//if (($req_type==' ')&&($req_vendor==' '))    $req_vid=' and SELECTVENDOR <>"group" '; 
 
 //  $res=SQLSelect('select zigbee2mqtt_devices.ID DEVID, zigbee2mqtt_devices.*,LOCATION from zigbee2mqtt_devices  left join (select ID LOCID, TITLE LOCATION from locations) locations ON  zigbee2mqtt_devices.LOCATION_ID=locations.LOCID  where  TITLE<>"bridge"  '.$req_location.' '. $req_type. ' order by  FIND  DESC' );
-$sql='select zigbee2mqtt_devices.ID DEVID, zigbee2mqtt_devices.TYPE , zigbee2mqtt_devices.*,LOCATION from zigbee2mqtt_devices  left join (select ID LOCID, TITLE LOCATION from locations) locations ON  zigbee2mqtt_devices.LOCATION_ID=locations.LOCID  where  TITLE<>"bridge" and selecttype<>"cc2531" '.$req_location.' '. $req_type.' '.$req_vendor. ' '.$req_vid. ' order by  DATE(FIND) DESC, SELECTVENDOR ';
+$sql='select zigbee2mqtt_devices.ID DEVID, zigbee2mqtt_devices.TYPE , zigbee2mqtt_devices.*,LOCATION from zigbee2mqtt_devices  left join (select ID LOCID, TITLE LOCATION from locations) locations ON  zigbee2mqtt_devices.LOCATION_ID=locations.LOCID  where  TITLE<>"bridge" and selecttype<>"cc2531" '.$req_location.' '. $req_type.' '.$req_vendor. ' '.$req_vid. ' '.$req_group. ' order by  DATE(FIND) DESC, SELECTVENDOR ';
 debmes($sql, 'zigbee2mqtt');
   $res=SQLSelect( $sql);
 
@@ -274,6 +312,7 @@ $basa=SQLSelectOne($sql);
  if ( ($ttype=='switch')) $res[$i]['CHANGEABLE']='1';
 
  if ($basa['model']=='KS-SM001')   $res[$i]['CHANGEABLE']='1';
+ if ($basa['model']=='group')      $res[$i]['CHANGEABLE']='1';
  if ($basa['model']=='GL-C-008')   $res[$i]['CHANGEABLE']='1';
  if ($basa['model']=='LLKZMK11LM') $res[$i]['CHANGEABLE']='3';
  if ($basa['model']=='TI0001')     $res[$i]['CHANGEABLE']='2';
