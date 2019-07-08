@@ -348,11 +348,13 @@
 [#if CHANGEABLE#]
 <a href="?view_mode=device_togle&id=[#DEVID#]&tab=&location=<#LOCATION_ID#>&type_id=<#ZIGBEE2MQTTDEV#>&vendor_id=<#VENDOR#>&vid_id=<#VID#>" title="Переключить">
 [#if SELECTTYPE<>""#]		<img class="card-img pull-left img-circle" src="../templates/zigbee2mqtt/img/[#SELECTTYPE#].jpg" alt="Device Logo"></a>
-[#else SELECTTYPE#]	<img class="card-img pull-left img-circle" src="../templates/zigbee2mqtt/img/group.jpg" alt="Group Logo"></a>[#endif SELECTTYPE#]
+[#else SELECTTYPE#]	<img class="card-img pull-left img-circle" src="../templates/zigbee2mqtt/img/unknow.jpg" alt="Unknow Logo"></a>[#endif SELECTTYPE#] 
 
 [#else#]
 [#if SELECTTYPE<>""#]		<img class="card-img pull-left img-circle" src="../templates/zigbee2mqtt/img/[#SELECTTYPE#].jpg" alt="Device Logo">
-[#else SELECTTYPE#]	<img class="card-img pull-left img-circle" src="../templates/zigbee2mqtt/img/group.jpg" alt="Group Logo"></a>[#endif SELECTTYPE#]
+[#else SELECTTYPE#]	<img class="card-img pull-left img-circle" src="../templates/zigbee2mqtt/img/unknow.jpg" alt="Unknow Logo">
+
+</a>[#endif SELECTTYPE#]
 [#endif#]
 
 
