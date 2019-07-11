@@ -62,6 +62,10 @@ echo 'creategroup';
    global $retain;
    $rec['RETAIN']=(int)$retain;
 
+   global $enable1;
+   $rec['ENABLE1']=(int)$enable1;
+
+
    global $convertonoff;
    $rec['CONVERTONOFF']=(int)$convertonoff;
 

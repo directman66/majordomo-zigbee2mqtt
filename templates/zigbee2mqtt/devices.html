@@ -68,7 +68,7 @@
 
 -->
   <div class="col-md-3">
-  <select class="form-control" name="type_id" onChange="document.frmList_mqtt.submit();">
+  <select class="form-control" name="type_id" onChange="document.frmList_mqtt.submit();" [#if "<#SETTINGS_THEME#>"=="dark"&& ACTION=""#]style="background-color : grey;color:white"[#endif#]>
 
 
 
@@ -81,7 +81,7 @@
 
 
   <div class="col-md-3">
-  <select class="form-control" name="vendor_id" onChange="document.frmList_mqtt.submit();">
+  <select class="form-control" name="vendor_id" onChange="document.frmList_mqtt.submit();" [#if "<#SETTINGS_THEME#>"=="dark"&& ACTION=""#]style="background-color : grey;color:white"[#endif#]>
 
 
 
@@ -96,11 +96,11 @@
 
   <div class="col-md-3">
 
-  <select class="form-control" name="group_list_id" onChange="document.frmList_mqtt.submit();">
+  <select class="form-control" name="group_list_id" onChange="document.frmList_mqtt.submit();" [#if "<#SETTINGS_THEME#>"=="dark"&& ACTION=""#]style="background-color : grey;color:white"[#endif#]>
    <option value="0">Устройства (Без групп) 
-   <option value="100500"[#if ID="<#ID#>"#] selected[#endif#]>Группы  (Без устройств)
+   <option value="100500"[#if Z2M_ID="100500"#]>Группы  (Без устройств)
    [#begin GROUP_LISTS#]
-   <option value="[#Z2M_ID#]"[#if ID="<#ID#>"#] selected[#endif#]>[#TITLE#]
+   <option value="[#Z2M_ID#]"[#if Z2M_ID="<#group_list_id#>"#] selected[#endif#]>[#TITLE#]
    [#end GROUP_LISTS#]
   </select>
   </div>
@@ -108,7 +108,7 @@
 
   <div class="col-md-3">
 
-  <select class="form-control" name="location_id" onChange="document.frmList_mqtt.submit();">
+  <select class="form-control" name="location_id" onChange="document.frmList_mqtt.submit();" [#if "<#SETTINGS_THEME#>"=="dark"&& ACTION=""#]style="background-color : grey;color:white"[#endif#]>
    <option value="0"><#LANG_FILTER_BY_LOCATION#> (<#LANG_ALL#>)
    [#begin LOCATIONS#]
    <option value="[#ID#]"[#if ID="<#LOCATION_ID#>"#] selected[#endif#]>[#TITLE#]
@@ -117,7 +117,7 @@
   </div>
 
 
-
+[#if ACTION="" #] <br>[#endif#]
 
 
 
