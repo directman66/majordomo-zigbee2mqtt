@@ -591,6 +591,11 @@ if ($jsonvalue!='null') {
 
 
     function api($params) {
+
+ debmes('Сработал api  ','zigbee2mqtt');
+ debmes($params,'zigbee2mqtt');
+ debmes($_REQUEST,'zigbee2mqtt');
+
         if ($_REQUEST['topic']) {
             $this->processMessage($_REQUEST['topic'], $_REQUEST['msg']);
         }
@@ -602,7 +607,7 @@ if ($jsonvalue!='null') {
 
 
 
-// debmes('Сработал processMessage :'.$path." value:". $value.' strpos:'. strpos($path,"set"),'zigbee2mqtt');
+ debmes('Сработал processMessage :'.$path." value:". $value.' strpos:'. strpos($path,"set"),'zigbee2mqtt');
 //if (ZMQTT_DEBUG=="1" ) debmes('Сработал processMessage :'.$path." value:". $value,'zigbee2mqtt');
 
    if (preg_match('/\#$/', $path)) {
@@ -637,6 +642,7 @@ if (strpos($path,'igbee2mqtt/0x')>0) {$msgtype='device_state';}
 if (strpos($path,'igbee2mqtt/bridge/state')>0) {$msgtype='bridge_state';}
 if (strpos($path,'igbee2mqtt/bridge/networkmap/raw')>0) {$msgtype='raw_map';}
 if (strpos($path,'igbee2mqtt/bridge/networkmap')>0) {$msgtype='graphwiz';}
+if (strpos($path,'igbee2mqtt/bridge/log')>0) {$msgtype='log';}
 
 
 //if ($path=='zigbee2mqtt/bridge/log') {$msgtype=$json->{'type'};}
@@ -654,12 +660,13 @@ if (($msgtype)&&($this->isJSON22($value))
 ||$path=='zigbee2mqtt/bridge/networkmap/graphviz'
 
 
+
 )
 {
 $json=json_decode($value);
 $msgtype=$json->{'type'};
 
-///debmes('Пришло важное сообщение, поместим его в журнал :'.$path." value:". $value." type:".$json->{'type'},'zigbee2mqtt');
+//debmes('Пришло важное сообщение, поместим его в журнал :'.$path." value:". $value." type:".$json->{'type'},'zigbee2mqtt');
 
 
 //{"type":"groups","message":{"1":{"friendly_name":"232323"},"2":{"friendly_name":"group1"},"3":{"friendly_name":"group1"},"4":{"friendly_name":"group1"}}}
@@ -980,9 +987,12 @@ else
 //debmes('Вызываю setglobal: value:'.$rec1['LINKED_OBJECT'].'.'.$rec1['LINKED_PROPERTY'].' value:'. $newvalue,'zigbee2mqtt');
 
 $oldvalue=getGlobal($rec['LINKED_OBJECT'].'.'.$rec['LINKED_PROPERTY']);
+if ($rec1['ENABLE1']<>"1"){
+setGlobal($rec1['LINKED_OBJECT'].'.'.$rec1['LINKED_PROPERTY'], $newvalue, array('zigbee2mqtt'=>'0'));} 
+else if ($newvalue<>$oldvalue)  
+{setGlobal($rec1['LINKED_OBJECT'].'.'.$rec1['LINKED_PROPERTY'], $newvalue, array('zigbee2mqtt'=>'0'));}
 
-if ($newvalue<>$oldvalue)    setGlobal($rec1['LINKED_OBJECT'].'.'.$rec1['LINKED_PROPERTY'], $newvalue, array('zigbee2mqtt'=>'0'));
-     }
+}
 //debmes('Проверяем, нужно ли вызвать метод : '.$rec1['LINKED_OBJECT'].'.'.$rec1['LINKED_METHOD'].' value:'. $newvalue,'zigbee2mqtt');
 
      if ($rec1['LINKED_OBJECT'] && $rec1['LINKED_METHOD']) {
@@ -3695,6 +3705,7 @@ function createdb()
  zigbee2mqtt: PAYLOAD_OFF varchar(255) NOT NULL DEFAULT ''
  zigbee2mqtt: PAYLOAD_TRUE varchar(255) NOT NULL DEFAULT ''
  zigbee2mqtt: PAYLOAD_FALSE varchar(255) NOT NULL DEFAULT ''
+ zigbee2mqtt: ENABLE1 varchar(1) NOT NULL DEFAULT ''
 
  zigbee2mqtt_log: ID int(10) unsigned NOT NULL auto_increment
  zigbee2mqtt_log: TITLE varchar(255) NOT NULL DEFAULT ''
