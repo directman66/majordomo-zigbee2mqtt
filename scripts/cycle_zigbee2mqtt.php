@@ -119,11 +119,15 @@ $zigbee2mqtt_client->close();
 function procmsg($topic, $msg) {
     //$url = BASE_URL . '/ajax/mqtt.html?op=process&topic='.urlencode($topic)."&msg=".urlencode($msg);
     //getURLBackground($url);
+
+debmes($topic.":".$msg, 'z2m');
+
     if (!isset($topic) || !isset($msg)) return false;
 
     echo date("Y-m-d H:i:s") . " Topic:{$topic} $msg\n";
     if (function_exists('callAPI')) {
-        callAPI('/api/module/zigbee2mqtt','GET',array('topic'=>$topic,'msg'=>$msg));
+//        callAPI('/api/module/zigbee2mqtt','GET',array('topic'=>$topic,'msg'=>$msg));
+      callAPI('/api/module/zigbee2mqtt','POST',array('topic'=>$topic,'msg'=>$msg));
     } else {
         global $zigbee2mqtt;
         $zigbee2mqtt->processMessage($topic, $msg);
