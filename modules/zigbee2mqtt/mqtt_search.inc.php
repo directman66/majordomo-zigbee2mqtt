@@ -180,7 +180,7 @@ $out['ZIGBEE2MQTTDEV']='0';
 
 //  $res=SQLSelect('select zigbee2mqtt_devices.ID DEVID, zigbee2mqtt_devices.*,LOCATION from zigbee2mqtt_devices  left join (select ID LOCID, TITLE LOCATION from locations) locations ON  zigbee2mqtt_devices.LOCATION_ID=locations.LOCID  where  TITLE<>"bridge"  '.$req_location.' '. $req_type. ' order by  FIND  DESC' );
 $sql='select zigbee2mqtt_devices.ID DEVID, zigbee2mqtt_devices.TYPE , zigbee2mqtt_devices.*,LOCATION from zigbee2mqtt_devices  left join (select ID LOCID, TITLE LOCATION from locations) locations ON  zigbee2mqtt_devices.LOCATION_ID=locations.LOCID  where  TITLE<>"bridge" and selecttype<>"cc2531" '.$req_location.' '. $req_type.' '.$req_vendor. ' '.$req_vid. ' '.$req_group. ' order by  DATE(FIND) DESC, SELECTVENDOR ';
-debmes($sql, 'zigbee2mqtt');
+//debmes($sql, 'zigbee2mqtt');
   $res=SQLSelect( $sql);
 
 //  $res=SQLSelect('select zigbee2mqtt_devices.ID DEVID, zigbee2mqtt_devices.*,LOCATION from zigbee2mqtt_devices  left join (select ID LOCID, TITLE LOCATION from locations) locations ON  zigbee2mqtt_devices.LOCATION_ID=locations.LOCID where  TITLE<>"bridge" order by MANUFACTURE ' );
@@ -333,9 +333,10 @@ $basa=SQLSelectOne($sql);
  if ($basa['model']=='GL-C-008')  $res[$i]['COLOR_TEMP']='1';
  if ($basa['model']=='GL-C-008')  $res[$i]['XY']='1';
  if ($basa['model']=='LED1624G9')  $res[$i]['XY']='1';
+ if ($basa['model']=='group')      $res[$i]['XY']='1';
  if ($basa['model']=='LED1624G9')  $res[$i]['COLOR_TEMP']='1';
  if ($basa['model']=='ZNLDP12LM')  $res[$i]['COLOR_TEMP']='1';
-
+ if ($basa['model']=='group')      $res[$i]['COLOR_TEMP']='1';
 
 
 
@@ -487,7 +488,7 @@ if ($this->tab=='groups'){
 
   $sql0='SELECT *  FROM zigbee2mqtt_grouplist';
 
-debmes($sql0,'zigbee2mqtt');
+//debmes($sql0,'zigbee2mqtt');
 
 $ssql=SQLSelect($sql0);
 
@@ -500,7 +501,7 @@ if ($this->tab=='log2'){
 
   $sql0='SELECT *  FROM zigbee2mqtt_log order by FIND DESC LIMIT 100';
 
-debmes($sql0,'zigbee2mqtt');
+//debmes($sql0,'zigbee2mqtt');
 
 $ssql=SQLSelect($sql0);
 
@@ -528,7 +529,7 @@ $vm=$this->id;
 //  $sql0='SELECT *  FROM (select zigbee2mqtt_devices.ID DEVID, zigbee2mqtt_devices.* from zigbee2mqtt_devices where ID="'.$vm.'" ) zigbee2mqtt_devices LEFT JOIN zigbee2mqtt_devices_list ON zigbee2mqtt_devices_list.zigbeeModel like CONCAT("%",zigbee2mqtt_devices.MODEL,"%") ';
   $sql0='SELECT *  FROM (select zigbee2mqtt_devices.ID DEVID, zigbee2mqtt_devices.* from zigbee2mqtt_devices where ID="'.$vm.'" ) zigbee2mqtt_devices LEFT JOIN zigbee2mqtt_devices_list ON zigbee2mqtt_devices_list.zigbeeModel like CONCAT("%",zigbee2mqtt_devices.MODELID,"%") ';
 
-debmes($sql0,'zigbee2mqtt');
+//debmes($sql0,'zigbee2mqtt');
 
 $ssql=SQLSelectOne($sql0);
 
@@ -557,7 +558,7 @@ select  zigbee2mqtt.*, zigbee2mqtt_devices_command.*  from (select * from zigbee
 
 
 
-debmes($sql,'zigbee2mqtt');
+//debmes($sql,'zigbee2mqtt');
 
  $res=SQLSelect($sql);
 
@@ -579,7 +580,7 @@ if ($res[$i]['command_topic'])
 {
 //$sql="update zigbee2mqtt set PATH_WRITE='".$res[$i]['command_topic']."/".$res[$i]['value_template']."' where ID='".$res[$i]['zmID']."'";
 $sql="update zigbee2mqtt set PATH_WRITE='".$res[$i]['command_topic']."' where ID='".$res[$i]['zmID']."'";
-debmes($sql, 'zigbee2mqtt');
+//debmes($sql, 'zigbee2mqtt');
 SQLExec ($sql);
 }
 
@@ -588,7 +589,7 @@ if (($res[$i]['payload_on'])&& (!$res[$i]['PAYLOAD_ON']))
 {
 //$sql="update zigbee2mqtt set PATH_WRITE='".$res[$i]['command_topic']."/".$res[$i]['value_template']."' where ID='".$res[$i]['zmID']."'";
 $sql="update zigbee2mqtt set PAYLOAD_ON='".$res[$i]['payload_on']."' where ID='".$res[$i]['zmID']."'";
-debmes($sql, 'zigbee2mqtt');
+//debmes($sql, 'zigbee2mqtt');
 SQLExec ($sql);
 }
 
@@ -596,7 +597,7 @@ if (($res[$i]['payload_off'])&& (!$res[$i]['PAYLOAD_OFF']))
 {
 //$sql="update zigbee2mqtt set PATH_WRITE='".$res[$i]['command_topic']."/".$res[$i]['value_template']."' where ID='".$res[$i]['zmID']."'";
 $sql="update zigbee2mqtt set PAYLOAD_OFF='".$res[$i]['payload_off']."' where ID='".$res[$i]['zmID']."'";
-debmes($sql, 'zigbee2mqtt');
+//debmes($sql, 'zigbee2mqtt');
 SQLExec ($sql);
 }
 
@@ -605,7 +606,7 @@ if ($res[$i]['command_value'])
 {
 //$sql="update zigbee2mqtt set PATH_WRITE='".$res[$i]['command_topic']."/".$res[$i]['value_template']."' where ID='".$res[$i]['zmID']."'";
 $sql="update zigbee2mqtt set COMMAND_VALUE='".$res[$i]['command_value']."' where ID='".$res[$i]['zmID']."'";
-debmes($sql, 'zigbee2mqtt');
+//debmes($sql, 'zigbee2mqtt');
 SQLExec ($sql);
 }
 
