@@ -1796,7 +1796,16 @@ $mqttsendvalue='{"state": "ON",  "brightness": 255,  "color": {"hex": "#'.$hex.'
 
 
   $this->sendcommand($mqttsendpath, $mqttsendvalue);
-$this->redirect("?");
+//$this->redirect("?");
+
+$location=$_GET['location'];
+$vendor_id=$_GET['vendor_id'];
+$type_id=$_GET['type_id'];
+$vid_id=$_GET['vid_id'];
+$group_list_id=$_GET['group_list_id'];
+
+$this->redirect("?&location=$location&type_id=$type_id&vendor_id=$vendor_id&vid_id=$vid_id&group_list_id=$group_list_id");
+
 
 
 }
@@ -1886,11 +1895,11 @@ $temp=substr($this->view_mode,13);
 
 	switch   ($temp)
 {
-	case 'hot':
-         $itemp=500; break;
-	case 'deff':      
-   $itemp=255; break;
-	case 'cold':   
+case 'hot':
+      $itemp=500; break;
+case 'deff':      
+      $itemp=255; break;
+case 'cold':   
       $itemp=0; break;
 }
 
@@ -1905,7 +1914,16 @@ $mqttsendvalue='{"state": "ON",  "color_mode":3, "brightness": 255,  "color_temp
 
 
   $this->sendcommand($mqttsendpath, $mqttsendvalue);
-$this->redirect("?");
+
+
+$location=$_GET['location'];
+$vendor_id=$_GET['vendor_id'];
+$type_id=$_GET['type_id'];
+$vid_id=$_GET['vid_id'];
+$group_list_id=$_GET['group_list_id'];
+
+$this->redirect("?&location=$location&type_id=$type_id&vendor_id=$vendor_id&vid_id=$vid_id&group_list_id=$group_list_id");
+
 
 
 }
