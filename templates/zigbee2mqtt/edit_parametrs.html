@@ -162,7 +162,11 @@
 	
 [#else#]
   <span id="mqtt[#ID#]" class="mqtt_value">[#VALUE#]</span>
-  [#if LINKED_OBJECT!=""#]([#LINKED_OBJECT#].[#LINKED_PROPERTY#])[#endif LINKED_OBJECT#]
+  [#if LINKED_OBJECT!=""#](
+<a href="/panel/linkedobject.html?op=redirect&object=[#LINKED_OBJECT#]&sub=properties" target="_blank">
+
+[#LINKED_OBJECT#].[#LINKED_PROPERTY#]</a>
+)[#endif LINKED_OBJECT#]
 [#endif#]
 
 

@@ -1,69 +1,33 @@
 
 
-<table width=100% >
+<!--<table width=100% > -->
+<table  align=center class="table table-striped" >
+<thead>
 
-<tr>
  <th>TOPIK </th>
  <th>MESSAGE </th>
  <th>ADDED</th>
 
-
-</tr>
 </thead>
-<tbody>
+<tbody> 
 [#begin LOG2#]
-
- <td>
-[#TITLE#]
- </td>
- <td>
-<span  title="Type: [#TYPE#] Topic:[#TITLE#]">[#MESSAGE#] </span>
-
-</td>
-
- <td>[#FIND#] </td>
-
-
-<!--
-<table border =0 width=100%><tr><td>
-[#TITLE#]</td>
-<td align="left">
-[#if POWER_WARNING<>""#]
-<span class="label label-[#POWER_WARNING#]"><i class="glyphicon glyphicon-flash"></i> [#BATTERY#]%</span>
-[#endif#]
-</td></tr></table>
-
-
-
-</b>
-</a>
--->
-
-
+<tr>
+ <td>[#TITLE#]</td>
+ <td><span  title="Type: [#TYPE#] Topic:[#TITLE#]">[#MESSAGE#] </span></td>
+ <td width="10%">[#FIND#] </td>
 </tr>
 [#end LOG2#]
-</tbody>
+</tbody> 
 </table>
 <input type="hidden" name="data_source" value="<#DATA_SOURCE#>">
 <input type="hidden" name="view_mode" value="multiple_mqtt">
-</form>
+
 <!-- / search results (list) -->
 <!-- paging -->
-[#if PAGES#]
-<table border=0>
-<td align=right><b>Pages:</b>&nbsp;</td>
-[#begin PREVPAGE#]<td><a href="?view_mode=<#VIEW_MODE#>&mode=<#MODE#>&save_qry=1&page=[#NUM#]">&lt;&lt;&lt;</a></td>[#end PREVPAGE#]
-<td>
-[#begin PAGES#]
-[#if !SELECTED#]<a href="?view_mode=<#VIEW_MODE#>&mode=<#MODE#>&save_qry=1&page=[#NUM#]">[#else#]<b>[#endif#][#NUM#]</b></a>
-[#end PAGES#]
-</td>
-[#begin NEXTPAGE#]<td><a href="?view_mode=<#VIEW_MODE#>&mode=<#MODE#>&save_qry=1&page=[#NUM#]">&gt;&gt;&gt;</a></td>[#end NEXTPAGE#]
-</table>
-[#endif PAGES#]
+
 <!-- / paging -->
 
-[#endif DEVICES#]
+
 
  <a href="?view_mode=clearlog" class="btn btn-default">Очистить</a>
 <!-- / results -->
