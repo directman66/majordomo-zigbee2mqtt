@@ -218,6 +218,7 @@
 
 
 <!-- / results -->
+<!--
 <script type="text/javascript">
  var valuesUpdateTimeout=0;
  function getLatestValues() {
@@ -226,7 +227,7 @@
   $('.mqtt_value').each(function () {
    ids+='ids[]='+this.id.replace('mqtt','')+'&';
   });
-  var url='/ajax/mqtt.html?op=getvalues&'+ids;
+  var url='/ajax/zigbee2mqtt.html?op=getvalues&'+ids;
   $.ajax({
    url: url
   }).done(function(data) {
@@ -247,5 +248,5 @@
  }
  valuesUpdateTimeout = setTimeout('getLatestValues()',2000);
 </script>
-
+-->
  <a href="?" class="btn btn-default"><#LANG_CANCEL#></a>
