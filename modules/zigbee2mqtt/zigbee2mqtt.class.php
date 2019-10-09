@@ -742,6 +742,9 @@ function update_default($path, $value){
 $dev_title=explode('/',$path)[1];
 
 
+//		    echo $cnt; 
+
+
      $sql="SELECT * FROM zigbee2mqtt_devices WHERE IEEEADDR LIKE '%".DBSafe($dev_title)."%'";
      $rec=SQLSelectOne($sql);
 
@@ -752,16 +755,18 @@ $dev_title=explode('/',$path)[1];
 
 
 
-     $rec['TITLE']=$dev_title;
-     $rec['IEEEADDR']=$dev_title;
-     $rec['FIND']=date('Y-m-d H:i:s');
+
+//                         $rec['TITLE']=$dev_title;
+          if(!$rec['ID']) { $rec['TITLE']=$dev_title;}
+
+     			$rec['IEEEADDR']=$dev_title;
+     			$rec['FIND']=date('Y-m-d H:i:s');
 
                     if ($dev_title=='bridge' )
 			{
 //                    if (ZMQTT_DEBUG=="1" ) debmes('это шлюз',zigbee2mqtt);
+                      $cnt=SQLSelectOne("SELECT count(*) cnt FROM zigbee2mqtt_devices WHERE TITLE ='bridge'")['cnt'];
 
-                    $cnt=SQLSelectOne("SELECT count(*) cnt FROM zigbee2mqtt_devices WHERE TITLE ='bridge'")['cnt'];
-		    echo $cnt; 
 	 	     $rec['FIND']=date('Y-m-d H:i:s');
 
                     if ($cnt==0) {SQLInsert('zigbee2mqtt_devices', $rec);} else 
@@ -785,7 +790,7 @@ if ($grl['ID'])   {      $rec['SELECTTYPE']='group';$rec['SELECTVENDOR']='group'
      $rec['FIND']=date('Y-m-d H:i:s');
 //if   ($rec['TITLE']=='bridge')  {      $rec['IEEEADDR']='bridge2';}
 //if   (strpos($rec['TITLE'], 'group')>0)  {      $rec['SELECTTYPE']='group';$rec['SELECTVENDOR']='group';}
-print_r($rec);
+//print_r($rec);
       SQLInsert('zigbee2mqtt_devices', $rec);
 
 
@@ -805,7 +810,7 @@ else
 //if (ZMQTT_DEBUG=="1" ) debmes('устройство уже зарегистрировано в системе   zigbee2mqtt_devices: '.$sql, 'zigbee2mqtt');
      $rec['IEEEADDR']=$dev_title;
      $rec['FIND']=date('Y-m-d H:i:s');
-SQLUPDATE('zigbee2mqtt_devices', $rec);
+     SQLUPDATE('zigbee2mqtt_devices', $rec);
 }
 
 } 
