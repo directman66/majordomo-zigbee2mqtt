@@ -590,6 +590,20 @@ if ($jsonvalue!='null') {
 */
 
 
+function processSubscription($event_name, $details='') {
+  if ($event_name=='HOURLY') {
+  $this->clearloghourly();
+  }
+ }	
+
+
+    function clearloghourly($params) {
+
+sqlexec('delete from zigbee2mqtt_log where  FIND<(CURDATE()- INTERVAL 30 DAY)');
+
+}
+
+
     function api($params) {
 
  debmes('Сработал api  ','zigbee2mqtt');
@@ -906,7 +920,7 @@ if ($newvalue=='ON') {$newvalue="1";}
 
 $oldvalue=getGlobal($rec['LINKED_OBJECT'].'.'.$rec['LINKED_PROPERTY']);
 
-if ($newvalue<>$oldvalue)  setGlobal($rec['LINKED_OBJECT'].'.'.$rec['LINKED_PROPERTY'], $newvalue, array('zigbee2mqtt'=>'0'));
+if ($newvalue<>$oldvalue)  setGlobal($rec['LINKED_OBJECT'].'.'.$rec['LINKED_PROPERTY'], $newvalue, array($this->name=>'0'));
      }
      if ($rec['LINKED_OBJECT'] && $rec['LINKED_METHOD']) {
        callMethod($rec['LINKED_OBJECT'] . '.' . $rec['LINKED_METHOD'], $rec['VALUE']);
@@ -988,9 +1002,9 @@ else
 
 $oldvalue=getGlobal($rec['LINKED_OBJECT'].'.'.$rec['LINKED_PROPERTY']);
 if ($rec1['ENABLE1']<>"1"){
-setGlobal($rec1['LINKED_OBJECT'].'.'.$rec1['LINKED_PROPERTY'], $newvalue, array('zigbee2mqtt'=>'0'));} 
+setGlobal($rec1['LINKED_OBJECT'].'.'.$rec1['LINKED_PROPERTY'], $newvalue, array($this->name=>'0'));} 
 else if ($newvalue<>$oldvalue)  
-{setGlobal($rec1['LINKED_OBJECT'].'.'.$rec1['LINKED_PROPERTY'], $newvalue, array('zigbee2mqtt'=>'0'));}
+{setGlobal($rec1['LINKED_OBJECT'].'.'.$rec1['LINKED_PROPERTY'], $newvalue, array($this->name=>'0'));}
 
 }
 //debmes('Проверяем, нужно ли вызвать метод : '.$rec1['LINKED_OBJECT'].'.'.$rec1['LINKED_METHOD'].' value:'. $newvalue,'zigbee2mqtt');
@@ -1087,7 +1101,7 @@ if ($newvalue=='ON') {$newvalue="1";}
 
 $oldvalue=getGlobal($rec['LINKED_OBJECT'].'.'.$rec['LINKED_PROPERTY']);
 
-if ($newvalue<>$oldvalue) setGlobal($rec1['LINKED_OBJECT'].'.'.$rec1['LINKED_PROPERTY'], $newvalue, array('zigbee2mqtt'=>'0'));
+if ($newvalue<>$oldvalue) setGlobal($rec1['LINKED_OBJECT'].'.'.$rec1['LINKED_PROPERTY'], $newvalue, array($this->name=>'0'));
 
      }
 
@@ -3378,6 +3392,8 @@ $sql="SELECT * FROM zigbee2mqtt WHERE LINKED_OBJECT LIKE '".DBSafe($object)."' A
 */
  function install($data='') {
   parent::install();
+
+ subscribeToEvent($this->name, 'HOURLY');
  }
 /**
 * Uninstall
