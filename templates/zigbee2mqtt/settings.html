@@ -84,11 +84,27 @@
     </div>
   </div>
   
+
+
+<div class="form-group">
+		<h3 class="controls">Majordomo settings</h3>
+	</div> 
+
+  <div class="form-group">
+    <label class="col-sm-3 control-label" [#if ERR_Z2M_HIST#] style="color:red;font-weight:bold"[#endif#]>History retention period (days):</label>
+    <div class="col-sm-9">
+      <input class="form-control" type="text" name="z2m_hist" value="<#Z2M_HIST#>">
+    </div>
+  </div>
+
 	<div class="form-group">
 	 <div class="controls">
 	 <label><input type="checkbox" name="mqtt_debug" value="1"[#if MQTT_DEBUG="1"#] checked[#endif#]> enable  debmes message [#ZMQTT_DEBUG#]</label>
 	 </div>
 	</div> 
+
+
+	
  
 <div class="form-actions">
 <button type="submit" name="subm" value="Submit" class="btn btn-primary"><#LANG_UPDATE#></button>
