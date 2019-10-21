@@ -287,6 +287,15 @@ $mqttsendvalue='{"state": "OFF"}';
     $port=1883;
    }
 
+
+   if ($this->config['Z2M_HIST']) {
+    $hist=$this->config['Z2M_HIST'];
+   } else {
+    $hist=30;
+   }
+
+
+
 //    $loglevel=$this->config['Z2M_LOGMODE'];
     $loglevel='deb';
 
@@ -454,6 +463,14 @@ $cnt=count($rec);
    }
 
 
+   if ($this->config['Z2M_HIST']) {
+    $hist=$this->config['Z2M_HIST'];
+   } else {
+    $hist=30;
+   }
+
+
+
 //   $mqtt_client = new phpMQTT($host, $port, $client_name.' Client');
    $mqtt_client = new Bluerhinos\phpMQTT($host, $port, $client_name . ' Client');
 
@@ -592,14 +609,25 @@ if ($jsonvalue!='null') {
 
 function processSubscription($event_name, $details='') {
   if ($event_name=='HOURLY') {
+
+
+
   $this->clearloghourly();
   }
  }	
 
 
-    function clearloghourly($params) {
+    function clearloghourly() {
 
-sqlexec('delete from zigbee2mqtt_log where  FIND<(CURDATE()- INTERVAL 30 DAY)');
+
+   $this->getConfig();
+   if ($this->config['Z2M_HIST']) {
+    $hist=$this->config['Z2M_HIST'];
+   } else {
+    $hist=30;
+   }
+
+sqlexec('delete from zigbee2mqtt_log where  FIND<(CURDATE()- INTERVAL '.$hist.' DAY)');
 
 }
 
@@ -1250,6 +1278,7 @@ define("ZMQTT_DEBUG", "1");
  $out['MQTT_CLIENT']=$this->config['MQTT_CLIENT'];
  $out['MQTT_HOST']=$this->config['MQTT_HOST'];
  $out['MQTT_PORT']=$this->config['MQTT_PORT'];
+ $out['Z2M_HIST']=$this->config['Z2M_HIST'];
  $out['Z2M_LOGMODE']=$this->config['Z2M_LOGMODE'];
  $out['Z2M_VIEW']=$this->config['Z2M_VIEW'];
 
@@ -2567,6 +2596,7 @@ sqlexec('delete from zigbee2mqtt_bind where ID='.$id);
    global $mqtt_query;
    global $zigbee2mqttpath;
    global $z2m_view;
+   global $z2m_hist;
 //echo $zigbee2mqttpath;
 
 //$vm1=$this->view_mode;
@@ -2586,6 +2616,9 @@ sqlexec('delete from zigbee2mqtt_bind where ID='.$id);
    $this->config['MQTT_QUERY']=trim($mqtt_query);
    $this->config['Z2M_LOGMODE']=trim($z2m_logmode2);
    $this->config['Z2M_VIEW']=trim($z2m_view);
+   $this->config['Z2M_HIST']=trim($z2m_hist);
+
+
 
 
 // $this->sendcommand('zigbee2mqtt/bridge/config/log_level', $z2m_logmode);
