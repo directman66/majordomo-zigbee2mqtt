@@ -711,6 +711,28 @@ $msgtype=$json->{'type'};
 //debmes('Пришло важное сообщение, поместим его в журнал :'.$path." value:". $value." type:".$json->{'type'},'zigbee2mqtt');
 
 
+//список исключений, по которым лог не храним
+$arr2=sqlselect('select IEEEADDR from  zigbee2mqtt_devices  where HISTORY="0"');
+$cntt=count($arr2);
+  for($i=0;$i<$cntt;$i++) {
+$arr3[]= $arr2[$i]['IEEEADDR'];
+                           }
+
+
+debmes($arr3, 'zm2');
+
+//$need = array_search(explode('/',$path)[1], $arr2); 
+$need = in_array(explode('/',$path)[1], $arr3); 
+
+//debmes($path, 'zm2');
+//debmes(explode('/',$path)[1], 'zm2');
+//debmes('need '.$need, 'zm2');
+//if (!$need) {debmes('no need '.$need, 'zm2'); } 
+//else {debmes('need '.$need, 'zm2'); } 
+
+
+
+if (!$need) {
 //{"type":"groups","message":{"1":{"friendly_name":"232323"},"2":{"friendly_name":"group1"},"3":{"friendly_name":"group1"},"4":{"friendly_name":"group1"}}}
 $arr=sqlselectone('select * from  zigbee2mqtt_log  where TITLE="dummy"');
 $arr['TITLE']= $path;
@@ -719,8 +741,8 @@ $arr['TYPE']= $msgtype;
 $arr['FIND']= date('Y-m-d H:i:s');
 
 //if (ZMQTT_DEBUG=="1" ) debmes($arr , 'zigbee2mqtt');
-
 $ok=SQLInsert('zigbee2mqtt_log', $arr);
+}
 
 }
 
@@ -1361,6 +1383,7 @@ $out['NEEDSAVE']="0";
 $out['IEEEADDR']=$res['IEEEADDR'];
 $out['HWVERSION']=$res['HWVERSION'];
 $out['SWBUILDID']=$res['SWBUILDID'];
+$out['HISTORY']=$res['HISTORY'];
 
 
 $res1=SQLSelectOne("SELECT * FROM zigbee2mqtt_devices_list where model='".$res['SELECTTYPE']."'");
@@ -1509,6 +1532,12 @@ $out['LOG2']=$ssql;
     $out['ERR_SELECTVENDOR']=1;
     $ok=0;
    }
+
+
+   global $history;
+   $rec['HISTORY']=$history;
+
+
 
 
    global $creategroup;
@@ -3720,6 +3749,7 @@ function createdb()
  zigbee2mqtt_devices: FIND datetime
  zigbee2mqtt_devices: LOCATION_ID varchar(4) NOT NULL DEFAULT '0'
  zigbee2mqtt_devices: GROUPLIST varchar(100) NOT NULL DEFAULT '0'
+ zigbee2mqtt_devices: HISTORY varchar(1) NOT NULL DEFAULT '1'
 
 
  zigbee2mqtt_devices_list: ID int(10) unsigned NOT NULL auto_increment
