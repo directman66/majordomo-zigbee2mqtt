@@ -3010,10 +3010,11 @@ $res2['MODELID']='cc2531';
 }
 
 
-$res2['SELECTTYPE']=    $json[$i]->{'model'};
 
+if (!$res2['SELECTTYPE']) $res2['SELECTTYPE']=    $json[$i]->{'model'};
 
-$res2['SELECTVENDOR']=$temp['vendor'];
+if (!$res2['SELECTTYPE']) $res2['SELECTVENDOR']=$temp['vendor'];
+
 $res2['MANUFACTURE']=$temp['vendor'];
 $res2['MODEL']=$json[$i]->{'model'};
 
@@ -3129,10 +3130,9 @@ $res2['MODELID']='cc2531';
 }
 
 
-$res2['SELECTTYPE']=    $json[$i]->{'model'};
+if (!$res2['SELECTTYPE']) $res2['SELECTTYPE']=$json[$i]->{'model'};
+if (!$res2['SELECTVENDOR']) $res2['SELECTVENDOR']=$temp['vendor'];
 
-
-$res2['SELECTVENDOR']=$temp['vendor'];
 $res2['MANUFACTURE']=$temp['vendor'];
 $res2['MODEL']=$json[$i]->{'model'};
 $res2['DEVICE_NAME']=$temp['zigbeeModel'];
