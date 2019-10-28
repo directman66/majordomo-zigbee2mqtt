@@ -38,6 +38,8 @@
 </style>
 
 
+
+
 <form action="?" method="post" name="frmList_mqtt" style="padding:0px" class="form">
 
 <table width=100% border=0>
@@ -66,10 +68,34 @@
   </select>
   </div>
 
--->
-  <div class="col-md-3">
-  <select class="form-control" name="type_id" onChange="document.frmList_mqtt.submit();" [#if "<#SETTINGS_THEME#>"=="dark"&& ACTION=""#]style="background-color : grey;color:white"[#endif#]>
 
+-->
+
+<!--
+
+          <div style="float:right;" class="dropdown">
+-->
+
+[#if ACTION<>"admin"#]
+          <div style="float:right;" >
+
+            <a class="btn btn-default btn-round"  href="?view_mode=&tab=log">
+              <span class="glyphicon glyphicon-list"></span> 
+            </a>        
+
+</div>
+
+[#endif#]
+
+
+
+
+
+
+  <div class="col-md-3">
+
+
+  <select class="form-control" name="type_id" onChange="document.frmList_mqtt.submit();" [#if "<#SETTINGS_THEME#>"=="dark"&& ACTION=""#]style="background-color : grey;color:white"[#endif#]>
 
 
       <option value="0">Фильтр по типу устройств (<#LANG_ALL#>)
@@ -94,7 +120,7 @@
 
 
 
-  <div class="col-md-3">
+  <div class="col-md-2">
 
   <select class="form-control" name="group_list_id" onChange="document.frmList_mqtt.submit();" [#if "<#SETTINGS_THEME#>"=="dark"&& ACTION=""#]style="background-color : grey;color:white"[#endif#]>
    <option value="0">Устройства (Без групп) 
@@ -121,6 +147,13 @@
 
 
 
+
+
+
+
+
+
+
 <!--<button type="submit" name="subm" value="Submit" class="btn btn-default"><#LANG_SEARCH#></button> -->
 <input type="hidden" name="data_source" value="<#DATA_SOURCE#>">
 <input type="hidden" name="view_mode" value="multiple_z2m">
@@ -132,6 +165,8 @@
 
 
 <hr>
+
+
 
 
 
@@ -460,3 +495,7 @@
 
 <!-- / results -->
 </td></tr></table>
+
+
+
+
