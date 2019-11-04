@@ -1936,7 +1936,7 @@ SQLInsert('zigbee2mqtt_devices_list', $par1);
 
 // Gledopto;
 
-$par1['zigbeeModel'] = 'GLEDOPTO" GL-C-008" GL-C-007';
+$par1['zigbeeModel'] = 'GLEDOPTO" GL-C-008';
 $par1['model'] = "GL-C-008";
 $par1['vendor'] = "Gledopto";
 $par1['type'] = "dimmer";  
@@ -1946,6 +1946,20 @@ $par1['extend'] = "";
 $par1['fromZigbee'] = "";
 $par1['toZigbee'] = "";
 SQLInsert('zigbee2mqtt_devices_list', $par1);
+
+
+$par1['zigbeeModel'] = 'GLEDOPTO" GL-C-007';
+$par1['model'] = "GL-C-007";
+$par1['vendor'] = "Gledopto";
+$par1['type'] = "dimmer";  
+$par1['description'] = "Zigbee LED controller RGB + CCT / RGBW / WWCW / Dimmer";
+$par1['supports'] = "generic.light_onoff_brightness_colortemp_colorxy";
+$par1['extend'] = "";
+$par1['fromZigbee'] = "";
+$par1['toZigbee'] = "";
+SQLInsert('zigbee2mqtt_devices_list', $par1);
+
+
 
 $par1['zigbeeModel'] = "GL-C-006";
 $par1['model'] = "GL-C-006";
@@ -2060,6 +2074,33 @@ $par1['extend'] = "";
 $par1['fromZigbee'] = "";
 $par1['toZigbee'] = "";
 SQLInsert('zigbee2mqtt_devices_list', $par1);
+
+
+$par1['zigbeeModel'] = "ZLL-DimmableLigh";
+$par1['model'] = "ZLED-TUNE9";
+$par1['vendor'] = "Trust";
+$par1['type'] = "bulb"; 
+$par1['description'] = "Smart Dimmable CCT LED Bulb";
+$par1['supports'] = "generic.light_onoff_brightness";
+$par1['extend'] = "";
+$par1['fromZigbee'] = "";
+$par1['toZigbee'] = "";
+SQLInsert('zigbee2mqtt_devices_list', $par1);
+
+
+
+$par1['zigbeeModel'] = "ZLL-DimmableLigh";
+$par1['model'] = "81809";
+$par1['vendor'] = "Trust";
+$par1['type'] = "bulb"; 
+$par1['description'] = "Smart Dimmable Colour LED Bulb";
+$par1['supports'] = "";
+$par1['extend'] = "";
+$par1['fromZigbee'] = "";
+$par1['toZigbee'] = "";
+SQLInsert('zigbee2mqtt_devices_list', $par1);
+
+
 
 $par1['zigbeeModel'] = "VMS_ADUROLIGHT";
 $par1['model'] = "ZPIR-8000";
