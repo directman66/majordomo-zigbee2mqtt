@@ -718,7 +718,7 @@ SQLInsert('zigbee2mqtt_devices_list', $par1);
 
 
 $par1['zigbeeModel'] = 'TRADFRI remote control';
-$par1['model'] = "E1524/E1810";		 
+$par1['model'] = "E1524-E1810";		 
 $par1['vendor'] = "IKEA";		 
 $par1['type'] = "remote";		 	 
 $par1['description'] = "TRADFRI remote control";		 
