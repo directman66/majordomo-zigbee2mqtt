@@ -1770,13 +1770,25 @@ global $prop_id;
 $property_id=$prop_id;
 
 
+global $command_topik;
+global $command_value;
+//$property_id=$prop_id;
+
+
 
 //debmes('update_prop id:'.$id.' new value:'.$new_value . ' property: '.$property. ' property_id: '.$property_id, 'zigbee2mqtt');
 
+if ($property_id) {
 $rec=SQLSelectOne('select * from zigbee2mqtt where ID='.$property_id);
 
 //$topik=$rec['PATH_WRITE'].'/'.$rec['METRIKA'];
 $topik=$rec['PATH_WRITE'];
+} 
+
+else 
+{
+$topik=$command_topik;
+}
 
 
 
@@ -1834,7 +1846,15 @@ $topik=$rec['PATH_WRITE'];
     return 0;
    }
 
+
+
+if ($property_id) {
 $json_value=array($rec['METRIKA']=> $new_value);
+} 
+else 
+{
+$json_value=array($command_value=> $new_value);
+}
 
 $jsonvalue=json_encode($json_value) ;
 
