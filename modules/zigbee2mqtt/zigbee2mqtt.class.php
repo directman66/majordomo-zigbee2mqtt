@@ -380,6 +380,94 @@ if ($value<>$oldvalue)    setGlobal($rec['LINKED_OBJECT'].'.'.$rec['LINKED_PROPE
  }
 
 
+ function setPropertyfn($fn,$command,  $value, $set_linked=0) {
+
+debmes($fn, 'zz2mm');
+debmes($command, 'zz2mm');
+debmes($value, 'zz2mm');
+        include_once(ROOT . "3rdparty/phpmqtt/phpMQTT.php");
+
+   $this->getConfig();
+   if ($mqtt->config['MQTT_CLIENT']) {
+    $client_name=$mqtt->config['MQTT_CLIENT'];
+   } else {
+    $client_name="MajorDoMo MQTT";
+   }
+
+
+
+   if ($mqtt->config['MQTT_DEBUG']) {
+    $debug=$mqtt->config['MQTT_DEBUG'];
+   } else {
+    $debug="0";
+   }
+
+
+
+
+
+   if ($this->config['MQTT_AUTH']) {
+    $username=$this->config['MQTT_USERNAME'];
+    $password=$this->config['MQTT_PASSWORD'];
+   }
+   if ($this->config['MQTT_HOST']) {
+    $host=$this->config['MQTT_HOST'];
+   } else {
+    $host='localhost';
+   }
+   if ($this->config['MQTT_PORT']) {
+    $port=$this->config['MQTT_PORT'];
+   } else {
+    $port=1883;
+   }
+
+   if ($this->config['Z2M_LOGMODE']) {
+    $loglevel=$this->config['Z2M_LOGMODE'];
+   } else {
+    $loglewel='debug';
+   }
+
+
+   if ($this->config['Z2M_HIST']) {
+    $hist=$this->config['Z2M_HIST'];
+   } else {
+    $hist=30;
+   }
+
+
+
+//   $mqtt_client = new phpMQTT($host, $port, $client_name.' Client');
+   $mqtt_client = new Bluerhinos\phpMQTT($host, $port, $client_name . ' Client');
+
+   if(!$mqtt_client->connect(true, NULL,$username,$password))
+   {
+//if (ZMQTT_DEBUG=="1" ) debmes('Ошибка подключения к mqtt', 'zigbee2mqtt');
+    return 0;
+   }
+
+
+$json=array( $command=> $value);
+
+
+$jsonvalue=json_encode($json) ;
+if ($jsonvalue!='null') { 
+//if (ZMQTT_DEBUG=="1" ) debmes('Публикую zigbee2mqqtt '.$rec[$i]['PATH_WRITE'].":".$jsonvalue, 'zigbee2mqtt1');
+
+debmes('publish', 'zz2mm');
+debmes($fn, 'zz2mm');
+debmes($jsonvalue, 'zz2mm');
+   $mqtt_client->publish($fn,$jsonvalue, (int)$rec[$i]['QOS'], (int)$rec[$i]['RETAIN']);
+       
+   }
+
+   $mqtt_client->close();
+
+
+
+
+}
+
+
  function setPropertyDevice($id, $value, $set_linked=0) {
 //if (ZMQTT_DEBUG=="1" ) debmes('Нужно изменить значение id='.$id.' на '.$value, 'zigbee2mqtt');
 
@@ -2113,10 +2201,19 @@ $this->redirect("?&location=$location&type_id=$type_id&vendor_id=$vendor_id&vid_
 
 
  if ($this->view_mode=='device_on') {
-	$id=$this->id;
+if ($id){	$id=$this->id;
 //	$this->setProperty($mqtt_properties[$i]['ID'], $value);
 //if (ZMQTT_DEBUG=="1" ) debmes('!!!!!!!device_on','zigbee2mqtt');
-	$this->setPropertyDevice($id, 'device_on_single');
+	$this->setPropertyDevice($id, 'device_on_single');}
+
+else 
+{
+$this->getConfig();
+$z2mp=explode('/',$this->config['MQTT_QUERY'])[0];
+$path=$z2mp.'/'.$_GET['friendlyname'].'/set';
+$this->setPropertyfn($path, 'state','ON');
+}
+
 
 $location=$_GET['location'];
 $vendor_id=$_GET['vendor_id'];
@@ -2129,10 +2226,22 @@ $this->redirect("?&location=$location&type_id=$type_id&vendor_id=$vendor_id&vid_
 }
 
  if ($this->view_mode=='device_off') {
+
+if ($id){	
+
 	$id=$this->id;
 //if (ZMQTT_DEBUG=="1" ) debmes('!!!!!!!device_off','zigbee2mqtt');
 //	$this->setProperty($mqtt_properties[$i]['ID'], $value);
 	$this->setPropertyDevice($id, 'device_off_single');
+}
+else 
+{
+$this->getConfig();
+$z2mp=explode('/',$this->config['MQTT_QUERY'])[0];
+$path=$z2mp.'/'.$_GET['friendlyname'].'/set';
+$this->setPropertyfn($path, 'state','OFF');
+}
+
 
 $location=$_GET['location'];
 $vendor_id=$_GET['vendor_id'];
@@ -3065,9 +3174,14 @@ if (!$res2['SELECTTYPE']) $res2['SELECTTYPE']=    $json[$i]->{'model'};
 if (!$res2['SELECTTYPE']) $res2['SELECTVENDOR']=$temp['vendor'];
 
 $res2['MANUFACTURE']=$temp['vendor'];
-$res2['MODEL']=$json[$i]->{'model'};
+//$res2['MODEL']=$json[$i]->{'model'};
+$res2['MODEL']=str_replace($temp['model'], '/', '-');
 
-$res2['DEVICE_NAME']=$temp['zigbeeModel'];
+//$res2['DEVICE_NAME']=$temp['zigbeeModel'];
+$res2['DEVICE_NAME']=str_replace($temp['zigbeeModel'], '/', '-');
+
+
+
 $res2['TYPE']= 	$json[$i]->{'type'};
 
 
@@ -3093,7 +3207,11 @@ SQLUPDATE('zigbee2mqtt_devices', $res2);
 else 
 {
 // debmes('insert', 'zigbee2mqtt1');
-if ($json[$i]->{'model'}) $res2['SELECTTYPE']=    $json[$i]->{'model'};
+//if ($json[$i]->{'model'}) $res2['SELECTTYPE']=    $json[$i]->{'model'};
+if ($json[$i]->{'model'}) $res2['SELECTTYPE']= str_replace(  $json[$i]->{'model'}, '/', '-');
+
+
+
 
 $res2['TITLE']=$res2['IEEEADDR'];
 //debmes($res2, 'zigbee2mqtt1');
@@ -3167,7 +3285,7 @@ $sql="SELECT * FROM zigbee2mqtt_devices where IEEEADDR='".$cdev."'";
 $res2=SQLSelectOne($sql);
 
 
-$temp=sqlselectone ("SELECT * FROM zigbee2mqtt_devices_list where model='".$json[$i]->{'model'}."'");
+$temp=sqlselectone ("SELECT * FROM zigbee2mqtt_devices_list where model='".str_replace(   '/', '-',$json[$i]->{'model'})."'");
 
 if ($res2['TITLE']=='bridge') {
 $res2['MODEL']='cc2531';
@@ -3179,12 +3297,17 @@ $res2['MODELID']='cc2531';
 }
 
 
-if (!$res2['SELECTTYPE']) $res2['SELECTTYPE']=$json[$i]->{'model'};
+//if (!$res2['SELECTTYPE']) $res2['SELECTTYPE']=str_replace(  $json[$i]->{'model'}, '/', '-');
+if (!$res2['SELECTTYPE']) $res2['SELECTTYPE']=str_replace(   '/', '-',$json[$i]->{'model'});
 if (!$res2['SELECTVENDOR']) $res2['SELECTVENDOR']=$temp['vendor'];
 
 $res2['MANUFACTURE']=$temp['vendor'];
-$res2['MODEL']=$json[$i]->{'model'};
-$res2['DEVICE_NAME']=$temp['zigbeeModel'];
+//$res2['MODEL']=$json[$i]->{'model'};
+$res2['MODEL']=str_replace( '/', '-',$json[$i]->{'model'});
+
+
+//$res2['DEVICE_NAME']=$temp['zigbeeModel'];
+$res2['DEVICE_NAME']=str_replace(   '/', '-',$json[$i]->{'model'});
 $res2['POWERSOURCE']=$json[$i]->{'powerSource'};
 $res2['TYPE']=   	$json[$i]->{'type'};
 
@@ -3215,7 +3338,10 @@ SQLUPDATE('zigbee2mqtt_devices', $res2);
 else 
 {
 //if (ZMQTT_DEBUG=="1" ) debmes('insert', 'zigbee2mqtt');
-if ($json[$i]->{'model'}) $res2['SELECTTYPE']=    $json[$i]->{'model'};
+//if ($json[$i]->{'model'}) $res2['SELECTTYPE']=    $json[$i]->{'model'};
+if ($json[$i]->{'model'}) $res2['SELECTTYPE']= str_replace(   '/', '-',$json[$i]->{'model'});
+
+
 
 $res2['TITLE']=$res2['IEEEADDR'];
 //if (ZMQTT_DEBUG=="1" ) debmes($res2, 'zigbee2mqtt');
