@@ -717,6 +717,19 @@ $par1['toZigbee'] = "";
 SQLInsert('zigbee2mqtt_devices_list', $par1);
 
 
+$par1['zigbeeModel'] = 'TRADFRI remote control';
+$par1['model'] = "E1524/E1810";		 
+$par1['vendor'] = "IKEA";		 
+$par1['type'] = "remote";		 	 
+$par1['description'] = "TRADFRI remote control";		 
+$par1['extend'] = "";		 
+$par1['supports'] = "toggle, arrow left/right click/hold/release, brightness up/down click/hold/release";		 
+$par1['fromZigbee'] = "";		 
+$par1['toZigbee'] = "";		 
+SQLInsert('zigbee2mqtt_devices_list', $par1);
+
+
+
 $par1['zigbeeModel'] = 'cc2531';
 $par1['model'] = "cc2531";		 
 $par1['vendor'] = "Texas Instruments";		 
