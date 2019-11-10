@@ -321,6 +321,9 @@ $basa=SQLSelectOne($sql);
  if ($basa['model']=='QBKG03LM')   $res[$i]['CHANGEABLE']='2';
 
 
+ if ($basa['model']=='ZLED-TUNE9')      $res[$i]['COLOR_TEMP']='1';
+
+
  if ($basa['model']=='QBKG03LM')  $res[$i]['DISABLERED']='2';
  if ($basa['model']=='QBKG04LM')  $res[$i]['DISABLERED']='1';
  if ($basa['model']=='QBKG12LM')  $res[$i]['DISABLERED']='2';
