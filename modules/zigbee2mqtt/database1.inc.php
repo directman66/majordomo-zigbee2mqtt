@@ -2077,7 +2077,7 @@ SQLInsert('zigbee2mqtt_devices_list', $par1);
 
 // Trust;
 
-$par1['zigbeeModel'] = "ZLL-DimmableLigh";
+$par1['zigbeeModel'] = "ZLED-2709";
 $par1['model'] = "ZLED-2709";
 $par1['vendor'] = "Trust";
 $par1['type'] = "bulb"; 
@@ -2089,7 +2089,7 @@ $par1['toZigbee'] = "";
 SQLInsert('zigbee2mqtt_devices_list', $par1);
 
 
-$par1['zigbeeModel'] = "ZLL-DimmableLigh";
+$par1['zigbeeModel'] = "ZLED-TUNE9";
 $par1['model'] = "ZLED-TUNE9";
 $par1['vendor'] = "Trust";
 $par1['type'] = "bulb"; 
@@ -2100,13 +2100,11 @@ $par1['fromZigbee'] = "";
 $par1['toZigbee'] = "";
 SQLInsert('zigbee2mqtt_devices_list', $par1);
 
-
-
 $par1['zigbeeModel'] = "ZLL-DimmableLigh";
 $par1['model'] = "81809";
 $par1['vendor'] = "Trust";
 $par1['type'] = "bulb"; 
-$par1['description'] = "Smart Dimmable Colour LED Bulb";
+$par1['description'] = "Smart Dimmable CCT RGB LED Bulb";
 $par1['supports'] = "";
 $par1['extend'] = "";
 $par1['fromZigbee'] = "";
