@@ -8297,7 +8297,7 @@ SQLInsert('zigbee2mqtt_devices_command', $par2);
 
 //trust
 //ZLED-TUNE9;
-$par2['zigbeeModel'] = 'ZLED-TUNE9';
+$par2['zigbeeModel'] = '81809';
 $par2['type'] = "light";
 $par2['state_topic'] =  "zigbee2mqtt/<FRIENDLY_NAME>";
 $par2['availability_topic'] = "zigbee2mqtt/bridge/state";
