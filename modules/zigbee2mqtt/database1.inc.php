@@ -398,6 +398,19 @@ $par1['fromZigbee'] = "";
 $par1['toZigbee'] = "";		 
 SQLInsert('zigbee2mqtt_devices_list', $par1);						
 
+$par1['zigbeeModel'] = 'lumi.curtainb1';
+$par1['model'] = "ZNCLDJ12LM";		 
+$par1['vendor'] = "Xiaomi";		 
+$par1['type'] = "device";		 
+$par1['description'] = "Aqara B1 curtain motor";		 
+$par1['extend'] = "";		 
+$par1['supports'] = "open, close, stop, position";		 
+$par1['fromZigbee'] = "";		 
+$par1['toZigbee'] = "";		 
+SQLInsert('zigbee2mqtt_devices_list', $par1);						
+
+
+
 //IKEA
 
 $par1['zigbeeModel'] = 'TRADFRI bulb E26 WS opal 980lm';
