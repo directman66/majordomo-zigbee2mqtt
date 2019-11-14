@@ -1464,6 +1464,7 @@ $out['DEVICE_LIST']=$res;
 $out['ID']=$res['ID'];
 $out['TITLE']=$res['TITLE'];
 $out['MODEL']=$res['MODEL'];
+$out['DEVICE_NAME']=$res['DEVICE_NAME'];
 $out['MODELID']=$res['MODELID'];
 $out['TYPE']=$res['TYPE'];
 $out['IEEEADDR']=$res['IEEEADDR'];
@@ -3412,7 +3413,8 @@ $res2['MODEL']=$json[$i]->{'model'};
 
 
 //$res2['DEVICE_NAME']=$temp['zigbeeModel'];
-$res2['DEVICE_NAME']=str_replace(   '/', '-',$json[$i]->{'model'});
+//$res2['DEVICE_NAME']=str_replace(   '/', '-',$json[$i]->{'modelID'});
+$res2['DEVICE_NAME']=$json[$i]->{'modelID'};
 $res2['POWERSOURCE']=$json[$i]->{'powerSource'};
 $res2['TYPE']=   	$json[$i]->{'type'};
 
