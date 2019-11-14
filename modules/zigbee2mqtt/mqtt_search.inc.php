@@ -571,12 +571,17 @@ select  zigbee2mqtt.*, zigbee2mqtt_devices_command.*  from (select * from zigbee
    for($i=0;$i<$total;$i++) {
 
 //    $res[$i]['VALUE']=str_replace('":','": ',$res[$i]['VALUE']);
+$this->getConfig();
+$zz=explode('/',$this->config['MQTT_QUERY'])[0];
 
-$res[$i]['state_topic']=str_replace('<FRIENDLY_NAME>',$ssql['IEEEADDR'],$res[$i]['state_topic']);
+//$res[$i]['state_topic']=str_replace('<FRIENDLY_NAME>',$ssql['IEEEADDR'],$res[$i]['state_topic']);
+$res[$i]['state_topic']=str_replace('<Z2M_PATH>', $zz,str_replace('<FRIENDLY_NAME>',$ssql['IEEEADDR'],$res[$i]['state_topic']));
 //$res[$i]['state_topic']=str_replace('<FRIENDLY_NAME>',"123",$res[$i]['state_topic']);
 //$res[$i]['state_topic']="123";
-$res[$i]['availability_topic']=str_replace('<FRIENDLY_NAME>',$ssql['IEEEADDR'],$res[$i]['availability_topic']);
-$res[$i]['command_topic']=str_replace('<FRIENDLY_NAME>',$ssql['IEEEADDR'],$res[$i]['command_topic']);
+//$res[$i]['availability_topic']=str_replace('<FRIENDLY_NAME>',$ssql['IEEEADDR'],$res[$i]['availability_topic']);
+$res[$i]['availability_topic']=str_replace('<Z2M_PATH>', $zz,str_replace('<FRIENDLY_NAME>',$ssql['IEEEADDR'],$res[$i]['availability_topic']));
+//$res[$i]['command_topic']=str_replace('<FRIENDLY_NAME>',$ssql['IEEEADDR'],$res[$i]['command_topic']);
+$res[$i]['command_topic']=str_replace('<Z2M_PATH>', $zz,str_replace('<FRIENDLY_NAME>',$ssql['IEEEADDR'],$res[$i]['command_topic']));
 
 //if (($res[$i]['command_topic'])&& (!$res[$i]['PATH_WRITE'])) 
 if ($res[$i]['command_topic']) 
