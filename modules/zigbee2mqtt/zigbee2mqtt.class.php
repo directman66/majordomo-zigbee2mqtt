@@ -738,6 +738,7 @@ sqlexec('delete from zigbee2mqtt_log where  FIND<(CURDATE()- INTERVAL '.$hist.' 
 
 
  debmes('Сработал processMessage :'.$path." value:". $value.' strpos:'. strpos($path,"set"),'zigbee2mqtt');
+ debmes('Сработал processMessage :'.$path." value:". $value.' strpos:'. strpos($path,"set"),'zigbee2mqtt2');
 //if (ZMQTT_DEBUG=="1" ) debmes('Сработал processMessage :'.$path." value:". $value,'zigbee2mqtt');
 
    if (preg_match('/\#$/', $path)) {
@@ -758,6 +759,7 @@ if (!$v) {$v="0"; }
     } 
 
 //else 
+
 	   $this->processMessage2($path,$value);
 
 }
@@ -768,11 +770,15 @@ if (!$v) {$v="0"; }
  function processMessage2($path, $value) {
 unset($msgtype);
 
-if (strpos($path,'igbee2mqtt/0x')>0) {$msgtype='device_state';}
-if (strpos($path,'igbee2mqtt/bridge/state')>0) {$msgtype='bridge_state';}
-if (strpos($path,'igbee2mqtt/bridge/networkmap/raw')>0) {$msgtype='raw_map';}
-if (strpos($path,'igbee2mqtt/bridge/networkmap')>0) {$msgtype='graphwiz';}
-if (strpos($path,'igbee2mqtt/bridge/log')>0) {$msgtype='log';}
+$this->getConfig();
+$zz=substr(explode('/',$this->config['MQTT_QUERY'])[0],1);
+
+
+if (strpos($path,$zz.'/0x')>0) {$msgtype='device_state';}
+if (strpos($path,$zz.'/bridge/state')>0) {$msgtype='bridge_state';}
+if (strpos($path,$zz.'/bridge/networkmap/raw')>0) {$msgtype='raw_map';}
+if (strpos($path,$zz.'/bridge/networkmap')>0) {$msgtype='graphwiz';}
+if (strpos($path,$zz.'/bridge/log')>0) {$msgtype='log';}
 
 
 //if ($path=='zigbee2mqtt/bridge/log') {$msgtype=$json->{'type'};}
@@ -783,11 +789,16 @@ if (strpos($path,'igbee2mqtt/bridge/log')>0) {$msgtype='log';}
 //if ($msgtype)
 //if ($path=='zigbee2mqtt/bridge/state')
 
+debmes('zz:'.$zz, 'zzz222');
+debmes($path, 'zzz222');
+debmes('$msgtype: '.$msgtype, 'zzz222');
+debmes($value, 'zzz222');
+
 if (($msgtype)&&($this->isJSON22($value))
-||$path=='zigbee2mqtt/bridge/log'
-||$path=='zigbee2mqtt/bridge/networkmap'
-||$path=='zigbee2mqtt/bridge/networkmap/raw'
-||$path=='zigbee2mqtt/bridge/networkmap/graphviz'
+||$path==$zz.'/bridge/log'
+||$path==$zz.'/bridge/networkmap'
+||$path==$zz.'/bridge/networkmap/raw'
+||$path==$zz.'/bridge/networkmap/graphviz'
 
 
 
@@ -937,7 +948,11 @@ if ($grl['ID'])   {      $rec['SELECTTYPE']='group';$rec['SELECTVENDOR']='group'
 //     $this->refreshdb_mqtt();
 
 SQLExec ('update  zigbee2mqtt set VALUE="" where TITLE="zigbee2mqtt/bridge/log"');
-$this->sendcommand('zigbee2mqtt/bridge/config/devices', '');
+
+$this->getConfig();
+$zz=explode('/',$this->config['MQTT_QUERY'])[0];
+
+$this->sendcommand($zz.'/bridge/config/devices', '');
 
 
 
@@ -1630,14 +1645,19 @@ $out['LOG2']=$ssql;
 
    global $creategroup;
 
+
+$this->getConfig();
+$zz=explode('/',$this->config['MQTT_QUERY'])[0];
+
+
 if (($creategroup)&&(strlen($creategroup)>0)&&($creategroup!='select')) {
 //   $rec['GROUP']=$creategroup;
     $rec['GROUP']='';
 
 $tmp=SQLSelectOne("SELECT * from zigbee2mqtt_grouplist where TITLE='$creategroup'");
 
-if (!$tmp['ID'])  $this->sendcommand('zigbee2mqtt/bridge/config/add_group', $creategroup);
-  $this->sendcommand('zigbee2mqtt/bridge/group/'.$creategroup.'/add', $dev_title);
+if (!$tmp['ID'])  $this->sendcommand($zz.'/bridge/config/add_group', $creategroup);
+  $this->sendcommand($zz.'/bridge/group/'.$creategroup.'/add', $dev_title);
 } else $rec['GROUP']='';
 
 
@@ -1649,7 +1669,7 @@ if (($selectdevicegroup)&&(strlen($selectdevicegroup)>0)) {
 //   $rec['GROUP']=$selectdevicegroup;
 $rec['GROUP']='';
 
-  $this->sendcommand('zigbee2mqtt/bridge/group/'.$selectdevicegroup.'/add', $dev_title);
+  $this->sendcommand($zz.'/bridge/group/'.$selectdevicegroup.'/add', $dev_title);
 } else $rec['GROUP']=''; 
 
 
@@ -2007,8 +2027,9 @@ $fn=$rec['IEEEADDR'];
 
 $mqttsendvalue='';
 
-
-  $this->sendcommand('zigbee2mqtt/'.$fn, $mqttsendvalue);
+$this->getConfig();
+$zz=explode('/',$this->config['MQTT_QUERY'])[0];
+$this->sendcommand($zz.'/'.$fn, $mqttsendvalue);
 
 $this->redirect("?view_mode=view_mqtt&id=".$id."&tab=edit_parametrs");
 
@@ -2028,8 +2049,9 @@ $fn=$rec['IEEEADDR'];
 
 $mqttsendvalue='';
 
-
-  $this->sendcommand('zigbee2mqtt/bridge/device/'.$fn.'/get_group_membership', $mqttsendvalue);
+$this->getConfig();
+$zz=explode('/',$this->config['MQTT_QUERY'])[0];
+$this->sendcommand($zz.'/bridge/device/'.$fn.'/get_group_membership', $mqttsendvalue);
 
 $this->redirect("?view_mode=view_mqtt&id=".$id."&tab=edit_parametrs");
 
@@ -2055,8 +2077,9 @@ $fn=$tmp[$i]['IEEEADDR'];
 
 $mqttsendvalue='';
 
-
-$this->sendcommand('zigbee2mqtt/bridge/device/'.$fn.'/get_group_membership', $mqttsendvalue);
+$this->getConfig();
+$zz=explode('/',$this->config['MQTT_QUERY'])[0];
+$this->sendcommand($zz.'/bridge/device/'.$fn.'/get_group_membership', $mqttsendvalue);
 
 
 }
@@ -2382,7 +2405,14 @@ $this->redirect("?&location=$location&type_id=$type_id&vendor_id=$vendor_id&vid_
 
 
   if ($this->view_mode=='startpairing') {
-  $this->sendcommand('zigbee2mqtt/bridge/config/permit_join', 'true');
+
+$this->getConfig();
+$zz=explode('/',$this->config['MQTT_QUERY'])[0];
+
+$this->sendcommand($zz.'/bridge/config/permit_join', 'true');
+
+
+
 //  $this->redirect("?tab=service");
 $location=$_GET['location'];
 $vendor_id=$_GET['vendor_id'];
@@ -2396,7 +2426,9 @@ $this->redirect("?");
 }
 
   if ($this->view_mode=='stoppairing') {
-  $this->sendcommand('zigbee2mqtt/bridge/config/permit_join', 'false');
+$this->getConfig();
+$zz=explode('/',$this->config['MQTT_QUERY'])[0];
+$this->sendcommand($zz.'/bridge/config/permit_join', 'false');
 //  $this->redirect("?tab=service");
 $location=$_GET['location'];
 $vendor_id=$_GET['vendor_id'];
@@ -2410,7 +2442,10 @@ $this->redirect("?");
 }
 
   if ($this->view_mode=='resetznp') {
-  $this->sendcommand('zigbee2mqtt/bridge/config/reset', '');
+
+$this->getConfig();
+$zz=explode('/',$this->config['MQTT_QUERY'])[0];
+$this->sendcommand($zz.'/bridge/config/reset', '');
 //  $this->redirect("?tab=service");
 $location=$_GET['location'];
 $vendor_id=$_GET['vendor_id'];
@@ -2437,7 +2472,12 @@ $payload='
 }
 }';
 
-  $this->sendcommand('zigbee2mqtt/'.$fn.'/system/set', $payload);
+$this->getConfig();
+
+$zz=explode('/',$this->config['MQTT_QUERY'])[0];
+
+
+  $this->sendcommand($zz.'/'.$fn.'/system/set', $payload);
 //  $this->redirect("?tab=service");
   $this->redirect("?");
 }
@@ -2455,7 +2495,11 @@ $payload='
 }
 }';
 
-  $this->sendcommand('zigbee2mqtt/'.$fn.'/system/set', $payload);
+$this->getConfig();
+$zz=explode('/',$this->config['MQTT_QUERY'])[0];
+
+
+  $this->sendcommand($zz.'/'.$fn.'/system/set', $payload);
 //  $this->redirect("?tab=service");
 $location=$_GET['location'];
 $vendor_id=$_GET['vendor_id'];
@@ -2481,7 +2525,9 @@ $payload='
 }
 }';
 
-  $this->sendcommand('zigbee2mqtt/'.$fn.'/system/set', $payload);
+$this->getConfig();
+$zz=explode('/',$this->config['MQTT_QUERY'])[0];
+$this->sendcommand($zz.'/'.$fn.'/system/set', $payload);
 //  $this->redirect("?tab=service");
 $location=$_GET['location'];
 $vendor_id=$_GET['vendor_id'];
@@ -2505,7 +2551,9 @@ $payload='
 }
 }';
 
-  $this->sendcommand('zigbee2mqtt/'.$fn.'/system/set', $payload);
+$this->getConfig();
+$zz=explode('/',$this->config['MQTT_QUERY'])[0];
+$this->sendcommand($zz.'/'.$fn.'/system/set', $payload);
 //  $this->redirect("?tab=service");
 $location=$_GET['location'];
 $vendor_id=$_GET['vendor_id'];
@@ -2530,7 +2578,9 @@ $payload='
 }
 }';
 
-  $this->sendcommand('zigbee2mqtt/'.$fn.'/system/set', $payload);
+$this->getConfig();
+$zz=explode('/',$this->config['MQTT_QUERY'])[0];
+$this->sendcommand($zz.'/'.$fn.'/system/set', $payload);
 //  $this->redirect("?tab=service");
 $location=$_GET['location'];
 $vendor_id=$_GET['vendor_id'];
@@ -2554,7 +2604,9 @@ $payload='
 }
 }';
 
-  $this->sendcommand('zigbee2mqtt/'.$fn.'/system/set', $payload);
+$this->getConfig();
+$zz=explode('/',$this->config['MQTT_QUERY'])[0];
+$this->sendcommand($zz.'/'.$fn.'/system/set', $payload);
 //  $this->redirect("?tab=service");
 $location=$_GET['location'];
 $vendor_id=$_GET['vendor_id'];
@@ -2665,8 +2717,9 @@ $rec['KEYY']=$key;
 $rec['ADDED']=date('Y-m-d H:i:s');
 if (!$rec['ID']) SQLInsert('zigbee2mqtt_bind', $rec);
 
-
-  $this->sendcommand('zigbee2mqtt/bridge/bind/'.$target, $source);
+$this->getConfig();
+$zz=explode('/',$this->config['MQTT_QUERY'])[0];
+$this->sendcommand($zz.'/bridge/bind/'.$target, $source);
 
 
   $this->redirect("?tab=bind");
@@ -2717,8 +2770,9 @@ $source=$_POST['source'];
 
 //debmes('view_mode: '.$this->view_mode.' $id:'.$id." target: ".$target." source:".$source, 'zigbee2mqtt'); 
 
-
-  $this->sendcommand('zigbee2mqtt/bridge/unbind/'.$target, $source);
+$this->getConfig();
+$zz=explode('/',$this->config['MQTT_QUERY'])[0];
+$this->sendcommand($zz.'/bridge/unbind/'.$target, $source);
 
 
 sqlexec('delete from zigbee2mqtt_bind where ID='.$id);
@@ -2785,7 +2839,9 @@ sqlexec('delete from zigbee2mqtt_bind where ID='.$id);
 $cmd='
 include_once(DIR_MODULES . "zigbee2mqtt/zigbee2mqtt.class.php");
 $z2m= new zigbee2mqtt();
-$z2m->sendcommand("zigbee2mqtt/bridge/config/log_level", "'.$z2m_logmode2.'");
+$this->getConfig();
+$zz=explode('/',$this->config["MQTT_QUERY"])[0];
+$z2m->sendcommand($zz."/bridge/config/log_level", "'.$z2m_logmode2.'");
 ';
  SetTimeOut('z2m_set_dubug',$cmd, '1'); 
 
@@ -2886,13 +2942,17 @@ global $group_list_id;
 
 
   if ($this->view_mode=='delete_dev_z2m') {
-  $this->sendcommand('zigbee2mqtt/bridge/config/remove', $this->ieee);
+$this->getConfig();
+$zz=explode('/',$this->config['MQTT_QUERY'])[0];
+$this->sendcommand($zz.'/bridge/config/remove', $this->ieee);
    $this->delete_dev($this->id);
    $this->redirect("?");
   }
 
   if ($this->view_mode=='delete_dev_z2m_only') {
-  $this->sendcommand('zigbee2mqtt/bridge/config/remove', $this->ieee);
+$this->getConfig();
+$zz=explode('/',$this->config['MQTT_QUERY'])[0];
+$this->sendcommand($zz.'/bridge/config/remove', $this->ieee);
   $this->redirect("?");
   }
 
@@ -2903,7 +2963,9 @@ $rec=SQLSElectOne('select * from zigbee2mqtt_grouplist where ID='.$this->id);
 $fn=$rec['TITLE'];
 $id=$this->id;
 
-$this->sendcommand('zigbee2mqtt/bridge/group/'.$fn.'/remove', $this->ieee);
+$this->getConfig();
+$zz=explode('/',$this->config['MQTT_QUERY'])[0];
+$this->sendcommand($zz.'/bridge/group/'.$fn.'/remove', $this->ieee);
 
   SQLExec("DELETE FROM zigbee2mqtt_grouplist WHERE ID='".$id."'");
    $this->redirect("?tab=groups");
@@ -2916,8 +2978,9 @@ $id=$this->id;
 $rec=SQLSElectOne('select * from zigbee2mqtt_devices where ID='.$id);
 $fn=$rec['IEEEADDR'];
 
-
-$this->sendcommand('zigbee2mqtt/bridge/group/remove_all', $this->ieee);
+$this->getConfig();
+$zz=explode('/',$this->config['MQTT_QUERY'])[0];
+$this->sendcommand($zz.'/bridge/group/remove_all', $this->ieee);
 
    $this->redirect("?view_mode=view_mqtt&id=$id&tab=edit_parametrs");
   }
@@ -2959,7 +3022,9 @@ $this->sendcommand('zigbee2mqtt/bridge/group/remove_all', $this->ieee);
 //  $this->sendcommand('zigbee2mqtt/bridge/device/0x00158d0002c65d56/grouplist', '');
 //  $this->sendcommand('zigbee2mqtt/bridge/device/0x00158d0002c65d56/get_group_membership', 'grouplist');
 
-  $this->sendcommand('zigbee2mqtt/bridge/config/groups', '');
+$this->getConfig();
+$zz=explode('/',$this->config['MQTT_QUERY'])[0];
+$this->sendcommand($zz.'/bridge/config/groups', '');
 
 
 //  $this->sendcommand('zigbee2mqtt/bridge/group/group1', '');
@@ -2983,7 +3048,9 @@ $this->sendcommand('zigbee2mqtt/bridge/group/remove_all', $this->ieee);
 $tmp=SQLSelect("SELECT * from zigbee2mqtt_devices");
   for($i=0;$i<count($tmp);$i++) {
 
-  $this->sendcommand('zigbee2mqtt/bridge/config/device_group_remove_all',$tmp[$i]['TITLE']);
+$this->getConfig();
+$zz=explode('/',$this->config['MQTT_QUERY'])[0];
+$this->sendcommand($zz.'/bridge/config/device_group_remove_all',$tmp[$i]['TITLE']);
   //$this->sendcommand('zigbee2mqtt/bridge/group/'.$tmp[$i]['TITLE'].'/remove_all','');
   
 }
@@ -2993,7 +3060,9 @@ $tmp=SQLSelect("SELECT * from zigbee2mqtt_grouplist");
   for($i=0;$i<count($tmp);$i++) {
 
   //$this->sendcommand('zigbee2mqtt/bridge/config/device_group_remove_all',$tmp[$i]['TITLE']);
-  $this->sendcommand('zigbee2mqtt/bridge/group/'.$tmp[$i]['TITLE'].'/remove_all','');
+$this->getConfig();
+$zz=explode('/',$this->config['MQTT_QUERY'])[0];
+$this->sendcommand($zz.'/bridge/group/'.$tmp[$i]['TITLE'].'/remove_all','');
   
 }
 
@@ -3011,8 +3080,9 @@ SQLExec("DELETE FROM zigbee2mqtt_grouplist");
 
 
 SQLExec ('update  zigbee2mqtt set VALUE="" where TITLE="zigbee2mqtt/bridge/log"');
-
-  $this->sendcommand('zigbee2mqtt/bridge/config/devices', '');
+$this->getConfig();
+$zz=explode('/',$this->config['MQTT_QUERY'])[0];
+$this->sendcommand($zz.'/bridge/config/devices', '');
 //  $this->sendcommand('zigbee2mqtt/bridge/config/devices/get', '');
 
 
@@ -3122,7 +3192,7 @@ $this->updateparrent();
 
 
 function refreshdb_mqtt() {
-
+/*
 $log=SQLSelectOne ('select * from zigbee2mqtt where TITLE="zigbee2mqtt/bridge/log"');
 $log1=$log['VALUE'];
 //if (ZMQTT_DEBUG=="1" ) debmes('log: '.$log1, 'zigbee2mqtt');
@@ -3141,7 +3211,7 @@ if (ZMQTT_DEBUG=="1" ) debmes('****************', 'zigbee2mqtt');
 if (ZMQTT_DEBUG=="1" ) debmes('ieeeAddr:'.$v, 'zigbee2mqtt');
 }
 */
-
+/*
 
     $total = count($json);
 //   if (ZMQTT_DEBUG=="1" ) debmes('total:'.$total, 'zigbee2mqtt');
@@ -3167,18 +3237,34 @@ $res2['SELECTVENDOR']='TI';
 $res2['MODELID']='cc2531';
 }
 
+//проверяем, может нам вместо model пришел modelid
+
+$tempmodel=str_replace($temp['model'], '/', '-');
+$model=$tempmodel;
+
+debmes('$tempmodel '.$tempmodel, 'z2mtempmodel');
 
 
-if (!$res2['SELECTTYPE']) $res2['SELECTTYPE']=    $json[$i]->{'model'};
+$res44=sqlselectone("select * from zigbee2mqtt_devices_list where zigbeeModel='$tempmodel'");
 
-if (!$res2['SELECTTYPE']) $res2['SELECTVENDOR']=$temp['vendor'];
+if ($res44['model']) {$model=$res44['model'];} 
+
+debmes('$model '.$model, 'z2mtempmodel');
+
+
+
+
+
+if (!$res2['SELECTTYPE']) $res2['SELECTTYPE']=$model;
+
+if (!$res2['SELECTVENDOR']) $res2['SELECTVENDOR']=$temp['vendor'];
 
 $res2['MANUFACTURE']=$temp['vendor'];
 //$res2['MODEL']=$json[$i]->{'model'};
-$res2['MODEL']=str_replace($temp['model'], '/', '-');
+$res2['MODEL']=$temp['model'];
 
 //$res2['DEVICE_NAME']=$temp['zigbeeModel'];
-$res2['DEVICE_NAME']=str_replace($temp['zigbeeModel'], '/', '-');
+$res2['DEVICE_NAME']=$model;
 
 
 
@@ -3208,7 +3294,7 @@ else
 {
 // debmes('insert', 'zigbee2mqtt1');
 //if ($json[$i]->{'model'}) $res2['SELECTTYPE']=    $json[$i]->{'model'};
-if ($json[$i]->{'model'}) $res2['SELECTTYPE']= str_replace(  $json[$i]->{'model'}, '/', '-');
+if ($json[$i]->{'model'}) $res2['SELECTTYPE']= $model;
 
 
 
@@ -3264,10 +3350,12 @@ $log1=$ar;
 //$json2=json_decode($log1);
 $json2=$log1;
 
-//if (ZMQTT_DEBUG=="1" ) debmes($json, 'zigbee2mqtt');
+//if (ZMQTT_DEBUG=="1" ) 
+//debmes($json, 'zigbee2mqttparse');
 
 
 $json=$json2->{'message'};
+//debmes($json, 'zigbee2mqttparse');
 
     $total = count($json);
 //   if (ZMQTT_DEBUG=="1" ) debmes('total:'.$total, 'zigbee2mqtt');
@@ -3276,16 +3364,32 @@ $json=$json2->{'message'};
 $cdev=$json[$i]->{'ieeeAddr'};
 
 if ($cdev){
+$model="";
 
-
+debmes('start '.$i, 'zigbee2mqttparse');
 
 //if (ZMQTT_DEBUG=="1" ) debmes('cdev:'.$cdev, 'zigbee2mqtt');
 $sql="SELECT * FROM zigbee2mqtt_devices where IEEEADDR='".$cdev."'";
 //if (ZMQTT_DEBUG=="1" ) debmes($sql, 'zigbee2mqtt');
 $res2=SQLSelectOne($sql);
 
+debmes($res2, 'zigbee2mqttparse');
 
-$temp=sqlselectone ("SELECT * FROM zigbee2mqtt_devices_list where model='".str_replace(   '/', '-',$json[$i]->{'model'})."'");
+if ($json[$i]->{'model'}) 
+{$tempmodel=str_replace(   '/', '-',$json[$i]->{'model'});
+debmes('$tempmodel '.$tempmodel, 'zigbee2mqttparse');
+$model=$tempmodel;
+$res44=sqlselectone("select * from zigbee2mqtt_devices_list where zigbeeModel='$tempmodel'");
+if ($res44['model']) {$model=$res44['model'];} 
+}
+
+debmes('$model '.$model, 'zigbee2mqttparse');
+
+
+
+
+
+$temp=sqlselectone ("SELECT * FROM zigbee2mqtt_devices_list where model='".$model."'");
 
 if ($res2['TITLE']=='bridge') {
 $res2['MODEL']='cc2531';
@@ -3298,12 +3402,13 @@ $res2['MODELID']='cc2531';
 
 
 //if (!$res2['SELECTTYPE']) $res2['SELECTTYPE']=str_replace(  $json[$i]->{'model'}, '/', '-');
-if (!$res2['SELECTTYPE']) $res2['SELECTTYPE']=str_replace(   '/', '-',$json[$i]->{'model'});
+if (!$res2['SELECTTYPE']) $res2['SELECTTYPE']=$model;
+//$res2['SELECTTYPE']=$model;
 if (!$res2['SELECTVENDOR']) $res2['SELECTVENDOR']=$temp['vendor'];
 
 $res2['MANUFACTURE']=$temp['vendor'];
 //$res2['MODEL']=$json[$i]->{'model'};
-$res2['MODEL']=str_replace( '/', '-',$json[$i]->{'model'});
+$res2['MODEL']=$json[$i]->{'model'};
 
 
 //$res2['DEVICE_NAME']=$temp['zigbeeModel'];
@@ -3339,13 +3444,17 @@ else
 {
 //if (ZMQTT_DEBUG=="1" ) debmes('insert', 'zigbee2mqtt');
 //if ($json[$i]->{'model'}) $res2['SELECTTYPE']=    $json[$i]->{'model'};
-if ($json[$i]->{'model'}) $res2['SELECTTYPE']= str_replace(   '/', '-',$json[$i]->{'model'});
+if ($json[$i]->{'model'}) $res2['SELECTTYPE']= $model;
 
 
 
 $res2['TITLE']=$res2['IEEEADDR'];
 //if (ZMQTT_DEBUG=="1" ) debmes($res2, 'zigbee2mqtt');
 if (($res2['TITLE'])&&($res2['TYPE']!='Coordinator')&&($res2['TITLE']!='bridge')&&($res2['TYPE']!='bridge') ) 
+
+
+
+
 SQLInsert('zigbee2mqtt_devices', $res2);
 }
 
