@@ -112,6 +112,18 @@ $par1['fromZigbee'] = "";
 $par1['toZigbee'] = "";		 
 SQLInsert('zigbee2mqtt_devices_list', $par1);						
 
+$par1['zigbeeModel'] = 'lumi.sensor_86sw2';
+$par1['model'] = "WXKG02LM";		 
+$par1['vendor'] = "Xiaomi";		 
+$par1['type'] = "remote";		 
+$par1['description'] = "Aqara double key wireless wall switch";		 
+$par1['extend'] = "";		 
+$par1['supports'] = "left, right and both click";		 
+$par1['fromZigbee'] = "";		 
+$par1['toZigbee'] = "";		 
+SQLInsert('zigbee2mqtt_devices_list', $par1);						
+
+
 $par1['zigbeeModel'] = 'lumi.sensor_86sw2Un';
 $par1['model'] = "WXKG02LM";		 
 $par1['vendor'] = "Xiaomi";		 
@@ -2541,6 +2553,46 @@ $par1['extend'] = "";
 $par1['fromZigbee'] = "";
 $par1['toZigbee'] = "";
 SQLInsert('zigbee2mqtt_devices_list', $par1);
+
+
+//DIY_RuZ
+$par1['zigbeeModel'] = "DIY_RuZ_KEYPAD20";
+$par1['model'] = "DIYRuZ_KEYPAD20";
+$par1['vendor'] = "DIYRuZ";
+$par1['type'] = "remote";
+$par1['description'] = "DiY 20 button keypad";
+$par1['supports'] = "";
+$par1['extend'] = "";
+$par1['fromZigbee'] = "";
+$par1['toZigbee'] = "";
+SQLInsert('zigbee2mqtt_devices_list', $par1);
+
+//DIY_RuZ
+$par1['zigbeeModel'] = "DIYRuZ_R4_5";
+$par1['model'] = "DIYRuZ_R4_5";
+$par1['vendor'] = "DIYRuZ";
+$par1['type'] = "relay";
+$par1['description'] = "DiY 4 Relays + 4 switches + 1 buzzer";
+$par1['supports'] = "";
+$par1['extend'] = "";
+$par1['fromZigbee'] = "";
+$par1['toZigbee'] = "";
+SQLInsert('zigbee2mqtt_devices_list', $par1);
+
+//DIY_RuZ
+$par1['zigbeeModel'] = "DIYRuZ_R4_5";
+$par1['model'] = "DIYRuZ_magnet";
+$par1['vendor'] = "DIYRuZ";
+$par1['type'] = "relay";
+$par1['description'] = "DIYRuZ contact sensor";
+$par1['supports'] = "";
+$par1['extend'] = "";
+$par1['fromZigbee'] = "";
+$par1['toZigbee'] = "";
+SQLInsert('zigbee2mqtt_devices_list', $par1);
+
+
+
 
 
 //LXZB-02A
