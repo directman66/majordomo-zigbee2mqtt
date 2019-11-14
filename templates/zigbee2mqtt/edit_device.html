@@ -154,7 +154,7 @@ GROUP (SELECT):
 [#endif#]
 -->
   [#begin SELECTTYPEARRAY#]
-
+<option ></option > 
 <!--<option data-content="<img src='../templates/zigbee2mqtt/img/[#model#].jpg' width='40' height='40'> [#vendor#]: [#model#]" value="[#model#]" [#if DEVICE_TYPE="<#SELECTTYPE#>"#] selected[#endif#]></option>-->
 <option [#if model#] data-content="<img src='../templates/zigbee2mqtt/img/[#model#].jpg' width='40' height='40'>[#model#]" [#endif#] value="[#model#]" [#if model="<#SELECTTYPE#>"#] selected[#endif#]></option>
 
