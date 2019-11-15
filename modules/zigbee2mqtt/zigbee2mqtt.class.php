@@ -773,6 +773,8 @@ unset($msgtype);
 $this->getConfig();
 $zz=substr(explode('/',$this->config['MQTT_QUERY'])[0],1);
 
+$gw=substr(explode('/',$path)[0],1);
+
 
 if (strpos($path,$zz.'/0x')>0) {$msgtype='device_state';}
 if (strpos($path,$zz.'/bridge/state')>0) {$msgtype='bridge_state';}
@@ -858,7 +860,7 @@ if ($json->{'type'}=='devices') {
 //if (ZMQTT_DEBUG=="1" ) debmes('справочник устройств:','zigbee2mqtt');
 
 //$this->parse_deviceinfo($json->{'message'});
-$this->parse_deviceinfo($json);
+$this->parse_deviceinfo($json, $gw);
 }
 
 if ($json->{'type'}=='groups') {$this->update_groups($json);}
@@ -1406,6 +1408,7 @@ define("ZMQTT_DEBUG", "1");
  $out['Z2M_HIST']=$this->config['Z2M_HIST'];
  $out['Z2M_LOGMODE']=$this->config['Z2M_LOGMODE'];
  $out['Z2M_VIEW']=$this->config['Z2M_VIEW'];
+ $out['SLSIP']=$this->config['SLSIP'];
 
 // $out['Z2M_LOGMODE']='deb';
 
@@ -1843,6 +1846,7 @@ $out['LOG']=$a;
 // $this->redirect("?tab=log");
 
 }
+
 
 
 
@@ -2810,6 +2814,7 @@ sqlexec('delete from zigbee2mqtt_bind where ID='.$id);
    global $zigbee2mqttpath;
    global $z2m_view;
    global $z2m_hist;
+   global $slsip;
 //echo $zigbee2mqttpath;
 
 //$vm1=$this->view_mode;
@@ -2830,6 +2835,7 @@ sqlexec('delete from zigbee2mqtt_bind where ID='.$id);
    $this->config['Z2M_LOGMODE']=trim($z2m_logmode2);
    $this->config['Z2M_VIEW']=trim($z2m_view);
    $this->config['Z2M_HIST']=trim($z2m_hist);
+   $this->config['SLSIP']=trim($slsip);
 
 
 
@@ -3340,7 +3346,7 @@ SQLIsert('zigbee2mqtt_devices', $res2);
 
 }
 
-function parse_deviceinfo($ar) {
+function parse_deviceinfo($ar, $gw) {
 
 //$log=SQLSelectOne ('select * from zigbee2mqtt where TITLE="zigbee2mqtt/bridge/log"');
 //$log1=$log['VALUE'];
@@ -3424,6 +3430,8 @@ $res2['NWKADDR']=$json[$i]->{'nwkAddr'};
 $res2['HWVERSION']=$json[$i]->{'hwVersion'};
 $res2['SWBUILDID']=$json[$i]->{'swBuildId'};
 $res2['MANUFNAME']=$json[$i]->{'manufName'};
+
+$res2['GW']=$gw;
 
 
 
@@ -3580,21 +3588,11 @@ function usual(&$out) {
         }
 
             if ($op == 'viewlog'  ) {
-//echo "123";      
-//echo $fn;      
-
 print_r(time().": ". $fn."<hr>");
-
 if (filesize ($fn)>0) {
-
 $fz=filesize ($fn);
-
 $file = new SplFileObject($fn, 'r');
-
-
-
 $file->seek(PHP_INT_MAX);
-
 $last_line = $file->key();
 //debmes($last_line, 'zg1');
 
@@ -3619,11 +3617,25 @@ $a =  str_replace( array("\r\n","\r","\n") , '<br>' , $a);
 echo $a;
 
 //print_r(time().": ". $fn);
-
-
-
-         }
         }
+        }
+
+            if ($op == 'viewslslog'  ) {
+print_r(time().": ". $fn."<hr>");
+
+$a='SLS ZGW LOG......comming son';
+
+$a =  str_replace( array("\r\n","\r","\n") , '<br>' , $a);
+//$out['LOG']=$a;
+//print_r($a);
+echo $a;
+
+//print_r(time().": ". $fn);
+
+        }
+
+
+
 
         echo json_encode($result);
         exit;
@@ -4007,6 +4019,7 @@ function createdb()
  zigbee2mqtt_devices: LOCATION_ID varchar(4) NOT NULL DEFAULT '0'
  zigbee2mqtt_devices: GROUPLIST varchar(100) NOT NULL DEFAULT '0'
  zigbee2mqtt_devices: HISTORY varchar(1) NOT NULL DEFAULT '1'
+ zigbee2mqtt_devices: GW varchar(100) NOT NULL DEFAULT ''
 
 
  zigbee2mqtt_devices_list: ID int(10) unsigned NOT NULL auto_increment
