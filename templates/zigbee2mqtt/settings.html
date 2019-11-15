@@ -63,15 +63,7 @@
       <input class="form-control" type="text" name="zigbee2mqttpath" value="<#ZIGBEE2MQTTPATH#>">
     </div>
   </div> 
-  <div class="form-group">
-    <label class="col-sm-3 control-label" [#if ERR_VIEW#] style="color:red;font-weight:bold"[#endif#]>View mode:</label>
-    <div class="col-sm-9">
-		 <select name="z2m_view" id="z2m_view" class="form-control">
-		  <option value="container-fluid"[#if Z2M_VIEW="container-fluid"#] selected[#endif#]>tiles</option>
-		  <option value="table"[#if Z2M_VIEW="table"#] selected[#endif#]>table (old)</option>
-		 </select>
-    </div>
-  </div> 
+
   <div class="form-group">
     <label class="col-sm-3 control-label" [#if ERR_Z2M_LOGMODE#] style="color:red;font-weight:bold"[#endif#]>Log level [#Z2M_LOGMODE#]:</label>
     <div class="col-sm-9">
@@ -86,6 +78,20 @@
   
 
 
+ 	<div class="form-group">
+		<h3 class="controls">SLS Zigbee gateway settings</h3>
+	</div> 
+	
+	
+	
+  <div class="form-group">
+    <label class="col-sm-3 control-label" [#if ERR_MQTT_QUERY#] style="color:red;font-weight:bold"[#endif#]>SLS ZGW IP adress :</label>
+    <div class="col-sm-9">
+      <input class="form-control" type="text" name="slsip" value="<#SLSIP#>">
+    </div>
+  </div> 
+  
+
 <div class="form-group">
 		<h3 class="controls">Majordomo settings</h3>
 	</div> 
@@ -96,6 +102,18 @@
       <input class="form-control" type="text" name="z2m_hist" value="<#Z2M_HIST#>">
     </div>
   </div>
+
+
+  <div class="form-group">
+    <label class="col-sm-3 control-label" [#if ERR_VIEW#] style="color:red;font-weight:bold"[#endif#]>View mode:</label>
+    <div class="col-sm-9">
+		 <select name="z2m_view" id="z2m_view" class="form-control">
+		  <option value="container-fluid"[#if Z2M_VIEW="container-fluid"#] selected[#endif#]>tiles</option>
+		  <option value="table"[#if Z2M_VIEW="table"#] selected[#endif#]>table (old)</option>
+		 </select>
+    </div>
+  </div> 
+
 
 	<div class="form-group">
 	 <div class="controls">
