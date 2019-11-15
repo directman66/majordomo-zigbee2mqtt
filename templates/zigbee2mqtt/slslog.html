@@ -1,0 +1,76 @@
+
+
+
+
+
+
+
+
+
+
+     </td>
+
+    </tr>
+</table>
+
+
+<!-- [#FN#]:-->
+
+
+
+<script type="text/javascript">
+    function viewslslog() {
+
+// clearTimeout(logTimer);
+
+// window.clearTimeout(logTimer);
+//  clearTimeout(deviceRefreshTimer[#ID#]);
+        var url="/ajax/zigbee2mqtt.html?op=viewslslog";
+//        $("#auth_log").html('wait...');
+        $.ajax({
+            url: url,
+            cache: false,
+            success: function(html){
+                $("#auth_log").html(html);
+            }
+        });
+//  logTimer = window.setTimeout('viewlog(fn);',1000);
+//  logTimer = window.setTimeout('viewlog();',2000);
+//  logTimer = window.setTimeout('viewlog("/opt/zigbee2mqtt/data/log/2019-05-05.22-35-52/log.txt");',1000);
+  logTimer = window.setTimeout('viewslslog();',2000);
+//   viewlog("[#FN#]");
+}
+   viewslslog();
+
+    
+</script>
+<!--<div class="modal fade" id="viewlog" tabindex="-1" role="dialog" aria-labelledby="about1" aria-hidden="true" height="100"> -->
+<div  id="viewlog" tabindex="-1" role="dialog" aria-labelledby="about1" aria-hidden="true" height="100"> 
+
+
+    <div>
+
+
+    <p  id="auth_log" >    </p>
+
+   </div>
+
+</div>
+
+
+
+
+
+    <p  id="auth_log" >    </p>
+    </div>
+    </div>
+
+
+
+<!--   <a onclick="viewlog('[#FN#]')" class="btn btn-default"  data-toggle="modal" data-target="#viewlog"  title="View"><i class="glyphicon glyphicon-film"></i></a> -->
+
+
+<br>
+
+[#LOG2#]
+
