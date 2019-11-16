@@ -229,6 +229,18 @@ $par1['fromZigbee'] = "";
 $par1['toZigbee'] = "";		 
 SQLInsert('zigbee2mqtt_devices_list', $par1);						
 
+$par1['zigbeeModel'] = 'lumi.sensor_ht';
+$par1['model'] = "WSDCGQ01LM";		 
+$par1['vendor'] = "Xiaomi";		 
+$par1['type'] = "sensor";		 
+$par1['description'] = "MiJia temperature & humidity sensor";		 
+$par1['extend'] = "";		 
+$par1['supports'] = "temperature and humidity";		 
+$par1['fromZigbee'] = "";		 
+$par1['toZigbee'] = "";		 
+SQLInsert('zigbee2mqtt_devices_list', $par1);						
+
+
 $par1['zigbeeModel'] = 'lumi.weather';
 $par1['model'] = "WSDCGQ11LM";		 
 $par1['vendor'] = "Xiaomi";		 
