@@ -778,6 +778,7 @@ $gw=substr(explode('/',$path)[0],1);
 
 if (strpos($path,$zz.'/0x')>0) {$msgtype='device_state';}
 if (strpos($path,$zz.'/bridge/state')>0) {$msgtype='bridge_state';}
+if (strpos($path,$zz.'/bridge/config')>0) {$msgtype='bridge_config';}
 if (strpos($path,$zz.'/bridge/networkmap/raw')>0) {$msgtype='raw_map';}
 if (strpos($path,$zz.'/bridge/networkmap')>0) {$msgtype='graphwiz';}
 if (strpos($path,$zz.'/bridge/log')>0) {$msgtype='log';}
@@ -1359,8 +1360,13 @@ function admin(&$out) {
 //$seen=SQLSelectOne("select max(FIND) FIND from zigbee2mqtt_log where MESSAGE='online'  ");
 //$seen=SQLSelectOne("select max(FIND) FIND from zigbee2mqtt_log   ");
 
+$this->getConfig();
+$zz=explode('/',$this->config['MQTT_QUERY'])[0];
 
-$permit=SQLSelectOne("select * from zigbee2mqtt where TITLE='zigbee2mqtt/bridge/config/permit_join'  ");
+$sql="select * from zigbee2mqtt where TITLE='$zz/bridge/config/permit_join'  ";
+$permit=SQLSelectOne($sql);
+
+debmes($sql, 'z2msql');
 
 //if $permit['VALUE']=
 $out['PERMIT']=$permit['VALUE'];
@@ -3085,10 +3091,12 @@ SQLExec("DELETE FROM zigbee2mqtt_grouplist");
 //         $this->refresh_db();
 //  $this->sendcommand('zigbee2mqtt/bridge/log', 'zigbee2mqtt/bridge/config/devices');
 
-
-SQLExec ('update  zigbee2mqtt set VALUE="" where TITLE="zigbee2mqtt/bridge/log"');
 $this->getConfig();
 $zz=explode('/',$this->config['MQTT_QUERY'])[0];
+
+
+
+SQLExec ('update  zigbee2mqtt set VALUE="" where TITLE="'.$zz.'/bridge/log"');
 $this->sendcommand($zz.'/bridge/config/devices', '');
 //  $this->sendcommand('zigbee2mqtt/bridge/config/devices/get', '');
 
