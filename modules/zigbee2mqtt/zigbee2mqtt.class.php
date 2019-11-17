@@ -3640,7 +3640,29 @@ print_r(time().": ". $logurl."<hr>");
 
 $a=geturl($logurl);
 
-$a =  str_replace( array("\r\n","\r","\n") , '<br>' , $a);
+//$tmp=explode( '\r\n', $a);
+//$tmp=explode( PHP_EOF, $a);
+$tmp=preg_split('/\\r\\n?|\\n/',$a);
+
+//echo $tmp;
+
+//$tmp=(iterator_to_array($a));
+
+//$newtmp=($tmp); 
+
+$newtmp=array_reverse($tmp); 
+
+//print_r($newtmp);
+//echo "<hr>";
+$a="";
+foreach ($newtmp as $value) 
+{ 
+$a.= $value.'<br>'; 
+} 
+
+
+
+//$a =  str_replace( array("\r\n","\r","\n") , '<br>' , $a);
 //$out['LOG']=$a;
 //print_r($a);
 echo $a;
