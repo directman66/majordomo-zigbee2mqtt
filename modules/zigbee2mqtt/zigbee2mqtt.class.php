@@ -3629,9 +3629,16 @@ echo $a;
         }
 
             if ($op == 'viewslslog'  ) {
-print_r(time().": ". $fn."<hr>");
 
-$a='SLS ZGW LOG......comming son';
+   $this->getConfig();
+   $logurl='http://'.$this->config['SLSIP'].'/log?get=raw';
+
+print_r(time().": ". $logurl."<hr>");
+
+
+//$a='SLS ZGW LOG......comming son';
+
+$a=geturl($logurl);
 
 $a =  str_replace( array("\r\n","\r","\n") , '<br>' , $a);
 //$out['LOG']=$a;
@@ -3645,7 +3652,7 @@ echo $a;
 
 
 
-        echo json_encode($result);
+//        echo json_encode($result);
         exit;
     }
 
