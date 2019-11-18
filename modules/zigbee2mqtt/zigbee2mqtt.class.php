@@ -3633,7 +3633,7 @@ echo $a;
    $this->getConfig();
    $logurl='http://'.$this->config['SLSIP'].'/log?get=raw';
 
-print_r(time().": ". $logurl."<hr>");
+print_r(time().": ". $logurl.' <a href="http://'.$this->config['SLSIP'].'" target="_blank"> Open</a> <br>');
 
 
 //$a='SLS ZGW LOG......comming son';
