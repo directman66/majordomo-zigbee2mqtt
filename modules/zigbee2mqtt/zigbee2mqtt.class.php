@@ -773,7 +773,7 @@ unset($msgtype);
 $this->getConfig();
 $zz=substr(explode('/',$this->config['MQTT_QUERY'])[0],1);
 
-$gw=substr(explode('/',$path)[0],1);
+$gw=explode('/',$path)[0];
 
 
 if (strpos($path,$zz.'/0x')>0) {$msgtype='device_state';}
@@ -1476,6 +1476,7 @@ $out['MODEL']=$res['MODEL'];
 $out['DEVICE_NAME']=$res['DEVICE_NAME'];
 $out['MODELID']=$res['MODELID'];
 $out['TYPE']=$res['TYPE'];
+$out['GW']=$res['GW'];
 $out['IEEEADDR']=$res['IEEEADDR'];
 $out['NWKADDR']=$res['NWKADDR'];
 $out['MANUFID']=$res['MANUFID'];
