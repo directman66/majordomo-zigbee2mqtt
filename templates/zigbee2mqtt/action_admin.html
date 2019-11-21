@@ -26,21 +26,7 @@ DATASOURCE: [#DATA_SOURCE#]
 	[#else#]
 		<span class="label label-danger" title="Статус цикла"><a href="?view_mode=cycle_start"  title="Цикл остановлен, нажатие перезапустит" ><font color="white" >Цикл</font></span></a>
 	[#endif#]
-<!--
-	[#if SEEN2==1#]
-<span class="label label-success" title="Приложение zigbee2mqtt работает [#SEEN#]">zigbee2mqtt</span>
-	[#else#]
-		<span class="label label-danger" title="Приложение zigbee2mqtt не работает [#SEEN#]">zigbee2mqtt</span>
-	[#endif#]
 
-
-
-
-<span class="label label-success" title="Открыт для сопряжения">  <a href="?view_mode=stoppairing"  title="Открыт для подключения новых устройств, нажатие переключит режим. " ><font color="white" >Сопряжение</font></span></a>
-	[#else#]
-<span class="label label-danger" title="Закрыт  для сопряжения">   <a href="?view_mode=startpairing"  title="Закрыт  для покдлючения новых устройств, нажатие переключит режим." ><font color="white" >Сопряжение</font></span></a>
-	[#endif#]
--->
 
    [#begin gwstatus#]
 
@@ -59,7 +45,7 @@ DATASOURCE: [#DATA_SOURCE#]
 
    [#end gwstatus#]
 
- </li>	
+
 
 
 
