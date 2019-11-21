@@ -2852,11 +2852,11 @@ sqlexec('delete from zigbee2mqtt_bind where ID='.$id);
 $cmd='
 include_once(DIR_MODULES . "zigbee2mqtt/zigbee2mqtt.class.php");
 $z2m= new zigbee2mqtt();
-$this->getConfig();
-$zz=explode('/',$this->config["MQTT_QUERY"])[0];
-$z2m->sendcommand($zz."/bridge/config/log_level", "'.$z2m_logmode2.'");
-';
- SetTimeOut('z2m_set_dubug',$cmd, '1'); 
+$z2m->getConfig();
+$zz=explode("/",$z2m->config["MQTT_QUERY"])[0];
+$z2m->sendcommand($zz."/bridge/config/log_level", "'.$z2m_logmode2.'");';
+//debmes($cmd, 'z2mdebug');
+SetTimeOut('z2m_set_dubug',$cmd, '1'); 
 
 
 
