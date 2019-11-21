@@ -1361,34 +1361,43 @@ function admin(&$out) {
 //$seen=SQLSelectOne("select max(FIND) FIND from zigbee2mqtt_log   ");
 
 $this->getConfig();
-$zz=explode('/',$this->config['MQTT_QUERY'])[0];
+$query_list = explode(',', $this->config['MQTT_QUERY']);
+$total = count($query_list);
 
+for ($i = 0; $i < $total; $i++) {
+
+$zz=explode('/',$query_list[$i])[0];
 $sql="select * from zigbee2mqtt where TITLE='$zz/bridge/config/permit_join'  ";
 $permit=SQLSelectOne($sql);
-
 debmes($sql, 'z2msql');
 
 //if $permit['VALUE']=
-$out['PERMIT']=$permit['VALUE'];
-
-
-$seen=SQLSelectOne("select * from zigbee2mqtt_log order by FIND DESC  limit 1  ");
-
+$out['gwstatus'][$i]['PERMITNAME']=$zz;
+$out['gwstatus'][$i]['PERMITSTATUS']=$permit['VALUE'];
 
 
 
-$out['SEEN']=$seen['FIND'];
-
-if ((time()-strtotime($seen['FIND'])<3600)) {$out['SEEN2']="1";}
-else {$out['SEEN2']="0";}
+//    $path = trim($query_list[$i]);
+//    $topics[$path] = array("qos" => 0, "function" => "procmsg");
 
 
-if ($seen['MESSAGE']=='offline')  {$out['SEEN2']="0";
-$out['PERMIT']='false';
+
+
+
+
+$seen=SQLSelectOne("select * from zigbee2mqtt_log where TITLE like '%$zz%' order by FIND DESC  limit 1  ");
+$out['gwstatus'][$i]['SEEN']=$seen['FIND'];
+
+if ((time()-strtotime($seen['FIND'])<3600)) {$out['gwstatus'][$i]['SEEN2']="1";}
+else {$out['gwstatus'][$i]['SEEN2']="0";}
+
+
+if ($seen['MESSAGE']=='offline')  {$out['gwstatus'][$i]['SEEN2']="0";
+$out['gwstatus'][$i]['PERMIT']='false';
 
 }
 
-
+}
 
 
 
@@ -2418,9 +2427,10 @@ $this->redirect("?&location=$location&type_id=$type_id&vendor_id=$vendor_id&vid_
 
   if ($this->view_mode=='startpairing') {
 
-$this->getConfig();
-$zz=explode('/',$this->config['MQTT_QUERY'])[0];
+//$this->getConfig();
+//$zz=explode('/',$this->config['MQTT_QUERY'])[0];
 
+$zz=$_GET['gw'];
 $this->sendcommand($zz.'/bridge/config/permit_join', 'true');
 
 
@@ -2438,8 +2448,9 @@ $this->redirect("?");
 }
 
   if ($this->view_mode=='stoppairing') {
-$this->getConfig();
-$zz=explode('/',$this->config['MQTT_QUERY'])[0];
+//$this->getConfig();
+//$zz=explode('/',$this->config['MQTT_QUERY'])[0];
+$zz=$_GET['gw'];
 $this->sendcommand($zz.'/bridge/config/permit_join', 'false');
 //  $this->redirect("?tab=service");
 $location=$_GET['location'];
