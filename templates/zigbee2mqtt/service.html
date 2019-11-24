@@ -1,13 +1,10 @@
-<br>
+<hr>
 
    <a href="?view_mode=srv_start" class="btn btn-default" title="Start zigbee2mqtt service" ><i class="glyphicon  glyphicon-play"></i>Start </a>
    <a href="?view_mode=srv_stop" class="btn btn-default" title="Stop zigbee2mqtt service" ><i class="glyphicon glyphicon-pause"></i>Stop </a>
    <a href="?view_mode=srv_restart" class="btn btn-default" title="Restart zigbee2mqtt service" ><i class="glyphicon glyphicon-refresh"></i>Restart </a>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
    <a href="?view_mode=resetznp" class="btn btn-default" title="Resets the ZNP (CC2530/CC2531)" ><i class="glyphicon glyphicon-refresh"></i> Reset ZNP</a>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-   <a href="?view_mode=startpairing" class="btn btn-default" title="Start pairing" ><i class="glyphicon glyphicon-refresh"></i>Start pairing mode </a>
-   <a href="?view_mode=stoppairing" class="btn btn-default" title="Stop pairing" ><i class="glyphicon glyphicon-refresh"></i>Stop pairing mode </a>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 <!-- <hr> -->
    <a href="?view_mode=updatedb"   class="btn btn-default" title="Manual update device metrics after update this module" ><i class="glyphicon glyphicon-refresh"></i>Update metrics</a> 
@@ -19,6 +16,18 @@
 <br><hr>
    <a href="?view_mode=getgroupslist" class="btn btn-default" title="Get groups list from mqtt" ><i class="glyphicon glyphicon-refresh"></i> Get groups list from mqtt</a>
    <a href="?view_mode=getalldevicegroup" class="btn btn-default" title="Refresh group from all devices " ><i class="glyphicon glyphicon-refresh"></i> Refresh all devices</a>
+
+
+
+<br><hr>
+[#begin gwstatus#]
+
+   <a href="?view_mode=startpairing&gw=[#PERMITNAME#]" class="btn btn-default" title="Start pairing" ><i class="glyphicon glyphicon-refresh"></i>Start pairing mode [#PERMITNAME#]</a>
+   <a href="?view_mode=stoppairing&gw=[#PERMITNAME#]" class="btn btn-default" title="Stop pairing" ><i class="glyphicon glyphicon-refresh"></i>Stop pairing mode [#PERMITNAME#] </a>
+[#end gwstatus#]
+
+
+
 
 
 
