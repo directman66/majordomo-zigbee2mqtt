@@ -620,6 +620,12 @@ if (($value=="device_off_left")&&(strpos($rec[$i]['METRIKA'],"tate")>0)&&(strpos
 
 
 
+if (($value=="device_open")&&(strpos($rec[$i]['METRIKA'],"tate")>0)&&(strpos($rec[$i]['PATH_WRITE'],'state')>0)) $json=array( 'state'=> 'open');
+if (($value=="device_stop")&&(strpos($rec[$i]['METRIKA'],"tate")>0)&&(strpos($rec[$i]['PATH_WRITE'],'state')>0))  $json=array( 'state'=> 'stop');
+if (($value=="device_close")&&(strpos($rec[$i]['METRIKA'],"tate")>0)&&(strpos($rec[$i]['PATH_WRITE'],'state')>0))  $json=array('state'=> 'close');
+
+
+
 
 
 if  (($value=="device_on_right")&&(strpos($rec[$i]['METRIKA'],"tate")>0) &&(strpos($rec[$i]['PATH_WRITE'],'right')>0)) $json=array( $rec[$i]['COMMAND_VALUE']=> $rec[$i]['PAYLOAD_ON']);
@@ -771,17 +777,17 @@ if (!$v) {$v="0"; }
 unset($msgtype);
 
 $this->getConfig();
-$zz=substr(explode('/',$this->config['MQTT_QUERY'])[0],1);
+//$zz=substr(explode('/',$this->config['MQTT_QUERY'])[0],1);
 
 $gw=explode('/',$path)[0];
 
 
-if (strpos($path,$zz.'/0x')>0) {$msgtype='device_state';}
-if (strpos($path,$zz.'/bridge/state')>0) {$msgtype='bridge_state';}
-if (strpos($path,$zz.'/bridge/config')>0) {$msgtype='bridge_config';}
-if (strpos($path,$zz.'/bridge/networkmap/raw')>0) {$msgtype='raw_map';}
-if (strpos($path,$zz.'/bridge/networkmap')>0) {$msgtype='graphwiz';}
-if (strpos($path,$zz.'/bridge/log')>0) {$msgtype='log';}
+if (strpos($path,'/0x')>0) {$msgtype='device_state';}
+if (strpos($path,'/bridge/state')>0) {$msgtype='bridge_state';}
+if (strpos($path,'/bridge/config')>0) {$msgtype='bridge_config';}
+if (strpos($path,'/bridge/networkmap/raw')>0) {$msgtype='raw_map';}
+if (strpos($path,'/bridge/networkmap')>0) {$msgtype='graphwiz';}
+if (strpos($path,'/bridge/log')>0) {$msgtype='log';}
 
 
 //if ($path=='zigbee2mqtt/bridge/log') {$msgtype=$json->{'type'};}
@@ -792,16 +798,17 @@ if (strpos($path,$zz.'/bridge/log')>0) {$msgtype='log';}
 //if ($msgtype)
 //if ($path=='zigbee2mqtt/bridge/state')
 
-debmes('zz:'.$zz, 'zzz222');
-debmes($path, 'zzz222');
-debmes('$msgtype: '.$msgtype, 'zzz222');
-debmes($value, 'zzz222');
+//debmes('zz:'.$zz, 'zzz222');
+//debmes($path, 'zzz222');
+//debmes('$msgtype: '.$msgtype, 'zzz222');
+//debmes($value, 'zzz222');
 
 if (($msgtype)&&($this->isJSON22($value))
-||$path==$zz.'/bridge/log'
-||$path==$zz.'/bridge/networkmap'
-||$path==$zz.'/bridge/networkmap/raw'
-||$path==$zz.'/bridge/networkmap/graphviz'
+||$path=='/bridge/log'
+||$path=='/bridge/config'
+||$path=='/bridge/networkmap'
+||$path=='/bridge/networkmap/raw'
+||$path=='/bridge/networkmap/graphviz'
 
 
 
@@ -892,6 +899,8 @@ $this->update_default($path, $value);
 function update_default($path, $value){
 
 $dev_title=explode('/',$path)[1];
+$gw=explode('/',$path)[0];
+
 
 
 //		    echo $cnt; 
@@ -901,13 +910,6 @@ $dev_title=explode('/',$path)[1];
      $rec=SQLSelectOne($sql);
 
 //if (ZMQTT_DEBUG=="1" ) debmes('апдейтим zigbee2mqtt_devices: '.$sql, 'zigbee2mqtt');
-
-     
-
-
-
-
-
 //                         $rec['TITLE']=$dev_title;
           if(!$rec['ID']) { $rec['TITLE']=$dev_title;}
 
@@ -920,8 +922,7 @@ $dev_title=explode('/',$path)[1];
                       $cnt=SQLSelectOne("SELECT count(*) cnt FROM zigbee2mqtt_devices WHERE TITLE ='bridge'")['cnt'];
 
 	 	     $rec['FIND']=date('Y-m-d H:i:s');
-
-                    if ($cnt==0) {SQLInsert('zigbee2mqtt_devices', $rec);} else 
+                     if ($cnt==0) {SQLInsert('zigbee2mqtt_devices', $rec);} else 
                         {SQLUpdate('zigbee2mqtt_devices', $rec);}
 //                       break;
 			} 
@@ -937,7 +938,10 @@ if ($grl['ID'])   {      $rec['SELECTTYPE']='group';$rec['SELECTVENDOR']='group'
 
 
 //if (ZMQTT_DEBUG=="1" ) debmes('устройство  новое, нужно создать новое устройство  zigbee2mqtt_devices: '.$sql, 'zigbee2mqtt');
+
+     $gw=explode('/',$path)[0];
      $rec['TITLE']=$dev_title;
+     $rec['GW']=$gw;
      $rec['IEEEADDR']=$dev_title;
      $rec['FIND']=date('Y-m-d H:i:s');
 //if   ($rec['TITLE']=='bridge')  {      $rec['IEEEADDR']='bridge2';}
@@ -950,22 +954,29 @@ if ($grl['ID'])   {      $rec['SELECTTYPE']='group';$rec['SELECTVENDOR']='group'
 //     $this->refresh_db();
 //     $this->refreshdb_mqtt();
 
-SQLExec ('update  zigbee2mqtt set VALUE="" where TITLE="zigbee2mqtt/bridge/log"');
-
-$this->getConfig();
-$zz=explode('/',$this->config['MQTT_QUERY'])[0];
-
-$this->sendcommand($zz.'/bridge/config/devices', '');
 
 
+     $gw=explode('/',$path)[0];
 
 
-       }
+//$this->getConfig();
+//$query_list = explode(',', $this->config['MQTT_QUERY']);
+//$total = count($query_list);
+//for ($i = 0; $i < $total; $i++) {
+
+//$zz=explode('/',$query_list[$i])[0];
+
+
+SQLExec ("update  zigbee2mqtt set VALUE='' where TITLE='$zz/bridge/log'");
+$this->sendcommand($gw.'/bridge/config/devices', '');
+      }
+      
 else 
 {
 //if (ZMQTT_DEBUG=="1" ) debmes('устройство уже зарегистрировано в системе   zigbee2mqtt_devices: '.$sql, 'zigbee2mqtt');
      $rec['IEEEADDR']=$dev_title;
      $rec['FIND']=date('Y-m-d H:i:s');
+     $rec['GW']=$gw;
      SQLUPDATE('zigbee2mqtt_devices', $rec);
 }
 
@@ -1070,7 +1081,7 @@ if ($value==$rec['PAYLOAD_FALSE']||$value=="") {$newvalue=0; SQLExec('update zig
 if ((!$newvalue) || (strlen($newvalue)==0)) {$newvalue=$value;}
 
 if ($newvalue=='OFF') {$newvalue="0";}
-if ($newvalue=='ON') {$newvalue="1";}
+if ($newvalue=='ON')  {$newvalue="1";}
 
 
 
@@ -1251,7 +1262,7 @@ else
 }
 
 if ($newvalue=='OFF') {$newvalue="0";}
-if ($newvalue=='ON') {$newvalue="1";}
+if ($newvalue=='ON')  {$newvalue="1";}
 
 
 //debmes('Проверяем, нужно ли вызвать setglobal: '.$rec1['LINKED_OBJECT'].'.'.$rec1['LINKED_PROPERTY'].' value:'. $newvalue,'zigbee2mqtt');
@@ -1278,15 +1289,7 @@ if ($newvalue<>$oldvalue) setGlobal($rec1['LINKED_OBJECT'].'.'.$rec1['LINKED_PRO
 
 
 
-}
-
-
-
-   }
-
-
-
-}
+}}}
 
 
 function update_groups($json){
@@ -1304,10 +1307,6 @@ $sql="select * from zigbee2mqtt_grouplist  where Z2M_ID='$key'";
 //if (ZMQTT_DEBUG=="1" ) debmes($sql, 'zigbee2mqtt');
 
 $grs=SQLSElectOne($sql);
-
-
-
-
 //if (ZMQTT_DEBUG=="1" ) debmes($grs, 'zigbee2mqtt');
 
 if  (!$grs['ID']) 
@@ -2213,7 +2212,9 @@ $out['status']=$a;
 
 }
 
-
+///////////////////////
+///toggle
+//////////////////////
  if ($this->view_mode=='device_togle') {
 	$id=$this->id;
 //	$this->setProperty($mqtt_properties[$i]['ID'], $value);
@@ -2244,18 +2245,20 @@ $this->redirect("?&location=$location&type_id=$type_id&vendor_id=$vendor_id&vid_
 }
 
 
- if ($this->view_mode=='device_on') {
-if ($id){	$id=$this->id;
-//	$this->setProperty($mqtt_properties[$i]['ID'], $value);
-//if (ZMQTT_DEBUG=="1" ) debmes('!!!!!!!device_on','zigbee2mqtt');
-	$this->setPropertyDevice($id, 'device_on_single');}
+///////////////////////
+///device control
+//////////////////////
 
-else 
-{
-$this->getConfig();
-$z2mp=explode('/',$this->config['MQTT_QUERY'])[0];
-$path=$z2mp.'/'.$_GET['friendlyname'].'/set';
-$this->setPropertyfn($path, 'state','ON');
+ if ($this->view_mode=='device_on') {
+//	$id=$this->id;
+	if ($id){	
+        //	$this->setProperty($mqtt_properties[$i]['ID'], $value);
+	//if (ZMQTT_DEBUG=="1" ) debmes('!!!!!!!device_on','zigbee2mqtt');
+	$this->setPropertyDevice($id, 'device_on_single');}
+	else 
+	{
+	$path=$_GET['gw'].'/'.$_GET['friendlyname'].'/set';
+	$this->setPropertyfn($path, 'state','ON');
 }
 
 
@@ -2271,19 +2274,16 @@ $this->redirect("?&location=$location&type_id=$type_id&vendor_id=$vendor_id&vid_
 
  if ($this->view_mode=='device_off') {
 
-if ($id){	
-
-	$id=$this->id;
-//if (ZMQTT_DEBUG=="1" ) debmes('!!!!!!!device_off','zigbee2mqtt');
-//	$this->setProperty($mqtt_properties[$i]['ID'], $value);
+//	$id=$this->id;
+	if ($id){	
+	//if (ZMQTT_DEBUG=="1" ) debmes('!!!!!!!device_off','zigbee2mqtt');
+	//	$this->setProperty($mqtt_properties[$i]['ID'], $value);
 	$this->setPropertyDevice($id, 'device_off_single');
-}
-else 
-{
-$this->getConfig();
-$z2mp=explode('/',$this->config['MQTT_QUERY'])[0];
-$path=$z2mp.'/'.$_GET['friendlyname'].'/set';
-$this->setPropertyfn($path, 'state','OFF');
+	}
+	else 
+	{
+	$path=$_GET['gw'].'/'.$_GET['friendlyname'].'/set';
+	$this->setPropertyfn($path, 'state','OFF');
 }
 
 
@@ -2292,15 +2292,22 @@ $vendor_id=$_GET['vendor_id'];
 $type_id=$_GET['type_id'];
 $vid_id=$_GET['vid_id'];
 $group_list_id=$_GET['group_list_id'];
-
 $this->redirect("?&location=$location&type_id=$type_id&vendor_id=$vendor_id&vid_id=$vid_id&group_list_id=$group_list_id");
 }
 
  if ($this->view_mode=='device_on_right') {
-	$id=$this->id;
-//	$this->setProperty($mqtt_properties[$i]['ID'], $value);
-//if (ZMQTT_DEBUG=="1" ) debmes('!!!!!!!device_on','zigbee2mqtt');
+//	$id=$this->id;
+        if ($id){	
+	//	$this->setProperty($mqtt_properties[$i]['ID'], $value);
+	//if (ZMQTT_DEBUG=="1" ) debmes('!!!!!!!device_on','zigbee2mqtt');
 	$this->setPropertyDevice($id, 'device_on_right');
+	} else
+	{
+	$path=$_GET['gw'].'/'.$_GET['friendlyname'].'/set';
+	$this->setPropertyfn($path, 'state_right','ON');
+	}
+
+
 
 $location=$_GET['location'];
 $vendor_id=$_GET['vendor_id'];
@@ -2314,10 +2321,18 @@ $this->redirect("?&location=$location&type_id=$type_id&vendor_id=$vendor_id&vid_
 
 
  if ($this->view_mode=='device_on_left') {
-	$id=$this->id;
-//	$this->setProperty($mqtt_properties[$i]['ID'], $value);
-//if (ZMQTT_DEBUG=="1" ) debmes('!!!!!!!device_on_left','zigbee2mqtt');
+//	$id=$this->id;
+	if ($id){	
+	//	$this->setProperty($mqtt_properties[$i]['ID'], $value);
+	//if (ZMQTT_DEBUG=="1" ) debmes('!!!!!!!device_on_left','zigbee2mqtt');
 	$this->setPropertyDevice($id, 'device_on_left');
+	}
+	else
+	{
+	$path=$_GET['gw'].'/'.$_GET['friendlyname'].'/set';
+	$this->setPropertyfn($path, 'state_left','ON');
+	}
+
 
 $location=$_GET['location'];
 $vendor_id=$_GET['vendor_id'];
@@ -2330,10 +2345,89 @@ $this->redirect("?&location=$location&type_id=$type_id&vendor_id=$vendor_id&vid_
 
 
  if ($this->view_mode=='device_on_l1') {
-	$id=$this->id;
-//	$this->setProperty($mqtt_properties[$i]['ID'], $value);
-//if (ZMQTT_DEBUG=="1" ) debmes('!!!!!!!device_on_l1','zigbee2mqtt');
-	$this->setPropertyDevice($id, 'device_on_l1');
+//	$id=$this->id;
+	if ($id){	
+	//	$this->setProperty($mqtt_properties[$i]['ID'], $value);
+	//if (ZMQTT_DEBUG=="1" ) debmes('!!!!!!!device_on_l1','zigbee2mqtt');
+	$this->setPropertyDevice($id, 'device_on_l1');}
+else
+{
+	$path=$_GET['gw'].'/'.$_GET['friendlyname'].'/set';
+	$this->setPropertyfn($path, 'state_l1','ON');
+}
+
+
+	$location=$_GET['location'];
+	$vendor_id=$_GET['vendor_id'];
+	$type_id=$_GET['type_id'];
+	$vid_id=$_GET['vid_id'];
+	$group_list_id=$_GET['group_list_id'];
+	
+	$this->redirect("?&location=$location&type_id=$type_id&vendor_id=$vendor_id&vid_id=$vid_id&group_list_id=$group_list_id");
+}
+
+
+ if ($this->view_mode=='device_open') {
+//	$id=$this->id;
+
+if ($id){	
+
+	//	$this->setProperty($mqtt_properties[$i]['ID'], $value);
+	//if (ZMQTT_DEBUG=="1" ) debmes('!!!!!!!device_on_l1','zigbee2mqtt');
+	$this->setPropertyDevice($id, 'device_open');
+
+}
+else
+{
+	$path=$_GET['gw'].'/'.$_GET['friendlyname'].'/set';
+	$this->setPropertyfn($path, 'state','open');
+}
+
+
+        $location=$_GET['location'];
+	$vendor_id=$_GET['vendor_id'];
+	$type_id=$_GET['type_id'];
+	$vid_id=$_GET['vid_id'];
+	$group_list_id=$_GET['group_list_id'];
+        $this->redirect("?&location=$location&type_id=$type_id&vendor_id=$vendor_id&vid_id=$vid_id&group_list_id=$group_list_id");
+}
+
+
+ if ($this->view_mode=='device_close') {
+//	$id=$this->id;
+
+	if ($id){	
+        //	$this->setProperty($mqtt_properties[$i]['ID'], $value);
+	//if (ZMQTT_DEBUG=="1" ) debmes('!!!!!!!device_on_l1','zigbee2mqtt');
+	$this->setPropertyDevice($id, 'device_close');
+	}
+	else
+	{
+	$path=$_GET['gw'].'/'.$_GET['friendlyname'].'/set';
+	$this->setPropertyfn($path, 'state','close');
+	}
+
+        
+        $location=$_GET['location'];
+	$vendor_id=$_GET['vendor_id'];
+	$type_id=$_GET['type_id'];
+	$vid_id=$_GET['vid_id'];
+	$group_list_id=$_GET['group_list_id'];
+        $this->redirect("?&location=$location&type_id=$type_id&vendor_id=$vendor_id&vid_id=$vid_id&group_list_id=$group_list_id");
+}
+
+ if ($this->view_mode=='device_stop') {
+//	$id=$this->id;
+        if ($id){	
+        //	$this->setProperty($mqtt_properties[$i]['ID'], $value);
+	//if (ZMQTT_DEBUG=="1" ) debmes('!!!!!!!device_on_l1','zigbee2mqtt');
+	$this->setPropertyDevice($id, 'device_stop');}
+	else
+	{
+	$path=$_GET['gw'].'/'.$_GET['friendlyname'].'/set';
+	$this->setPropertyfn($path, 'state','stop');
+}
+
 
 $location=$_GET['location'];
 $vendor_id=$_GET['vendor_id'];
@@ -2344,11 +2438,21 @@ $group_list_id=$_GET['group_list_id'];
 $this->redirect("?&location=$location&type_id=$type_id&vendor_id=$vendor_id&vid_id=$vid_id&group_list_id=$group_list_id");
 }
 
+
  if ($this->view_mode=='device_off_l1') {
-	$id=$this->id;
-//	$this->setProperty($mqtt_properties[$i]['ID'], $value);
-//if (ZMQTT_DEBUG=="1" ) debmes('!!!!!!!device_off_l1','zigbee2mqtt');
-	$this->setPropertyDevice($id, 'device_off_l1');
+//	$id=$this->id;
+
+	if ($id){	
+        //	$this->setProperty($mqtt_properties[$i]['ID'], $value);
+	//if (ZMQTT_DEBUG=="1" ) debmes('!!!!!!!device_off_l1','zigbee2mqtt');
+	$this->setPropertyDevice($id, 'device_off_l1');}
+        else
+{
+	$path=$_GET['gw'].'/'.$_GET['friendlyname'].'/set';
+	$this->setPropertyfn($path, 'state_l1','OFF');
+}
+
+
 
 $location=$_GET['location'];
 $vendor_id=$_GET['vendor_id'];
@@ -2360,10 +2464,21 @@ $this->redirect("?&location=$location&type_id=$type_id&vendor_id=$vendor_id&vid_
 }
 
  if ($this->view_mode=='device_on_l2') {
-	$id=$this->id;
+//	$id=$this->id;
+
+if ($id){	
+
 //	$this->setProperty($mqtt_properties[$i]['ID'], $value);
 //if (ZMQTT_DEBUG=="1" ) debmes('!!!!!!!device_on_l2','zigbee2mqtt');
 	$this->setPropertyDevice($id, 'device_on_l2');
+	}
+	else
+	{
+	$path=$_GET['gw'].'/'.$_GET['friendlyname'].'/set';
+	$this->setPropertyfn($path, 'state_l2','ON');
+	}
+
+
 
 $location=$_GET['location'];
 $vendor_id=$_GET['vendor_id'];
@@ -2377,10 +2492,20 @@ $this->redirect("?&location=$location&type_id=$type_id&vendor_id=$vendor_id&vid_
 }
 
  if ($this->view_mode=='device_off_l2') {
-	$id=$this->id;
+//	$id=$this->id;
+
+if ($id){	
+
 //	$this->setProperty($mqtt_properties[$i]['ID'], $value);
 //if (ZMQTT_DEBUG=="1" ) debmes('!!!!!!!device_off_l2','zigbee2mqtt');
-	$this->setPropertyDevice($id, 'device_off_l2');
+	$this->setPropertyDevice($id, 'device_off_l2');}
+
+else
+{
+	$path=$_GET['gw'].'/'.$_GET['friendlyname'].'/set';
+	$this->setPropertyfn($path, 'state_l2','OFF');
+}
+
 
 $location=$_GET['location'];
 $vendor_id=$_GET['vendor_id'];
@@ -2392,10 +2517,21 @@ $this->redirect("?&location=$location&type_id=$type_id&vendor_id=$vendor_id&vid_
 }
 
  if ($this->view_mode=='device_off_left') {
-	$id=$this->id;
+//	$id=$this->id;
+
+	if ($id){	
+
 //	$this->setProperty($mqtt_properties[$i]['ID'], $value);
 //if (ZMQTT_DEBUG=="1" ) debmes('!!!!!!!device_off_left','zigbee2mqtt');
-	$this->setPropertyDevice($id, 'device_off_left');
+	$this->setPropertyDevice($id, 'device_off_left');}
+
+else
+{
+	$path=$_GET['gw'].'/'.$_GET['friendlyname'].'/set';
+	$this->setPropertyfn($path, 'state_left','OFF');
+}
+
+
 $location=$_GET['location'];
 $vendor_id=$_GET['vendor_id'];
 $type_id=$_GET['type_id'];
@@ -2409,10 +2545,20 @@ $this->redirect("?&location=$location&type_id=$type_id&vendor_id=$vendor_id&vid_
 
 
  if ($this->view_mode=='device_off_right') {
-	$id=$this->id;
-//if (ZMQTT_DEBUG=="1" ) debmes('!!!!!!!device_off','zigbee2mqtt');
-//	$this->setProperty($mqtt_properties[$i]['ID'], $value);
-	$this->setPropertyDevice($id, 'device_off_right');
+//	$id=$this->id;
+
+	if ($id){	
+
+	//if (ZMQTT_DEBUG=="1" ) debmes('!!!!!!!device_off','zigbee2mqtt');
+	//	$this->setProperty($mqtt_properties[$i]['ID'], $value);
+	$this->setPropertyDevice($id, 'device_off_right');}
+
+	else
+	{
+	$path=$_GET['gw'].'/'.$_GET['friendlyname'].'/set';
+	$this->setPropertyfn($path, 'state_right','OFF');
+}
+
 
 $location=$_GET['location'];
 $vendor_id=$_GET['vendor_id'];
@@ -2466,10 +2612,22 @@ $this->redirect("?");
 
   if ($this->view_mode=='resetznp') {
 
+
 $this->getConfig();
-$zz=explode('/',$this->config['MQTT_QUERY'])[0];
+$query_list = explode(',', $this->config['MQTT_QUERY']);
+$total = count($query_list);
+
+for ($i = 0; $i < $total; $i++) {
+
+$zz=explode('/',$query_list[$i])[0];
+
+
+//$zz=explode('/',$this->config['MQTT_QUERY'])[0];
 $this->sendcommand($zz.'/bridge/config/reset', '');
 //  $this->redirect("?tab=service");
+
+}
+
 $location=$_GET['location'];
 $vendor_id=$_GET['vendor_id'];
 $type_id=$_GET['type_id'];
@@ -2495,15 +2653,20 @@ $payload='
 }
 }';
 
+
+
 $this->getConfig();
+$query_list = explode(',', $this->config['MQTT_QUERY']);
+$total = count($query_list);
 
-$zz=explode('/',$this->config['MQTT_QUERY'])[0];
+for ($i = 0; $i < $total; $i++) {
 
+$zz=explode('/',$query_list[$i])[0];
 
   $this->sendcommand($zz.'/'.$fn.'/system/set', $payload);
 //  $this->redirect("?tab=service");
   $this->redirect("?");
-}
+}}
 
   if ($this->view_mode=='leftbutton_enable') {
   $id=$this->id;
@@ -2519,10 +2682,16 @@ $payload='
 }';
 
 $this->getConfig();
-$zz=explode('/',$this->config['MQTT_QUERY'])[0];
+$query_list = explode(',', $this->config['MQTT_QUERY']);
+$total = count($query_list);
+
+for ($i = 0; $i < $total; $i++) {
+
+$zz=explode('/',$query_list[$i])[0];
 
 
   $this->sendcommand($zz.'/'.$fn.'/system/set', $payload);
+}
 //  $this->redirect("?tab=service");
 $location=$_GET['location'];
 $vendor_id=$_GET['vendor_id'];
@@ -2549,8 +2718,14 @@ $payload='
 }';
 
 $this->getConfig();
-$zz=explode('/',$this->config['MQTT_QUERY'])[0];
+$query_list = explode(',', $this->config['MQTT_QUERY']);
+$total = count($query_list);
+
+for ($i = 0; $i < $total; $i++) {
+
+$zz=explode('/',$query_list[$i])[0];
 $this->sendcommand($zz.'/'.$fn.'/system/set', $payload);
+}
 //  $this->redirect("?tab=service");
 $location=$_GET['location'];
 $vendor_id=$_GET['vendor_id'];
@@ -2575,8 +2750,14 @@ $payload='
 }';
 
 $this->getConfig();
-$zz=explode('/',$this->config['MQTT_QUERY'])[0];
+$query_list = explode(',', $this->config['MQTT_QUERY']);
+$total = count($query_list);
+
+for ($i = 0; $i < $total; $i++) {
+
+$zz=explode('/',$query_list[$i])[0];
 $this->sendcommand($zz.'/'.$fn.'/system/set', $payload);
+}
 //  $this->redirect("?tab=service");
 $location=$_GET['location'];
 $vendor_id=$_GET['vendor_id'];
@@ -2602,8 +2783,14 @@ $payload='
 }';
 
 $this->getConfig();
-$zz=explode('/',$this->config['MQTT_QUERY'])[0];
+$query_list = explode(',', $this->config['MQTT_QUERY']);
+$total = count($query_list);
+
+for ($i = 0; $i < $total; $i++) {
+
+$zz=explode('/',$query_list[$i])[0];
 $this->sendcommand($zz.'/'.$fn.'/system/set', $payload);
+}
 //  $this->redirect("?tab=service");
 $location=$_GET['location'];
 $vendor_id=$_GET['vendor_id'];
@@ -2628,9 +2815,15 @@ $payload='
 }';
 
 $this->getConfig();
-$zz=explode('/',$this->config['MQTT_QUERY'])[0];
+$query_list = explode(',', $this->config['MQTT_QUERY']);
+$total = count($query_list);
+
+for ($i = 0; $i < $total; $i++) {
+
+$zz=explode('/',$query_list[$i])[0];
 $this->sendcommand($zz.'/'.$fn.'/system/set', $payload);
 //  $this->redirect("?tab=service");
+}
 $location=$_GET['location'];
 $vendor_id=$_GET['vendor_id'];
 $type_id=$_GET['type_id'];
@@ -2968,15 +3161,22 @@ global $group_list_id;
 
   if ($this->view_mode=='delete_dev_z2m') {
 $this->getConfig();
-$zz=explode('/',$this->config['MQTT_QUERY'])[0];
+$query_list = explode(',', $this->config['MQTT_QUERY']);
+$total = count($query_list);
+
+for ($i = 0; $i < $total; $i++) {
+$zz=explode('/',$query_list[$i])[0];
 $this->sendcommand($zz.'/bridge/config/remove', $this->ieee);
+}
    $this->delete_dev($this->id);
    $this->redirect("?");
   }
 
   if ($this->view_mode=='delete_dev_z2m_only') {
 $this->getConfig();
-$zz=explode('/',$this->config['MQTT_QUERY'])[0];
+//$zz=explode('/',$this->config['MQTT_QUERY'])[0];
+$zz=$_GET['gw'];
+
 $this->sendcommand($zz.'/bridge/config/remove', $this->ieee);
   $this->redirect("?");
   }
@@ -3103,13 +3303,21 @@ SQLExec("DELETE FROM zigbee2mqtt_grouplist");
 //         $this->refresh_db();
 //  $this->sendcommand('zigbee2mqtt/bridge/log', 'zigbee2mqtt/bridge/config/devices');
 
+//$this->getConfig();
+//$zz=explode('/',$this->config['MQTT_QUERY'])[0];
+
+
 $this->getConfig();
-$zz=explode('/',$this->config['MQTT_QUERY'])[0];
+$query_list = explode(',', $this->config['MQTT_QUERY']);
+$total = count($query_list);
 
+for ($i = 0; $i < $total; $i++) {
 
-
+$zz=explode('/',$query_list[$i])[0];
 SQLExec ('update  zigbee2mqtt set VALUE="" where TITLE="'.$zz.'/bridge/log"');
 $this->sendcommand($zz.'/bridge/config/devices', '');
+
+}
 //  $this->sendcommand('zigbee2mqtt/bridge/config/devices/get', '');
 
 
@@ -3844,7 +4052,18 @@ SQLExec('update zigbee2mqtt_devices set PARRENTIEEEADDR="", LQI="", STATUS="" ')
 
 
 //   $mqtt_client->publish('zigbee2mqtt/bridge/networkmap','graphviz');
-   $mqtt_client->publish('zigbee2mqtt/bridge/networkmap','raw');
+
+$this->getConfig();
+$query_list = explode(',', $this->config['MQTT_QUERY']);
+$total = count($query_list);
+
+for ($i = 0; $i < $total; $i++) {
+
+$zz=explode('/',$query_list[$i])[0];
+
+   $mqtt_client->publish("$zz/bridge/networkmap",'raw');
+}
+
    //$mqtt_client->publish($rec['PATH_WRITE'].'/set',$jsonvalue, (int)$rec['QOS'], (int)$rec['RETAIN']);
 
 
@@ -3897,8 +4116,17 @@ function get_map_graphwiz(){
 
 
 
+$this->getConfig();
+$query_list = explode(',', $this->config['MQTT_QUERY']);
+$total = count($query_list);
 
-   $mqtt_client->publish('zigbee2mqtt/bridge/networkmap','graphviz');
+for ($i = 0; $i < $total; $i++) {
+
+$zz=explode('/',$query_list[$i])[0];
+$mqtt_client->publish("$zz/bridge/networkmap",'graphviz');
+}
+
+
 //   $mqtt_client->publish('zigbee2mqtt/bridge/networkmap','raw');
    //$mqtt_client->publish($rec['PATH_WRITE'].'/set',$jsonvalue, (int)$rec['QOS'], (int)$rec['RETAIN']);
 
