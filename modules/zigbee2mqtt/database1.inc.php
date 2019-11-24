@@ -414,7 +414,7 @@ SQLInsert('zigbee2mqtt_devices_list', $par1);
 $par1['zigbeeModel'] = 'lumi.curtain';
 $par1['model'] = "ZNCLDJ11LM";		 
 $par1['vendor'] = "Xiaomi";		 
-$par1['type'] = "device";		 
+$par1['type'] = "openable";		 
 $par1['description'] = "Aqara curtain motor";		 
 $par1['extend'] = "";		 
 $par1['supports'] = "open, close, stop, position";		 
@@ -2113,6 +2113,22 @@ $par1['extend'] = "";
 SQLInsert('zigbee2mqtt_devices_list', $par1);
 
 // Trust;
+
+
+
+
+
+$par1['zigbeeModel'] = "ZLL-ColorTempera";
+$par1['model'] = "ZLED-2709";
+$par1['vendor'] = "Trust";
+$par1['type'] = "bulb"; 
+$par1['description'] = "Smart Dimmable LED Bulb";
+$par1['supports'] = "generic.light_onoff_brightness";
+$par1['extend'] = "";
+$par1['fromZigbee'] = "";
+$par1['toZigbee'] = "";
+SQLInsert('zigbee2mqtt_devices_list', $par1);
+
 
 $par1['zigbeeModel'] = "ZLED-2709";
 $par1['model'] = "ZLED-2709";
