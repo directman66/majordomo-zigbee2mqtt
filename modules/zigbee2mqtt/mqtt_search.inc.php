@@ -307,6 +307,7 @@ $basa=SQLSelectOne($sql);
 //echo "1".$ttype;
 
  if ($ttype=='bulb')  $res[$i]['CHANGEABLE']='1';
+ if ($ttype=='openable')  $res[$i]['CHANGEABLE']='4';
  if ( ($ttype=='relay')) $res[$i]['CHANGEABLE']='1';
  if ( ($ttype=='switch') && (strpos($basa['description'],'double')>0)) $res[$i]['CHANGEABLE']='2';
  if ( ($ttype=='switch')) $res[$i]['CHANGEABLE']='1';
@@ -538,6 +539,7 @@ $ssql=SQLSelectOne($sql0);
 
 //$zm=$ssql['model'];
 $zm=$ssql['SELECTTYPE'];
+$gw=$ssql['GW'];
 
 //$sql="SELECT * FROM (select * from zigbee2mqtt_devices_command  WHERE zigbeeModel='".$zm."') zigbee2mqtt_devices_command  LEFT JOIN zigbee2mqtt ON zigbee2mqtt.PATH like CONCAT('%','".$ssql['IEEEADDR']."','%')" ;
 
@@ -561,7 +563,7 @@ select  zigbee2mqtt.*, zigbee2mqtt_devices_command.*  from (select * from zigbee
 
 
 
-//debmes($sql,'zigbee2mqtt');
+debmes($sql,'zigbee2mqtt2323');
 
  $res=SQLSelect($sql);
 
@@ -572,7 +574,8 @@ select  zigbee2mqtt.*, zigbee2mqtt_devices_command.*  from (select * from zigbee
 
 //    $res[$i]['VALUE']=str_replace('":','": ',$res[$i]['VALUE']);
 $this->getConfig();
-$zz=explode('/',$this->config['MQTT_QUERY'])[0];
+//$zz=explode('/',$this->config['MQTT_QUERY'])[0];
+$zz=$gw;
 
 //$res[$i]['state_topic']=str_replace('<FRIENDLY_NAME>',$ssql['IEEEADDR'],$res[$i]['state_topic']);
 $res[$i]['state_topic']=str_replace('<Z2M_PATH>', $zz,str_replace('<FRIENDLY_NAME>',$ssql['IEEEADDR'],$res[$i]['state_topic']));
@@ -634,7 +637,8 @@ SQLExec ($sql);
 
   }
 
-}}
+}
+}
 
 
 
