@@ -122,7 +122,8 @@
 
   <div class="col-md-2">
 
-  <select class="form-control" name="group_list_id" onChange="document.frmList_mqtt.submit();" [#if "<#SETTINGS_THEME#>"=="dark"&& ACTION=""#]style="background-color : grey;color:white"[#endif#]>
+  <select class="form-control" name="group_list_id" onChange="document.frmList_mqtt.submit();" [#if "<#SETTINGS_THEME#>"=="dark" && ACTION=""#]style="background-color : grey;color:white"[#endif#]> 
+<!--  <select class="form-control" name="group_list_id" onChange="document.frmList_mqtt.submit();" [#if "<#SETTINGS_THEME#>"=="dark1" && ACTION=""#]style="background-color : grey;color:white"[#endif#]> -->
    <option value="0">Устройства (Без групп) 
    <option value="100500"[#if Z2M_ID="100500"#]>Группы  (Без устройств)
    [#begin GROUP_LISTS#]
@@ -186,7 +187,7 @@
 
 
 
-[#if "<#ACTION#>"=="admin"#]
+-[#if "<#ACTION#>"=="admin"|| "<#ACTION#>"==""#] 
 [#if LOST="1"#]   <div class="panel panel-warning"> [#else#]
   <div class="panel [#if STATE="1"#]panel-primary[#else#]panel-info[#endif#]">
 [#endif#]
@@ -194,9 +195,7 @@
 
 [#if "<#SETTINGS_THEME#>"=="dark"#]
 
-[#if LOST="1"#]   <div class="panel panel-grey"> [#else#]
-
-  <div class="panel [#if STATE="1"#]panel-info[#else#]panel-primary[#endif#]">
+[#if LOST="1"#]   <div class="panel panel-grey"> [#else#]   <div class="panel [#if STATE="1"#]panel-info[#else#]panel-primary[#endif#]">
 [#else#]
   <div class="panel [#if STATE="1"#]panel-primary[#else#]panel-info[#endif#]">
 [#endif#]
