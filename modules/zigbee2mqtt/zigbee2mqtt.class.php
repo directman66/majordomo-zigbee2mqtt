@@ -787,6 +787,8 @@ if (strpos($path,'/bridge/state')>0) {$msgtype='bridge_state';}
 if (strpos($path,'/bridge/config')>0) {$msgtype='bridge_config';}
 if (strpos($path,'/bridge/networkmap/raw')>0) {$msgtype='raw_map';}
 if (strpos($path,'/bridge/networkmap')>0) {$msgtype='graphwiz';}
+if (strpos($path,'/bridge/networkmap/raw/nodes')>0) {$msgtype='rawnodes';}
+
 if (strpos($path,'/bridge/log')>0) {$msgtype='log';}
 
 
@@ -794,7 +796,7 @@ if (strpos($path,'/bridge/log')>0) {$msgtype='log';}
 
 
 
-//if (($path=='zigbee2mqtt/bridge/log')||($msgtype))
+//if (($path=='zigbee2mqtt/bridge/log')||($msgtype))             	
 //if ($msgtype)
 //if ($path=='zigbee2mqtt/bridge/state')
 
@@ -802,6 +804,9 @@ if (strpos($path,'/bridge/log')>0) {$msgtype='log';}
 //debmes($path, 'zzz222');
 //debmes('$msgtype: '.$msgtype, 'zzz222');
 //debmes($value, 'zzz222');
+if ($msgtype=='rawnodes') {$this->parse_rawnodes($json, $gw);
+}
+
 
 if (($msgtype)&&($this->isJSON22($value))
 ||$path=='/bridge/log'
@@ -862,6 +867,10 @@ $ok=SQLInsert('zigbee2mqtt_log', $arr);
 
 //if (ZMQTT_DEBUG=="1" ) debmes($json,'zigbee2mqtt');
 //if (ZMQTT_DEBUG=="1" ) debmes($json->{'type'},'zigbee2mqtt');
+
+
+
+
 
 if ($json->{'type'}=='devices') {
 
@@ -2352,8 +2361,8 @@ $this->redirect("?&location=$location&type_id=$type_id&vendor_id=$vendor_id&vid_
 	$this->setPropertyDevice($id, 'device_on_l1');}
 else
 {
-	$path=$_GET['gw'].'/'.$_GET['friendlyname'].'/set';
-	$this->setPropertyfn($path, 'state_l1','ON');
+	$path=$_GET['gw'].'/'.$_GET['friendlyname'].'/l1/set';
+	$this->setPropertyfn($path, 'state','ON');
 }
 
 
@@ -2448,8 +2457,8 @@ $this->redirect("?&location=$location&type_id=$type_id&vendor_id=$vendor_id&vid_
 	$this->setPropertyDevice($id, 'device_off_l1');}
         else
 {
-	$path=$_GET['gw'].'/'.$_GET['friendlyname'].'/set';
-	$this->setPropertyfn($path, 'state_l1','OFF');
+	$path=$_GET['gw'].'/'.$_GET['friendlyname'].'/l1/set';
+	$this->setPropertyfn($path, 'state','OFF');
 }
 
 
@@ -2474,8 +2483,8 @@ if ($id){
 	}
 	else
 	{
-	$path=$_GET['gw'].'/'.$_GET['friendlyname'].'/set';
-	$this->setPropertyfn($path, 'state_l2','ON');
+	$path=$_GET['gw'].'/'.$_GET['friendlyname'].'/l2/set';
+	$this->setPropertyfn($path, 'state','ON');
 	}
 
 
@@ -2502,8 +2511,8 @@ if ($id){
 
 else
 {
-	$path=$_GET['gw'].'/'.$_GET['friendlyname'].'/set';
-	$this->setPropertyfn($path, 'state_l2','OFF');
+	$path=$_GET['gw'].'/'.$_GET['friendlyname'].'/l2/set';
+	$this->setPropertyfn($path, 'state','OFF');
 }
 
 
@@ -3748,6 +3757,83 @@ $lqi=$str->{'lqi'};
 //if (ZMQTT_DEBUG=="1" ) debmes($ieeeAddr.":".$parent, 'zigbee2mqtt');
 
 $defaultiee=SQLSelectOne ("select * from zigbee2mqtt_devices where TITLE='bridge'")['IEEEADDR'];
+
+//if (ZMQTT_DEBUG=="1" ) debmes('default:'.$defaultiee, 'zigbee2mqtt');
+
+$rec3=SQLSelectOne ("select * from zigbee2mqtt_devices where IEEEADDR='$ieeeAddr'");
+if   ($rec3) 
+{
+//if (strlen($parent)>3)  {$rec3['PARRENTIEEEADDR']=$parent;} else {   $rec3['PARRENTIEEEADDR']=$defaultiee; }
+$rec3['PARRENTIEEEADDR']=$parent;
+$rec3['LQI']=$lqi;
+$rec3['STATUS']=$status;
+$rec3['NWKADDR']=$nwkAddr;
+if (strpos($allieee,$ieeeAddr)==0)  SQLUpdate(  'zigbee2mqtt_devices',$rec3); 
+
+
+}
+
+$allieee.=$ieeeAddr.";";
+
+
+//var_dump( $str);
+// $json3= json_decode  ($str,true);
+
+//foreach ( $json3 as $key=>$value)
+//{if (ZMQTT_DEBUG=="1" ) debmes($key.":".$value, 'zigbee2mqtt');}
+
+
+
+}
+
+
+}
+
+
+
+
+function parse_rawnodes($json, $gw)
+{
+
+debmes('parse_rawnodes', 'z2mmap');
+///clear
+$rec4=SQLSelect ("select * from zigbee2mqtt_devices ");
+    $total = count($rec4);
+    for ($ij=0;$ij<$total;$ij++) 
+{
+$rec4[$ij]['LQI']='';
+$rec4[$ij]['STATUS']='';
+$rec4[$ij]['PARRENTIEEEADDR']='';
+//if (ZMQTT_DEBUG=="1" ) debmes($rec4[$ij], 'z2m');
+SQLUpdate(  'zigbee2mqtt_devices',$rec4[$ij]); 
+}
+
+$defaultiee=SQLSelectOne ("select * from zigbee2mqtt_devices where TITLE='bridge'")['IEEEADDR'];
+
+//$allieee="";
+//$maparray=SQLSelectOne ('select * from zigbee2mqtt where TITLE="zigbee2mqtt/bridge/networkmap/raw"');
+//$map=$maparray['VALUE'];
+//if (ZMQTT_DEBUG=="1" ) debmes($map, 'zigbee2mqtt');
+
+//$json1=json_decode($map);
+$json1 = json_decode($json, JSON_OBJECT_AS_ARRAY);
+
+    $total = count($json1);
+//if (ZMQTT_DEBUG=="1" ) debmes($total, 'zigbee2mqtt');
+
+    for ($ij=0;$ij<$total;$ij++) {
+//$str=$json1[$ij]['ieeeAddr'].":".$json1[$ij]['nwkAddr'];
+$str=$json1[$ij];
+
+$ieeeAddr=$str->{'sourceIeeeAddr'};
+$parent=$str->{'targetIeeeAddr'};
+$status=$str->{'status'};
+$nwkAddr=$str->{'sourceNwkAddr'};
+$lqi=$str->{'lqi'};
+
+//if (ZMQTT_DEBUG=="1" ) debmes($ieeeAddr.":".$parent, 'zigbee2mqtt');
+
+
 
 //if (ZMQTT_DEBUG=="1" ) debmes('default:'.$defaultiee, 'zigbee2mqtt');
 
