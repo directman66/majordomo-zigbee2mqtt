@@ -425,7 +425,7 @@ SQLInsert('zigbee2mqtt_devices_list', $par1);
 $par1['zigbeeModel'] = 'lumi.curtainb1';
 $par1['model'] = "ZNCLDJ12LM";		 
 $par1['vendor'] = "Xiaomi";		 
-$par1['type'] = "device";		 
+$par1['type'] = "openable";		 
 $par1['description'] = "Aqara B1 curtain motor";		 
 $par1['extend'] = "";		 
 $par1['supports'] = "open, close, stop, position";		 
