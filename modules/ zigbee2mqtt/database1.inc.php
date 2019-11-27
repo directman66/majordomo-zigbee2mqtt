@@ -2642,3 +2642,4 @@ SQLInsert('zigbee2mqtt_devices_list', $par1);
 
 
 
+
