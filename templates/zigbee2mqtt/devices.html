@@ -138,7 +138,7 @@
   <select class="form-control" name="location_id" onChange="document.frmList_mqtt.submit();" [#if "<#SETTINGS_THEME#>"=="dark"&& ACTION=""#]style="background-color : grey;color:white"[#endif#]>
    <option value="0"><#LANG_FILTER_BY_LOCATION#> (<#LANG_ALL#>)
    [#begin LOCATIONS#]
-   <option value="[#ID#]"[#if ID="<#LOCATION_ID#>"#] selected[#endif#]>[#TITLE#]
+   <option value="[#ID#]"[#if ID="<#LOCATION_ID#>"#] selected[#endif#]>[#TITLE#]          
    [#end LOCATIONS#]
   </select>
   </div>
@@ -379,7 +379,7 @@
               <li><a href="?view_mode=delete_dev_z2m_only&id=[#DEVID#]&ieee=[#IEEEADDR#]&location=<#LOCATION_ID#>&type_id=<#ZIGBEE2MQTTDEV#>&vendor_id=<#VENDOR#>&vid_id=<#VID#>&group_list_id=<#group_list_id#>&friendlyname=[#IEEEADDR#]&gw=[#GW#]" onClick="return confirm('Are you sure? Please confirm.')" style="color: #a94442;"><span class="glyphicon glyphicon-trash"></span>Исключить из сети zigbee</a></li>
             </ul>             
           </div>
-          <h3 class="panel-title" [#if LOST#]style="color:lightgray;"[#endif#]>[#TITLE#]
+          <h3 class="panel-title" [#if LOST#]style="color:lightgray;"[#endif#]>	<div><p title="[#GW#]">[#TITLE#]
 
 
 
@@ -387,7 +387,7 @@
 <span class="label label-[#POWER_WARNING#]"><i class="glyphicon glyphicon-flash"></i> [#BATTERY#]%</span>
 [#endif#]
 
-
+</p> </div>
 
 </h3>
 
