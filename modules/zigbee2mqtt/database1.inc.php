@@ -449,6 +449,19 @@ $par1['toZigbee'] = "";
 SQLInsert('zigbee2mqtt_devices_list', $par1);						
 
 
+$par1['zigbeeModel'] = 'TRADFRI LED bulb E27 1000 lumen,';
+$par1['model'] = "LED1732G11";		 
+$par1['vendor'] = "IKEA";		 
+$par1['type'] = "bulb";		 
+$par1['description'] = "TRADFRI LED bulb E27 1000 lumen, dimmable, white spectrum, opal white";		 
+$par1['extend'] = "";		 
+$par1['supports'] = "on/off, brightness, color temperature";		 
+$par1['fromZigbee'] = "";		 
+$par1['toZigbee'] = "";		 
+SQLInsert('zigbee2mqtt_devices_list', $par1);						
+
+
+
 $par1['zigbeeModel'] = 'TRADFRI bulb E27 WS opal 980lm';
 $par1['model'] = "LED1545G12";		 
 $par1['vendor'] = "IKEA";		 
@@ -566,6 +579,9 @@ $par1['supports'] = "generic.light_onoff_brightness_colortemp";
 $par1['fromZigbee'] = "";		 
 $par1['toZigbee'] = "";		 
 SQLInsert('zigbee2mqtt_devices_list', $par1);
+
+
+
 
 
 $par1['zigbeeModel'] = 'TRADFRI bulb E26 opal 1000lm';
