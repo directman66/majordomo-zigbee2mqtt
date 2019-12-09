@@ -307,6 +307,7 @@ $basa=SQLSelectOne($sql);
 //echo "1".$ttype;
 
  if ($ttype=='bulb')  $res[$i]['CHANGEABLE']='1';
+ if ($ttype=='dimmer')  $res[$i]['CHANGEABLE']='1';
  if ($ttype=='openable')  $res[$i]['CHANGEABLE']='4';
  if ( ($ttype=='relay')) $res[$i]['CHANGEABLE']='1';
  if ( ($ttype=='switch') && (strpos($basa['description'],'double')>0)) $res[$i]['CHANGEABLE']='2';
@@ -315,6 +316,7 @@ $basa=SQLSelectOne($sql);
  if ($basa['model']=='KS-SM001')   $res[$i]['CHANGEABLE']='1';
  if ($basa['model']=='group')      $res[$i]['CHANGEABLE']='1';
  if ($basa['model']=='GL-C-008')   $res[$i]['CHANGEABLE']='1';
+ if ($basa['model']=='GL-C-007')   $res[$i]['CHANGEABLE']='1';
  if ($basa['model']=='LLKZMK11LM') $res[$i]['CHANGEABLE']='3';
  if ($basa['model']=='TI0001')     $res[$i]['CHANGEABLE']='2';
  if ($basa['model']=='QBKG12LM')   $res[$i]['CHANGEABLE']='2';
@@ -336,6 +338,10 @@ $basa=SQLSelectOne($sql);
 
  if ($basa['model']=='GL-C-008')  $res[$i]['COLOR_TEMP']='1';
  if ($basa['model']=='GL-C-008')  $res[$i]['XY']='1';
+ if ($basa['model']=='GL-C-007')  $res[$i]['COLOR_TEMP']='1';
+ if ($basa['model']=='GL-C-007')  $res[$i]['XY']='1';
+
+
  if ($basa['model']=='LED1624G9')  $res[$i]['XY']='1';
  if ($basa['model']=='group')      $res[$i]['XY']='1';
  if ($basa['model']=='LED1624G9')  $res[$i]['COLOR_TEMP']='1';
