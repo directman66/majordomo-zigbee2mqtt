@@ -445,19 +445,24 @@ debmes($value, 'zz2mm');
     return 0;
    }
 
+if ($this->isJSON22($value)) 	{
+				$jsonvalue=$value;
+				} 
 
-$json=array( $command=> $value);
+				else 
+				{
+				$json=array( $command=> $value);
+				$jsonvalue=json_encode($json) ;
+				}
 
-
-$jsonvalue=json_encode($json) ;
 if ($jsonvalue!='null') { 
 //if (ZMQTT_DEBUG=="1" ) debmes('Публикую zigbee2mqqtt '.$rec[$i]['PATH_WRITE'].":".$jsonvalue, 'zigbee2mqtt1');
 
 debmes('publish', 'zz2mm');
 debmes($fn, 'zz2mm');
 debmes($jsonvalue, 'zz2mm');
-   $mqtt_client->publish($fn,$jsonvalue, (int)$rec[$i]['QOS'], (int)$rec[$i]['RETAIN']);
-       
+$mqtt_client->publish($fn,$jsonvalue, (int)$rec[$i]['QOS'], (int)$rec[$i]['RETAIN']);
+      
    }
 
    $mqtt_client->close();
@@ -1108,10 +1113,17 @@ if ($newvalue<>$oldvalue)  setGlobal($rec['LINKED_OBJECT'].'.'.$rec['LINKED_PROP
      }
 
 
+
+
+//сюда пишем обработчик уровня сигнала
+if ((substr($path,strrpos($path,'/')+1)=='linkquality'))
+{
+//$newvalue=str_replace(']','',str_replace('[','',$value));
+$newvalue=$value;
+SQLExec('update zigbee2mqtt_devices set LQI="'.$newvalue.'" where ID="'.$dev_id.'"');
+}
+
 //сюда пишем обработчик получения групп
-
-
-
 if ((substr($path,strrpos($path,'/')+1)=='group_list'))
 {
 $newvalue=str_replace(']','',str_replace('[','',$value));
@@ -1197,6 +1209,7 @@ else if ($newvalue<>$oldvalue)
        callMethod($rec1['LINKED_OBJECT'] . '.' . $rec1['LINKED_METHOD']);
      }
 }
+
 
 
 
@@ -2015,21 +2028,29 @@ $this->redirect("?view_mode=view_mqtt&id=".$id."&tab=edit_parametrs");
 
 
  if (substr($this->view_mode,0,11)=='setcolorhex') {
+	$hex=substr($this->view_mode,12);
+	$mqttsendvalue='{"state": "ON",  "brightness": 255,  "color": {"hex": "#'.$hex.'"}}';
+//$id=$this->id;
+/*
+if ($property_id) {
+        
+	//$rec=SQLSelectOne('select * from zigbee2mqtt where dev_id='.$id.' and metrika="color"')
+	$rec=SQLSelectOne('select * from zigbee2mqtt where dev_id='.$id.' and metrika="state"');
+	$mqttsendpath=$rec['PATH_WRITE'];
+        $this->sendcommand($mqttsendpath, $mqttsendvalue);
+	} 
+	else 
+
+	{
+*/
+	$path=$_GET['gw'].'/'.$_GET['friendlyname'].'/set';
+	$this->setPropertyfn($path, null,$mqttsendvalue);
+
+/*}
+*/
 
 
-$id=$this->id;
-$hex=substr($this->view_mode,12);
 
-//$rec=SQLSelectOne('select * from zigbee2mqtt where dev_id='.$id.' and metrika="color"')
-$rec=SQLSelectOne('select * from zigbee2mqtt where dev_id='.$id.' and metrika="state"');
-
-$mqttsendpath=$rec['PATH_WRITE'];
-
-
-$mqttsendvalue='{"state": "ON",  "brightness": 255,  "color": {"hex": "#'.$hex.'"}}';
-
-
-  $this->sendcommand($mqttsendpath, $mqttsendvalue);
 //$this->redirect("?");
 
 $location=$_GET['location'];
@@ -2125,32 +2146,33 @@ $this->redirect("?");
 
 
  if (substr($this->view_mode,0,12)=='setcolortemp') {
-
-
-$id=$this->id;
-$temp=substr($this->view_mode,13);
-
-	switch   ($temp)
-{
-case 'hot':
+	$temp=substr($this->view_mode,13);
+        switch   ($temp)
+	{
+	case 'hot':
       $itemp=500; break;
-case 'deff':      
+	case 'deff':      
       $itemp=255; break;
-case 'cold':   
+	case 'cold':   
       $itemp=0; break;
-}
+	}
+	$mqttsendvalue='{"state": "ON",  "color_mode":3, "brightness": 255,  "color_temp":'.$itemp.' }';
 
+
+//$id=$this->id;
+if ($property_id) {
 //$rec=SQLSelectOne('select * from zigbee2mqtt where dev_id='.$id.' and metrika="color"')
 $rec=SQLSelectOne('select * from zigbee2mqtt where dev_id='.$id.' and metrika="state"');
-
 $mqttsendpath=$rec['PATH_WRITE'];
-
 //color_mode 
 //$mqttsendvalue='{"state": "ON",  "brightness": 255,  "color_temp":'.$itemp.' }';
-$mqttsendvalue='{"state": "ON",  "color_mode":3, "brightness": 255,  "color_temp":'.$itemp.' }';
-
-
   $this->sendcommand($mqttsendpath, $mqttsendvalue);
+} else 
+	{
+	$path=$_GET['gw'].'/'.$_GET['friendlyname'].'/set';
+	$this->setPropertyfn($path, null,$mqttsendvalue);
+	}
+
 
 
 $location=$_GET['location'];
@@ -2361,8 +2383,8 @@ $this->redirect("?&location=$location&type_id=$type_id&vendor_id=$vendor_id&vid_
 	$this->setPropertyDevice($id, 'device_on_l1');}
 else
 {
-	$path=$_GET['gw'].'/'.$_GET['friendlyname'].'/l1/set';
-	$this->setPropertyfn($path, 'state','ON');
+	$path=$_GET['gw'].'/'.$_GET['friendlyname'].'/set';
+	$this->setPropertyfn($path, 'state_l1','ON');
 }
 
 
@@ -2457,8 +2479,8 @@ $this->redirect("?&location=$location&type_id=$type_id&vendor_id=$vendor_id&vid_
 	$this->setPropertyDevice($id, 'device_off_l1');}
         else
 {
-	$path=$_GET['gw'].'/'.$_GET['friendlyname'].'/l1/set';
-	$this->setPropertyfn($path, 'state','OFF');
+	$path=$_GET['gw'].'/'.$_GET['friendlyname'].'/set';
+	$this->setPropertyfn($path, 'state_l1','OFF');
 }
 
 
@@ -2484,7 +2506,7 @@ if ($id){
 	else
 	{
 	$path=$_GET['gw'].'/'.$_GET['friendlyname'].'/l2/set';
-	$this->setPropertyfn($path, 'state','ON');
+	$this->setPropertyfn($path, 'state_l2','ON');
 	}
 
 
@@ -2512,7 +2534,7 @@ if ($id){
 else
 {
 	$path=$_GET['gw'].'/'.$_GET['friendlyname'].'/l2/set';
-	$this->setPropertyfn($path, 'state','OFF');
+	$this->setPropertyfn($path, 'state_l2','OFF');
 }
 
 
@@ -3875,6 +3897,66 @@ $allieee.=$ieeeAddr.";";
 */
 function usual(&$out) {
 
+
+        $device = $_GET['device'];
+        $command = $_GET['command'];
+
+
+
+        if ($device && $command) {
+
+        $val = $_GET['value'];
+        $settt = $_GET['settt'];
+        if ($settt=="") { $sett='set';} else {$sett=$settt;}
+	$path=$_GET['gw'].'/'.$_GET['friendlyname'].'/'.$sett;
+
+
+///////////////
+ if ($command=='setcolortemp') {
+	
+        switch   ($val)
+	{
+	case 'hot':
+      $itemp=500; break;
+	case 'deff':      
+      $itemp=255; break;
+	case 'cold':   
+      $itemp=0; break;
+	}
+	$val='{"state": "ON",  "color_mode":3, "brightness": 255,  "color_temp":'.$itemp.' }';
+	$command="";	
+        }
+
+ if ($command=='setcolor') {
+	
+        switch   ($val)
+	{
+	case 'hot':
+      $itemp=500; break;
+	case 'deff':      
+      $itemp=255; break;
+	case 'cold':   
+      $itemp=0; break;
+	}
+	$val='{"state": "ON",  "brightness": 255,  "color": {"hex": "#'.$val.'"}}';
+	$command=null;	
+        }
+
+///////////////
+
+        $result=$this->setPropertyfn($path, $command,$val);
+
+
+//$location=$_GET['location'];
+//$vendor_id=$_GET['vendor_id'];
+//$type_id=$_GET['type_id'];
+//$vid_id=$_GET['vid_id'];
+//$group_list_id=$_GET['group_list_id'];
+//$this->redirect("?&location=$location&type_id=$type_id&vendor_id=$vendor_id&vid_id=$vid_id&group_list_id=$group_list_id");
+
+
+
+}
 
 
 
