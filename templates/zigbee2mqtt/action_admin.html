@@ -6,6 +6,21 @@ DATASOURCE: [#DATA_SOURCE#]
 
 <!-- table zwave_devices search -->
 
+
+<script type="application/javascript">
+    function switch_z2m(device_id, param, value,friendlyname, gw, settt,result_id) {
+        var url='<#ROOTHTML#>ajax/zigbee2mqtt.html?device='+device_id+'&command='+encodeURIComponent(param)+'&value='+value+'&friendlyname='+friendlyname+'&gw='+gw+'&settt='+settt;
+        $('#'+result_id).html('...');
+        $.ajax({
+            url: url
+        }).done(function(data) {
+            $('#'+result_id).html(data);
+        });
+        return false;
+    }
+</script>
+
+
  [#if VIEW_MODE=""||VIEW_MODE="update_log"#]
 	 <ul class="nav nav-tabs">
 <li [#if TAB=="" || TAB=="indata" #] class="active" [#endif#]><a href="?data_source=<#DATA_SOURCE#>&view_mode=&id=<#ID#>&tab=devices"><#LANG_DEVICES#></a> </li>
