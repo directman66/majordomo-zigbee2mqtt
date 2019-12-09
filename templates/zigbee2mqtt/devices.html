@@ -1,6 +1,16 @@
 
 <!-- table dev_sonoff_devices search -->
 <br>
+
+
+
+
+<script src="https://kit.fontawesome.com/a076d05399.js"></script>
+<!--<script src="https://kit.fontawesome.com/all.js"></script> -->
+<!--<script src="/templates/zigbee2mqtt/css/fontawesome/js/all.min.js"></script>-->
+<!--<script defer src="/templates/zigbee2mqtt/css/fontawesome/js/all.js"></script> -->
+
+
 <style>
 .panel-heading {padding:3px}
 .panel-title {padding: 9px 12px 9px 12px;}
@@ -182,7 +192,7 @@
 [#begin DEVICES#]  
 
 
-  <div class="col-sm-6 col-md-6 col-lg-4">
+  <div class="col-sm-6 col-md-6 col-lg-3">
 
 
 
@@ -225,17 +235,35 @@
 
 [#if CHANGEABLE="1"#]
 
+
+
+
+
+
+
+
+<!--   <a href="#" onclick="return switchMegaDDevice([#DEVICE_ID#],[#NUM#],1,'result[#ID#]');">ON</a>  -->
+<!-- 
    <a href="?view_mode=device_on&id=[#DEVID#]&tab=&location=<#LOCATION_ID#>&type_id=<#ZIGBEE2MQTTDEV#>&vendor_id=<#VENDOR#>&vid_id=<#VID#>&group_list_id=<#group_list_id#>&friendlyname=[#IEEEADDR#]&gw=[#GW#]"  class="btn btn-default btn-round" title="Включить"> 
-              <span class="glyphicon glyphicon-ok"></span>
-</a>
+              <span class="glyphicon glyphicon-ok"></span></a>
+
+
 
    <a href="?view_mode=device_off&id=[#DEVID#]&tab=&location=<#LOCATION_ID#>&type_id=<#ZIGBEE2MQTTDEV#>&vendor_id=<#VENDOR#>&vid_id=<#VID#>&group_list_id=<#group_list_id#>&friendlyname=[#IEEEADDR#]&gw=[#GW#]" class="btn btn-default btn-round"  title="Выключить">
-              <span class="glyphicon glyphicon-remove"></span>
- </a>
+              <span class="glyphicon glyphicon-remove"></span> </a>
+
+-->
+
+   <a href="#"  onclick="return switch_z2m([#DEVID#],'state','ON','[#IEEEADDR#]','[#GW#]', '','result[#ID#]');" class="btn btn-default btn-round" title="Включить"> 
+              <span class="glyphicon glyphicon-ok"></span></a>
+   <a href="#"  onclick="return switch_z2m([#DEVID#],'state','OFF','[#IEEEADDR#]','[#GW#]','', 'result[#ID#]');" class="btn btn-default btn-round" title="Выключить"> 
+              <span class="glyphicon glyphicon-remove"></span> </a>
+
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 [#endif#]
 
 [#if CHANGEABLE="2"#]
+<!--
    <a href="?view_mode=device_on_left&id=[#DEVID#]&tab=&location=<#LOCATION_ID#>&type_id=<#ZIGBEE2MQTTDEV#>&vendor_id=<#VENDOR#>&vid_id=<#VID#>&group_list_id=<#group_list_id#>&friendlyname=[#IEEEADDR#]&gw=[#GW#]"  class="btn btn-default btn-round" title="Включить"> 
               <span class="glyphicon glyphicon-ok"></span>
 </a>
@@ -251,6 +279,28 @@
    <a href="?view_mode=device_off_right&id=[#DEVID#]&tab=&location=<#LOCATION_ID#>&type_id=<#ZIGBEE2MQTTDEV#>&vendor_id=<#VENDOR#>&vid_id=<#VID#>&group_list_id=<#group_list_id#>&friendlyname=[#IEEEADDR#]&gw=[#GW#]" class="btn btn-default btn-round"  title="Выключить">
               <span class="glyphicon glyphicon-remove"></span>
  </a>
+-->
+
+
+
+   <a href="#"  onclick="return switch_z2m([#DEVID#],'state_left','ON','[#IEEEADDR#]','[#GW#]', '','result[#ID#]');" class="btn btn-default btn-round" title="Включить"> 
+              <span class="glyphicon glyphicon-ok"></span>
+</a>
+
+
+   <a href="#"  onclick="return switch_z2m([#DEVID#],'state_left','OFF','[#IEEEADDR#]','[#GW#]','', 'result[#ID#]');" class="btn btn-default btn-round" title="Выключить"> 
+              <span class="glyphicon glyphicon-remove"></span>
+ </a>
+|
+   <a href="#"  onclick="return switch_z2m([#DEVID#],'state_right','ON','[#IEEEADDR#]','[#GW#]','', 'result[#ID#]');" class="btn btn-default btn-round" title="Включить"> 
+              <span class="glyphicon glyphicon-ok"></span>
+</a>
+
+   <a href="#"  onclick="return switch_z2m([#DEVID#],'state_right','OFF','[#IEEEADDR#]','[#GW#]','', 'result[#ID#]');" class="btn btn-default btn-round" title="Выключить"> 
+              <span class="glyphicon glyphicon-remove"></span>
+ </a>
+
+
 &nbsp;
 [#endif#]
 
@@ -259,6 +309,7 @@
 
 
 [#if CHANGEABLE="3"#]
+<!--
    <a href="?view_mode=device_on_l1&id=[#DEVID#]&tab=&location=<#LOCATION_ID#>&type_id=<#ZIGBEE2MQTTDEV#>&vendor_id=<#VENDOR#>&vid_id=<#VID#>&group_list_id=<#group_list_id#>&friendlyname=[#IEEEADDR#]&gw=[#GW#]"  class="btn btn-default btn-round" title="Включить"> 
               <span class="glyphicon glyphicon-ok"></span>
 </a>
@@ -274,11 +325,30 @@
    <a href="?view_mode=device_off_l2&id=[#DEVID#]&tab=&location=<#LOCATION_ID#>&type_id=<#ZIGBEE2MQTTDEV#>&vendor_id=<#VENDOR#>&vid_id=<#VID#>&group_list_id=<#group_list_id#>&friendlyname=[#IEEEADDR#]&gw=[#GW#]" class="btn btn-default btn-round"  title="Выключить">
               <span class="glyphicon glyphicon-remove"></span>
  </a>
+-->
+
+   <a href="#"  onclick="return switch_z2m([#DEVID#],'state_l1','ON','[#IEEEADDR#]','[#GW#]', '','result[#ID#]');" class="btn btn-default btn-round" title="Включить"> 
+              <span class="glyphicon glyphicon-ok"></span>
+</a>
+
+   <a href="#"  onclick="return switch_z2m([#DEVID#],'state_l1','OFF','[#IEEEADDR#]','[#GW#]', '','result[#ID#]');" class="btn btn-default btn-round" title="Выключить"> 
+              <span class="glyphicon glyphicon-remove"></span>
+ </a>
+|
+   <a href="#"  onclick="return switch_z2m([#DEVID#],'state_l2','ON','[#IEEEADDR#]','[#GW#]', '','result[#ID#]');" class="btn btn-default btn-round" title="Включить"> 
+              <span class="glyphicon glyphicon-ok"></span>
+</a>
+
+   <a href="#"  onclick="return switch_z2m([#DEVID#],'state_l2','OFF','[#IEEEADDR#]','[#GW#]', '','result[#ID#]');" class="btn btn-default btn-round" title="Выключить"> 
+              <span class="glyphicon glyphicon-remove"></span>
+ </a>
+
 &nbsp;
 [#endif#]
 
 
 [#if CHANGEABLE="4"#]
+<!--
    <a href="?view_mode=device_open&id=[#DEVID#]&tab=&location=<#LOCATION_ID#>&type_id=<#ZIGBEE2MQTTDEV#>&vendor_id=<#VENDOR#>&vid_id=<#VID#>&group_list_id=<#group_list_id#>&friendlyname=[#IEEEADDR#]&gw=[#GW#]"  class="btn btn-default btn-round" title="Открыть"> 
               <span class="glyphicon glyphicon-resize-full"></span>
 </a>
@@ -290,7 +360,17 @@
    <a href="?view_mode=device_close&id=[#DEVID#]&tab=&location=<#LOCATION_ID#>&type_id=<#ZIGBEE2MQTTDEV#>&vendor_id=<#VENDOR#>&vid_id=<#VID#>&group_list_id=<#group_list_id#>&friendlyname=[#IEEEADDR#]&gw=[#GW#]" class="btn btn-default btn-round"  title="Закрыть">
               <span class="glyphicon glyphicon-resize-small"></span>
  </a>
+-->
 
+   <a href="#"  onclick="return switch_z2m([#DEVID#],'state','open','[#IEEEADDR#]','[#GW#]', '','result[#ID#]');" class="btn btn-default btn-round" title="Открыть"> 
+              <span class="glyphicon glyphicon-resize-full"></span>
+</a>
+   <a href="#"  onclick="return switch_z2m([#DEVID#],'state','stop','[#IEEEADDR#]','[#GW#]', '','result[#ID#]');" class="btn btn-default btn-round" title="Остановить"> 
+              <span class="glyphicon glyphicon-remove"></span>
+ </a>
+   <a href="#"  onclick="return switch_z2m([#DEVID#],'state','close','[#IEEEADDR#]','[#GW#]', '','result[#ID#]');" class="btn btn-default btn-round" title="Закрыть"> 
+              <span class="glyphicon glyphicon-resize-small"></span>
+ </a>
 
 &nbsp;
 [#endif#]
@@ -318,15 +398,26 @@
               <li><a href="?view_mode=view_mqtt&id=[#DEVID#]&tab=device_log" title="Properties"><span class="glyphicon glyphicon-calendar"></span>История</a></li>
 
 
+
+
 [#if COLOR_TEMP="1"#]
               <li class="divider"></li>
 
 
               <li>              
 <table align="center"><tr><td>
+<!--
 <a href="?view_mode=setcolortemp_hot&id=[#DEVID#]&tab=&location=<#LOCATION_ID#>&type_id=<#ZIGBEE2MQTTDEV#>&vendor_id=<#VENDOR#>&vid_id=<#VID#>&group_list_id=<#group_list_id#>&friendlyname=[#IEEEADDR#]&gw=[#GW#]" class="btn btn-warning"  title="Сменить цвет на теплый">теплый</a> </td><td>
 <a href="?view_mode=setcolortemp_deff&id=[#DEVID#]&tab=&location=<#LOCATION_ID#>&type_id=<#ZIGBEE2MQTTDEV#>&vendor_id=<#VENDOR#>&vid_id=<#VID#>&group_list_id=<#group_list_id#>&friendlyname=[#IEEEADDR#]&gw=[#GW#]" class="btn btn-default" title="Сменить цвет на нейтральный">нейтральный</a> </td><td>
 <a href="?view_mode=setcolortemp_cold&id=[#DEVID#]&tab=&location=<#LOCATION_ID#>&type_id=<#ZIGBEE2MQTTDEV#>&vendor_id=<#VENDOR#>&vid_id=<#VID#>&group_list_id=<#group_list_id#>&friendlyname=[#IEEEADDR#]&gw=[#GW#]" class="btn btn-info" title="Сменить цвет на холодный">холодный</a> 
+-->
+
+<a href="#" onclick="return switch_z2m([#DEVID#],'setcolortemp','hot','[#IEEEADDR#]','[#GW#]', '','result[#ID#]');" class="btn btn-warning"  title="Сменить цвет на теплый">теплый</a> </td><td>
+<a href="#" onclick="return switch_z2m([#DEVID#],'setcolortemp','deff','[#IEEEADDR#]','[#GW#]', '','result[#ID#]');" class="btn btn-default" title="Сменить цвет на нейтральный">нейтральный</a> </td><td>
+<a href="#" onclick="return switch_z2m([#DEVID#],'setcolortemp','cold','[#IEEEADDR#]','[#GW#]', '','result[#ID#]');" class="btn btn-info" title="Сменить цвет на холодный">холодный</a> 
+
+
+
 </td></tr></table>
 </li>
               <li class="divider"></li>                            
@@ -335,6 +426,7 @@
 
 
 [#if XY="1"#]
+<!--
               <li class="divider"></li>
               <li>
 <table align="center"><tr><td>
@@ -348,6 +440,27 @@
 <a href="?view_mode=setcolorhex_ffffff&id=[#DEVID#]&tab=&location=<#LOCATION_ID#>&type_id=<#ZIGBEE2MQTTDEV#>&vendor_id=<#VENDOR#>&vid_id=<#VID#>&group_list_id=<#group_list_id#>&friendlyname=[#IEEEADDR#]&gw=[#GW#]" class="btn btn-default" title="Сменить цвет на белый">&nbsp;&nbsp;белый&nbsp;&nbsp;</a> </td><td>
 <a href="?view_mode=setcolorhex_ffff00&id=[#DEVID#]&tab=&location=<#LOCATION_ID#>&type_id=<#ZIGBEE2MQTTDEV#>&vendor_id=<#VENDOR#>&vid_id=<#VID#>&group_list_id=<#group_list_id#>&friendlyname=[#IEEEADDR#]&gw=[#GW#]" class="btn btn-warning" title="Сменить цвет на желтый">&nbsp;желтый&nbsp;</a> </td><td>
 <a href="?view_mode=setcolorhex_00ffff&id=[#DEVID#]&tab=&location=<#LOCATION_ID#>&type_id=<#ZIGBEE2MQTTDEV#>&vendor_id=<#VENDOR#>&vid_id=<#VID#>&group_list_id=<#group_list_id#>&friendlyname=[#IEEEADDR#]&gw=[#GW#]" class="btn btn-info"  title="Сменить цвет на голубой">голубой</a> </td><td>
+</td></tr></table>
+</li>
+              <li class="divider"></li>
+
+
+-->
+
+
+              <li class="divider"></li>
+              <li>
+<table align="center"><tr><td>
+<a href="#" onclick="return switch_z2m([#DEVID#],'setcolor','ff0000','[#IEEEADDR#]','[#GW#]', '','result[#ID#]');" class="btn btn-danger"  title="Сменить цвет на красный">красный</a> </td><td>
+<a href="#" onclick="return switch_z2m([#DEVID#],'setcolor','00ff00','[#IEEEADDR#]','[#GW#]', '','result[#ID#]');" class="btn btn-success" title="Сменить цвет на зеленый">зеленый</a> </td><td>
+<a href="#" onclick="return switch_z2m([#DEVID#],'setcolor','0000ff','[#IEEEADDR#]','[#GW#]', '','result[#ID#]');"  class="btn btn-primary" title="Сменить цвет на синий">   &nbsp;синий&nbsp;&nbsp;</a> </td></tr>
+<tr>
+<td>&nbsp;</td><td></td><td></td>
+</tr>
+<tr><td>
+<a href="#" onclick="return switch_z2m([#DEVID#],'setcolor','ffffff','[#IEEEADDR#]','[#GW#]', '','result[#ID#]');" class="btn btn-default" title="Сменить цвет на белый">&nbsp;&nbsp;белый&nbsp;&nbsp;</a> </td><td>
+<a href="#" onclick="return switch_z2m([#DEVID#],'setcolor','ffff00','[#IEEEADDR#]','[#GW#]', '','result[#ID#]');" class="btn btn-warning" title="Сменить цвет на желтый">&nbsp;желтый&nbsp;</a> </td><td>
+<a href="#" onclick="return switch_z2m([#DEVID#],'setcolor','00ffff','[#IEEEADDR#]','[#GW#]', '','result[#ID#]');" class="btn btn-info"  title="Сменить цвет на голубой">голубой</a> </td><td>
 </td></tr></table>
 </li>
               <li class="divider"></li>
@@ -379,15 +492,97 @@
               <li><a href="?view_mode=delete_dev_z2m_only&id=[#DEVID#]&ieee=[#IEEEADDR#]&location=<#LOCATION_ID#>&type_id=<#ZIGBEE2MQTTDEV#>&vendor_id=<#VENDOR#>&vid_id=<#VID#>&group_list_id=<#group_list_id#>&friendlyname=[#IEEEADDR#]&gw=[#GW#]" onClick="return confirm('Are you sure? Please confirm.')" style="color: #a94442;"><span class="glyphicon glyphicon-trash"></span>Исключить из сети zigbee</a></li>
             </ul>             
           </div>
-          <h3 class="panel-title" [#if LOST#]style="color:lightgray;"[#endif#]>	<div><p title="[#GW#]">[#TITLE#]
+          <h3 class="panel-title" [#if LOST#]style="color:lightgray;"[#endif#]>	<div  style="white-space: nowrap;" title="[#GW#]"> [#TITLE#]
+<!--
+<div class="pull-right signal-level" style="background: linear-gradient(to right,  [#LQI#] 0%,  #999 [#LQI#]%);">
+<!--				<div class="pull-right signal-level" style="background: linear-gradient(to right, [#RSSI_COLOR#] 100%,  #999 100%);"> -->
+<!--				  <div class="glyphicon glyphicon-signal" title="[#LQI#]"></div>
 
+</div>
+-->
 
-
+<!--
 [#if POWER_WARNING<>""#]
 <span class="label label-[#POWER_WARNING#]"><i class="glyphicon glyphicon-flash"></i> [#BATTERY#]%</span>
 [#endif#]
+ -->
 
-</p> </div>
+
+<!--<i class="fa fa-signal 4" title="[#LQI#]"></i> -->
+<i class="fas fa-signal-4"></i>
+
+
+
+
+
+
+
+[#if LQI<>""#]
+
+[#if LQI>=110#]
+<img src="/templates/zigbee2mqtt/img/signal.svg" title="[#LQI#]" style="fill:red; stroke:green;" width="20" height="20"  >
+
+[#endif#]
+
+[#if  LQI<"110" && LQI>="90"#]
+<!--<i class="fa fa-wifi-4" title="[#LQI#]"></i> -->
+<img src="/templates/zigbee2mqtt/img/signal-4.svg" title="[#LQI#]" style="font-size:10px" width="20" height="20">
+[#endif#]
+       
+[#if  LQI<"90" && LQI>="50"#]
+<!--<i class="fa fa-wifi-3" title="[#LQI#]"></i>-->
+<img src="/templates/zigbee2mqtt/img/signal-3.svg" title="[#LQI#]" style="font-size:10px" width="20" height="20">
+[#endif#]
+
+
+[#if  LQI<"50" && LQI>="30"#]
+<!--<i class="fa fa-wifi-2" title="[#LQI#]"></i>   -->
+<img src="/templates/zigbee2mqtt/img/signal-2.svg" title="[#LQI#]" style="font-size:10px" width="20" height="20">
+[#endif#]
+
+[#if  LQI<"30"#]
+<img src="/templates/zigbee2mqtt/img/signal-1.svg" title="[#LQI#]" style="font-size:10px" width="20" height="20">
+<!--<i class="fa fa-signal-1" title="[#LQI#]"></i> -->
+[#endif#]
+
+
+
+
+[#endif LQI#]
+
+[#if POWER_WARNING<>""#]
+
+[#if BATTERY==100#]
+<i class="fas fa fa-battery-full fa-rotate-270" title="[#BATTERY#]"></i>
+[#endif#]
+
+[#if  BATTERY<"100" && BATTERY>="70"#]
+<i class="fas fa fa-battery-three-quarters fa-rotate-270" title="[#BATTERY#]"></i>
+[#endif#]
+       
+[#if  BATTERY<"70" && BATTERY>="50"#]
+<i class="fas fa fa-battery-half fa-rotate-270" title="[#BATTERY#]"></i>
+[#endif#]
+
+
+[#if  BATTERY<"50" && BATTERY>="30"#]
+<i class="fas fa fa-battery-quarter fa-rotate-270"  style="color:orange;" title="[#BATTERY#]"></i>
+[#endif#]
+
+[#if  BATTERY<"30"#]
+<i class="fas fa fa-battery-empty fa-rotate-270" style="color:red;" title="[#BATTERY#]"></i>
+[#endif#]
+
+
+[#endif POWER_WARNING#]
+
+
+
+
+
+
+
+</div>
 
 </h3>
 
@@ -416,7 +611,11 @@
 
 
 [#if CHANGEABLE#]
+<!--
 <a href="?view_mode=device_togle&id=[#DEVID#]&tab=&location=<#LOCATION_ID#>&type_id=<#ZIGBEE2MQTTDEV#>&vendor_id=<#VENDOR#>&vid_id=<#VID#>&group_list_id=<#group_list_id#>&friendlyname=[#IEEEADDR#]&gw=[#GW#]" title="Переключить">
+-->
+<a href="#" onclick="return switch_z2m([#DEVID#],'state','toggle','[#IEEEADDR#]','[#GW#]', '','result[#ID#]');"   title="Переключить">
+
 [#if SELECTTYPE<>""#]		<img class="card-img pull-left img-circle" src="../templates/zigbee2mqtt/img/[#SELECTTYPE#].jpg" alt="Device Logo"></a>
 [#else SELECTTYPE#]	<img class="card-img pull-left img-circle" src="../templates/zigbee2mqtt/img/unknow.jpg" alt="Unknow Logo"></a>[#endif SELECTTYPE#] 
 
@@ -432,64 +631,55 @@
 
 
 
-          <div style="color:#999;font-size: 12px;[#if LOST#] ;color:lightgray;font-weight:bold[#endif#]">Модель[#if LOCATION#] ([#LOCATION#]) [#endif#]</div>
+<!--          <div style="color:#999;font-size: 12px;[#if LOST#] ;color:lightgray;font-weight:bold[#endif#]">Модель[#if LOCATION#] ([#LOCATION#]) [#endif#]</div> -->
+
 
           <div class="pull-right">
             <div style="color:#999;font-size: 20px;[#if LOST#];color:lightgray; [#else#]color:black; [#endif#]">[#LINKED#]</div></div>
 
 
-          <div style="font-size:20px[#if LOST#];color:lightgray;[#endif#]">  [#if SELECTTYPE!=""#]
-										   [#SELECTTYPE#]
-										  [#else#]
-										   &nbsp;
-
-
-										  [#endif#]</div>
-
-
-
-
-
-          <div class="pull-right">
- [#if FIND!=""#]
-            <div style="color:#999;font-size: 12px;[#if LOST#];color:lightgray;[#endif#]"><#LANG_UPDATED#>
-[#else#]
- <div style="color:#999;font-size: 12px;[#if LOST#];color:lightgray;[#endif#]">
-[#endif#]
-
-
-<!--			  [#if LOST!=""#]
-<!--				<div class="pull-right signal-level" style="background: linear-gradient(to right, [#RSSI_COLOR#] [#RSSI_LVL#]%,  #999 [#RSSI_LVL#]%);">
-				  <div class="glyphicon glyphicon-signal"></div>
-				</div>
-			  [#else#]
-<!--				<div class="pull-left">
-				  <span class="label label-danger"><#LANG_OFFLINE#></span>
-<!--				</div>
-			  [#endif#]
--->
-</div>
-            <p [#if LOST#]style=";color:lightgray;"[#endif#]> 
-
-
- [#if FIND!=""#]
-[#FIND#]
-				  [#else#]
-
-
-
-				   &nbsp;
-				  [#endif#]</p>
+          <div style="color:#999;font-size: 12px;[#if LOST#];color:lightgray; [#else#]color:black; [#endif#]">  
+          [#if SELECTVENDOR!=""#][#SELECTVENDOR#][#else#]&nbsp;[#endif#]
           </div>
-          <div style="color:#999;font-size: 12px;[#if LOST#];color:lightgray;[#endif#] ">Производитель</div>
-          <p [#if LOST#]style="color:lightgray;"[#endif#]>  
-[#if SELECTVENDOR!=""#]
-			   [#SELECTVENDOR#]
-			  [#else#]
-			   &nbsp;
-			  [#endif#]</p>
-        </div>
-      </div>
+
+          <div style="color:#999;font-size: 12px;[#if LOST#];color:lightgray; [#else#]color:black; [#endif#]">  
+          [#if SELECTTYPE!=""#][#SELECTTYPE#][#else#]&nbsp;[#endif#]
+          </div>
+
+          <div style="color:#999;font-size: 12px;[#if LOST#] ;color:lightgray;font-weight:bold[#endif#]">[#if LOCATION#] [#LOCATION#] [#else#]&nbsp;[#endif#]</div> 
+
+          <div style="color:#999;font-size: 10px;[#if LOST#];color:lightgray;[#endif#] ">
+       
+             [#if IEEEADDR!=""#][#IEEEADDR#][#else#]&nbsp;[#endif#]
+          
+         </div>  
+          <div class="pull-right"  style="color:#999;font-size: 12px;[#if LOST#];color:lightgray; [#else#]color:black; [#endif#]">  
+
+
+
+          [#if FIND!=""#]
+          [#FIND#]
+	  [#else#]
+          &nbsp;
+	  [#endif#]
+          </div>
+
+          <div style="color:#999;font-size: 12px;[#if LOST#];color:lightgray;[#endif#] ">
+
+             [#if GW!=""#][#GW#][#else#]&nbsp;[#endif#]
+         
+         </div>  
+
+
+<br>
+
+
+
+
+<!--          <div style="color:#999;font-size: 12px;[#if LOST#];color:lightgray;[#endif#] ">Производитель</div> -->
+
+
+    </div>      </div>
 
   
   
@@ -505,8 +695,9 @@
 [#end DEVICES#]  
 
 
+
 <!-- / paging -->
- [#else DEVICES#]
+[#else DEVICES#]
 <p>
 <font color="red"><#LANG_NO_RECORDS_FOUND#></font>
 </p>
