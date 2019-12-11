@@ -580,6 +580,17 @@ $par1['fromZigbee'] = "";
 $par1['toZigbee'] = "";		 
 SQLInsert('zigbee2mqtt_devices_list', $par1);
 
+$par1['zigbeeModel'] = 'TRADFRI bulb E14 W op/ch 400lm';
+$par1['model'] = "LED1536G5";		 
+$par1['vendor'] = "IKEA";	
+$par1['type'] = "bulb";		 	 
+$par1['description'] = "TRADFRI LED bulb E12/E14 400 lumen, dimmable, white spectrum, opal white";		 
+$par1['extend'] = "";		 
+$par1['supports'] = "generic.light_onoff_brightness_colortemp";		 
+$par1['fromZigbee'] = "";		 
+$par1['toZigbee'] = "";		 
+SQLInsert('zigbee2mqtt_devices_list', $par1);
+
 
 
 
@@ -1151,7 +1162,7 @@ SQLInsert('zigbee2mqtt_devices_list', $par1);
 $par1['zigbeeModel'] = 'RWL020';
 $par1['model'] = "324131092621";		 
 $par1['vendor'] = "Philips";		 
-$par1['type'] = "dimmer";		 	 
+$par1['type'] = "remote";		 	 
 $par1['description'] = "Hue dimmer switch";		 
 $par1['extend'] = "";		 
 $par1['supports'] = "on/off";		 
@@ -2578,7 +2589,7 @@ SQLInsert('zigbee2mqtt_devices_list', $par1);
 $par1['zigbeeModel'] = "LXN56-DC27LX1.1";
 $par1['model'] = "LXZB-02A";
 $par1['vendor'] = "Nue - 3A";
-$par1['type'] = "relay";
+$par1['type'] = "dimmer";
 $par1['description'] = "Nue / 3A Smart light controller (on/off, brightness)";
 $par1['supports'] = "";
 $par1['extend'] = "";
