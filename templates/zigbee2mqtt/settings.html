@@ -115,6 +115,21 @@
   </div> 
 
 
+  <div class="form-group">
+    <label class="col-sm-3 control-label" [#if ERR_Z2M_NTILES#] style="color:red;font-weight:bold"[#endif#]>Number of tiles:</label>
+    <div class="col-sm-9">
+		 <select name="z2m_ntiles" id="z2m_ntiles" class="form-control">
+		  <option value="3"[#if Z2M_NTILES="3"#] selected[#endif#]>3</option>
+		  <option value="4"[#if Z2M_NTILES="4"#] selected[#endif#]>4</option>
+		  <option value="5"[#if Z2M_NTILES="5"#] selected[#endif#]>5</option>
+		  <option value="6"[#if Z2M_NTILES="6"#] selected[#endif#]>6</option>
+
+		 </select>
+    </div>
+  </div> 
+
+
+
 	<div class="form-group">
 	 <div class="controls">
 	 <label><input type="checkbox" name="mqtt_debug" value="1"[#if MQTT_DEBUG="1"#] checked[#endif#]> enable  debmes message [#ZMQTT_DEBUG#]</label>
