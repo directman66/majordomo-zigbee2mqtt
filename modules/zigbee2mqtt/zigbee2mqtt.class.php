@@ -1444,6 +1444,7 @@ define("ZMQTT_DEBUG", "1");
  $out['Z2M_HIST']=$this->config['Z2M_HIST'];
  $out['Z2M_LOGMODE']=$this->config['Z2M_LOGMODE'];
  $out['Z2M_VIEW']=$this->config['Z2M_VIEW'];
+ $out['Z2M_NTILES']=$this->config['Z2M_NTILES'];
  $out['SLSIP']=$this->config['SLSIP'];
 
 // $out['Z2M_LOGMODE']='deb';
@@ -3055,6 +3056,7 @@ sqlexec('delete from zigbee2mqtt_bind where ID='.$id);
    global $mqtt_query;
    global $zigbee2mqttpath;
    global $z2m_view;
+   global $z2m_ntiles;
    global $z2m_hist;
    global $slsip;
 //echo $zigbee2mqttpath;
@@ -3078,6 +3080,7 @@ sqlexec('delete from zigbee2mqtt_bind where ID='.$id);
    $this->config['Z2M_VIEW']=trim($z2m_view);
    $this->config['Z2M_HIST']=trim($z2m_hist);
    $this->config['SLSIP']=trim($slsip);
+   $this->config['Z2M_NTILES']=trim($z2m_ntiles);
 
 
 
