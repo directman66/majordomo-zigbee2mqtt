@@ -1998,6 +1998,9 @@ $topik=$command_topik;
    }
 
 
+//if ($new_value=='true')  {settype($new_value, 'bool');}
+if ($new_value=='false') {$new_value=""; settype($new_value, 'bool');}
+
 
 if ($property_id) {
 $json_value=array($rec['METRIKA']=> $new_value);
@@ -2695,10 +2698,20 @@ for ($i = 0; $i < $total; $i++) {
 
 $zz=explode('/',$query_list[$i])[0];
 
+
   $this->sendcommand($zz.'/'.$fn.'/system/set', $payload);
-//  $this->redirect("?tab=service");
-  $this->redirect("?");
-}}
+}
+
+$location=$_GET['location'];
+$vendor_id=$_GET['vendor_id'];
+$type_id=$_GET['type_id'];
+$vid_id=$_GET['vid_id'];
+$group_list_id=$_GET['group_list_id'];
+
+$this->redirect("?&location=$location&type_id=$type_id&vendor_id=$vendor_id&vid_id=$vid_id&group_list_id=$group_list_id");
+
+
+}
 
   if ($this->view_mode=='leftbutton_enable') {
   $id=$this->id;
