@@ -8289,6 +8289,25 @@ $par2['command_value'] = "state";
 SQLInsert('zigbee2mqtt_devices_command', $par2);
 
 
+$par2['zigbeeModel'] = 'LLKZMK11LM';
+$par2['type'] = "interlock";
+$par2['state_topic'] =  "<Z2M_PATH>/<FRIENDLY_NAME>";
+$par2['availability_topic'] = "<Z2M_PATH>/bridge/state";
+$par2['payload_off'] = "false"  ;
+$par2['payload_on'] = "true"  ;
+$par2['value_template'] = "interlock";
+$par2['command_topic'] = "<Z2M_PATH>/<FRIENDLY_NAME>/set";
+$par2['json_attributes'] = "";
+$par2['device_class'] = "";
+$par2['unit_of_measurement'] = "";
+$par2['brightness'] = "";
+$par2['color_temp'] = "";
+$par2['xy'] = "";
+$par2['command_value'] = "interlock";
+SQLInsert('zigbee2mqtt_devices_command', $par2);
+
+
+
  
 //LXZB-02A;
 $par2['zigbeeModel'] = 'LXZB-02A';
