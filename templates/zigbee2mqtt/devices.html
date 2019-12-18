@@ -562,8 +562,8 @@
 <!--<i class="fa fa-signal-1" title="[#LQI#]"></i> -->
 [#endif#]
 
-
-
+[#else#]
+<img src="/templates/zigbee2mqtt/img/signal-slash.svg" title="[#LQI#]" style="font-size:10px" width="20" height="20">
 
 [#endif LQI#]
 
@@ -618,7 +618,7 @@
 </div>
 [#else#]
 <div class="pull-right">
-&nbsp;<br><br>
+1&nbsp;<br><br>
 </div>
 [#endif#]
 
@@ -656,18 +656,22 @@
 
 
           <div style="color:#999;font-size: 12px;[#if LOST#];color:lightgray; [#else#]color:black; [#endif#]">  
-          [#if SELECTVENDOR!=""#][#SELECTVENDOR#][#else#]&nbsp;[#endif#]
+          [#if SELECTVENDOR!=""#][#SELECTVENDOR#][#else#]
+2&nbsp;[#endif#]
           </div>
 
           <div style="color:#999;font-size: 12px;[#if LOST#];color:lightgray; [#else#]color:black; [#endif#]">  
-          [#if SELECTTYPE!=""#][#SELECTTYPE#][#else#]&nbsp;[#endif#]
+          [#if SELECTTYPE!=""#][#SELECTTYPE#][#else#]
+3&nbsp;[#endif#]
           </div>
 
-          <div style="color:#999;font-size: 12px;[#if LOST#] ;color:lightgray;font-weight:bold[#endif#]">[#if LOCATION#] [#LOCATION#] [#else#]&nbsp;[#endif#]</div> 
+          <div style="color:#999;font-size: 12px;[#if LOST#] ;color:lightgray;font-weight:bold[#endif#]">[#if LOCATION#] [#LOCATION#] [#else#]
+4&nbsp;[#endif#]</div> 
 
           <div style="color:#999;font-size: 10px;[#if LOST#];color:lightgray;[#endif#] ">
        
-             [#if IEEEADDR!=""#][#IEEEADDR#][#else#]&nbsp;[#endif#]
+             [#if IEEEADDR!=""#][#IEEEADDR#][#else#]
+5&nbsp;[#endif#]
           
          </div>  
           <div class="pull-right"  style="color:#999;font-size: 12px;[#if LOST#];color:lightgray; [#else#]color:black; [#endif#]">  
@@ -677,13 +681,14 @@
           [#if FIND!=""#]
           [#FIND#]
 	  [#else#]
-          &nbsp;
+6&nbsp;
 	  [#endif#]
           </div>
 
           <div style="color:#999;font-size: 12px;[#if LOST#];color:lightgray;[#endif#] ">
 
-             [#if GW!=""#][#GW#][#else#]&nbsp;[#endif#]
+             [#if GW!=""#][#GW#][#else#]
+7&nbsp;[#endif#]
          
          </div>  
 
