@@ -14,6 +14,26 @@
 </script>
 
 
+<script type="text/javascript">
+ function httpRefreshDevice[#ID#]() {
+  clearTimeout(deviceRefreshTimer[#ID#]);
+  var baseURL = "<#ROOTHTML#>ajax/zigbee2mqtt.html?op=get_device&id=[#ID#]";
+  ajaxManager.addReq({
+   type: 'GET',
+   url: baseURL,
+   success: function(data){
+    var obj=jQuery.parseJSON(data);
+    $('#devicepreview[#ID#]').html(obj.HTML);
+   }
+  });
+  deviceRefreshTimer[#ID#] = setTimeout('httpRefreshDevice[#ID#]()',3000);
+ }
+ deviceRefreshTimer[#ID#] = setTimeout('httpRefreshDevice[#ID#]()',3000);
+</script>
+
+
+
+
 <br>
 
 
