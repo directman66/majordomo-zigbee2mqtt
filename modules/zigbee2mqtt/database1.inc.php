@@ -2697,7 +2697,7 @@ $par1['supports'] = "";
 $par1['extend'] = "";
 $par1['fromZigbee'] = "";
 $par1['toZigbee'] = "";
-SQ	LInsert('zigbee2mqtt_devices_list', $par1);
+SQLInsert('zigbee2mqtt_devices_list', $par1);
 
 
 
