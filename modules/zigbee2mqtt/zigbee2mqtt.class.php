@@ -3214,6 +3214,7 @@ $total = count($query_list);
 for ($i = 0; $i < $total; $i++) {
 $zz=explode('/',$query_list[$i])[0];
 $this->sendcommand($zz.'/bridge/config/remove', $this->ieee);
+$this->sendcommand($zz.'/bridge/config/force_remove', $this->ieee);
 }
    $this->delete_dev($this->id);
    $this->redirect("?");
@@ -3225,6 +3226,7 @@ $this->getConfig();
 $zz=$_GET['gw'];
 
 $this->sendcommand($zz.'/bridge/config/remove', $this->ieee);
+$this->sendcommand($zz.'/bridge/config/force_remove', $this->ieee);
   $this->redirect("?");
   }
 
@@ -3238,6 +3240,7 @@ $id=$this->id;
 $this->getConfig();
 $zz=explode('/',$this->config['MQTT_QUERY'])[0];
 $this->sendcommand($zz.'/bridge/group/'.$fn.'/remove', $this->ieee);
+
 
   SQLExec("DELETE FROM zigbee2mqtt_grouplist WHERE ID='".$id."'");
    $this->redirect("?tab=groups");
