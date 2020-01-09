@@ -2700,6 +2700,7 @@ $zz=explode('/',$query_list[$i])[0];
 
 
   $this->sendcommand($zz.'/'.$fn.'/system/set', $payload);
+  $this->sendcommand($zz.'/'.$fn.'/set', $payload);
 }
 
 $location=$_GET['location'];
@@ -2736,6 +2737,7 @@ $zz=explode('/',$query_list[$i])[0];
 
 
   $this->sendcommand($zz.'/'.$fn.'/system/set', $payload);
+  $this->sendcommand($zz.'/'.$fn.'/set', $payload);
 }
 //  $this->redirect("?tab=service");
 $location=$_GET['location'];
@@ -2770,6 +2772,7 @@ for ($i = 0; $i < $total; $i++) {
 
 $zz=explode('/',$query_list[$i])[0];
 $this->sendcommand($zz.'/'.$fn.'/system/set', $payload);
+$this->sendcommand($zz.'/'.$fn.'/set', $payload);
 }
 //  $this->redirect("?tab=service");
 $location=$_GET['location'];
@@ -2802,6 +2805,7 @@ for ($i = 0; $i < $total; $i++) {
 
 $zz=explode('/',$query_list[$i])[0];
 $this->sendcommand($zz.'/'.$fn.'/system/set', $payload);
+$this->sendcommand($zz.'/'.$fn.'/set', $payload);
 }
 //  $this->redirect("?tab=service");
 $location=$_GET['location'];
@@ -2835,6 +2839,7 @@ for ($i = 0; $i < $total; $i++) {
 
 $zz=explode('/',$query_list[$i])[0];
 $this->sendcommand($zz.'/'.$fn.'/system/set', $payload);
+$this->sendcommand($zz.'/'.$fn.'/set', $payload);
 }
 //  $this->redirect("?tab=service");
 $location=$_GET['location'];
@@ -2867,6 +2872,7 @@ for ($i = 0; $i < $total; $i++) {
 
 $zz=explode('/',$query_list[$i])[0];
 $this->sendcommand($zz.'/'.$fn.'/system/set', $payload);
+$this->sendcommand($zz.'/'.$fn.'/set', $payload);
 //  $this->redirect("?tab=service");
 }
 $location=$_GET['location'];
