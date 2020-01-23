@@ -2217,6 +2217,12 @@ $a =  str_replace( array("\r\n","\r","\n") , '<br>' , $a);
 $out['status']=$a;
 
 
+$stricta=sqlselectOne("SHOW VARIABLES LIKE 'sql_mode';")['Value'];
+
+if ($stricta<>"") $out['strict']='disable'; else  $out['strict']='enable'; 
+$out['stricta']=$stricta;
+
+
 }
 
  if ($this->tab=='map') {
@@ -2246,6 +2252,21 @@ $out['status']=$a;
    $this->redirect("?tab=service");
 
 }
+
+
+ if ($this->view_mode=='disablestrict') {
+SQLExec ("set global sql_mode='';");
+  $this->redirect("?tab=service");
+
+}
+
+if ($this->view_mode=='enablestrict') {
+SQLExec ("set global sql_mode='STRICT_TRANS_TABLES';");
+$this->redirect("?tab=service");
+
+}
+
+
 
 ///////////////////////
 ///toggle
