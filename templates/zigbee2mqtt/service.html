@@ -7,6 +7,10 @@
    <a href="?view_mode=resetznp" class="btn btn-default" title="Resets the ZNP (CC2530/CC2531)" ><i class="glyphicon glyphicon-refresh"></i> Reset ZNP</a>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 <!-- <hr> -->
+
+
+
+
    <a href="?view_mode=updatedb"   class="btn btn-default" title="Manual update device metrics after update this module" ><i class="glyphicon glyphicon-refresh"></i>Update metrics</a> 
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 
@@ -17,6 +21,12 @@
    <a href="?view_mode=getgroupslist" class="btn btn-default" title="Get groups list from mqtt" ><i class="glyphicon glyphicon-refresh"></i> Get groups list from mqtt</a>
    <a href="?view_mode=getalldevicegroup" class="btn btn-default" title="Refresh group from all devices " ><i class="glyphicon glyphicon-refresh"></i> Refresh all devices</a>
 
+<br><hr>
+   <a href="?view_mode=disablestrict" class="btn btn-default" title="Disable STRICT_TRANS_TABLES for MySQL" ><i class="glyphicon glyphicon-refresh"></i> Disable STRICT_TRANS_TABLES for MySQL</a>
+   <a href="?view_mode=enablestrict" class="btn btn-default" title="Enable STRICT_TRANS_TABLES for MySQL" ><i class="glyphicon glyphicon-refresh"></i> Enable STRICT_TRANS_TABLES for MySQL</a>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+Current: [#if strict="enable"#] <span class="label label-danger" ><font color="white" >Enable</span></font>  [#else#] 	<span class="label label-success"><font color="white" >Disable</span></font>[#endif#]
+ [#stricta#]
 
 
 <br><hr>
