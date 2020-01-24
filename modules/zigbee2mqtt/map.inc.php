@@ -38,7 +38,7 @@ $out['map_array']=$nodes;
 $graph=SQLSelectOne ('select * from zigbee2mqtt where value like "digraph%"');
 
 $mygaph=str_replace(array("\r\n", "\r", "\n"), '',  strip_tags($graph['VALUE']));
-
+$mygaph=str_replace("'", '`',  $mygaph);
 $out['GRAPH']=$mygaph;
 
 
