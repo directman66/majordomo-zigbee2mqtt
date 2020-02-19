@@ -3142,7 +3142,10 @@ SetTimeOut('z2m_set_dubug',$cmd, '1');
 
    $this->saveConfig();
 
-        if ((time() - gg('cycle_zigbee2mqttRun')) > 360*30 ) {setGlobal('cycle_zigbee2mqttControl', 'restart');}   
+//        if ((time() - gg('cycle_zigbee2mqttRun')) > 360*30 ) {setGlobal('cycle_zigbee2mqttControl', 'restart');}
+setGlobal('cycle_zigbee2mqttControl', 'restart');
+
+   
 
 
 
