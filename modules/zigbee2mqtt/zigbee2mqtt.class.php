@@ -4145,16 +4145,27 @@ echo $a;
 // debmes('Сработал propertySetHandle object:'.$object." property:". $property." value:". $value,  'zigbee2mqtt_sethandle');
 $sql="SELECT * FROM zigbee2mqtt WHERE LINKED_OBJECT LIKE '".DBSafe($object)."' AND LINKED_PROPERTY LIKE '".DBSafe($property)."'";
 // debmes($sql, 'zigbee2mqtt_sethandle');
-
-
    $mqtt_properties=SQLSelect($sql);
+
    $total=count($mqtt_properties);
 // debmes($object.":". $property.":". $value. ' найдено результатов '. $total, 'zigbee2mqtt_sethandle');
 
    if ($total) {
     for($i=0;$i<$total;$i++) {
 //debmes('Запускаем setProperty '. $mqtt_properties[$i]['ID'].":".$value, 'zigbee2mqtt_sethandle');
+
+     //определяем,на каком шлюзе сейчас девайс
+     $devid=$mqtt_properties[$i]['DEVID'];
+     $gw=SQLSelectOne('select * FROM zigbee2mqtt_devices where ID='.$devid)['GW'];
+     $pos=strripos($mqtt_properties[$i]['ID'], $gw);
+     
+if ($pos === false) {
+//    echo "К сожалению, ($needle) не найдена в ($haystack)";
+
+} else {
      $this->setProperty($mqtt_properties[$i]['ID'], $value);
+}
+
     }
    }  
  }
