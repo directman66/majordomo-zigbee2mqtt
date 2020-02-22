@@ -247,7 +247,8 @@ $res[$i]['LINKED']=$lnk;
 
 $lnk2="";
 
-$sql="SELECT *  FROM  zigbee2mqtt where LENGTH(LINKED_METHOD)>2  and DEV_ID='".$res[$i]['DEVID']."'";
+//$sql="SELECT *  FROM  zigbee2mqtt where LENGTH(LINKED_METHOD)>2  and DEV_ID='".$res[$i]['DEVID']."' and PATH like '%ZigBeeCA20%'" ;
+$sql="SELECT *  FROM  zigbee2mqtt where LENGTH(LINKED_METHOD)>2  and DEV_ID='".$res[$i]['DEVID']."'" ;
 
   $res2=SQLSelect($sql);
    $total2=count($res2);
@@ -556,9 +557,9 @@ $gw=$ssql['GW'];
 //////////////
 //////////////
 
-$sql="select  zigbee2mqtt.*, zigbee2mqtt_devices_command.*  from (select *,zigbee2mqtt.ID zmID  from zigbee2mqtt where PATH like CONCAT('%','".$ssql['IEEEADDR']."','%')  )zigbee2mqtt left join (select * from zigbee2mqtt_devices_command WHERE zigbeeModel='".$zm."') zigbee2mqtt_devices_command ON zigbee2mqtt.METRIKA=zigbee2mqtt_devices_command.value_template 
+$sql="select  zigbee2mqtt.*, zigbee2mqtt_devices_command.*  from (select *,zigbee2mqtt.ID zmID  from zigbee2mqtt where PATH like CONCAT('%','".$ssql['IEEEADDR']."','%')  )zigbee2mqtt left join (select * from zigbee2mqtt_devices_command WHERE zigbeeModel='".$zm."') zigbee2mqtt_devices_command ON zigbee2mqtt.METRIKA=zigbee2mqtt_devices_command.value_template WHERE  PATH like '%$gw%' 
 union
-select  zigbee2mqtt.*, zigbee2mqtt_devices_command.*  from (select * from zigbee2mqtt_devices_command WHERE zigbeeModel='".$zm."') zigbee2mqtt_devices_command left join (select *,zigbee2mqtt.ID zmID  from zigbee2mqtt where PATH like CONCAT('%','".$ssql['IEEEADDR']."','%')  )zigbee2mqtt ON zigbee2mqtt.METRIKA=zigbee2mqtt_devices_command.value_template
+select  zigbee2mqtt.*, zigbee2mqtt_devices_command.*  from (select * from zigbee2mqtt_devices_command WHERE zigbeeModel='".$zm."') zigbee2mqtt_devices_command left join (select *,zigbee2mqtt.ID zmID  from zigbee2mqtt where PATH like CONCAT('%','".$ssql['IEEEADDR']."','%')   )zigbee2mqtt ON zigbee2mqtt.METRIKA=zigbee2mqtt_devices_command.value_template 
 ";
 
 //$sql="select  zigbee2mqtt_devices.*, zigbee2mqtt_devices_command.*  from (select *,zigbee2mqtt.ID zmID  from zigbee2mqtt_devices where PATH like CONCAT('%','".$ssql['IEEEADDR']."','%')  )zigbee2mqtt left join (select * from zigbee2mqtt_devices_command WHERE zigbeeModel='".$zm."') zigbee2mqtt_devices_command ON zigbee2mqtt.METRIKA=zigbee2mqtt_devices_command.value_template 
