@@ -2715,6 +2715,157 @@ SQLInsert('zigbee2mqtt_devices_list', $par1);
 
 
 
+//universal
+$par1['zigbeeModel'] = 'universal remote';
+$par1['model'] = "universal remote";		 
+$par1['type'] = "remote";		 
+$par1['vendor'] = "universal";		 
+$par1['description'] = "universal remote";		 
+$par1['extend'] = "";		 
+$par1['supports'] = "click";		 
+$par1['fromZigbee'] = "";		 
+$par1['toZigbee'] = "";		 
+SQLInsert('zigbee2mqtt_devices_list', $par1);						
+
+
+
+//universal
+$par1['zigbeeModel'] = 'universal_dimmable_bulb';
+$par1['model'] = "universal_dimmable_bulb";		 
+$par1['type'] = "bulb";		 
+$par1['vendor'] = "universal";		 
+$par1['description'] = "universal dimmable bulb";		 
+$par1['extend'] = "";		 
+$par1['supports'] = "state, brithness";		 
+$par1['fromZigbee'] = "";		 
+$par1['toZigbee'] = "";		 
+SQLInsert('zigbee2mqtt_devices_list', $par1);						
+
+//universal
+$par1['zigbeeModel'] = 'universal_cct_bulb';
+$par1['model'] = "universal_cct_bulb";		 
+$par1['type'] = "bulb";		 
+$par1['vendor'] = "universal";		 
+$par1['description'] = "universal cct bulb";		 
+$par1['extend'] = "";		 
+$par1['supports'] = "state, brithness";		 
+$par1['fromZigbee'] = "";		 
+$par1['toZigbee'] = "";		 
+SQLInsert('zigbee2mqtt_devices_list', $par1);						
+
+//universal
+$par1['zigbeeModel'] = 'universal_color_bulb';
+$par1['model'] = "universal_color_bulb";		 
+$par1['type'] = "bulb";		 
+$par1['vendor'] = "universal";		 
+$par1['description'] = "universal color bulb";		 
+$par1['extend'] = "";		 
+$par1['supports'] = "state, brithness";		 
+$par1['fromZigbee'] = "";		 
+$par1['toZigbee'] = "";		 
+SQLInsert('zigbee2mqtt_devices_list', $par1);						
+
+//universal
+$par1['zigbeeModel'] = 'universal_1ch_relay';
+$par1['model'] = "universal_1ch_relay";		 
+$par1['type'] = "relay";		 
+$par1['vendor'] = "universal";		 
+$par1['description'] = "universal 1ch relay";		 
+$par1['extend'] = "";		 
+$par1['supports'] = "state";		 
+$par1['fromZigbee'] = "";		 
+$par1['toZigbee'] = "";		 
+SQLInsert('zigbee2mqtt_devices_list', $par1);						
+
+
+//universal
+$par1['zigbeeModel'] = 'universal_openable';
+$par1['model'] = "universal_openable";		 
+$par1['type'] = "openable";		 
+$par1['vendor'] = "universal";		 
+$par1['description'] = "universal openable";		 
+$par1['extend'] = "";		 
+$par1['supports'] = "open,close";		 
+$par1['fromZigbee'] = "";		 
+$par1['toZigbee'] = "";		 
+SQLInsert('zigbee2mqtt_devices_list', $par1);						
+
+//universal
+$par1['zigbeeModel'] = 'universal_1ch_switch';
+$par1['model'] = "universal_1ch_switch";		 
+$par1['type'] = "switch";		 
+$par1['vendor'] = "universal";		 
+$par1['description'] = "universal 1ch switch";		 
+$par1['extend'] = "";		 
+$par1['supports'] = "state";		 
+$par1['fromZigbee'] = "";		 
+$par1['toZigbee'] = "";		 
+SQLInsert('zigbee2mqtt_devices_list', $par1);							
+
+$par1['zigbeeModel'] = 'universal_2ch_switch';
+$par1['model'] = "universal_2ch_switch";		 
+$par1['type'] = "switch";		 
+$par1['vendor'] = "universal";		 
+$par1['description'] = "universal 2ch switch";		 
+$par1['extend'] = "";		 
+$par1['supports'] = "state_left, state_right";		 
+$par1['fromZigbee'] = "";		 
+$par1['toZigbee'] = "";		 
+SQLInsert('zigbee2mqtt_devices_list', $par1);							
+
+
+$par1['zigbeeModel'] = 'universal_dimmer';
+$par1['model'] = "universal_dimmer";		 
+$par1['type'] = "dimmer";		 
+$par1['vendor'] = "universal";		 
+$par1['description'] = "universal 2ch switch";		 
+$par1['extend'] = "";		 
+$par1['supports'] = "state, brithness";		 
+$par1['fromZigbee'] = "";		 
+$par1['toZigbee'] = "";		 
+SQLInsert('zigbee2mqtt_devices_list', $par1);							
+
+
+$par1['zigbeeModel'] = 'universal_cct_dimmer';
+$par1['model'] = "universal_cct_dimmer";		 
+$par1['type'] = "dimmer";		 
+$par1['vendor'] = "universal";		 
+$par1['description'] = "universal 2ch switch";		 
+$par1['extend'] = "";		 
+$par1['supports'] = "state, brithness, cct";		 
+$par1['fromZigbee'] = "";		 
+$par1['toZigbee'] = "";		 
+SQLInsert('zigbee2mqtt_devices_list', $par1);							
+
+$par1['zigbeeModel'] = 'universal_color_dimmer';
+$par1['model'] = "universal_color_dimmer";		 
+$par1['type'] = "dimmer";		 
+$par1['vendor'] = "universal";		 
+$par1['description'] = "universal 2ch switch";		 
+$par1['extend'] = "";		 
+$par1['supports'] = "state, brithness";		 
+$par1['fromZigbee'] = "";		 
+$par1['toZigbee'] = "";		 
+SQLInsert('zigbee2mqtt_devices_list', $par1);							
+
+$par1['zigbeeModel'] = 'SPZB0001';
+$par1['model'] = "SPZB0001";		 
+$par1['type'] = "thermostat";		 
+$par1['vendor'] = "Eurotronic";		 
+$par1['description'] = "Spirit Zigbee wireless heater thermostat";		 
+$par1['extend'] = "";		 
+$par1['supports'] = "temperature, heating system control";		 
+$par1['fromZigbee'] = "";		 
+$par1['toZigbee'] = "";		 
+SQLInsert('zigbee2mqtt_devices_list', $par1);							
+
+
+
+
+
+
+
+
 
 }
 
