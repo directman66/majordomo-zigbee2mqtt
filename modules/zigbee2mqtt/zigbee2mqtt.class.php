@@ -760,6 +760,7 @@ sqlexec('delete from zigbee2mqtt_log where  FIND<(CURDATE()- INTERVAL '.$hist.' 
 
  debmes('Полученное сообщение содержит json:'.$value ,'zigbee2mqtt2');
        $ar=json_decode($value,true);
+       debmes($ar,'zigbee2mqtt2');
        foreach($ar as $k=>$v) {
 if (!$v) {$v="0"; }
 
@@ -775,14 +776,14 @@ if (!$v) {$v="0"; }
        foreach($arr as $kk=>$vv) {
            if (is_array($vv))   $vv = json_encode($vv);
            if (!$vv) {$vv="0"; }
-       	   debmes('Передаем '.$vv.' в '. $path.'/'.$kk,'zigbee2mqtt2');
+       	   debmes('Передаем $vv в processMessage2 '.$vv.' в '. $path.'/'.$kk,'zigbee2mqtt2');
            $this->processMessage2($path.'/'.$kk,$vv);
 }}
 
 
 
 
-    	  debmes('Передаем '.$v.' в '. $path.'/'.$k,'zigbee2mqtt2');
+    	  debmes('Передаем $v в processMessage2 '.$v.' в '. $path.'/'.$k,'zigbee2mqtt2');
           $this->processMessage2($path.'/'.$k,$v);
            }
            } 
@@ -797,6 +798,9 @@ if (!$v) {$v="0"; }
 
 
  function processMessage2($path, $value) {
+
+debmes('Получено  в processMessage2 '.$path. 'value '.$value,'zigbee2mqtt2');
+
 unset($msgtype);
 
 $this->getConfig();
@@ -908,7 +912,7 @@ $dev_title=explode('/',$path)[1];
 //if (ZMQTT_DEBUG=="1" ) debmes('$dev_title='.$dev_title,'zigbee2mqtt') ;
 
 
-if (strpos($path,"set")>0) {if (ZMQTT_DEBUG=="1" ) debmes('путь содержит set, его мы записывать не будем, чтобы не было колизии', 'zigbee2mqtt'); }
+if (strpos(substr($path,-3),"set")>0) {if (ZMQTT_DEBUG=="1" ) debmes('путь содержит set, его мы записывать не будем, чтобы не было колизии', 'zigbee2mqtt'); }
 else 
 {
 ////основной запрос
