@@ -3350,6 +3350,115 @@ SQLInsert('zigbee2mqtt_devices_command', $par2);
 
 
 
+//SPZB0001
+$par2['zigbeeModel'] = 'SPZB0001';
+$par2['type'] = "thermostat";
+$par2['state_topic'] =  "<Z2M_PATH>/<FRIENDLY_NAME>";
+$par2['availability_topic'] = "<Z2M_PATH>/bridge/state";
+$par2['brightness'] = "";
+$par2['command_topic'] = "<Z2M_PATH>/<FRIENDLY_NAME>/set"  ;
+$par2['payload_on'] = "";
+$par2['payload_off'] = "";
+$par2['value_template'] = "current_heating_setpoint";
+$par2['json_attributes'] = "";
+$par2['device_class'] = "";
+$par2['unit_of_measurement'] = "";
+$par2['color_temp'] = "";
+$par2['xy'] = "";
+$par2['command_value'] = "current_heating_setpoint";
+SQLInsert('zigbee2mqtt_devices_command', $par2);
+
+//SPZB0001
+$par2['zigbeeModel'] = 'SPZB0001';
+$par2['type'] = "thermostat";
+$par2['state_topic'] =  "<Z2M_PATH>/<FRIENDLY_NAME>";
+$par2['availability_topic'] = "<Z2M_PATH>/bridge/state";
+$par2['brightness'] = "";
+$par2['command_topic'] = "<Z2M_PATH>/<FRIENDLY_NAME>/set"  ;
+$par2['payload_on'] = "";
+$par2['payload_off'] = "";
+$par2['value_template'] = "eurotronic_system_mode";
+$par2['json_attributes'] = "";
+$par2['device_class'] = "";
+$par2['unit_of_measurement'] = "";
+$par2['color_temp'] = "";
+$par2['xy'] = "";
+$par2['command_value'] = "eurotronic_system_mode";
+SQLInsert('zigbee2mqtt_devices_command', $par2);
+
+//SPZB0001
+$par2['zigbeeModel'] = 'SPZB0001';
+$par2['type'] = "thermostat";
+$par2['state_topic'] =  "<Z2M_PATH>/<FRIENDLY_NAME>";
+$par2['availability_topic'] = "<Z2M_PATH>/bridge/state";
+$par2['brightness'] = "";
+$par2['command_topic'] = "<Z2M_PATH>/<FRIENDLY_NAME>/set"  ;
+$par2['payload_on'] = "";
+$par2['payload_off'] = "";
+$par2['value_template'] = "system_mode";
+$par2['json_attributes'] = "";
+$par2['device_class'] = "";
+$par2['unit_of_measurement'] = "";
+$par2['color_temp'] = "";
+$par2['xy'] = "";
+$par2['command_value'] = "system_mode";
+SQLInsert('zigbee2mqtt_devices_command', $par2);
+
+//SPZB0001
+$par2['zigbeeModel'] = 'SPZB0001';
+$par2['type'] = "thermostat";
+$par2['state_topic'] =  "<Z2M_PATH>/<FRIENDLY_NAME>";
+$par2['availability_topic'] = "<Z2M_PATH>/bridge/state";
+$par2['brightness'] = "";
+$par2['command_topic'] = "<Z2M_PATH>/<FRIENDLY_NAME>/set"  ;
+$par2['payload_on'] = "";
+$par2['payload_off'] = "";
+$par2['value_template'] = "pi_heating_demand";
+$par2['json_attributes'] = "";
+$par2['device_class'] = "";
+$par2['unit_of_measurement'] = "";
+$par2['color_temp'] = "";
+$par2['xy'] = "";
+$par2['command_value'] = "pi_heating_demand";
+SQLInsert('zigbee2mqtt_devices_command', $par2);
+
+//SPZB0001
+$par2['zigbeeModel'] = 'SPZB0001';
+$par2['type'] = "thermostat";
+$par2['state_topic'] =  "<Z2M_PATH>/<FRIENDLY_NAME>";
+$par2['availability_topic'] = "<Z2M_PATH>/bridge/state";
+$par2['brightness'] = "";
+$par2['command_topic'] = "<Z2M_PATH>/<FRIENDLY_NAME>/set"  ;
+$par2['payload_on'] = "";
+$par2['payload_off'] = "";
+$par2['value_template'] = "occupied_heating_setpoint";
+$par2['json_attributes'] = "";
+$par2['device_class'] = "";
+$par2['unit_of_measurement'] = "";
+$par2['color_temp'] = "";
+$par2['xy'] = "";
+$par2['command_value'] = "occupied_heating_setpoint";
+SQLInsert('zigbee2mqtt_devices_command', $par2);
+
+//SPZB0001
+$par2['zigbeeModel'] = 'SPZB0001';
+$par2['type'] = "thermostat";
+$par2['state_topic'] =  "<Z2M_PATH>/<FRIENDLY_NAME>";
+$par2['availability_topic'] = "<Z2M_PATH>/bridge/state";
+$par2['brightness'] = "";
+$par2['command_topic'] = "<Z2M_PATH>/<FRIENDLY_NAME>/set"  ;
+$par2['payload_on'] = "";
+$par2['payload_off'] = "";
+$par2['value_template'] = "unoccupied_heating_setpoint";
+$par2['json_attributes'] = "";
+$par2['device_class'] = "";
+$par2['unit_of_measurement'] = "";
+$par2['color_temp'] = "";
+$par2['xy'] = "";
+$par2['command_value'] = "unoccupied_heating_setpoint";
+SQLInsert('zigbee2mqtt_devices_command', $par2);
+
+
 
 ////////////////////////////////////////////////
 ////////////////////////////////////////////////
