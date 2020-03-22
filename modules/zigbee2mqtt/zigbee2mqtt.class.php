@@ -748,7 +748,7 @@ sqlexec('delete from zigbee2mqtt_log where  FIND<(CURDATE()- INTERVAL '.$hist.' 
 
 
 
- debmes('Сработал processMessage :'.$path." value:". $value.' strpos:'. strpos($path,"set"),'zigbee2mqtt');
+// debmes('Сработал processMessage :'.$path." value:". $value.' strpos:'. strpos($path,"set"),'zigbee2mqtt');
  debmes('Сработал processMessage :'.$path." value:". $value.' strpos:'. strpos($path,"set"),'zigbee2mqtt2');
 //if (ZMQTT_DEBUG=="1" ) debmes('Сработал processMessage :'.$path." value:". $value,'zigbee2mqtt');
 
@@ -760,7 +760,10 @@ sqlexec('delete from zigbee2mqtt_log where  FIND<(CURDATE()- INTERVAL '.$hist.' 
 
  debmes('Полученное сообщение содержит json:'.$value ,'zigbee2mqtt2');
        $ar=json_decode($value,true);
+       ksort($ar);
        debmes($ar,'zigbee2mqtt2');
+//       arsort($ar);
+//       debmes($ar,'zigbee2mqtt2');
        foreach($ar as $k=>$v) {
 if (!$v) {$v="0"; }
 
@@ -772,6 +775,7 @@ if (!$v) {$v="0"; }
 
    if (preg_match('/^{/',$v)) {
        $arr=json_decode($v,true);
+       ksort($arr);
        debmes($arr,'zigbee2mqtt2');
        foreach($arr as $kk=>$vv) {
            if (is_array($vv))   $vv = json_encode($vv);
