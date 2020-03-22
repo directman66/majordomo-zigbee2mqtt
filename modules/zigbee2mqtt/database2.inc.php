@@ -3206,6 +3206,27 @@ $par2['unit_of_measurement'] = "";
 $par2['color_temp'] = "";
 $par2['command_value'] = "state";
 SQLInsert('zigbee2mqtt_devices_command', $par2);
+
+//ZLED-TUNE9;
+$par2['zigbeeModel'] = 'LED1649C5';
+$par2['type'] = "light";
+$par2['state_topic'] =  "<Z2M_PATH>/<FRIENDLY_NAME>";
+$par2['availability_topic'] = "<Z2M_PATH>/bridge/state";
+$par2['brightness'] = "true";
+$par2['xy'] = "true";
+$par2['command_topic'] = "<Z2M_PATH>/<FRIENDLY_NAME>/set"  ;
+$par2['payload_on'] = "";
+$par2['payload_off'] = "";
+$par2['value_template'] = "transition";
+$par2['json_attributes'] = "";
+$par2['device_class'] = "";
+$par2['unit_of_measurement'] = "";
+$par2['color_temp'] = "";
+$par2['command_value'] = "transition";
+SQLInsert('zigbee2mqtt_devices_command', $par2);
+
+
+
 ////////////////////////////////////////
 ////////////////////////////////////////
 ////////////////////////////////////////
@@ -8444,6 +8465,26 @@ $par2['color_temp'] = "";
 $par2['command_value'] = "brightness";
 SQLInsert('zigbee2mqtt_devices_command', $par2);
 
+
+//ZLED-TUNE9;
+$par2['zigbeeModel'] = 'ZLED-TUNE9';
+$par2['type'] = "light";
+$par2['state_topic'] =  "<Z2M_PATH>/<FRIENDLY_NAME>";
+$par2['availability_topic'] = "<Z2M_PATH>/bridge/state";
+$par2['brightness'] = "true";
+$par2['xy'] = "true";
+$par2['command_topic'] = "<Z2M_PATH>/<FRIENDLY_NAME>/set"  ;
+$par2['payload_on'] = "";
+$par2['payload_off'] = "";
+$par2['value_template'] = "transition";
+$par2['json_attributes'] = "";
+$par2['device_class'] = "";
+$par2['unit_of_measurement'] = "";
+$par2['color_temp'] = "";
+$par2['command_value'] = "transition";
+SQLInsert('zigbee2mqtt_devices_command', $par2);
+
+
 //trust
 //ZLED-TUNE9;
 $par2['zigbeeModel'] = 'ZLED-TUNE9';
@@ -8612,6 +8653,25 @@ $par2['unit_of_measurement'] = "";
 $par2['color_temp'] = "";
 $par2['command_value'] = "color";
 SQLInsert('zigbee2mqtt_devices_command', $par2);
+
+//ZLED-TUNE9;
+$par2['zigbeeModel'] = '81809';
+$par2['type'] = "light";
+$par2['state_topic'] =  "<Z2M_PATH>/<FRIENDLY_NAME>";
+$par2['availability_topic'] = "<Z2M_PATH>/bridge/state";
+$par2['brightness'] = "true";
+$par2['xy'] = "true";
+$par2['command_topic'] = "<Z2M_PATH>/<FRIENDLY_NAME>/set"  ;
+$par2['payload_on'] = "";
+$par2['payload_off'] = "";
+$par2['value_template'] = "transition";
+$par2['json_attributes'] = "";
+$par2['device_class'] = "";
+$par2['unit_of_measurement'] = "";
+$par2['color_temp'] = "";
+$par2['command_value'] = "transition";
+SQLInsert('zigbee2mqtt_devices_command', $par2);
+
 
 /////////////////
 
