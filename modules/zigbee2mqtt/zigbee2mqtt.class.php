@@ -911,8 +911,10 @@ $dev_title=explode('/',$path)[1];
 
 //if (ZMQTT_DEBUG=="1" ) debmes('$dev_title='.$dev_title,'zigbee2mqtt') ;
 
+//if (strpos(substr($path,-3),"set")>0) debmes(substr($path,-3), 'z2m_settt');
+//debmes($path.'        '.substr($path,-4).' strpos:'.strpos(substr($path,-4),"/set"), 'z2m_settt');
 
-if (strpos(substr($path,-3),"set")>0) {if (ZMQTT_DEBUG=="1" ) debmes('путь содержит set, его мы записывать не будем, чтобы не было колизии', 'zigbee2mqtt'); }
+if (substr($path,-4)=="/set") { debmes('путь содержит set, его мы записывать не будем, чтобы не было колизии', 'z2m_settt'); }
 else 
 {
 ////основной запрос
