@@ -2860,12 +2860,16 @@ $par1['toZigbee'] = "";
 SQLInsert('zigbee2mqtt_devices_list', $par1);							
 
 
-
-
-
-
-
-
+$par1['zigbeeModel'] = 'GZCGQ01LM';
+$par1['model'] = "GZCGQ01LM";		 
+$par1['type'] = "sensor";		 
+$par1['vendor'] = "Xiaomi";		 
+$par1['description'] = "MiJia light intensity sensor";		 
+$par1['extend'] = "";		 
+$par1['supports'] = "illuminance";		 
+$par1['fromZigbee'] = "";		 
+$par1['toZigbee'] = "";		 
+SQLInsert('zigbee2mqtt_devices_list', $par1);							
 
 }
 
