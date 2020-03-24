@@ -607,6 +607,7 @@ SQLInsert('zigbee2mqtt_devices_list', $par1);
 
 
 
+
 $par1['zigbeeModel'] = 'TRADFRI bulb E26 opal 1000lm';
 $par1['model'] = "LED1622G12";		 
 $par1['vendor'] = "IKEA";	
@@ -2870,6 +2871,21 @@ $par1['supports'] = "illuminance";
 $par1['fromZigbee'] = "";		 
 $par1['toZigbee'] = "";		 
 SQLInsert('zigbee2mqtt_devices_list', $par1);							
+
+$par1['zigbeeModel'] = 'GDKES-02TZXD';
+$par1['model'] = "GDKES-02TZXD";		 
+$par1['type'] = "switch";		 
+$par1['vendor'] = "TUYATEC";		 
+$par1['description'] = "Smart light switch - 2 gang without neutral wire";		 
+$par1['extend'] = "";		 
+$par1['supports'] = "on,off";		 
+$par1['fromZigbee'] = "";		 
+$par1['toZigbee'] = "";		 
+SQLInsert('zigbee2mqtt_devices_list', $par1);							
+
+
+
+
 
 }
 
