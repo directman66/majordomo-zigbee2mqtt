@@ -2886,6 +2886,31 @@ $par1['toZigbee'] = "";
 SQLInsert('zigbee2mqtt_devices_list', $par1);
 
 
+// GDKES-03TZXD
+$par1['zigbeeModel'] = 'TS0013';
+$par1['model'] = "GDKES-03TZXD";
+$par1['type'] = "switch";
+$par1['vendor'] = "TUYATEC";
+$par1['description'] = "Smart light switch - 3 gang without neutral wire";
+$par1['extend'] = "";
+$par1['supports'] = "on/off";
+$par1['fromZigbee'] = "";
+$par1['toZigbee'] = "";
+SQLInsert('zigbee2mqtt_devices_list', $par1);
+
+// TS0011
+$par1['zigbeeModel'] = 'TS0011';
+$par1['model'] = "GDKES-01TZXD";
+$par1['type'] = "switch";
+$par1['vendor'] = "TUYATEC";
+$par1['description'] = "Smart light switch - 1 gang without neutral wire";
+$par1['extend'] = "";
+$par1['supports'] = "on/off";
+$par1['fromZigbee'] = "";
+$par1['toZigbee'] = "";
+SQLInsert('zigbee2mqtt_devices_list', $par1);
+
+
 
 }
 
