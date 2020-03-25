@@ -314,15 +314,17 @@ $basa=SQLSelectOne($sql);
  if ( ($ttype=='switch') && (strpos($basa['description'],'double')>0)) $res[$i]['CHANGEABLE']='2';
  if ( ($ttype=='switch')) $res[$i]['CHANGEABLE']='1';
 
- if ($basa['model']=='KS-SM001')   $res[$i]['CHANGEABLE']='1';
- if ($basa['model']=='group')      $res[$i]['CHANGEABLE']='1';
- if ($basa['model']=='GL-C-008')   $res[$i]['CHANGEABLE']='1';
- if ($basa['model']=='GL-C-007')   $res[$i]['CHANGEABLE']='1';
- if ($basa['model']=='LLKZMK11LM') $res[$i]['CHANGEABLE']='3';
- if ($basa['model']=='TI0001')     $res[$i]['CHANGEABLE']='2';
- if ($basa['model']=='QBKG12LM')   $res[$i]['CHANGEABLE']='2';
- if ($basa['model']=='QBKG11LM')   $res[$i]['CHANGEABLE']='1';
- if ($basa['model']=='QBKG03LM')   $res[$i]['CHANGEABLE']='2';
+ if ($basa['model']=='KS-SM001')    $res[$i]['CHANGEABLE']='1';
+ if ($basa['model']=='group')       $res[$i]['CHANGEABLE']='1';
+ if ($basa['model']=='GL-C-008')    $res[$i]['CHANGEABLE']='1';
+ if ($basa['model']=='GL-C-007')    $res[$i]['CHANGEABLE']='1';
+ if ($basa['model']=='LLKZMK11LM')  $res[$i]['CHANGEABLE']='3';
+ if ($basa['model']=='TI0001')      $res[$i]['CHANGEABLE']='2';
+ if ($basa['model']=='QBKG12LM')    $res[$i]['CHANGEABLE']='2';
+ if ($basa['model']=='QBKG11LM')    $res[$i]['CHANGEABLE']='1';
+ if ($basa['model']=='QBKG03LM')    $res[$i]['CHANGEABLE']='2';
+ if ($basa['model']=='GDKES-02TZXD')$res[$i]['CHANGEABLE']='2';
+
 
 
  if ($basa['model']=='ZLED-TUNE9')      $res[$i]['COLOR_TEMP']='1';
