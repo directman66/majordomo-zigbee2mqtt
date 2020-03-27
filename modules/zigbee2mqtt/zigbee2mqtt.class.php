@@ -4139,9 +4139,12 @@ echo $a;
             if ($op == 'viewslslog'  ) {
 
    $this->getConfig();
-   $logurl='http://'.$this->config['SLSIP'].'/log?get=raw';
+//   $logurl='http://'.$this->config['SLSIP'].'/log?get=raw';
+   $logurl='http://'.$this->config['SLSIP'].'/api/log?action=getBuffer';
+
 
 print_r(time().": ". $logurl.' <a href="http://'.$this->config['SLSIP'].'" target="_blank"> Open</a> <br>');
+
 
 
 //$a='SLS ZGW LOG......comming son';
