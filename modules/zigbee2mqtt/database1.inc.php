@@ -2205,6 +2205,19 @@ $par1['toZigbee'] = "";
 SQLInsert('zigbee2mqtt_devices_list', $par1);
 
 
+$par1['zigbeeModel'] = "ZLL-ExtendedColo";
+$par1['model'] = "ZLL-ExtendedColo";
+$par1['vendor'] = "Trust";
+$par1['type'] = "bulb"; 
+$par1['description'] = "Smart Dimmable CCT RGB LED Bulb";
+$par1['supports'] = "";
+$par1['extend'] = "";
+$par1['fromZigbee'] = "";
+$par1['toZigbee'] = "";
+SQLInsert('zigbee2mqtt_devices_list', $par1);
+
+
+
 
 $par1['zigbeeModel'] = "VMS_ADUROLIGHT";
 $par1['model'] = "ZPIR-8000";
