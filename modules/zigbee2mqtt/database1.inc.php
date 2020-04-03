@@ -2636,6 +2636,20 @@ $par1['toZigbee'] = "";
 SQLInsert('zigbee2mqtt_devices_list', $par1);
 
 //DIY_RuZ
+$par1['zigbeeModel'] = "DIYRuZ_rspm";
+$par1['model'] = "DIYRuZ_rspm";
+$par1['vendor'] = "DIYRuZ";
+$par1['type'] = "relay";
+$par1['description'] = "DIYRuZ relay switch power meter";
+$par1['supports'] = "";
+$par1['extend'] = "";
+$par1['fromZigbee'] = "";
+$par1['toZigbee'] = "";
+SQLInsert('zigbee2mqtt_devices_list', $par1);
+
+
+
+//DIY_RuZ
 $par1['zigbeeModel'] = "DIYRuZ_R4_5";
 $par1['model'] = "DIYRuZ_R4_5";
 $par1['vendor'] = "DIYRuZ";
