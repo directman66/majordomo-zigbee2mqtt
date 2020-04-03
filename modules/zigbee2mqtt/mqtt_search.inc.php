@@ -348,10 +348,14 @@ $basa=SQLSelectOne($sql);
  if ($basa['model']=='LED1624G9')  $res[$i]['XY']='1';
  if ($basa['model']=='81809')  	   $res[$i]['XY']='1';
  if ($basa['model']=='group')      $res[$i]['XY']='1';
+ if ($basa['model']=='ZLL-ExtendedColo')      $res[$i]['XY']='1';
  if ($basa['model']=='LED1624G9')  $res[$i]['COLOR_TEMP']='1';
+ if ($basa['model']=='ZLL-ExtendedColo')      $res[$i]['COLOR_TEMP']='1';
  if ($basa['model']=='ZNLDP12LM')  $res[$i]['COLOR_TEMP']='1';
  if ($basa['model']=='81809')  	   $res[$i]['COLOR_TEMP']='1';
  if ($basa['model']=='group')      $res[$i]['COLOR_TEMP']='1';
+
+
 
 
 
