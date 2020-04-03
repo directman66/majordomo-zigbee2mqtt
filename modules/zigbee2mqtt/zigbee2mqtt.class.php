@@ -918,7 +918,10 @@ $dev_title=explode('/',$path)[1];
 //if (strpos(substr($path,-3),"set")>0) debmes(substr($path,-3), 'z2m_settt');
 //debmes($path.'        '.substr($path,-4).' strpos:'.strpos(substr($path,-4),"/set"), 'z2m_settt');
 
-if (substr($path,-4)=="/set") { debmes('путь содержит set, его мы записывать не будем, чтобы не было колизии', 'z2m_settt'); }
+//debmes(strpos(substr($path)), 'z2m_settt')
+//debmes(strpos(substr($path),"/set/"), 'z2m_settt')
+
+if ((substr($path,-4)=="/set")||(strpos($path,"/set/")>0)) { debmes('путь содержит set, его мы записывать не будем, чтобы не было колизии', 'z2m_settt'); }
 else 
 {
 ////основной запрос
@@ -1123,6 +1126,15 @@ if ($newvalue<>$oldvalue)  setGlobal($rec['LINKED_OBJECT'].'.'.$rec['LINKED_PROP
      }
      if ($rec['LINKED_OBJECT'] && $rec['LINKED_METHOD']) {
        callMethod($rec['LINKED_OBJECT'] . '.' . $rec['LINKED_METHOD'], $rec['VALUE']);
+
+
+$arr=sqlselectone('select * from  zigbee2mqtt_log  where TITLE="dummy"');
+$arr['TITLE']= $path;
+$arr['TYPE']= 'callMethod';
+$arr['MESSAGE']= $rec['LINKED_OBJECT'] . '.' . $rec['LINKED_METHOD'];
+$arr['FIND']= date('Y-m-d H:i:s');
+
+
      }
 
 
@@ -1228,7 +1240,15 @@ else if ($newvalue<>$oldvalue)
 
 //debmes('выполним метод '.$rec1['LINKED_OBJECT'] . '.' . $rec1['LINKED_METHOD'],'zigbee2mqtt');
 //       callMethod($rec1['LINKED_OBJECT'] . '.' . $rec1['LINKED_METHOD'], $rec1['VALUE']);
-       callMethod($rec1['LINKED_OBJECT'] . '.' . $rec1['LINKED_METHOD']);
+        callMethod($rec1['LINKED_OBJECT'] . '.' . $rec1['LINKED_METHOD']);
+	//запишем в лог событие
+	$arr=sqlselectone('select * from  zigbee2mqtt_log  where TITLE="dummy"');
+	$arr['TITLE']= $path;
+	$arr['TYPE']= 'callMethod';
+	$arr['MESSAGE']= $rec['LINKED_OBJECT'] . '.' . $rec['LINKED_METHOD'];
+	$arr['FIND']= date('Y-m-d H:i:s');
+
+
      }
 }
 
@@ -1301,6 +1321,15 @@ if ($newvalue<>$oldvalue) setGlobal($rec1['LINKED_OBJECT'].'.'.$rec1['LINKED_PRO
 //debmes('выполним метод '.$rec1['LINKED_OBJECT'] . '.' . $rec1['LINKED_METHOD'],'zigbee2mqtt');
 //       callMethod($rec1['LINKED_OBJECT'] . '.' . $rec1['LINKED_METHOD'], $rec1['VALUE']);
        callMethod($rec1['LINKED_OBJECT'] . '.' . $rec1['LINKED_METHOD']);
+
+	//запишем в лог событие
+	$arr=sqlselectone('select * from  zigbee2mqtt_log  where TITLE="dummy"');
+	$arr['TITLE']= $rec['DEV_ID'];
+	$arr['TYPE']= 'callMethod';
+	$arr['MESSAGE']= $rec['LINKED_OBJECT'] . '.' . $rec['LINKED_METHOD'];
+	$arr['FIND']= date('Y-m-d H:i:s');
+
+
      }
 }
 
