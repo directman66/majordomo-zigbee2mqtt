@@ -4169,7 +4169,9 @@ echo $a;
 
    $this->getConfig();
 //   $logurl='http://'.$this->config['SLSIP'].'/log?get=raw';
-   $logurl='http://'.$this->config['SLSIP'].'/api/log?action=getBuffer';
+//   $logurl='http://'.$this->config['SLSIP'].'/api/log?action=getBuffer';
+//   $logurl='http://'.$this->config['SLSIP'].'/api/log?action=message-history';
+$logurl='http://'.$this->config['SLSIP'].'/api/messages-history?action=getBuffer';
 
 
 print_r(time().": ". $logurl.' <a href="http://'.$this->config['SLSIP'].'" target="_blank"> Open</a> <br>');
