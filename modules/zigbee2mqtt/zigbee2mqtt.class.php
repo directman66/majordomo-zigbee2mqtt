@@ -2749,6 +2749,31 @@ $this->redirect("?");
 
 }
 
+
+  if ($this->view_mode=='touchlink') {
+
+//$this->getConfig();
+//$zz=explode('/',$this->config['MQTT_QUERY'])[0];
+
+$zz=$_GET['gw'];
+$this->sendcommand($zz.'/bridge/config/touchlink/factory_reset', '');
+
+
+
+//  $this->redirect("?tab=service");
+$location=$_GET['location'];
+$vendor_id=$_GET['vendor_id'];
+$type_id=$_GET['type_id'];
+$vid_id=$_GET['vid_id'];
+$group_list_id=$_GET['group_list_id'];
+
+//$this->redirect("?&location=$location&type_id=$type_id&vendor_id=$vendor_id&vid_id=$vid_id");
+$this->redirect("?");
+
+}
+
+
+
   if ($this->view_mode=='stoppairing') {
 //$this->getConfig();
 //$zz=explode('/',$this->config['MQTT_QUERY'])[0];
