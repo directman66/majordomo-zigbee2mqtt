@@ -1,4 +1,8 @@
+# Более подробная инструкция находится [тут](https://slsys.github.io/Gateway/int_majordomo_rus.html)
+
 # Модуль для интеграции устройств zigbee в систему [MAJORDOMO](https://mjdm.ru/) c использованием [zigbee2mqtt](https://www.zigbee2mqtt.io)
+
+
 
 
 
