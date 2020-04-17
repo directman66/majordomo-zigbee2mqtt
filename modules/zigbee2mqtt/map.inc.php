@@ -17,12 +17,13 @@ for ($i=0;$i<$total;$i++) {
     }
     $node = [];
     $node["id"] = $raw['nodes'][$i]["ieeeAddr"];
-    $node["label"] = $raw['nodes'][$i]["friendlyName"];
     $node["size"] = 40;
+    $node["group"] = $dev['GROUP'];
     $node["font"] = array("color"=>'black', "size"=>10);
     $node["shape"] = "image";
     if ($raw['nodes'][$i]["type"] == "Coordinator")
     {
+        $node["label"] = "Coordinator";
         $node["image"] = "/templates/zigbee2mqtt/img/cc2531.jpg";
         $node["color"] = "red";
     }
@@ -33,7 +34,9 @@ for ($i=0;$i<$total;$i++) {
     }
     if ($raw['nodes'][$i]["type"] == "Router")
         $node["color"] = "blue";
-
+    
+    $node["label"] .= "\n".$raw['nodes'][$i]["ieeeAddr"];
+        
     $rn[] = $node;
 }
 $total = count($raw["links"]);
