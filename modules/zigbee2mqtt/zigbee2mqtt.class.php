@@ -107,7 +107,7 @@ define("ZMQTT_DEBUG", "1");
   $out=array();
   if ($this->action=='admin') {
 
-
+//print_r ($_GET);
 
    $this->admin($out);
 
@@ -1495,6 +1495,14 @@ function admin(&$out) {
 //$seen=SQLSelectOne("select max(FIND) FIND from zigbee2mqtt_log   ");
 
 $this->getConfig();
+
+$slslist = explode(',', $this->config['SLSIP']);
+$total = count($slslist);
+for ($i = 0; $i < $total; $i++) {
+$out['slsdev'][$i]['IP']=$slslist[$i];
+}
+
+
 $query_list = explode(',', $this->config['MQTT_QUERY']);
 $total = count($query_list);
 
@@ -1503,7 +1511,7 @@ for ($i = 0; $i < $total; $i++) {
 $zz=explode('/',$query_list[$i])[0];
 $sql="select * from zigbee2mqtt where TITLE='$zz/bridge/config/permit_join'  ";
 $permit=SQLSelectOne($sql);
-debmes($sql, 'z2msql');
+//debmes($sql, 'z2msql');
 
 //if $permit['VALUE']=
 $out['gwstatus'][$i]['PERMITNAME']=$zz;
@@ -1533,6 +1541,9 @@ $out['gwstatus'][$i]['PERMIT']='false';
 
 }
 
+//print_r($_GET);
+$slsipp=$_GET['slsipp'];
+$out['SLSIPP']=$slsipp;
 
 
 
@@ -4152,8 +4163,16 @@ function usual(&$out) {
 
 
     if ($this->ajax) {
+//print_r($_GET);
+
         global $op;
         global $fn;
+        global $slsipp;
+//$slsipp=$_GET['slsipp'];
+//echo $slsipp;
+//        global $slsipp;
+//echo $slsipp;
+
         $result=array();
         if ($op=='getvalues') {
             global $ids;
@@ -4209,10 +4228,15 @@ echo $a;
 //   $logurl='http://'.$this->config['SLSIP'].'/log?get=raw';
 //   $logurl='http://'.$this->config['SLSIP'].'/api/log?action=getBuffer';
 //   $logurl='http://'.$this->config['SLSIP'].'/api/log?action=message-history';
-$logurl='http://'.$this->config['SLSIP'].'/api/messages-history?action=getBuffer';
+//$logurl='http://'.$this->config['SLSIP'].'/api/messages-history?action=getBuffer';
 
 
-print_r(time().": ". $logurl.' <a href="http://'.$this->config['SLSIP'].'" target="_blank"> Open</a> <br>');
+
+$logurl='http://'.$slsipp.'/api/messages-history?action=getBuffer';
+
+
+//print_r(time().": ". $logurl.' <a href="http://'.$this->config['SLSIP'].'" target="_blank"> Open</a> <br>');
+print_r(time().": ". $logurl.' <a href="http://'.$slsipp.'" target="_blank"> Open</a> <br>');
 
 
 
