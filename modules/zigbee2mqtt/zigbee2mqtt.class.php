@@ -1496,10 +1496,10 @@ function admin(&$out) {
 
 $this->getConfig();
 
-$slslist = explode(',', $this->config['SLSIP']);
+$slslist =(explode(',', $this->config['SLSIP']));
 $total = count($slslist);
 for ($i = 0; $i < $total; $i++) {
-$out['slsdev'][$i]['IP']=$slslist[$i];
+$out['slsdev'][$i]['IP']=trim($slslist[$i]);
 }
 
 
@@ -1543,7 +1543,7 @@ $out['gwstatus'][$i]['PERMIT']='false';
 
 //print_r($_GET);
 $slsipp=$_GET['slsipp'];
-$out['SLSIPP']=$slsipp;
+$out['SLSIPP']=trim($slsipp);
 
 
 
