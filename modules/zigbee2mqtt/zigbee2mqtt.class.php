@@ -999,7 +999,7 @@ $gw=explode('/',$path)[0];
 //$zz=explode('/',$query_list[$i])[0];
 
 //
-SQLExec ("update  zigbee2mqtt set VALUE='' where TITLE='$zz/bridge/log'");
+SQLExec ("update  zigbee2mqtt set VALUE='' where TITLE='$gw/bridge/log'");
 $this->sendcommand($gw.'/bridge/config/devices', '');
       }
       
@@ -1018,6 +1018,8 @@ else
 
 //добавляем информацию в справочник топиков  zigbee2mqtt
 //   $dev_id=SQLSelectOne("SELECT * FROM zigbee2mqtt_devices WHERE TITLE LIKE '%".DBSafe($dev_title)."%'")['ID'];
+
+
 $sql="SELECT * FROM zigbee2mqtt_devices WHERE IEEEADDR LIKE '%".DBSafe($dev_title)."%'";
 //if (ZMQTT_DEBUG=="1" ) debmes($sql, 'zigbee2mqtt');
    $dev_id=SQLSelectOne($sql)['ID'];
@@ -1027,13 +1029,21 @@ $sql="SELECT * FROM zigbee2mqtt_devices WHERE IEEEADDR LIKE '%".DBSafe($dev_titl
 
 
 
+//debmes($path, 'z2m_migration');
+//debmes(stripos($path,'/'), 'z2m_migration');
+
+
 $npath=substr($path,0,strrpos($path,'/'));
+$nnpath=substr($path,stripos($path,'/',0));
 $metrika=substr($path,strrpos($path,'/')+1); 
 
-$sql="SELECT * FROM zigbee2mqtt WHERE PATH LIKE '%$npath%' and METRIKA='$metrika'" ;
+if (strrpos($path,'bridge')>0) { $sql="SELECT * FROM zigbee2mqtt WHERE PATH LIKE '%$npath%' and METRIKA='$metrika'";  }
+else 
+{$sql="SELECT * FROM zigbee2mqtt WHERE PATH LIKE '%$nnpath%' and METRIKA='$metrika'" ;}
 
 
 //debmes($sql, 'zigbee2mqtt');
+debmes($sql, 'z2m_migration');
    $rec=SQLSelectOne($sql);
 
    
