@@ -1516,17 +1516,8 @@ $permit=SQLSelectOne($sql);
 //if $permit['VALUE']=
 $out['gwstatus'][$i]['PERMITNAME']=$zz;
 $out['gwstatus'][$i]['PERMITSTATUS']=$permit['VALUE'];
-
-
-
 //    $path = trim($query_list[$i]);
 //    $topics[$path] = array("qos" => 0, "function" => "procmsg");
-
-
-
-
-
-
 $seen=SQLSelectOne("select * from zigbee2mqtt_log where TITLE like '%$zz%' order by FIND DESC  limit 1  ");
 $out['gwstatus'][$i]['SEEN']=$seen['FIND'];
 
@@ -1545,6 +1536,8 @@ $out['gwstatus'][$i]['PERMIT']='false';
 $slsipp=$_GET['slsipp'];
 $out['SLSIPP']=trim($slsipp);
 
+
+$out['ZIGBEE2MQTTPATH']=$this->config['ZIGBEE2MQTTPATH'];
 
 
 
@@ -1586,9 +1579,9 @@ define("ZMQTT_DEBUG", "1");
  }
 
 
- if (!$out['ZIGBEE2MQTTPATH']) {
-  $out['ZIGBEE2MQTTPATH']='/opt/zigbee2mqtt';
- }
+/// if (!$out['ZIGBEE2MQTTPATH']) {
+//  $out['ZIGBEE2MQTTPATH']='/opt/zigbee2mqtt';
+/// }
 
 
  if (!$out['MQTT_PORT']) {
@@ -3310,10 +3303,10 @@ setGlobal('cycle_zigbee2mqttControl', 'restart');
   $this->saveConfig();
  }
 
- if (!$this->config['ZIGBEE2MQTTPATCH']) {
-  $this->config['ZIGBEE2MQTTPATCH']='/opt/zigbee2mqtt/';
-  $this->saveConfig();
- }
+// if (!$this->config['ZIGBEE2MQTTPATCH']) {
+//  $this->config['ZIGBEE2MQTTPATCH']='/opt/zigbee2mqtt/';
+//  $this->saveConfig();
+// }
 
 
  if (!$this->config['MQTT_QUERY']) {
