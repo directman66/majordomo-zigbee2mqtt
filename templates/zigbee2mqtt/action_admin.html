@@ -1,9 +1,11 @@
 <!--
+
 VIEW_MODE: [#VIEW_MODE#]
 TAB: [#TAB#]
 TITLE: [#TITLE#]
 DATASOURCE: [#DATA_SOURCE#]
 <!-- table zwave_devices search -->
+ZIGBEE2MQTTPATH:[#ZIGBEE2MQTTPATH#]
  [#if VIEW_MODE=""||VIEW_MODE="update_log"#]
 	 <ul class="nav nav-tabs">
 <li [#if TAB=="" || TAB=="indata" #] class="active" [#endif#]><a href="?data_source=<#DATA_SOURCE#>&view_mode=&id=<#ID#>&tab=devices"><#LANG_DEVICES#></a> </li>
@@ -12,7 +14,14 @@ DATASOURCE: [#DATA_SOURCE#]
 <li [#if TAB=="bind" #] class="active" [#endif#]><a href="?data_source=<#DATA_SOURCE#>&view_mode=&id=<#ID#>&tab=bind">Bind</a> </li>
 <li [#if TAB=="settings" #] class="active" [#endif#]><a href="?data_source=<#DATA_SOURCE#>&view_mode=&id=<#ID#>&tab=settings"><#LANG_SECTION_SETTINGS#></a> </li>
 <li [#if TAB=="map" #] class="active" [#endif#]><a href="?data_source=<#DATA_SOURCE#>&view_mode=&id=<#ID#>&tab=map"><#LANG_MAP#></a> </li>
+
+
+
+
+[#if ZIGBEE2MQTTPATH<>""#]
 <li [#if TAB=="log" #] class="active" [#endif#]><a href="?data_source=<#DATA_SOURCE#>&view_mode=&id=<#ID#>&tab=log">Zigbee2mqtt Log</a> </li>
+   [#endif#]
+
    [#begin slsdev#]
 <li [#if TAB=="slslog" #] class="active" [#endif#]><a href="?data_source=<#DATA_SOURCE#>&view_mode=&id=<#ID#>&tab=slslog&slsipp=[#IP#]">SLS ZGW Log ([#IP#])</a> </li>
    [#end slsdev#]
