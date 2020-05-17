@@ -714,6 +714,20 @@ $par1['fromZigbee'] = "";
 $par1['toZigbee'] = "";		 
 SQLInsert('zigbee2mqtt_devices_list', $par1);
 
+
+$par1['zigbeeModel'] = 'TRADFRI Driver 10W';
+$par1['model'] = "TRADFRI Driver 10W";		 
+$par1['vendor'] = "IKEA";	
+$par1['type'] = "dimmer";		 	 
+$par1['description'] = "TRADFRI driver for wireless control (10 watt)";		 
+$par1['extend'] = "";		 
+$par1['supports'] = " generic.light_onoff_brightness";		 
+$par1['fromZigbee'] = "";		 
+$par1['toZigbee'] = "";		 
+SQLInsert('zigbee2mqtt_devices_list', $par1);
+
+
+
 $par1['zigbeeModel'] = 'TRADFRI transformer 30W';
 $par1['model'] = "ICPSHC24-30EU-IL-1";		 
 $par1['vendor'] = "IKEA";		 
