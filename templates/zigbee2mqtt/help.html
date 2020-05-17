@@ -1,99 +1,590 @@
-<hr>
+<br/>
+<div class="panel-group" id="accordion">
+	<div class="panel panel-info">
+		<div class="panel-heading">
+		<a data-toggle="collapse" data-parent="#accordion" href="#sms_help">Информация</a>
+		</div>
+		<div class="panel-body collapse" id="sms_help">
+		Модуль для работы с устройствами zigbee с использованием USB стика сc2531 и проекта 
+<a href="https://koenkk.github.io/zigbee2mqtt/" target="_blank">zigbee2mqtt</a><br>
 
-   <a href="?view_mode=srv_start" class="btn btn-default" title="Start zigbee2mqtt service" ><i class="glyphicon  glyphicon-play"></i>Start </a>
-   <a href="?view_mode=srv_stop" class="btn btn-default" title="Stop zigbee2mqtt service" ><i class="glyphicon glyphicon-pause"></i>Stop </a>
-   <a href="?view_mode=srv_restart" class="btn btn-default" title="Restart zigbee2mqtt service" ><i class="glyphicon glyphicon-refresh"></i>Restart </a>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-   <a href="?view_mode=resetznp" class="btn btn-default" title="Resets the ZNP (CC2530/CC2531)" ><i class="glyphicon glyphicon-refresh"></i> Reset ZNP</a>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-<!-- <hr> -->
+			
+			</br>     </br>
 
-
-
-
-   <a href="?view_mode=updatedb"   class="btn btn-default" title="Manual update device metrics after update this module" ><i class="glyphicon glyphicon-refresh"></i>Update metrics</a> 
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-
-<!--   <a href="?view_mode=refresh_db" class="btn btn-default" title="Refresh config database" ><i class="glyphicon glyphicon-refresh"></i> Refresh database.db</a> -->
-<!--   <a href="?view_mode=refresh_db" class="btn btn-default" title="Refresh config database" ><i class="glyphicon glyphicon-refresh"></i> Refresh database.db</a> -->
-   <a href="?view_mode=refresh_mqtt" class="btn btn-default" title="Refresh device list mqtt" ><i class="glyphicon glyphicon-refresh"></i> Refresh device list from all gateways</a>
-<br><hr>
-   <a href="?view_mode=getgroupslist" class="btn btn-default" title="Get groups list from mqtt" ><i class="glyphicon glyphicon-refresh"></i> Get groups list from mqtt</a>
-   <a href="?view_mode=getalldevicegroup" class="btn btn-default" title="Refresh group from all devices " ><i class="glyphicon glyphicon-refresh"></i> Refresh all devices from groups</a>
-
-<br><hr>
-   <a href="?view_mode=disablestrict" class="btn btn-default" title="Disable STRICT_TRANS_TABLES for MySQL" ><i class="glyphicon glyphicon-refresh"></i> Disable STRICT_TRANS_TABLES for MySQL</a>
-   <a href="?view_mode=enablestrict" class="btn btn-default" title="Enable STRICT_TRANS_TABLES for MySQL" ><i class="glyphicon glyphicon-refresh"></i> Enable STRICT_TRANS_TABLES for MySQL</a>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-Current: [#if strict="enable"#] <span class="label label-danger" ><font color="white" >Enable</span></font>  [#else#] 	<span class="label label-success"><font color="white" >Disable</span></font>[#endif#]
- [#stricta#]
+	
+		</div> </div> </div>
 
 
-<br><hr>
-[#begin gwstatus#]
+<div class="panel-group" id="accordion">
+	<div class="panel panel-info">
+		<div class="panel-heading">
+		<a data-toggle="collapse" data-parent="#accordion" href="#nach">Стики сс2531/сс2530 (устаревший вариант) </a>
+		</div>
+		<div class="panel-body collapse" id="nach">
+		<p>
+Для работы c zigbee2mqtt нужен прошитый стик и компьютер на линукс (подойдет любой одноплатник типа малины)<br>
 
-   <a href="?view_mode=startpairing&gw=[#PERMITNAME#]" class="btn btn-default" title="Start pairing" ><i class="glyphicon glyphicon-refresh"></i>Start pairing mode [#PERMITNAME#]</a>
-   <a href="?view_mode=stoppairing&gw=[#PERMITNAME#]" class="btn btn-default" title="Stop pairing" ><i class="glyphicon glyphicon-refresh"></i>Stop pairing mode [#PERMITNAME#] </a>
-[#end gwstatus#]
+<h3>
+<a href="https://www.avito.ru/ekaterinburg/tovary_dlya_kompyutera/zigbee_shlyuz_-_usb_stik_cc2531_1024727941" target="_blank">Готовый прошитый последней девелоперской прошивкой стик можно заказать по цене 1000 руб + стоимость доставки по РФ (около 150 руб)</a><br>
+</h3>
 
+Разработка данного модуля осуществляется на общественных началах и требует значительных временных затрат. Покупка прошитого стика сс2531  у автора модуля также является элементом стимулирования развития проекта. 
+<br>
+<br>
 
+Также все необходимое оборудование можно заказать на aliexpress(проверенный продавец) <br><br>
 
-<br><hr>
-[#begin gwstatus#]
+<a href="https://ru.aliexpress.com/store/product/Wireless-Zigbee-CC2531-Sniffer-Bare-Board-Packet-Protocol-Analyzer-Module-USB-Interface-Dongle-Capture-Packet-Module/2182011_32852226435.html" target="_blank">
+стик:
+<img src="../templates/zigbee2mqtt/img/cc25311.jpg"   class="img-rounded" height="150" width="150">
+</a><br>
+<a href="https://ru.aliexpress.com/store/product/Smart-RF04E-Smart-RF04EB-CC1110-CC2530-CC2531-CC2540-ZigBee-Module-Target-Zigbee-Emulator-CC-Debugger-Bluetooth/2182011_32950422195.html" target="_blank">дебаггер:
 
-   <a href="?view_mode=touchlink&gw=[#PERMITNAME#]" class="btn btn-default" title="Start touchlink mode" ><i class="glyphicon glyphicon-refresh"></i>Touchlink mode for [#PERMITNAME#]</a>
-[#end gwstatus#]
-
-
-
-
-
-
-   <!--
-   <a href="?view_mode=getgroupslist" class="btn btn-default" title="Get groups list from mqtt" ><i class="glyphicon glyphicon-refresh"></i> Get groups list from mqtt</a>
-   
-   -->
-   
-<br><hr>
+<img src="../templates/zigbee2mqtt/img/cc_debugger.jpg"   class="img-rounded" height="150" width="150">
+</a><br>
+<a href="https://ru.aliexpress.com/store/product/Downloader-Cable-Bluetooth-4-0-CC2540-zigbee-CC2531-Sniffer-USB-Programmer-Wire-Download-Programming-Connector-Board/2182011_32853531081.html" target="_blank">шнурок:
+<img src="../templates/zigbee2mqtt/img/downloader_cable.png"   class="img-rounded" height="150" width="150">
+</a><br>
+<br><br>
+Желательно все сразу заказать у одного продавца, тогда будет один трек на все товары. Я имел неосторожность заказать у разных продавцов, в итоге кабель для прошивки  ждал около 3 месяцев.
+<br>
 
 
 
-   <!--
-   <a href="?view_mode=getgroupslist" class="btn btn-default" title="Get groups list from mqtt" ><i class="glyphicon glyphicon-refresh"></i> Get groups list from mqtt</a>
-   
-   -->
-   
-<br><hr>
-
-<form action="?" method="post" enctype="multipart/form-data" name="frmEdit" class="form-horizontal">
-<fieldset>
+		</div> </div> </div>
 
 
+<div class="panel-group" id="accordion">
+	<div class="panel panel-info">
+		<div class="panel-heading">
+		<a data-toggle="collapse" data-parent="#accordion" href="#v3">Стик v3 (усовершенствованный вариант)</a>
+		</div>
+		<div class="panel-body collapse" id="v3">
+		<p>
+Пользователем Jager разработан стик на базе трансивера сс2538 с усилителем сс2592. Тесты на открытой местности подтвердили до 800 метров на открытой местности. Информация по самостоятельной сборке шлюза находится на сайте 
+<a href="https://modkam.ru/?p=1112" target="_blank">modkam.ru
+<img src="https://i2.wp.com/modkam.ru/wp-content/uploads/2019/08/3D-%D0%BF%D1%80%D0%B5%D0%B4%D0%BF%D1%80%D0%BE%D1%81%D0%BC%D0%BE%D1%82%D1%80-2019-08-07-09.39.06.jpg?resize=800%2C549&ssl=1"   >
+</a><br>
+		</div> </div> </div>
 
 
-    
-        <table width=100%>
-<tr><td width=70%>
-   
-MQTT MESSAGE PATH: <input type="text"  class="form-control"  value="[#PATH#]" name="mqttsendpath" >
-VALUE:<input type="text"  class="form-control"  value="[#VALUE#]" name="mqttsendvalue" >
-     
-     
-<div class="form-actions">
- </td><td>
- &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<button type="submit" name="subm" value="SEND"  class="btn btn-default" >SEND</button>
- 
 
-<input type="hidden" name="id" value="<#ID#>">
-<input type="hidden" name="view_mode" value="send_test_mqtt">
-<input type="hidden" name="mode" value="update">
 
-</fieldset>
-</form>     
-</div> 
-</td></tr>
+
+<div class="panel-group" id="accordion">
+	<div class="panel panel-info">
+		<div class="panel-heading">
+		<a data-toggle="collapse" data-parent="#accordion" href="#sls">Шлюз SLS Zigbee Gateway</a>
+		</div>
+		<div class="panel-body collapse" id="sls">
+		<p>
+Шлюз SLS Zigbee Gateway позволяет отказаться от китайских сетевых облаков и использовать одновременно устройства разных производителей. Шлюз имеет свою прошивку SLS, которая полностью совместима с zigbee2mqtt. Это позволяет использовать шлюз совместно с системами MajorDoMo, HomeAssistant, IOBroker, Node-Red и др.
+
+
+
+
+В настоящее время прошивка поддерживает около 100 видов устройств от 10 производителей. Список поддерживаемых устройств постоянно обновляется. Почти любое из устройств Zigbee или BLE может быть добавлено в прошивку по запросу.
+
+
+
+В основе шлюза лежит контроллер ESP32, трансивер сс2538 с усилителем сс2592
+
+Инструкция и дополнительная информация по работе с шлюзом указаны на сайте 
+<a href="https://slsys.github.io/Gateway/README_rus.html" target="_blank"> https://slsys.github.io/Gateway</a><br>
+
+<br>
+
+Интеграция с MajorDoMo подробно разобрана в инструкции по
+<a href="https://github.com/slsys/Gateway/blob/master/int_majordomo_rus.md" target="_blank"> интеграции шлюза SLS</a><br>
+
+
+
+
+
+
+<h3>
+<a href="https://www.avito.ru/ekaterinburg/tovary_dlya_kompyutera/sls_zigbee_gateway_1859134075" target="_blank">
+<img src="https://i0.wp.com/modkam.ru/wp-content/uploads/2019/11/Mi_Gateway_Shield15.jpg?w=775&ssl=1"   >
+<br>Готовый шлюз можно заказать по ссылке
+</a><br>
+</h3>
+Доставка в любой регион РФ или СНГ почтой России или авито доставкой. Примерная стоимость доставки почтой РФ 250 руб. и оплачивается дополнительно.
+<br>
+<br>
+<br>
+Для тех, кто желает собрать шлюз самостоятельно, инструкция по сборке и файлы для заказа плат можно найти на сайте
+<a href="https://modkam.ru/?p=1342" target="_blank"> modkam.ru</a><br>
+
+
+
+
+		</div> </div> </div>
+
+
+
+<div class="panel-group" id="accordion">
+	<div class="panel panel-info">
+		<div class="panel-heading">
+		<a data-toggle="collapse" data-parent="#accordion" href="#vozm">Прошивка стика</a>
+		</div>
+		<div class="panel-body collapse" id="vozm">
+<a href="https://www.zigbee2mqtt.io/getting_started/flashing_the_cc2531.html" target="_blank">Подробная инструкция на англ. языке с картинками
+</a><br>
+<br>
+<a href="https://yadi.sk/d/RxIVtu3YTCBDyw" target="_blank">Прошивальщик без регистрации можно скачать тут
+</a><br>
+<br>
+<a href="https://github.com/Koenkk/Z-Stack-firmware/tree/dev/coordinator/" target="_blank">Последние версии прошивок можно взять тут
+</a><br>
+
+		</div> </div> </div>
+
+
+
+<div class="panel-group" id="accordion">
+	<div class="panel panel-info">
+		<div class="panel-heading">
+		<a data-toggle="collapse" data-parent="#accordion" href="#vidget">Установка zigbee2mqtt</a>
+		</div>
+		<div class="panel-body collapse" id="vidget">
+<a href="https://www.zigbee2mqtt.io/getting_started/running_zigbee2mqtt.html" target="_blank">Оригинальная инструкция по установке для linux
+</a><br><br>
+	<b>
+Проверяем на каком порту у нас появился стик: <br>
+</b>
+<code><b>
+pi@raspberry:~ $ ls -l /dev/ttyACM0<br>
+crw-rw---- 1 root dialout 166, 0 May 16 19:15 /dev/ttyACM0  # <-- CC2531 on /dev/ttyACM0<br>
+</code></b><br>
+или<br><br>
+<code><b>
+pi@raspberry:/ $ ls -l /dev/serial/by-id<br>
+total 0<br>
+lrwxrwxrwx. 1 root root 13 Oct 19 19:26 usb-Texas_Instruments_TI_CC2531_USB_CDC___0X00124B0018ED3DDF-if00 -> ../../ttyACM0
+</code></b>
+<br>
+Убедились, что стик встал на порту /dev/ttyACM0, этот адрес потом понадобится при настройке конфигурации configuration.yaml<br><br>
+
+<b>Устанавливаем необходимые пакеты<br></b>
+<code><b>
+# Setup Node.js repository<br>
+sudo curl -sL https://deb.nodesource.com/setup_10.x | sudo -E bash -<br>
+
+# Install Node.js<br>
+sudo apt-get install -y nodejs git make g++ gcc<br>
+
+# Verify that the correct nodejs and npm (automatically installed with nodejs)<br>
+# version has been installed<br>
+node --version  # Should output v10.X<br>
+npm --version  # Should output 6.X<br>
+
+# Clone zigbee2mqtt repository<br>
+sudo git clone https://github.com/Koenkk/zigbee2mqtt.git /opt/zigbee2mqtt<br>
+sudo chown -R pi:pi /opt/zigbee2mqtt<br>
+
+# Install dependencies<br>
+cd /opt/zigbee2mqtt<br>
+npm install<br>
+</code></b>
+<br>
+по завершении установки мы должны получить на экране что-то подобное:<br>
+<code><b>
+node-pre-gyp info ok<br>
+added 383 packages in 111.613s
+</code></b>
+
+<br><b><br>
+Настраиваем файл конфигурации:<br></b>
+
+<code><b>
+nano /opt/zigbee2mqtt/data/configuration.yaml<br>
+</code></b>
+
+<a href="https://github.com/directman66/majordomo-zigbee2mqtt/blob/master/modules/zigbee2mqtt/ext/configuration.yaml" target="_blank">Актуальный пример файла конфигурации:
+</a>
+
+
+<br><br><br>
+
+
+<b>Запуск сервиса <br></b>
+<code><b>
+cd /opt/zigbee2mqtt<br>
+npm start<br>
+</code></b>
+
+
+
+<code><b>
+2018-5-18 20:35:07 INFO Starting zigbee-shepherd<br>
+2018-5-18 20:35:09 INFO zigbee-shepherd started<br>
+2018-5-18 20:35:09 INFO Currently 0 devices are joined:<br>
+2018-5-18 20:35:09 INFO Connecting to MQTT server at mqtt://localhost<br>
+2018-5-18 20:35:09 INFO zigbee-shepherd ready<br>
+2018-5-18 20:35:09 INFO Connected to MQTT server<br>
+</code></b>
+остановить можно нажатием CTR-C<br>
+<br>
+
+<b>Запуск zigbee2mqtt как сервис<br></b>
+Создаем файл zigbee2mqtt.service<br>
+<code><b>
+sudo nano /etc/systemd/system/zigbee2mqtt.service<br>
+</code></b>
+c содержимым:<br>
+<code><b>
+[Unit]<br>
+Description=zigbee2mqtt<br>
+After=network.target<br>
+<br>
+[Service]<br>
+ExecStart=/usr/bin/npm start<br>
+WorkingDirectory=/opt/zigbee2mqtt<br>
+StandardOutput=inherit<br>
+StandardError=inherit<br>
+Restart=always<br>
+User=pi<br>
+<br>
+[Install]<br>
+WantedBy=multi-user.target<br>
+</code></b>
+для запуска zigbee2mqtt необходимо выполнить:<br>
+<code><b>
+sudo systemctl start zigbee2mqtt<br>
+</code></b><br>
+
+<code><b>
+systemctl status zigbee2mqtt.service<br>
+</code></b><br>
+
+автозапуск демона при старте системы:<br>
+<code><b><br>
+sudo systemctl enable zigbee2mqtt.service<br>
+</code></b><br>
+
+
+
+		</div> </div> </div>
+
+
+<div class="panel-group" id="accordion">
+	<div class="panel panel-info">
+		<div class="panel-heading">
+		<a data-toggle="collapse" data-parent="#accordion" href="#update">Обновление zigbee2mqtt</a>
+		</div>
+		<div class="panel-body collapse" id="update">
+<a href="https://www.zigbee2mqtt.io/getting_started/running_zigbee2mqtt.html" target="_blank">Оригинальная инструкция по установке для linux
+</a><br><br>
+
+<b>обновление локального архива проекта zigbee2mqtt<br></b>
+<code><b>
+# Stop zigbee2mqtt and go to directory<br>
+sudo systemctl stop zigbee2mqtt<br>
+cd /opt/zigbee2mqtt<br>
+<br>
+# Backup configuration<br>
+cp -R data data-backup<br>
+<br>
+# Update<br>
+git checkout HEAD -- npm-shrinkwrap.json<br>
+git pull<br>
+rm -rf node_modules<br>
+npm install<br>
+<br>
+# Restore configuration<br>
+cp -R data-backup/* data<br>
+rm -rf data-backup<br>
+<br>
+# Start zigbee2mqtt<br>
+sudo systemctl start zigbee2mqtt<br>
+<br>
+</code></b>
+</code></b>
+
+
+
+		</div> </div> </div>
+
+
+<div class="panel-group" id="accordion">
+	<div class="panel panel-info">
+		<div class="panel-heading">
+		<a data-toggle="collapse" data-parent="#accordion" href="#docker">Установка в docker</a>
+		</div>
+		<div class="panel-body collapse" id="docker">
+<a href="https://www.zigbee2mqtt.io/information/docker.html" target="_blank">Оригинальная инструкция по установке в docker. Это наиболее простой вариант установки для Windows
+</a><br><br>
+
+
+		</div> </div> </div>
+
+
+
+
+<div class="panel-group" id="accordion">
+	<div class="panel panel-info">
+		<div class="panel-heading">
+		<a data-toggle="collapse" data-parent="#accordion" href="#pair">Подключение устройств</a>
+		</div>
+		<div class="panel-body collapse" id="pair">
+
+zigbee2mqtt может автоматически добавлять устройства, которые посылают пакеты на сопряжение (pairing).<br>
+Для этого в конфигурационном файле configuration.yaml должна присутствовать строка<br>
+
+<code><b>
+permit_join: true<br>
+</code></b>
+
+		</div> </div> </div>
+
+
+
+
+<div class="panel-group" id="accordion">
+	<div class="panel panel-info">
+		<div class="panel-heading">
+		<a data-toggle="collapse" data-parent="#accordion" href="#dev">Переход на ветку для разработчиков DEV </a>
+		</div>
+		<div class="panel-body collapse" id="dev">
+<a href="http://www.zigbee2mqtt.io/how_tos/how-to-switch-to-dev-branch.html" target="_blank">Оригинальная инструкция по установке для linux
+</a><br><br>
+
+<b>Как перейти на ветку dev<br></b>
+
+Ветка разработчика Zigbee2mqtt содержит последние функции, улучшения и поддерживаемые устройства. Если вы хотите попробовать это, вы можете проверить ветку dev.<br>
+ПРИМЕЧАНИЕ: эта ветка является веткой разработки! Это может быть менее стабильным, чем версия выпуска!<br>
+
+<code><b>
+
+# Stop zigbee2mqtt and go to directory<br>
+sudo systemctl stop zigbee2mqtt<br>
+cd /opt/zigbee2mqtt<br>
+<br>
+# Backup configuration<br>
+cp -R data data-backup<br>
+<br>
+# Update<br>
+git checkout HEAD -- npm-shrinkwrap.json<br>
+git fetch<br>
+git checkout dev # Change 'dev' to 'master' to switch back to the release version<br>
+git pull<br>
+rm -rf node_modules<br>
+npm install<br>
+
+# Restore configuration<br>
+cp -R data-backup/* data<br>
+rm -rf data-backup<br>
+<br>
+# Start zigbee2mqtt<br>
+sudo systemctl start zigbee2mqtt
+
+</code></b>
+
+
+
+		</div> </div> </div>
+
+
+
+
+<div class="panel-group" id="accordion">
+	<div class="panel panel-info">
+		<div class="panel-heading">
+		<a data-toggle="collapse" data-parent="#accordion" href="#dlist">Список поддерживаемых устройств</a>
+		</div>
+		<div class="panel-body collapse" id="dlist">
+
+<b><a href="https://www.zigbee2mqtt.io/information/supported_devices.html" target="_blank">Актуальный  список можно посмотреть на странице разработчика  </a><br></b>
+<br>
+
+<table   class="table table-stripped">
+<thead>
+<tr>
+<th>ID </th>
+<th>IMG </th>
+<th>zigbeeModel </th>
+<th>model </th>
+<th>vendor</th>
+<th>type</th>
+<th>description</th>
+<th>supports</th>
+
+</tr>
+</thead>
+<tbody>
+[#begin DEVICE_LIST#]
+<tr>
+<td>[#ID#]</td>
+<td>
+
+<img src="../templates/zigbee2mqtt/img/[#model#].jpg"   class="img-rounded" height="80" width="80">
+
+</td>
+<td>
+
+   <a href="https://www.zigbee2mqtt.io/devices/[#model#]" target="_blank">[#zigbeeModel#]</a>
+
+</td>
+
+<td>[#model#]</td>
+<td>[#vendor#]</td>
+<td>[#type#]</td>
+<td>[#description#]</td>
+<td>[#supports#]</td>
+
+</tr>
+[#end DEVICE_LIST#]
+</tbody>
 </table>
-<hr>
 
-Service:
-[#status#]
+		</div> </div> </div>
+
+
+<div class="panel-group" id="accordion">
+	<div class="panel panel-info">
+		<div class="panel-heading">
+		<a data-toggle="collapse" data-parent="#accordion" href="#binding">Управление устройствами без координатора. Binding.</a>
+		</div>
+		<div class="panel-body collapse" id="binding">
+
+   <a href="https://www.zigbee2mqtt.io/information/binding.html" target="_blank"><b>Binding</b></a>
+<br><br>
+Протоколом Zigbee предусмотрена непосредственная  привязка устройств, когда настенный выключатель (пульт на батарейках) может отправлять команду исполнительному устройству 
+минуя координатор. Это позволяет устройствам напрямую управлять друг другом без вмешательства zigbee2mqtt или любого программного обеспечения для домашней автоматизации.
+
+
+<br><br>
+Привязка диммера непосредственно к лампе или группе имеет следующие преимущества:
+<br><br>
+<b>Плавность:</b> использование binding  значительно улучшает обратную связь по диммированию, поскольку диммер непосредственно затемняет лампу и, следовательно, не должен выполнять обход программного обеспечения MQTT / домашней автоматизации. <br>
+<b>Доступность:</b> Управление устройством будет работать, даже если программное обеспечение для домашней автоматизации, zigbee2mqtt или координатор не работает.
+
+
+<br><br>
+Хорошо биндятся между собой устройства и пульты IKEA серии TRADFRI, Philips Hue и некоторые другие. Протестирована работа Реле Nue и gledopto.
+<br><br>
+<b>Привязка устройств:</b><br>   <br>
+<b>light link</b>- привязка осуществляется длительным нажатием кнопки сопряжения пульта в непосредственной близости от исполнительного устройства. Лампы икея в этот момент начинают изменять яркость в цикле. Необходимо дождаться, когда ярость стабилизируется, тогда процедура binding будет завершена.<br><br>
+<b>soft link</b>  - привязка устройств через координатор. Если исполнительное устройство управляет  несколькими конечными точками, возможно привязка нескольких точек. По умолчанию берется первая конечная точка. 
+Если ваше управляемое устройство имеет несколько конечных точек, например, left или right, необходимо точно указать ее. Для непосредственной связи через zigbee2mqtt необходимо отправить
+<code>
+zigbee2mqtt/bridge/bind/[SOURCE_DEVICE_FRIENDLY_NAME]   payload TARGET_DEVICE_FRIENDLY_NAME
+</code>
+ для привязки устройства.<br><br>
+
+Чтобы отвязать устройство, нужно отправить команду <code>
+zigbee2mqtt/bridge/unbind/[SOURCE_DEVICE_FRIENDLY_NAME] payload TARGET_DEVICE_FRIENDLY_NAME</code>
+<br><br>
+Средствами модуля отправка этих команд производится автоматически через вкладку bind. Так как это экспериментальная функция и поддерживается  очень ограниченным количеством устройств, 
+возможность работы этой функции полностью лежит на совети производителя оборудования. Всеми любимое оборудование aqara (xiaomi) пока не поддерживает данный функционал.<br><br>
+
+   <a href="https://mjdm.ru/forum/viewtopic.php?f=5&t=6011&p=96064#p96064" target="_blank"><b>Список оборудования, протестированный в режиме binding</b></a>
+
+
+
+
+
+		</div> </div> </div>
+
+
+<div class="panel-group" id="accordion">
+	<div class="panel panel-info">
+		<div class="panel-heading">
+		<a data-toggle="collapse" data-parent="#accordion" href="#remote">Управление устройствами</a>
+		</div>
+		<div class="panel-body collapse" id="remote">
+
+comming...
+
+		</div> </div> </div>
+
+
+
+
+<div class="panel-group" id="accordion">
+	<div class="panel panel-info">
+		<div class="panel-heading">
+		<a data-toggle="collapse" data-parent="#accordion" href="#serv">Описание кнопок страницы "Сервис"</a>
+		</div>
+		<div class="panel-body collapse" id="serv">
+		<p><b>
+
+
+На вкладке "Сервис" расположены кнопки управления режимами работы шлюза.Кпнопки сгруппированы по типам задач. 
+<br><br>
+Кнопками Start, Stop, Restart можно управлять процессом  zigbee2mqtt, если он установлен на одном сервере с MajorDomo.  Причем  пользователю, от которого запущен сервис (обычно www-data) должны быть предоставлены полные права для управления процессами сервера. 
+<br><br>	
+Update metrics - обновляет базу данных доступных метрик устройств после обновления модуля. В виду того, что база данных устройств довольно объемная по размеру, а также ввиду того, что пользователи могут самостоятельно менять логику работы, обновление метрик запускается вручную.
+<br><br>	
+Refresh device - запрос списка устройств со шлюзом. При нажатии данной кнопки, сервер MajorDoMo отправляет каждому из прописанных шлюзов запрос на получение списка устройств. При получении ответа от шлюза, список обновляется. Данная команда выполняется автоматически, если какой-либо из шлюзов прислал информацию о наличии нового устройства.
+<br><br>	
+Get group list - запрос списока групп с шлюзов.  <br>
+Refresh all devices - запрос списка устройств в группах.
+<br><br>
+Disable STRICT_TRANS_TABLES - отключает строгий режим SQL сервера. Данная команда нужны для случаев, когда MajorDoMo работает как-то не так, не выполняются команды, возникаю ошибки MYSQL.
+<br>
+Disable STRICT_TRANS_TABLES - включает строгий режим SQL сервера.
+<br><br>
+Start pairing mode zigbee2mqtt - включает режим сопряжения для шлюза zigbee2mqtt
+<br>
+Stop pairing mode zigbee2mqtt - отключает режим сопряжения для шлюза zigbee2mqtt
+<br><br>
+Touchlink mode for zigbee2mqtt - включает режим сброса устройств методом Touchlink. Удобно использовать при включении в сеть zigbee-ламп. После сброса они обычно самостоятельно добавляются в сеть, если включен режим сопряжения. При этом лампочка начинает моргать.
+
+
+<br><br>
+
+MQTT MESSAGE PATH/VALUE - отправка произвольной команды в mqtt сервер. После нажатия SEND происходит отправка данных VALUE в топик MQTT MESSAGE PATH.
+
+
+<br><br>
+В нижней части страницы "Сервис" отображается информация о статусе процесса zigbee2mqtt локального сервера.
+
+
+		</div> </div> </div>
+
+
+
+
+
+<div class="panel-group" id="accordion">
+	<div class="panel panel-info">
+		<div class="panel-heading">
+		<a data-toggle="collapse" data-parent="#accordion" href="#cont">Полезные ссылки</a>
+		</div>
+		<div class="panel-body collapse" id="cont">
+		<p><b>
+
+
+<a href="https://www.zigbee2mqtt.io" target="_blank">Ссылка на проект zigbee2mqtt</a><br>
+
+<a href="https://www.zigbee2mqtt.io/information/supported_devices.html" target="_blank">Список поддерживаемого оборудования</a><br>
+
+
+
+
+
+
+<a href="https://github.com/directman66/majordomo-zigbee2mqtt" target="_blank">Ссылка на репозиторий модуля</a><br>
+<a href="http://majordomo.smartliving.ru/forum/viewtopic.php?f=5&t=6011" target="_blank">Тема на форуме</a>.<br></b></br>
+		</div> </div> </div>
+
+<div class="panel-group" id="accordion">
+	<div class="panel panel-info">
+		<div class="panel-heading">
+		<a data-toggle="collapse" data-parent="#accordion" href="#bax">Поддержать разработку</a>
+		</div>
+		<div class="panel-body collapse" id="bax">
+
+[#inc rekv.html#]
+
+		</div> </div> </div>
+
+                                                                                                         
+	
+</div>
+
+
+	
+</div>
+
