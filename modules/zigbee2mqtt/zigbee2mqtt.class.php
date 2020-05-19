@@ -859,7 +859,8 @@ $msgtype=$json->{'type'};
         debmes($arr3, 'zm2');
 
 	//$need = array_search(explode('/',$path)[1], $arr2); 
-	$need = in_array(explode('/',$path)[1], $arr3); 
+	if (is_array(explode('/',$path)[1]))	
+	{$need = in_array(explode('/',$path)[1], $arr3); }
         //debmes($path, 'zm2');
 	//debmes(explode('/',$path)[1], 'zm2');
 	//debmes('need '.$need, 'zm2');
