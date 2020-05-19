@@ -847,6 +847,19 @@ $par1['toZigbee'] = "";
 SQLInsert('zigbee2mqtt_devices_list', $par1);
 
 
+//8718699693985 
+$par1['zigbeeModel'] = '8718699693985 ';
+$par1['model'] = "8718699693985 ";		 
+$par1['vendor'] = "Philips";		 
+$par1['type'] = "remote";		 	 
+$par1['description'] = "Hue smart button";		 
+$par1['extend'] = "";		 
+$par1['supports'] = "action";		 
+$par1['fromZigbee'] = "";		 
+$par1['toZigbee'] = "";		 
+SQLInsert('zigbee2mqtt_devices_list', $par1);
+
+
 $par1['zigbeeModel'] = 'LLC012';
 $par1['model'] = "7299760PH";		 
 $par1['vendor'] = "Philips";		 
