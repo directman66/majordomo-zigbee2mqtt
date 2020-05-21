@@ -996,7 +996,7 @@ $par2['zigbeeModel'] = 'WSDCGQ01LM';
 $par2['type'] = "sensor";
 $par2['state_topic'] =  "<Z2M_PATH>/<FRIENDLY_NAME>";
 $par2['availability_topic'] = "<Z2M_PATH>/bridge/state";
-$par2['unit_of_measurement'] = "Р В РІР‚СљР Р†Р вЂљРЎв„ўР В РІР‚в„ўР вЂ™Р’В°C";
+$par2['unit_of_measurement'] = "Р В Р’В Р Р†Р вЂљРЎС™Р В Р вЂ Р В РІР‚С™Р РЋРІвЂћСћР В Р’В Р Р†Р вЂљРІвЂћСћР В РІР‚в„ўР вЂ™Р’В°C";
 $par2['device_class'] = "temperature";
 $par2['value_template'] = "temperature";
 $par2['json_attributes'] = "" ;
@@ -1095,7 +1095,7 @@ $par2['zigbeeModel'] = 'WSDCGQ11LM';
 $par2['type'] = "sensor";
 $par2['state_topic'] =  "<Z2M_PATH>/<FRIENDLY_NAME>";
 $par2['availability_topic'] = "<Z2M_PATH>/bridge/state";
-$par2['unit_of_measurement'] = "Р В РІР‚СљР Р†Р вЂљРЎв„ўР В РІР‚в„ўР вЂ™Р’В°C";
+$par2['unit_of_measurement'] = "Р В Р’В Р Р†Р вЂљРЎС™Р В Р вЂ Р В РІР‚С™Р РЋРІвЂћСћР В Р’В Р Р†Р вЂљРІвЂћСћР В РІР‚в„ўР вЂ™Р’В°C";
 $par2['device_class'] = "";
 $par2['value_template'] = "temperature";
 $par2['json_attributes'] = "" ;
@@ -4495,7 +4495,7 @@ $par2['zigbeeModel'] = '9290012607';
 $par2['type'] = "sensor";
 $par2['state_topic'] =  "<Z2M_PATH>/<FRIENDLY_NAME>";
 $par2['availability_topic'] = "<Z2M_PATH>/bridge/state";
-$par2['unit_of_measurement'] = "Р В РІР‚СљР Р†Р вЂљРЎв„ўР В РІР‚в„ўР вЂ™Р’В°C";
+$par2['unit_of_measurement'] = "Р В Р’В Р Р†Р вЂљРЎС™Р В Р вЂ Р В РІР‚С™Р РЋРІвЂћСћР В Р’В Р Р†Р вЂљРІвЂћСћР В РІР‚в„ўР вЂ™Р’В°C";
 $par2['device_class'] = "temperature";
 $par2['value_template'] = "temperature";
 $par2['json_attributes'] = "linkquality,battery,voltage";
@@ -5720,7 +5720,7 @@ $par2['zigbeeModel'] = 'AC01353010G';
 $par2['type'] = "sensor";
 $par2['state_topic'] =  "<Z2M_PATH>/<FRIENDLY_NAME>";
 $par2['availability_topic'] = "<Z2M_PATH>/bridge/state";
-$par2['unit_of_measurement'] = "Р В РІР‚СљР Р†Р вЂљРЎв„ўР В РІР‚в„ўР вЂ™Р’В°C";
+$par2['unit_of_measurement'] = "Р В Р’В Р Р†Р вЂљРЎС™Р В Р вЂ Р В РІР‚С™Р РЋРІвЂћСћР В Р’В Р Р†Р вЂљРІвЂћСћР В РІР‚в„ўР вЂ™Р’В°C";
 $par2['device_class'] = "";
 $par2['value_template'] = "temperature";
 $par2['json_attributes'] = "";
@@ -7219,6 +7219,44 @@ SQLInsert('zigbee2mqtt_devices_command', $par2);
 
 
 
+//GL-C-007-2ID;
+$par2['zigbeeModel'] = 'GL-C-007-2ID';
+$par2['type'] = "light";
+$par2['state_topic'] =  "<Z2M_PATH>/<FRIENDLY_NAME>";
+$par2['availability_topic'] = "<Z2M_PATH>/bridge/state";
+$par2['brightness'] = "true";
+$par2['color_temp'] = "true";
+$par2['xy'] = "true";
+$par2['command_topic'] = "<Z2M_PATH>/<FRIENDLY_NAME>/white/set"  ;
+$par2['payload_on'] = "";
+$par2['payload_off'] = "";
+$par2['value_template'] = "white";
+$par2['json_attributes'] = "";
+$par2['device_class'] = "";
+$par2['unit_of_measurement'] = "";
+$par2['command_value'] = "white";
+SQLInsert('zigbee2mqtt_devices_command', $par2);
+
+//GL-C-007-2ID;
+$par2['zigbeeModel'] = 'GL-C-007-2ID';
+$par2['type'] = "light";
+$par2['state_topic'] =  "<Z2M_PATH>/<FRIENDLY_NAME>";
+$par2['availability_topic'] = "<Z2M_PATH>/bridge/state";
+$par2['brightness'] = "true";
+$par2['color_temp'] = "true";
+$par2['xy'] = "true";
+$par2['command_topic'] = "<Z2M_PATH>/<FRIENDLY_NAME>/rgb/set"  ;
+$par2['payload_on'] = "";
+$par2['payload_off'] = "";
+$par2['value_template'] = "rgb";
+$par2['json_attributes'] = "";
+$par2['device_class'] = "";
+$par2['unit_of_measurement'] = "";
+$par2['command_value'] = "rgb";
+SQLInsert('zigbee2mqtt_devices_command', $par2);
+
+
+
 ////////////////////////////////////////////////
 ////////////////////////////////////////////////
 ////////////////////////////////////////////////
@@ -7964,7 +8002,7 @@ $par2['zigbeeModel'] = '3326-L';
 $par2['type'] = "sensor";
 $par2['state_topic'] =  "<Z2M_PATH>/<FRIENDLY_NAME>";
 $par2['availability_topic'] = "<Z2M_PATH>/bridge/state";
-$par2['unit_of_measurement'] = "Р В РІР‚СљР Р†Р вЂљРЎв„ўР В РІР‚в„ўР вЂ™Р’В°C";
+$par2['unit_of_measurement'] = "Р В Р’В Р Р†Р вЂљРЎС™Р В Р вЂ Р В РІР‚С™Р РЋРІвЂћСћР В Р’В Р Р†Р вЂљРІвЂћСћР В РІР‚в„ўР вЂ™Р’В°C";
 $par2['device_class'] = "temperature";
 $par2['value_template'] = "temperature";
 $par2['json_attributes'] = "" ;
