@@ -208,31 +208,24 @@ define("ZMQTT_DEBUG", "1");
 //debmes("SELECT * FROM zigbee2mqtt WHERE ID='".$id."'", 'zigbee2mqtt_setproperty');
   $rec=SQLSelectOne("SELECT * FROM zigbee2mqtt WHERE ID='".$id."'");
 
-$rec2=SQLSelectOne('select * from zigbee2mqtt where dev_id='.$rec['DEV_ID'].' and metrika="state"');
+//$rec2=SQLSelectOne('select * from zigbee2mqtt where dev_id='.$rec['DEV_ID'].' and metrika="state"');
 
 
 // debmes('Нужно изменить значение id='.$id.' на '.$value .' для устройства DEV_ID='.$rec['DEV_ID']. '('.$rec2['TITLE'].')', 'zigbee2mqtt_setproperty');
 
 
   if ($rec['ID'] && $rec['METRIKA']=='rgbcolor') {
-
 $rec2=SQLSelectOne('select * from zigbee2mqtt where dev_id='.$rec['DEV_ID'].' and metrika="state"');
 $mqttsendpath=$rec2['PATH_WRITE'];
-
 //if ($value='000000' ) {$br=0;} else {$br=255; }
 $br=255; 
-
 if ($value=='000000' ) {
-
 //$st='OFF';
 $mqttsendvalue='{"state": "OFF"}';
-
 } else {$mqttsendvalue='{"state": "'.$st.'",  "brightness": '.$br.',  "color": {"hex": "#'.$value.'"}}';}
 //debmes("публикую ".$mqttsendpath.' '.$mqttsendvalue, 'zigbee2mqtt_setproperty');
   $this->sendcommand($mqttsendpath, $mqttsendvalue);
 }
-
-
   if (!$rec['ID'] || !$rec['PATH']) {
 //debmes('Не хватает данных', 'zigbee2mqtt_setproperty');
    return 0;
