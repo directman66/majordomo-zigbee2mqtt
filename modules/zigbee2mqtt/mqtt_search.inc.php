@@ -343,6 +343,8 @@ $basa=SQLSelectOne($sql);
  if ($basa['model']=='GL-C-008')  $res[$i]['XY']='1';
  if ($basa['model']=='GL-C-007')  $res[$i]['COLOR_TEMP']='1';
  if ($basa['model']=='GL-C-007')  $res[$i]['XY']='1';
+ if ($basa['model']=='GL-C-007-2ID')  $res[$i]['COLOR_TEMP']='1';
+ if ($basa['model']=='GL-C-007-2ID')  $res[$i]['XY']='1';
 
 
  if ($basa['model']=='LED1624G9')  $res[$i]['XY']='1';
