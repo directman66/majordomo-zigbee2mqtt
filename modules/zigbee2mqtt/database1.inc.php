@@ -2939,6 +2939,20 @@ $par1['toZigbee'] = "";
 SQLInsert('zigbee2mqtt_devices_list', $par1);							
 
 
+
+//TS0001
+$par1['zigbeeModel'] = 'TS0001';
+$par1['model'] = "TS0001";
+$par1['type'] = "relay";
+$par1['vendor'] = "TUYA";
+$par1['description'] = "Valve control";
+$par1['extend'] = "";
+$par1['supports'] = "on/off";
+$par1['fromZigbee'] = "";
+$par1['toZigbee'] = "";
+SQLInsert('zigbee2mqtt_devices_list', $par1);
+
+
 // GDKES-02TZXD
 $par1['zigbeeModel'] = 'TS0012';
 $par1['model'] = "GDKES-02TZXD";
@@ -2975,8 +2989,6 @@ $par1['supports'] = "on/off";
 $par1['fromZigbee'] = "";
 $par1['toZigbee'] = "";
 SQLInsert('zigbee2mqtt_devices_list', $par1);
-
-
 
 }
 
