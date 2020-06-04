@@ -604,6 +604,57 @@ zigbee2mqtt/bridge/unbind/[SOURCE_DEVICE_FRIENDLY_NAME] payload TARGET_DEVICE_FR
 <div class="panel-group" id="accordion">
 	<div class="panel panel-info">
 		<div class="panel-heading">
+		<a data-toggle="collapse" data-parent="#accordion" href="#method">Управление устройствами из методов и сценариев</a>
+		</div>
+		<div class="panel-body collapse" id="method">
+
+<b>Пример сценария Majoromo для открытия/закрытия штор прикода Aqara</b><br>
+Создатс "Простое устройство" Openable1. В методы Open/Close добавляете следующий код:<br>
+<code>
+include_once(DIR_MODULES . 'zigbee2mqtt/zigbee2mqtt.class.php');<br>
+$z2m = new zigbee2mqtt();<br>
+$z2m->sendcommand('zigbee2mqtt/0x00158D0002EE1285/set', '{"state":"open"}');<br>
+</code>
+где  0x00158D0002EE1285  - IEEE адрес вашего привода.
+
+		</div> </div> </div>
+
+
+
+<div class="panel-group" id="accordion">
+	<div class="panel panel-info">
+		<div class="panel-heading">
+		<a data-toggle="collapse" data-parent="#accordion" href="#gr">Группы</a>
+		</div>
+		<div class="panel-body collapse" id="gr">
+
+
+Объединение устройств в группы позволяет устройствам подписываться на групповые команлы, тем самым избавляя пользователя или систему домашней автоматизации в необходимости отправки команд каждому устройству. Также намного ускоряется время реакции устройств по сравнению с циклической отправкой.
+<br><br>
+Добавление устройств в группы производится со вкладки Edit Device. Можно создать новую группу или выбрать из имеющихся.
+
+
+<br>
+<img src="https://github.com/slsys/Gateway/raw/master/img/grouppp.png"   >
+<br>
+Далее согласно протоколу zigbee2mqtt создается новое устройство с именем группы. Отправляя одну команду в группу можно изменить режим работы всех включенных в нее устройств.
+<br>
+Протоколом zigbee предусмотена поддержка устройствами нахождение в нескольких группах. Перечитать список групп, куда входит устройство можно со вкладки Parameters
+<br>
+<img src="https://github.com/slsys/Gateway/raw/master/img/grouppp2.png"   >
+<br>
+В панели администратора можно выбрать режим отображения "только группы".
+<br>
+<img src="https://github.com/slsys/Gateway/raw/master/img/grouppp3.png"   >
+<br>
+
+		</div> </div> </div>
+
+
+
+<div class="panel-group" id="accordion">
+	<div class="panel panel-info">
+		<div class="panel-heading">
 		<a data-toggle="collapse" data-parent="#accordion" href="#serv">Описание кнопок страницы "Сервис"</a>
 		</div>
 		<div class="panel-body collapse" id="serv">
