@@ -608,13 +608,13 @@ zigbee2mqtt/bridge/unbind/[SOURCE_DEVICE_FRIENDLY_NAME] payload TARGET_DEVICE_FR
 		</div>
 		<div class="panel-body collapse" id="method">
 
-<b>Пример сценария Majoromo для открытия/закрытия штор прикода Aqara</b><br>
-Создатс "Простое устройство" Openable1. В методы Open/Close добавляете следующий код:<br>
+<b>Пример сценария Majoromo для открытия/закрытия штор прикода Aqara</b><br><br>
+Необходимо создать "Простое устройство" Openable1, в методы Open/Close добавить следующий код:<br><br>
 <code>
 include_once(DIR_MODULES . 'zigbee2mqtt/zigbee2mqtt.class.php');<br>
 $z2m = new zigbee2mqtt();<br>
 $z2m->sendcommand('zigbee2mqtt/0x00158D0002EE1285/set', '{"state":"open"}');<br>
-</code>
+</code><br>
 где  0x00158D0002EE1285  - IEEE адрес вашего привода.
 
 		</div> </div> </div>
