@@ -2636,6 +2636,28 @@ $par1['fromZigbee'] = "";
 $par1['toZigbee'] = "";
 SQLInsert('zigbee2mqtt_devices_list', $par1);
 
+$par1['zigbeeModel'] = "TI0001-switch";
+$par1['model'] = "TI0001-switch";
+$par1['vendor'] = "Livolo";
+$par1['type'] = "switch";
+$par1['description'] = "LIVOLO Smart Switch (New)";
+$par1['supports'] = "";
+$par1['extend'] = "";
+$par1['fromZigbee'] = "";
+$par1['toZigbee'] = "";
+SQLInsert('zigbee2mqtt_devices_list', $par1);
+
+$par1['zigbeeModel'] = "TI0001-socket";
+$par1['model'] = "TI0001-socket";
+$par1['vendor'] = "Livolo";
+$par1['type'] = "switch";
+$par1['description'] = "LIVOLO Smart Socket";
+$par1['supports'] = "";
+$par1['extend'] = "";
+$par1['fromZigbee'] = "";
+$par1['toZigbee'] = "";
+SQLInsert('zigbee2mqtt_devices_list', $par1);
+
 //LLKZMK11LM
 $par1['zigbeeModel'] = "lumi.relay.c2acn01";
 $par1['model'] = "LLKZMK11LM";
