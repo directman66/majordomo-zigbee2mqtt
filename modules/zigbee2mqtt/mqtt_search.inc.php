@@ -311,6 +311,7 @@ $basa=SQLSelectOne($sql);
  if ($ttype=='dimmer')  $res[$i]['CHANGEABLE']='1';
  if ($ttype=='openable')  $res[$i]['CHANGEABLE']='4';
  if ( ($ttype=='relay')) $res[$i]['CHANGEABLE']='1';
+ if ( ($ttype=='plug')) $res[$i]['CHANGEABLE']='1';
  if ( ($ttype=='switch') && (strpos($basa['description'],'double')>0)) $res[$i]['CHANGEABLE']='2';
  if ( ($ttype=='switch')) $res[$i]['CHANGEABLE']='1';
 
