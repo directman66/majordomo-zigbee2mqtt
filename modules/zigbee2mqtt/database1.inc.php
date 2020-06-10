@@ -2990,6 +2990,19 @@ $par1['fromZigbee'] = "";
 $par1['toZigbee'] = "";
 SQLInsert('zigbee2mqtt_devices_list', $par1);
 
+
+// TS0011
+$par1['zigbeeModel'] = 'MCLH-03';
+$par1['model'] = "RICI01";
+$par1['type'] = "plug";
+$par1['vendor'] = "LifeControl";
+$par1['description'] = "Power plug";
+$par1['extend'] = "";
+$par1['supports'] = "on/off, power measurement";
+$par1['fromZigbee'] = "";
+$par1['toZigbee'] = "";
+SQLInsert('zigbee2mqtt_devices_list', $par1);
+
 }
 
 
