@@ -2713,6 +2713,21 @@ $par1['fromZigbee'] = "";
 $par1['toZigbee'] = "";
 SQLInsert('zigbee2mqtt_devices_list', $par1);
 
+
+
+//DIY_RuZ
+$par1['zigbeeModel'] = "DIYRuZ_R8_8";
+$par1['model'] = "DIYRuZ_R4_5";
+$par1['vendor'] = "DIYRuZ_R8_8";
+$par1['type'] = "relay";
+$par1['description'] = "DiY 8 Relays + 8 switches + 1 buzzer";
+$par1['supports'] = "";
+$par1['extend'] = "";
+$par1['fromZigbee'] = "";
+$par1['toZigbee'] = "";
+SQLInsert('zigbee2mqtt_devices_list', $par1);
+
+
 //DIY_RuZ
 $par1['zigbeeModel'] = "DIYRuZ_R4_5";
 $par1['model'] = "DIYRuZ_magnet";
