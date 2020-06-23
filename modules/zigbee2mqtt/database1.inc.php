@@ -2700,13 +2700,25 @@ $par1['toZigbee'] = "";
 SQLInsert('zigbee2mqtt_devices_list', $par1);
 
 
+//DIYRuZ_FreePad
+$par1['zigbeeModel'] = "DIYRuZ_FreePad";
+$par1['model'] = "DIYRuZ_FreePad";
+$par1['vendor'] = "DIYRuZ";
+$par1['type'] = "relay";
+$par1['description'] = "DIYRuZ_FreePad";
+$par1['supports'] = "";
+$par1['extend'] = "";
+$par1['fromZigbee'] = "";
+$par1['toZigbee'] = "";
+SQLInsert('zigbee2mqtt_devices_list', $par1);
+
 
 //DIY_RuZ
 $par1['zigbeeModel'] = "DIYRuZ_R4_5";
 $par1['model'] = "DIYRuZ_R4_5";
 $par1['vendor'] = "DIYRuZ";
 $par1['type'] = "relay";
-$par1['description'] = "DiY 4 Relays + 4 switches + 1 buzzer";
+$par1['description'] = "DiY 4 Relays + 4 switches + 1 buzzer (modkam.ru)";
 $par1['supports'] = "";
 $par1['extend'] = "";
 $par1['fromZigbee'] = "";
@@ -2716,11 +2728,23 @@ SQLInsert('zigbee2mqtt_devices_list', $par1);
 
 
 //DIY_RuZ
-$par1['zigbeeModel'] = "DIYRuZ_R8_8";
-$par1['model'] = "DIYRuZ_R4_5";
-$par1['vendor'] = "DIYRuZ_R8_8";
+$par1['zigbeeModel'] = "DIYRuZ_R4_4";
+$par1['model'] = "DIYRuZ_R4_4";
+$par1['vendor'] = "DIYRuZ";
 $par1['type'] = "relay";
-$par1['description'] = "DiY 8 Relays + 8 switches + 1 buzzer";
+$par1['description'] = "DiY 4 Relays + 4 switches (modkam.ru)";
+$par1['supports'] = "";
+$par1['extend'] = "";
+$par1['fromZigbee'] = "";
+$par1['toZigbee'] = "";
+SQLInsert('zigbee2mqtt_devices_list', $par1);
+
+//DIY_RuZ
+$par1['zigbeeModel'] = "DIYRuZ_R8_8";
+$par1['model'] = "DIYRuZ_R8_8";
+$par1['vendor'] = "DIYRuZ";
+$par1['type'] = "relay";
+$par1['description'] = "DiY 8 Relays + 8 switches + 1 buzzer (modkam.ru)";
 $par1['supports'] = "";
 $par1['extend'] = "";
 $par1['fromZigbee'] = "";
