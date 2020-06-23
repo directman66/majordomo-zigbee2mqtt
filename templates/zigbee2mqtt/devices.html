@@ -385,19 +385,6 @@
 
 
 [#if CHANGEABLE="4"#]
-<!--
-   <a href="?view_mode=device_open&id=[#DEVID#]&tab=&location=<#LOCATION_ID#>&type_id=<#ZIGBEE2MQTTDEV#>&vendor_id=<#VENDOR#>&vid_id=<#VID#>&group_list_id=<#group_list_id#>&friendlyname=[#IEEEADDR#]&gw=[#GW#]"  class="btn btn-default btn-round" title="Открыть"> 
-              <span class="glyphicon glyphicon-resize-full"></span>
-</a>
-
-   <a href="?view_mode=device_stop&id=[#DEVID#]&tab=&location=<#LOCATION_ID#>&type_id=<#ZIGBEE2MQTTDEV#>&vendor_id=<#VENDOR#>&vid_id=<#VID#>&group_list_id=<#group_list_id#>&friendlyname=[#IEEEADDR#]&gw=[#GW#]" class="btn btn-default btn-round"  title="Остановить">
-              <span class="glyphicon glyphicon-remove"></span>
- </a>
-
-   <a href="?view_mode=device_close&id=[#DEVID#]&tab=&location=<#LOCATION_ID#>&type_id=<#ZIGBEE2MQTTDEV#>&vendor_id=<#VENDOR#>&vid_id=<#VID#>&group_list_id=<#group_list_id#>&friendlyname=[#IEEEADDR#]&gw=[#GW#]" class="btn btn-default btn-round"  title="Закрыть">
-              <span class="glyphicon glyphicon-resize-small"></span>
- </a>
--->
 
    <a href="#"  onclick="return switch_z2m([#DEVID#],'state','open','[#IEEEADDR#]','[#GW#]', '','result[#ID#]');" class="btn btn-default btn-round" title="Открыть"> 
               <span class="glyphicon glyphicon-resize-full"></span>
@@ -411,6 +398,45 @@
 
 &nbsp;
 [#endif#]
+
+[#if CHANGEABLE="R4"#]
+
+   <a href="#"  onclick="return switch_z2m([#DEVID#],'state_l1','open','[#IEEEADDR#]','[#GW#]', '','result[#ID#]');" class="btn btn-default btn-round" title="Переключить реле 1"> 
+              <span class="glyphicon glyphicon-resize-full">1</span></a>
+   <a href="#"  onclick="return switch_z2m([#DEVID#],'state_l2','open','[#IEEEADDR#]','[#GW#]', '','result[#ID#]');" class="btn btn-default btn-round" title="Переключить реле 2"> 
+              <span class="glyphicon glyphicon-resize-full">2</span></a>
+   <a href="#"  onclick="return switch_z2m([#DEVID#],'state_l3','open','[#IEEEADDR#]','[#GW#]', '','result[#ID#]');" class="btn btn-default btn-round" title="Переключить реле 3"> 
+              <span class="glyphicon glyphicon-resize-full">3</span></a>
+   <a href="#"  onclick="return switch_z2m([#DEVID#],'state_l4','open','[#IEEEADDR#]','[#GW#]', '','result[#ID#]');" class="btn btn-default btn-round" title="Переключить реле 4"> 
+              <span class="glyphicon glyphicon-resize-full">4</span></a>
+
+&nbsp;
+[#endif#]
+
+
+[#if CHANGEABLE="R8"#]
+
+   <a href="#"  onclick="return switch_z2m([#DEVID#],'state_l1','open','[#IEEEADDR#]','[#GW#]', '','result[#ID#]');" class="btn btn-default btn-round" title="Переключить реле 1"> 
+              <span class="glyphicon glyphicon-resize-full">1</span></a>
+   <a href="#"  onclick="return switch_z2m([#DEVID#],'state_l2','open','[#IEEEADDR#]','[#GW#]', '','result[#ID#]');" class="btn btn-default btn-round" title="Переключить реле 2"> 
+              <span class="glyphicon glyphicon-resize-full">2</span></a>
+   <a href="#"  onclick="return switch_z2m([#DEVID#],'state_l3','open','[#IEEEADDR#]','[#GW#]', '','result[#ID#]');" class="btn btn-default btn-round" title="Переключить реле 3"> 
+              <span class="glyphicon glyphicon-resize-full">3</span></a>
+   <a href="#"  onclick="return switch_z2m([#DEVID#],'state_l4','open','[#IEEEADDR#]','[#GW#]', '','result[#ID#]');" class="btn btn-default btn-round" title="Переключить реле 4"> 
+              <span class="glyphicon glyphicon-resize-full">4</span></a>
+   <a href="#"  onclick="return switch_z2m([#DEVID#],'state_l5','open','[#IEEEADDR#]','[#GW#]', '','result[#ID#]');" class="btn btn-default btn-round" title="Переключить реле 5"> 
+              <span class="glyphicon glyphicon-resize-full">5</span></a>
+   <a href="#"  onclick="return switch_z2m([#DEVID#],'state_l6','open','[#IEEEADDR#]','[#GW#]', '','result[#ID#]');" class="btn btn-default btn-round" title="Переключить реле 6"> 
+              <span class="glyphicon glyphicon-resize-full">6</span></a>
+   <a href="#"  onclick="return switch_z2m([#DEVID#],'state_l7','open','[#IEEEADDR#]','[#GW#]', '','result[#ID#]');" class="btn btn-default btn-round" title="Переключить реле 7"> 
+              <span class="glyphicon glyphicon-resize-full">7</span></a>
+   <a href="#"  onclick="return switch_z2m([#DEVID#],'state_l8','open','[#IEEEADDR#]','[#GW#]', '','result[#ID#]');" class="btn btn-default btn-round" title="Переключить реле 8"> 
+              <span class="glyphicon glyphicon-resize-full">8</span></a>
+
+
+&nbsp;
+[#endif#]
+
 
 
 
