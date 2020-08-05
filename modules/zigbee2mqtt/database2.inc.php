@@ -9893,8 +9893,7 @@ $par2['xy'] = "";
 $par2['command_value'] = "state_l1";
 SQLInsert('zigbee2mqtt_devices_command', $par2);
 
-//X712A  
-https://www.zigbee2mqtt.io/devices/X703A.html
+//X712A  https://www.zigbee2mqtt.io/devices/X703A.html
 $par2['zigbeeModel'] = 'X703A';
 $par2['type'] = "switch";
 $par2['state_topic'] =  "<Z2M_PATH>/<FRIENDLY_NAME>";
@@ -9913,8 +9912,7 @@ $par2['command_value'] = "state_l2";
 SQLInsert('zigbee2mqtt_devices_command', $par2);
 
 
-//X712A  
-https://www.zigbee2mqtt.io/devices/X703A.html
+//X712A  https://www.zigbee2mqtt.io/devices/X703A.html
 $par2['zigbeeModel'] = 'X703A';
 $par2['type'] = "switch";
 $par2['state_topic'] =  "<Z2M_PATH>/<FRIENDLY_NAME>";
