@@ -203,7 +203,7 @@ define("ZMQTT_DEBUG", "1");
 * @access public
 */
  function setProperty($id, $value, $set_linked=0) {
-// debmes('Нужно изменить значение id='.$id.' на '.$value, 'zigbee2mqtt_setproperty');
+ debmes('Нужно изменить значение id='.$id.' на '.$value, 'zigbee2mqtt_setproperty');
 
 //debmes("SELECT * FROM zigbee2mqtt WHERE ID='".$id."'", 'zigbee2mqtt_setproperty');
   $rec=SQLSelectOne("SELECT * FROM zigbee2mqtt WHERE ID='".$id."'");
@@ -4301,6 +4301,7 @@ $sql="SELECT * FROM zigbee2mqtt WHERE LINKED_OBJECT LIKE '".DBSafe($object)."' A
 // debmes($sql, 'zigbee2mqtt_sethandle');
 // debmes($object.":". $property.":". $value, 'zigbee2mqtt_11');
    $mqtt_properties=SQLSelect($sql);
+debmes($mqtt_properties, 'zigbee2mqtt_sethandle');
 
    $total=count($mqtt_properties);
 // debmes($total, 'zigbee2mqtt_11');
@@ -4308,7 +4309,7 @@ $sql="SELECT * FROM zigbee2mqtt WHERE LINKED_OBJECT LIKE '".DBSafe($object)."' A
 
    if ($total) {
     for($i=0;$i<$total;$i++) {
-//debmes('Запускаем setProperty '. $mqtt_properties[$i]['ID'].":".$value, 'zigbee2mqtt_sethandle');
+debmes('Проверяем setProperty '. $mqtt_properties[$i]['ID'].":".$value, 'zigbee2mqtt_sethandle');
 
      //определяем,на каком шлюзе сейчас девайс
 
@@ -4316,18 +4317,32 @@ $sql="SELECT * FROM zigbee2mqtt WHERE LINKED_OBJECT LIKE '".DBSafe($object)."' A
      $devid=$mqtt_properties[$i]['DEV_ID'];
      $gw=SQLSelectOne('select * FROM zigbee2mqtt_devices where ID='.$devid)['GW'];
 
-
+debmes('select * FROM zigbee2mqtt_devices where ID='.$devid, 'zigbee2mqtt_sethandle');
+debmes('$gw='.$gw, 'zigbee2mqtt_sethandle');
+debmes("mqtt_properties[$i]['PATH']=".$mqtt_properties[$i]['PATH'], 'zigbee2mqtt_sethandle');
 
      $pos=strripos($mqtt_properties[$i]['PATH'], $gw);
 
 // debmes($devid.":". $gw.":". $pos, 'zigbee2mqtt_11');
      
-if ($pos === false) {
+//if ($pos === false) {
+
+//проверяем, есть ли данный девайс на другом шлюзе
+//if (strlen($gw)>0) {
+//$sql='update zigbee2mqtt_devices  set GW="'.$gw." where ID=".$devid;
+//     $gw=SQLExec($sql	);
+//}
+
+
 //    echo "К сожалению, ($needle) не найдена в ($haystack)";
+//debmes('$pos='.strripos($mqtt_properties[$i]['PATH']).'='.$pos. ' '. $gw, 'zigbee2mqtt_sethandle');
+//debmes("К сожалению, ($needle) не найдена в ($haystack)", 'zigbee2mqtt_sethandle');
 // debmes('запись с другого шлюза', 'zigbee2mqtt_11');
 
-} else {
+//} else
+ {
 // debmes('запись с нашего шлюза', 'zigbee2mqtt_11');
+debmes('Запускаем setProperty '. $mqtt_properties[$i]['ID'].":".$value, 'zigbee2mqtt_sethandle');
      $this->setProperty($mqtt_properties[$i]['ID'], $value);
 }
 
