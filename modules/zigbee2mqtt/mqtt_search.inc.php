@@ -342,11 +342,11 @@ $basa=SQLSelectOne($sql);
 
 
 
-// if ($basa['model']=='LTW010')  $res[$i]['COLOR_TEMP']='1';	
- if ($basa['model']=='LTW010')  $res[$i]['XY']='1';	
+ if ($basa['model']=='LTW010')  $res[$i]['COLOR_TEMP']='1';	
+// if ($basa['model']=='LTW010')  $res[$i]['XY']='1';	
 
-// if ($basa['model']=='8718696548738')  $res[$i]['COLOR_TEMP']='1';	
- if ($basa['model']=='8718696548738')  $res[$i]['XY']='1';	
+ if ($basa['model']=='8718696548738')  $res[$i]['COLOR_TEMP']='1';	
+// if ($basa['model']=='8718696548738')  $res[$i]['XY']='1';	
 
 
 
