@@ -342,6 +342,8 @@ $basa=SQLSelectOne($sql);
 
 
 
+ if ($basa['model']=='LTW010')  $res[$i]['COLOR_TEMP']='1';	
+ if ($basa['model']=='LTW010')  $res[$i]['XY']='1';	
 
 
  if ($basa['model']=='GL-C-008')  $res[$i]['COLOR_TEMP']='1';
