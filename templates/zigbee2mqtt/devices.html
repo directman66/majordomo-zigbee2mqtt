@@ -1,5 +1,6 @@
 <!-- table dev_sonoff_devices search -->
 
+
 <script type="application/javascript">
     function switch_z2m(device_id, param, value,friendlyname, gw, settt,result_id) {
         var url='<#ROOTHTML#>ajax/zigbee2mqtt.html?device='+device_id+'&command='+encodeURIComponent(param)+'&value='+value+'&friendlyname='+friendlyname+'&gw='+gw+'&settt='+settt;
@@ -413,15 +414,55 @@
 
 [#if CHANGEABLE="R8"#]
 
-
+[#if CHANGEABLE1="1"#]
+   <a href="#"  onclick="return switch_z2m([#DEVID#],'state_l1','toggle','[#IEEEADDR#]','[#GW#]', '','result[#ID#]');" class="btn btn-warning btn-round" title="Переключить реле 1">1</a> 
+[#else#]
    <a href="#"  onclick="return switch_z2m([#DEVID#],'state_l1','toggle','[#IEEEADDR#]','[#GW#]', '','result[#ID#]');" class="btn btn-default btn-round" title="Переключить реле 1">1</a> 
+[#endif#]
+
+[#if CHANGEABLE2="1"#]
+   <a href="#"  onclick="return switch_z2m([#DEVID#],'state_l2','toggle','[#IEEEADDR#]','[#GW#]', '','result[#ID#]');" class="btn btn-warning btn-round" title="Переключить реле 2">2</a> 
+[#else#]
    <a href="#"  onclick="return switch_z2m([#DEVID#],'state_l2','toggle','[#IEEEADDR#]','[#GW#]', '','result[#ID#]');" class="btn btn-default btn-round" title="Переключить реле 2">2</a> 
+[#endif#]
+
+
+[#if CHANGEABLE3="1"#]
+   <a href="#"  onclick="return switch_z2m([#DEVID#],'state_l3','toggle','[#IEEEADDR#]','[#GW#]', '','result[#ID#]');" class="btn btn-warning btn-round" title="Переключить реле 3">3</a> 
+[#else#]
    <a href="#"  onclick="return switch_z2m([#DEVID#],'state_l3','toggle','[#IEEEADDR#]','[#GW#]', '','result[#ID#]');" class="btn btn-default btn-round" title="Переключить реле 3">3</a> 
+[#endif#]
+
+[#if CHANGEABLE4="1"#]
+   <a href="#"  onclick="return switch_z2m([#DEVID#],'state_l4','toggle','[#IEEEADDR#]','[#GW#]', '','result[#ID#]');" class="btn btn-warning btn-round" title="Переключить реле 4">4</a> 
+[#else#]
    <a href="#"  onclick="return switch_z2m([#DEVID#],'state_l4','toggle','[#IEEEADDR#]','[#GW#]', '','result[#ID#]');" class="btn btn-default btn-round" title="Переключить реле 4">4</a> 
+[#endif#]
+[#if CHANGEABLE5="1"#]
+   <a href="#"  onclick="return switch_z2m([#DEVID#],'state_l5','toggle','[#IEEEADDR#]','[#GW#]', '','result[#ID#]');" class="btn btn-warning btn-round" title="Переключить реле 5">5</a> 
+[#else#]
    <a href="#"  onclick="return switch_z2m([#DEVID#],'state_l5','toggle','[#IEEEADDR#]','[#GW#]', '','result[#ID#]');" class="btn btn-default btn-round" title="Переключить реле 5">5</a> 
+[#endif#]
+
+[#if CHANGEABLE6="1"#]
+   <a href="#"  onclick="return switch_z2m([#DEVID#],'state_l6','toggle','[#IEEEADDR#]','[#GW#]', '','result[#ID#]');" class="btn btn-warning btn-round" title="Переключить реле 6">6</a> 
+[#else#]
    <a href="#"  onclick="return switch_z2m([#DEVID#],'state_l6','toggle','[#IEEEADDR#]','[#GW#]', '','result[#ID#]');" class="btn btn-default btn-round" title="Переключить реле 6">6</a> 
+[#endif#]
+[#if CHANGEABLE7="1"#]
+   <a href="#"  onclick="return switch_z2m([#DEVID#],'state_l7','toggle','[#IEEEADDR#]','[#GW#]', '','result[#ID#]');" class="btn btn-warning btn-round" title="Переключить реле 7">7</a> 
+[#else#]
    <a href="#"  onclick="return switch_z2m([#DEVID#],'state_l7','toggle','[#IEEEADDR#]','[#GW#]', '','result[#ID#]');" class="btn btn-default btn-round" title="Переключить реле 7">7</a> 
+[#endif#]
+
+[#if CHANGEABLE8="1"#]
+   <a href="#"  onclick="return switch_z2m([#DEVID#],'state_l8','toggle','[#IEEEADDR#]','[#GW#]', '','result[#ID#]');" class="btn btn-warning btn-round" title="Переключить реле 8">8</a> 
+[#else#]
    <a href="#"  onclick="return switch_z2m([#DEVID#],'state_l8','toggle','[#IEEEADDR#]','[#GW#]', '','result[#ID#]');" class="btn btn-default btn-round" title="Переключить реле 8">8</a> 
+[#endif#]
+
+
+
 
 
 
