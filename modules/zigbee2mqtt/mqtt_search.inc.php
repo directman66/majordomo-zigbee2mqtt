@@ -323,6 +323,7 @@ $basa=SQLSelectOne($sql);
  if ($basa['model']=='DIYRuZ_R8_8') $res[$i]['CHANGEABLE']='R8';
  if ($basa['model']=='DIYRuZ_R4_4') $res[$i]['CHANGEABLE']='R4';
  if ($basa['model']=='DIYRuZ_R4_5') $res[$i]['CHANGEABLE']='R4';
+ if ($basa['model']=='DIYRuZ_Flower_WS') $res[$i]['CHANGEABLE']='R3';
  if ($basa['model']=='TI0001')      $res[$i]['CHANGEABLE']='2';
  if ($basa['model']=='QBKG12LM')    $res[$i]['CHANGEABLE']='2';
  if ($basa['model']=='QBKG11LM')    $res[$i]['CHANGEABLE']='1';
