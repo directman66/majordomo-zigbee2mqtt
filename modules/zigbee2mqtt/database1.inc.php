@@ -2675,6 +2675,63 @@ $par1['toZigbee'] = "";
 SQLInsert('zigbee2mqtt_devices_list', $par1);
 
 
+
+
+
+
+
+//DIYRuZ_Flower
+$par1['zigbeeModel'] = "DIYRuZ_Flower";
+$par1['model'] = "DIYRuZ_Flower";
+$par1['vendor'] = "DIYRuZ";
+$par1['type'] = "semsor";
+$par1['description'] = "DIYRuZ_Flower";
+$par1['supports'] = "";
+$par1['extend'] = "";
+$par1['fromZigbee'] = "";
+$par1['toZigbee'] = "";
+SQLInsert('zigbee2mqtt_devices_list', $par1);
+
+//DIYRuZ_AirSense
+$par1['zigbeeModel'] = "DIYRuZ_AirSense";
+$par1['model'] = "DIYRuZ_AirSense";
+$par1['vendor'] = "DIYRuZ";
+$par1['type'] = "semsor";
+$par1['description'] = "DIYRuZ_AirSense";
+$par1['supports'] = "";
+$par1['extend'] = "";
+$par1['fromZigbee'] = "";
+$par1['toZigbee'] = "";
+SQLInsert('zigbee2mqtt_devices_list', $par1);
+
+
+
+//DIYRuZ_Geiger
+$par1['zigbeeModel'] = "DIYRuZ_Geiger";
+$par1['model'] = "DIYRuZ_Geiger";
+$par1['vendor'] = "DIYRuZ";
+$par1['type'] = "semsor";
+$par1['description'] = "DIYRuZ_Geiger";
+$par1['supports'] = "";
+$par1['extend'] = "";
+$par1['fromZigbee'] = "";
+$par1['toZigbee'] = "";
+SQLInsert('zigbee2mqtt_devices_list', $par1);
+
+//DIYRuZ_Flower_WS
+$par1['zigbeeModel'] = "DIYRuZ_Flower_WS";
+$par1['model'] = "DIYRuZ_Flower_WS";
+$par1['vendor'] = "DIYRuZ";
+$par1['type'] = "controller";
+$par1['description'] = "DIYRuZ_Flower_WS";
+$par1['supports'] = "";
+$par1['extend'] = "";
+$par1['fromZigbee'] = "";
+$par1['toZigbee'] = "";
+SQLInsert('zigbee2mqtt_devices_list', $par1);
+
+
+
 //DIY_RuZ
 $par1['zigbeeModel'] = "DIY_RuZ_KEYPAD20";
 $par1['model'] = "DIYRuZ_KEYPAD20";
