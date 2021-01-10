@@ -2864,6 +2864,20 @@ SQLInsert('zigbee2mqtt_devices_list', $par1);
 
 
 
+//SNZB-01
+$par1['zigbeeModel'] = "SNZB-01";
+$par1['model'] = "SNZB-01";
+$par1['vendor'] = "SONOFF";
+$par1['type'] = "relay";
+$par1['description'] = "Wireless button";
+$par1['supports'] = "";
+$par1['extend'] = "";
+$par1['fromZigbee'] = "";
+$par1['toZigbee'] = "";
+SQLInsert('zigbee2mqtt_devices_list', $par1);
+
+
+
 //WXCJKG13LM
 $par1['zigbeeModel'] = 'lumi.remote.b686opcn01';
 $par1['model'] = "WXCJKG13LM";		 
