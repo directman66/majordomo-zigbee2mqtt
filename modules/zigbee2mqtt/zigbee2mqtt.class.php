@@ -861,8 +861,13 @@ $msgtype=$json->{'type'};
 	//else {debmes('need '.$need, 'zm2'); } 
 
 
+   $this->getConfig();
+      $hist=$this->config['Z2M_HIST'];
+    
 
-if (!$need) {
+
+
+if ((!$need)&&($hist)&&($hist<>"0")) {
 //{"type":"groups","message":{"1":{"friendly_name":"232323"},"2":{"friendly_name":"group1"},"3":{"friendly_name":"group1"},"4":{"friendly_name":"group1"}}}
 $arr=sqlselectone('select * from  zigbee2mqtt_log  where TITLE="dummy"');
 $arr['TITLE']= $path;
