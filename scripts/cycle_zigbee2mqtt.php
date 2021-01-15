@@ -79,6 +79,7 @@ foreach ($topics as $k => $v) {
     $zigbee2mqtt_client->subscribe($rec, 0);
 }
 $previousMillis = 0;
+$cycleVarName='ThisComputer.'.str_replace('.php', '', basename(__FILE__)).'Run';
 
 while ($zigbee2mqtt_client->proc()) {
 
@@ -98,7 +99,12 @@ while ($zigbee2mqtt_client->proc()) {
     if ($currentMillis - $previousMillis > 10000) {
         $previousMillis = $currentMillis;
 
-        setGlobal((str_replace('.php', '', basename(__FILE__))) . 'Run', time(), 1);
+        //setGlobal((str_replace('.php', '', basename(__FILE__))) . 'Run', time(), 1);
+        if ($latest_check_cycle + 30 < time())
+           {
+       $latest_check_cycle = time();
+       saveToCache("MJD:$cycleVarName", $latest_check_cycle);
+           }
 
         if (file_exists('./reboot') || IsSet($_GET['onetime'])) {
             $zigbee2mqtt_client->close();
