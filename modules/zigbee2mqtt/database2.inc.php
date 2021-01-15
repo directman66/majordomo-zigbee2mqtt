@@ -10184,7 +10184,42 @@ $par2['xy'] = "";
 $par2['command_value'] = "heat";
 SQLInsert('zigbee2mqtt_devices_command', $par2);
 
+//livolo switch (new);
+$par2['zigbeeModel'] = 'TI0001-switch';
+$par2['type'] = "light";
+$par2['state_topic'] =  "<Z2M_PATH>/<FRIENDLY_NAME>";
+$par2['availability_topic'] = "<Z2M_PATH>/bridge/state";
+$par2['brightness'] = "";
+$par2['command_topic'] = "<Z2M_PATH>/<FRIENDLY_NAME>/left/set" ;
+$par2['payload_on'] = "ON";
+$par2['payload_off'] = "OFF";
+$par2['value_template'] = "state_left";
+$par2['json_attributes'] = "";
+$par2['device_class'] = "";
+$par2['unit_of_measurement'] = "";
+$par2['color_temp'] = "";
+$par2['xy'] = "";
+$par2['command_value'] = "state";
+SQLInsert('zigbee2mqtt_devices_command', $par2);
 
+
+//livolo socket;
+$par2['zigbeeModel'] = 'TI0001-socket';
+$par2['type'] = "light";
+$par2['state_topic'] =  "<Z2M_PATH>/<FRIENDLY_NAME>";
+$par2['availability_topic'] = "<Z2M_PATH>/bridge/state";
+$par2['brightness'] = "";
+$par2['command_topic'] = "<Z2M_PATH>/<FRIENDLY_NAME>/left/set" ;
+$par2['payload_on'] = "ON";
+$par2['payload_off'] = "OFF";
+$par2['value_template'] = "state_left";
+$par2['json_attributes'] = "";
+$par2['device_class'] = "";
+$par2['unit_of_measurement'] = "";
+$par2['color_temp'] = "";
+$par2['xy'] = "";
+$par2['command_value'] = "state";
+SQLInsert('zigbee2mqtt_devices_command', $par2);
 
 
 }
