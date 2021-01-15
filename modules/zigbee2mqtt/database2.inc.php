@@ -10128,6 +10128,61 @@ $par2['command_value'] = "pump_timeout_3";
 SQLInsert('zigbee2mqtt_devices_command', $par2);
 
 
+//BHT-002-GCLZB
+$par2['zigbeeModel'] = 'BHT-002-GCLZB';
+$par2['type'] = "thermostat";
+$par2['state_topic'] =  "<Z2M_PATH>/<FRIENDLY_NAME>";
+$par2['availability_topic'] = "<Z2M_PATH>/bridge/state";
+$par2['payload_off'] = "LOCK"  ;
+$par2['payload_on'] = "UNLOCK"  ;
+$par2['value_template'] = "child_lock";
+$par2['command_topic'] = "<Z2M_PATH>/<FRIENDLY_NAME>/set"  ;
+$par2['json_attributes'] = "";
+$par2['device_class'] = "";
+$par2['unit_of_measurement'] = "";
+$par2['brightness'] = "";
+$par2['color_temp'] = "";
+$par2['xy'] = "";
+$par2['command_value'] = "child_lock";
+SQLInsert('zigbee2mqtt_devices_command', $par2);
+
+
+//BHT-002-GCLZB
+$par2['zigbeeModel'] = 'BHT-002-GCLZB';
+$par2['type'] = "thermostat";
+$par2['state_topic'] =  "<Z2M_PATH>/<FRIENDLY_NAME>";
+$par2['availability_topic'] = "<Z2M_PATH>/bridge/state";
+$par2['payload_off'] = "UNLOCK"  ;
+$par2['payload_on'] = "LOCK"  ;
+$par2['value_template'] = "current_heating_setpoint";
+$par2['command_topic'] = "<Z2M_PATH>/<FRIENDLY_NAME>/set"  ;
+$par2['json_attributes'] = "";
+$par2['device_class'] = "";
+$par2['unit_of_measurement'] = "";
+$par2['brightness'] = "";
+$par2['color_temp'] = "";
+$par2['xy'] = "";
+$par2['command_value'] = "current_heating_setpoint";
+SQLInsert('zigbee2mqtt_devices_command', $par2);
+
+
+//BHT-002-GCLZB
+$par2['zigbeeModel'] = 'BHT-002-GCLZB';
+$par2['type'] = "thermostat";
+$par2['state_topic'] =  "<Z2M_PATH>/<FRIENDLY_NAME>";
+$par2['availability_topic'] = "<Z2M_PATH>/bridge/state";
+$par2['payload_off'] = "OFF"  ;
+$par2['payload_on'] = "ON"  ;
+$par2['value_template'] = "heat";
+$par2['command_topic'] = "<Z2M_PATH>/<FRIENDLY_NAME>/set"  ;
+$par2['json_attributes'] = "";
+$par2['device_class'] = "";
+$par2['unit_of_measurement'] = "";
+$par2['brightness'] = "";
+$par2['color_temp'] = "";
+$par2['xy'] = "";
+$par2['command_value'] = "heat";
+SQLInsert('zigbee2mqtt_devices_command', $par2);
 
 
 
