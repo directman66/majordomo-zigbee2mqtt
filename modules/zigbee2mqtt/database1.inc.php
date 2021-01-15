@@ -3089,6 +3089,52 @@ $par1['toZigbee'] = "";
 SQLInsert('zigbee2mqtt_devices_list', $par1);
 
 // TS0011
+$par1['zigbeeModel'] = 'TS0601_thermostat';
+$par1['model'] = "TS0601_thermostat";
+$par1['type'] = "thermostat";
+$par1['vendor'] = "TUYATEC";
+$par1['description'] = "Radiator valve with thermostat";
+$par1['extend'] = "";
+$par1['supports'] = "";
+$par1['fromZigbee'] = "";
+$par1['toZigbee'] = "";
+SQLInsert('zigbee2mqtt_devices_list', $par1);
+
+
+
+// _TZE200_aocl_fnxz
+$par1['zigbeeModel'] = '_TZE200_aocl_fnxz';
+$par1['model'] = "_TZE200_aocl_fnxz";
+$par1['type'] = "thermostat";
+$par1['vendor'] = "TUYATEC";
+$par1['description'] = "Tuya thermostat";
+$par1['extend'] = "";
+$par1['supports'] = "";
+$par1['fromZigbee'] = "";
+$par1['toZigbee'] = "";
+SQLInsert('zigbee2mqtt_devices_list', $par1);
+
+
+
+// _TZE200_aocl_fnxz
+$par1['zigbeeModel'] = 'BHT-002-GCLZB';
+$par1['model'] = "BHT-002-GCLZB";
+$par1['type'] = "thermostat";
+$par1['vendor'] = "Moes";
+$par1['description'] = "Moes BHT series Thermostat";
+$par1['extend'] = "";
+$par1['supports'] = "lock (state), climate (current_heating_setpoint, local_temperature, system_mode, running_state, preset), linkquality";
+$par1['fromZigbee'] = "";
+$par1['toZigbee'] = "";
+SQLInsert('zigbee2mqtt_devices_list', $par1);
+
+
+
+
+
+
+
+// TS0011
 $par1['zigbeeModel'] = 'TS0011';
 $par1['model'] = "GDKES-01TZXD";
 $par1['type'] = "switch";
@@ -3099,6 +3145,7 @@ $par1['supports'] = "on/off";
 $par1['fromZigbee'] = "";
 $par1['toZigbee'] = "";
 SQLInsert('zigbee2mqtt_devices_list', $par1);
+
 
 
 // TS0011
