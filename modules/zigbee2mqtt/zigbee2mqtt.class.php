@@ -2118,6 +2118,9 @@ $topik=$command_topik;
 if ($new_value=='false') {$new_value=""; settype($new_value, 'bool');}
 
 
+
+if ($rec['METRIKA']=='current_heating_setpoint') {$new_value=(int)$new_value;}
+
 if ($property_id) {
 $json_value=array($rec['METRIKA']=> $new_value);
 } 
