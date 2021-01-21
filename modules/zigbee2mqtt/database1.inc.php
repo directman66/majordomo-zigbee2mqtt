@@ -714,6 +714,20 @@ $par1['fromZigbee'] = "";
 $par1['toZigbee'] = "";		 
 SQLInsert('zigbee2mqtt_devices_list', $par1);
 
+
+$par1['zigbeeModel'] = 'TRADFRI Driver 10W';
+$par1['model'] = "TRADFRI Driver 10W";		 
+$par1['vendor'] = "IKEA";	
+$par1['type'] = "dimmer";		 	 
+$par1['description'] = "TRADFRI driver for wireless control (10 watt)";		 
+$par1['extend'] = "";		 
+$par1['supports'] = " generic.light_onoff_brightness";		 
+$par1['fromZigbee'] = "";		 
+$par1['toZigbee'] = "";		 
+SQLInsert('zigbee2mqtt_devices_list', $par1);
+
+
+
 $par1['zigbeeModel'] = 'TRADFRI transformer 30W';
 $par1['model'] = "ICPSHC24-30EU-IL-1";		 
 $par1['vendor'] = "IKEA";		 
@@ -828,6 +842,19 @@ $par1['type'] = "bulb";
 $par1['description'] = "Hue Bloom";		 
 $par1['extend'] = "";		 
 $par1['supports'] = "hue.light_onoff_brightness_colorxy";		 
+$par1['fromZigbee'] = "";		 
+$par1['toZigbee'] = "";		 
+SQLInsert('zigbee2mqtt_devices_list', $par1);
+
+
+//8718699693985 
+$par1['zigbeeModel'] = '8718699693985 ';
+$par1['model'] = "8718699693985 ";		 
+$par1['vendor'] = "Philips";		 
+$par1['type'] = "remote";		 	 
+$par1['description'] = "Hue smart button";		 
+$par1['extend'] = "";		 
+$par1['supports'] = "action";		 
 $par1['fromZigbee'] = "";		 
 $par1['toZigbee'] = "";		 
 SQLInsert('zigbee2mqtt_devices_list', $par1);
@@ -2050,6 +2077,18 @@ $par1['toZigbee'] = "";
 SQLInsert('zigbee2mqtt_devices_list', $par1);
 
 
+$par1['zigbeeModel'] = 'GL-C-007-2ID';
+$par1['model'] = "GL-C-007-2ID";
+$par1['vendor'] = "Gledopto";
+$par1['type'] = "dimmer";  
+$par1['description'] = "Zigbee LED controller RGB + CCT / RGBW / WWCW / Dimmer";
+$par1['supports'] = "generic.light_onoff_brightness_colortemp_colorxy";
+$par1['extend'] = "";
+$par1['fromZigbee'] = "";
+$par1['toZigbee'] = "";
+SQLInsert('zigbee2mqtt_devices_list', $par1);
+
+
 
 $par1['zigbeeModel'] = "GL-C-006";
 $par1['model'] = "GL-C-006";
@@ -2636,6 +2675,63 @@ $par1['toZigbee'] = "";
 SQLInsert('zigbee2mqtt_devices_list', $par1);
 
 
+
+
+
+
+
+//DIYRuZ_Flower
+$par1['zigbeeModel'] = "DIYRuZ_Flower";
+$par1['model'] = "DIYRuZ_Flower";
+$par1['vendor'] = "DIYRuZ";
+$par1['type'] = "semsor";
+$par1['description'] = "DIYRuZ_Flower";
+$par1['supports'] = "";
+$par1['extend'] = "";
+$par1['fromZigbee'] = "";
+$par1['toZigbee'] = "";
+SQLInsert('zigbee2mqtt_devices_list', $par1);
+
+//DIYRuZ_AirSense
+$par1['zigbeeModel'] = "DIYRuZ_AirSense";
+$par1['model'] = "DIYRuZ_AirSense";
+$par1['vendor'] = "DIYRuZ";
+$par1['type'] = "semsor";
+$par1['description'] = "DIYRuZ_AirSense";
+$par1['supports'] = "";
+$par1['extend'] = "";
+$par1['fromZigbee'] = "";
+$par1['toZigbee'] = "";
+SQLInsert('zigbee2mqtt_devices_list', $par1);
+
+
+
+//DIYRuZ_Geiger
+$par1['zigbeeModel'] = "DIYRuZ_Geiger";
+$par1['model'] = "DIYRuZ_Geiger";
+$par1['vendor'] = "DIYRuZ";
+$par1['type'] = "semsor";
+$par1['description'] = "DIYRuZ_Geiger";
+$par1['supports'] = "";
+$par1['extend'] = "";
+$par1['fromZigbee'] = "";
+$par1['toZigbee'] = "";
+SQLInsert('zigbee2mqtt_devices_list', $par1);
+
+//DIYRuZ_Flower_WS
+$par1['zigbeeModel'] = "DIYRuZ_Flower_WS";
+$par1['model'] = "DIYRuZ_Flower_WS";
+$par1['vendor'] = "DIYRuZ";
+$par1['type'] = "controller";
+$par1['description'] = "DIYRuZ_Flower_WS";
+$par1['supports'] = "";
+$par1['extend'] = "";
+$par1['fromZigbee'] = "";
+$par1['toZigbee'] = "";
+SQLInsert('zigbee2mqtt_devices_list', $par1);
+
+
+
 //DIY_RuZ
 $par1['zigbeeModel'] = "DIY_RuZ_KEYPAD20";
 $par1['model'] = "DIYRuZ_KEYPAD20";
@@ -2661,18 +2757,57 @@ $par1['toZigbee'] = "";
 SQLInsert('zigbee2mqtt_devices_list', $par1);
 
 
+//DIYRuZ_FreePad
+$par1['zigbeeModel'] = "DIYRuZ_FreePad";
+$par1['model'] = "DIYRuZ_FreePad";
+$par1['vendor'] = "DIYRuZ";
+$par1['type'] = "relay";
+$par1['description'] = "DIYRuZ_FreePad";
+$par1['supports'] = "";
+$par1['extend'] = "";
+$par1['fromZigbee'] = "";
+$par1['toZigbee'] = "";
+SQLInsert('zigbee2mqtt_devices_list', $par1);
+
 
 //DIY_RuZ
 $par1['zigbeeModel'] = "DIYRuZ_R4_5";
 $par1['model'] = "DIYRuZ_R4_5";
 $par1['vendor'] = "DIYRuZ";
 $par1['type'] = "relay";
-$par1['description'] = "DiY 4 Relays + 4 switches + 1 buzzer";
+$par1['description'] = "DiY 4 Relays + 4 switches + 1 buzzer (modkam.ru)";
 $par1['supports'] = "";
 $par1['extend'] = "";
 $par1['fromZigbee'] = "";
 $par1['toZigbee'] = "";
 SQLInsert('zigbee2mqtt_devices_list', $par1);
+
+
+
+//DIY_RuZ
+$par1['zigbeeModel'] = "DIYRuZ_R4_4";
+$par1['model'] = "DIYRuZ_R4_4";
+$par1['vendor'] = "DIYRuZ";
+$par1['type'] = "relay";
+$par1['description'] = "DiY 4 Relays + 4 switches (modkam.ru)";
+$par1['supports'] = "";
+$par1['extend'] = "";
+$par1['fromZigbee'] = "";
+$par1['toZigbee'] = "";
+SQLInsert('zigbee2mqtt_devices_list', $par1);
+
+//DIY_RuZ
+$par1['zigbeeModel'] = "DIYRuZ_R8_8";
+$par1['model'] = "DIYRuZ_R8_8";
+$par1['vendor'] = "DIYRuZ";
+$par1['type'] = "relay";
+$par1['description'] = "DiY 8 Relays + 8 switches + 1 buzzer (modkam.ru)";
+$par1['supports'] = "";
+$par1['extend'] = "";
+$par1['fromZigbee'] = "";
+$par1['toZigbee'] = "";
+SQLInsert('zigbee2mqtt_devices_list', $par1);
+
 
 //DIY_RuZ
 $par1['zigbeeModel'] = "DIYRuZ_R4_5";
@@ -2721,6 +2856,20 @@ $par1['model'] = "S31ZB";
 $par1['vendor'] = "SONOFF";
 $par1['type'] = "relay";
 $par1['description'] = "Zigbee smart switch";
+$par1['supports'] = "";
+$par1['extend'] = "";
+$par1['fromZigbee'] = "";
+$par1['toZigbee'] = "";
+SQLInsert('zigbee2mqtt_devices_list', $par1);
+
+
+
+//SNZB-01
+$par1['zigbeeModel'] = "SNZB-01";
+$par1['model'] = "SNZB-01";
+$par1['vendor'] = "SONOFF";
+$par1['type'] = "relay";
+$par1['description'] = "Wireless button";
 $par1['supports'] = "";
 $par1['extend'] = "";
 $par1['fromZigbee'] = "";
@@ -2900,6 +3049,20 @@ $par1['toZigbee'] = "";
 SQLInsert('zigbee2mqtt_devices_list', $par1);							
 
 
+
+//TS0001
+$par1['zigbeeModel'] = 'TS0001';
+$par1['model'] = "TS0001";
+$par1['type'] = "relay";
+$par1['vendor'] = "TUYA";
+$par1['description'] = "Valve control";
+$par1['extend'] = "";
+$par1['supports'] = "on/off";
+$par1['fromZigbee'] = "";
+$par1['toZigbee'] = "";
+SQLInsert('zigbee2mqtt_devices_list', $par1);
+
+
 // GDKES-02TZXD
 $par1['zigbeeModel'] = 'TS0012';
 $par1['model'] = "GDKES-02TZXD";
@@ -2926,6 +3089,52 @@ $par1['toZigbee'] = "";
 SQLInsert('zigbee2mqtt_devices_list', $par1);
 
 // TS0011
+$par1['zigbeeModel'] = 'TS0601_thermostat';
+$par1['model'] = "TS0601_thermostat";
+$par1['type'] = "thermostat";
+$par1['vendor'] = "TUYATEC";
+$par1['description'] = "Radiator valve with thermostat";
+$par1['extend'] = "";
+$par1['supports'] = "";
+$par1['fromZigbee'] = "";
+$par1['toZigbee'] = "";
+SQLInsert('zigbee2mqtt_devices_list', $par1);
+
+
+
+// _TZE200_aocl_fnxz
+$par1['zigbeeModel'] = '_TZE200_aocl_fnxz';
+$par1['model'] = "_TZE200_aocl_fnxz";
+$par1['type'] = "thermostat";
+$par1['vendor'] = "TUYATEC";
+$par1['description'] = "Tuya thermostat";
+$par1['extend'] = "";
+$par1['supports'] = "";
+$par1['fromZigbee'] = "";
+$par1['toZigbee'] = "";
+SQLInsert('zigbee2mqtt_devices_list', $par1);
+
+
+
+// _TZE200_aocl_fnxz
+$par1['zigbeeModel'] = 'BHT-002-GCLZB';
+$par1['model'] = "BHT-002-GCLZB";
+$par1['type'] = "thermostat";
+$par1['vendor'] = "Moes";
+$par1['description'] = "Moes BHT series Thermostat";
+$par1['extend'] = "";
+$par1['supports'] = "lock (state), climate (current_heating_setpoint, local_temperature, system_mode, running_state, preset), linkquality";
+$par1['fromZigbee'] = "";
+$par1['toZigbee'] = "";
+SQLInsert('zigbee2mqtt_devices_list', $par1);
+
+
+
+
+
+
+
+// TS0011
 $par1['zigbeeModel'] = 'TS0011';
 $par1['model'] = "GDKES-01TZXD";
 $par1['type'] = "switch";
@@ -2937,6 +3146,81 @@ $par1['fromZigbee'] = "";
 $par1['toZigbee'] = "";
 SQLInsert('zigbee2mqtt_devices_list', $par1);
 
+
+
+// TS0011
+$par1['zigbeeModel'] = 'MCLH-03';
+$par1['model'] = "RICI01";
+$par1['type'] = "plug";
+$par1['vendor'] = "LifeControl";
+$par1['description'] = "Power plug";
+$par1['extend'] = "";
+$par1['supports'] = "on/off, power measurement";
+$par1['fromZigbee'] = "";
+$par1['toZigbee'] = "";
+SQLInsert('zigbee2mqtt_devices_list', $par1);
+
+
+
+// X712A https://www.zigbee2mqtt.io/devices/X711A.html
+$par1['zigbeeModel'] = 'X711A';
+$par1['model'] = "X712A";
+$par1['type'] = "switch";
+$par1['vendor'] = "Lonsonho";
+$par1['description'] = "1 gang switch";
+$par1['extend'] = "";
+$par1['supports'] = "on/off";
+$par1['fromZigbee'] = "";
+$par1['toZigbee'] = "";
+SQLInsert('zigbee2mqtt_devices_list', $par1);
+
+// X712A https://www.zigbee2mqtt.io/devices/X712A.html
+$par1['zigbeeModel'] = 'X712A';
+$par1['model'] = "X712A";
+$par1['type'] = "switch";
+$par1['vendor'] = "Lonsonho";
+$par1['description'] = "2 gang switch";
+$par1['extend'] = "";
+$par1['supports'] = "on/off";
+$par1['fromZigbee'] = "";
+$par1['toZigbee'] = "";
+SQLInsert('zigbee2mqtt_devices_list', $par1);
+
+
+// X703A
+$par1['zigbeeModel'] = 'X703A';
+$par1['model'] = "X703A";
+$par1['type'] = "switch";
+$par1['vendor'] = "Lonsonho";
+$par1['description'] = "3 gang switch";
+$par1['extend'] = "";
+$par1['supports'] = "on/off";
+$par1['fromZigbee'] = "";
+$par1['toZigbee'] = "";
+SQLInsert('zigbee2mqtt_devices_list', $par1);
+
+
+$par1['zigbeeModel'] = "TI0001-switch";
+$par1['model'] = "TI0001-switch";
+$par1['vendor'] = "Livolo";
+$par1['type'] = "switch";
+$par1['description'] = "LIVOLO Smart Switch (New)";
+$par1['supports'] = "";
+$par1['extend'] = "";
+$par1['fromZigbee'] = "";
+$par1['toZigbee'] = "";
+SQLInsert('zigbee2mqtt_devices_list', $par1);
+
+$par1['zigbeeModel'] = "TI0001-socket";
+$par1['model'] = "TI0001-socket";
+$par1['vendor'] = "Livolo";
+$par1['type'] = "switch";
+$par1['description'] = "LIVOLO Smart Socket";
+$par1['supports'] = "";
+$par1['extend'] = "";
+$par1['fromZigbee'] = "";
+$par1['toZigbee'] = "";
+SQLInsert('zigbee2mqtt_devices_list', $par1);
 
 
 }

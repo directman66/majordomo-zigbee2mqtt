@@ -1,15 +1,10 @@
 <!--
+
 VIEW_MODE: [#VIEW_MODE#]
 TAB: [#TAB#]
 TITLE: [#TITLE#]
 DATASOURCE: [#DATA_SOURCE#]
-
 <!-- table zwave_devices search -->
-
-
-
-
-
  [#if VIEW_MODE=""||VIEW_MODE="update_log"#]
 	 <ul class="nav nav-tabs">
 <li [#if TAB=="" || TAB=="indata" #] class="active" [#endif#]><a href="?data_source=<#DATA_SOURCE#>&view_mode=&id=<#ID#>&tab=devices"><#LANG_DEVICES#></a> </li>
@@ -18,11 +13,20 @@ DATASOURCE: [#DATA_SOURCE#]
 <li [#if TAB=="bind" #] class="active" [#endif#]><a href="?data_source=<#DATA_SOURCE#>&view_mode=&id=<#ID#>&tab=bind">Bind</a> </li>
 <li [#if TAB=="settings" #] class="active" [#endif#]><a href="?data_source=<#DATA_SOURCE#>&view_mode=&id=<#ID#>&tab=settings"><#LANG_SECTION_SETTINGS#></a> </li>
 <li [#if TAB=="map" #] class="active" [#endif#]><a href="?data_source=<#DATA_SOURCE#>&view_mode=&id=<#ID#>&tab=map"><#LANG_MAP#></a> </li>
+
+
+
+
+[#if ZIGBEE2MQTTPATH<>""#]
 <li [#if TAB=="log" #] class="active" [#endif#]><a href="?data_source=<#DATA_SOURCE#>&view_mode=&id=<#ID#>&tab=log">Zigbee2mqtt Log</a> </li>
-<li [#if TAB=="slslog" #] class="active" [#endif#]><a href="?data_source=<#DATA_SOURCE#>&view_mode=&id=<#ID#>&tab=slslog">SLS ZGW Log</a> </li>
+   [#endif#]
+
+   [#begin slsdev#]
+<li [#if TAB=="slslog" #] class="active" [#endif#]><a href="?data_source=<#DATA_SOURCE#>&view_mode=&id=<#ID#>&tab=slslog&slsipp=[#IP#]">SLS ZGW Log ([#IP#])</a> </li>
+   [#end slsdev#]
 <li [#if TAB=="log2" #] class="active" [#endif#]><a href="?data_source=<#DATA_SOURCE#>&view_mode=&id=<#ID#>&tab=log2">Majorodmo Log</a> </li>
 <li [#if TAB=="service" #] class="active" [#endif#]><a href="?data_source=<#DATA_SOURCE#>&view_mode=&id=<#ID#>&tab=service"><#LANG_GENERAL_SERVICE#></a> </li>
-<li [#if TAB=="help" #] class="active" [#endif#]><a href="?view_mode=<#VIEW_MODE#>&tab=help">Help</a> </li>	
+<li [#if TAB=="help" #] class="active" [#endif#]><a href="?view_mode=<#VIEW_MODE#>&tab=help"><#LANG_MARKET_CATEGORY_INFORMATION#></a> </li>	
 
 
 	[#if CYCLERUN==1#]

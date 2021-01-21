@@ -26,6 +26,7 @@
     <label class="col-sm-3 control-label" [#if ERR_MQTT_QUERY#] style="color:red;font-weight:bold"[#endif#]>Subscription path: (*)</label>
     <div class="col-sm-9">
       <input class="form-control" type="text" name="mqtt_query" value="<#MQTT_QUERY#>">
+    <label >(use delimiter to add multiple gateways, ex: ZigBeeCA20/#,zigbee2mqtt/#)</label>
     </div>
   </div>  
   
@@ -61,6 +62,7 @@
     <label class="col-sm-3 control-label" [#if ERR_MQTT_QUERY#] style="color:red;font-weight:bold"[#endif#]>Folder path:</label>
     <div class="col-sm-9">
       <input class="form-control" type="text" name="zigbee2mqttpath" value="<#ZIGBEE2MQTTPATH#>">
+    <label >(ex: /opt/zigbee2mqtt)</label>
     </div>
   </div> 
 
@@ -86,8 +88,12 @@
 	
   <div class="form-group">
     <label class="col-sm-3 control-label" [#if ERR_MQTT_QUERY#] style="color:red;font-weight:bold"[#endif#]>SLS ZGW IP adress :</label>
+
+
+
     <div class="col-sm-9">
       <input class="form-control" type="text" name="slsip" value="<#SLSIP#>">
+    <label >(use delimiter to add multiple gateways, ex: 192.168.1.35,192.168.1.36)</label>
     </div>
   </div> 
   

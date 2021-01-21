@@ -996,7 +996,7 @@ $par2['zigbeeModel'] = 'WSDCGQ01LM';
 $par2['type'] = "sensor";
 $par2['state_topic'] =  "<Z2M_PATH>/<FRIENDLY_NAME>";
 $par2['availability_topic'] = "<Z2M_PATH>/bridge/state";
-$par2['unit_of_measurement'] = "Р В РІР‚СљР Р†Р вЂљРЎв„ўР В РІР‚в„ўР вЂ™Р’В°C";
+$par2['unit_of_measurement'] = "Р В Р’В Р вЂ™Р’В Р В Р вЂ Р В РІР‚С™Р РЋРЎв„ўР В Р’В Р В РІР‚В Р В Р’В Р Р†Р вЂљРЎв„ўР В Р Р‹Р Р†РІР‚С›РЎС›Р В Р’В Р вЂ™Р’В Р В Р вЂ Р В РІР‚С™Р Р†РІР‚С›РЎС›Р В Р’В Р Р†Р вЂљРІвЂћСћР В РІР‚в„ўР вЂ™Р’В°C";
 $par2['device_class'] = "temperature";
 $par2['value_template'] = "temperature";
 $par2['json_attributes'] = "" ;
@@ -1095,7 +1095,7 @@ $par2['zigbeeModel'] = 'WSDCGQ11LM';
 $par2['type'] = "sensor";
 $par2['state_topic'] =  "<Z2M_PATH>/<FRIENDLY_NAME>";
 $par2['availability_topic'] = "<Z2M_PATH>/bridge/state";
-$par2['unit_of_measurement'] = "Р В РІР‚СљР Р†Р вЂљРЎв„ўР В РІР‚в„ўР вЂ™Р’В°C";
+$par2['unit_of_measurement'] = "Р В Р’В Р вЂ™Р’В Р В Р вЂ Р В РІР‚С™Р РЋРЎв„ўР В Р’В Р В РІР‚В Р В Р’В Р Р†Р вЂљРЎв„ўР В Р Р‹Р Р†РІР‚С›РЎС›Р В Р’В Р вЂ™Р’В Р В Р вЂ Р В РІР‚С™Р Р†РІР‚С›РЎС›Р В Р’В Р Р†Р вЂљРІвЂћСћР В РІР‚в„ўР вЂ™Р’В°C";
 $par2['device_class'] = "";
 $par2['value_template'] = "temperature";
 $par2['json_attributes'] = "" ;
@@ -3351,6 +3351,46 @@ $par2['xy'] = "";
 $par2['command_value'] = "state";
 SQLInsert('zigbee2mqtt_devices_command', $par2);
 
+
+//TRADFRI Driver 10W
+$par2['zigbeeModel'] = 'TRADFRI Driver 10W';
+$par2['type'] = "light";
+$par2['state_topic'] =  "<Z2M_PATH>/<FRIENDLY_NAME>";
+$par2['availability_topic'] = "<Z2M_PATH>/bridge/state";
+$par2['brightness'] = "true";
+$par2['command_topic'] = "<Z2M_PATH>/<FRIENDLY_NAME>/set"  ;
+$par2['payload_on'] = "";
+$par2['payload_off'] = "";
+$par2['value_template'] = "brightness";
+$par2['json_attributes'] = "";
+$par2['device_class'] = "";
+$par2['unit_of_measurement'] = "";
+$par2['color_temp'] = "";
+$par2['xy'] = "";
+$par2['command_value'] = "brightness";
+SQLInsert('zigbee2mqtt_devices_command', $par2);
+
+
+//TRADFRI Driver 10W
+$par2['zigbeeModel'] = 'TRADFRI Driver 10W';
+$par2['type'] = "light";
+$par2['state_topic'] =  "<Z2M_PATH>/<FRIENDLY_NAME>";
+$par2['availability_topic'] = "<Z2M_PATH>/bridge/state";
+$par2['brightness'] = "";
+$par2['command_topic'] = "<Z2M_PATH>/<FRIENDLY_NAME>/set"  ;
+$par2['payload_on'] = "ON";
+$par2['payload_off'] = "OFF";
+$par2['value_template'] = "state";
+$par2['json_attributes'] = "";
+$par2['device_class'] = "";
+$par2['unit_of_measurement'] = "";
+$par2['color_temp'] = "";
+$par2['xy'] = "";
+$par2['command_value'] = "state";
+SQLInsert('zigbee2mqtt_devices_command', $par2);
+
+
+
 //BASICZBR3
 $par2['zigbeeModel'] = 'BASICZBR3';
 $par2['type'] = "relay";
@@ -4017,6 +4057,90 @@ SQLInsert('zigbee2mqtt_devices_command', $par2);
 ////////////////////////////////////////////////
 ////////////////////////////////////////////////
 
+////////////////////////////////////////////////
+////////////////////////////////////////////////
+////////////////////////////////////////////////
+
+//8718696548738;
+$par2['zigbeeModel'] = '8718696548738';
+$par2['type'] = "light";
+$par2['state_topic'] =  "<Z2M_PATH>/<FRIENDLY_NAME>";
+$par2['availability_topic'] = "<Z2M_PATH>/bridge/state";
+$par2['brightness'] = "true";
+$par2['color_temp'] = "true";
+$par2['command_topic'] = "<Z2M_PATH>/<FRIENDLY_NAME>/set"  ;
+$par2['payload_on'] = "ON";
+$par2['payload_off'] = "OFF";
+$par2['value_template'] = "state";
+$par2['json_attributes'] = "";
+$par2['device_class'] = "";
+$par2['unit_of_measurement'] = "";
+$par2['xy'] = "";
+$par2['command_value'] = "state";
+SQLInsert('zigbee2mqtt_devices_command', $par2);
+
+$par2['zigbeeModel'] = '8718696548738';
+$par2['type'] = "light";
+$par2['state_topic'] =  "<Z2M_PATH>/<FRIENDLY_NAME>";
+$par2['availability_topic'] = "<Z2M_PATH>/bridge/state";
+$par2['brightness'] = "true";
+$par2['color_temp'] = "true";
+$par2['command_topic'] = "<Z2M_PATH>/<FRIENDLY_NAME>/set"  ;
+$par2['payload_on'] = "";
+$par2['payload_off'] = "";
+$par2['value_template'] = "brightness";
+$par2['json_attributes'] = "";
+$par2['device_class'] = "";
+$par2['unit_of_measurement'] = "";
+$par2['xy'] = "";
+$par2['command_value'] = "brightness";
+SQLInsert('zigbee2mqtt_devices_command', $par2);
+
+$par2['zigbeeModel'] = '8718696548738';
+$par2['type'] = "light";
+$par2['state_topic'] =  "<Z2M_PATH>/<FRIENDLY_NAME>";
+$par2['availability_topic'] = "<Z2M_PATH>/bridge/state";
+$par2['brightness'] = "true";
+$par2['color_temp'] = "true";
+$par2['command_topic'] = "<Z2M_PATH>/<FRIENDLY_NAME>/set"  ;
+$par2['payload_on'] = "";
+$par2['payload_off'] = "";
+$par2['value_template'] = "color_temp";
+$par2['json_attributes'] = "";
+$par2['device_class'] = "";
+$par2['unit_of_measurement'] = "";
+$par2['xy'] = "";
+$par2['command_value'] = "color_temp";
+SQLInsert('zigbee2mqtt_devices_command', $par2);
+
+
+
+$par2['zigbeeModel'] = '8718696548738';
+$par2['type'] = "light";
+$par2['state_topic'] =  "<Z2M_PATH>/<FRIENDLY_NAME>";
+$par2['availability_topic'] = "<Z2M_PATH>/bridge/state";
+$par2['brightness'] = "true";
+$par2['color_temp'] = "true";
+$par2['command_topic'] = "<Z2M_PATH>/<FRIENDLY_NAME>/set"  ;
+$par2['payload_on'] = "";
+$par2['payload_off'] = "";
+$par2['value_template'] = "transition";
+$par2['json_attributes'] = "";
+$par2['device_class'] = "";
+$par2['unit_of_measurement'] = "";
+$par2['xy'] = "";
+$par2['command_value'] = "transition";
+SQLInsert('zigbee2mqtt_devices_command', $par2);
+
+
+
+////////////////////////////////////////////////
+////////////////////////////////////////////////
+////////////////////////////////////////////////
+
+
+
+
 //8718696598283;
 $par2['zigbeeModel'] = '8718696598283';
 $par2['type'] = "light";
@@ -4455,7 +4579,7 @@ $par2['zigbeeModel'] = '9290012607';
 $par2['type'] = "sensor";
 $par2['state_topic'] =  "<Z2M_PATH>/<FRIENDLY_NAME>";
 $par2['availability_topic'] = "<Z2M_PATH>/bridge/state";
-$par2['unit_of_measurement'] = "Р В РІР‚СљР Р†Р вЂљРЎв„ўР В РІР‚в„ўР вЂ™Р’В°C";
+$par2['unit_of_measurement'] = "Р В Р’В Р вЂ™Р’В Р В Р вЂ Р В РІР‚С™Р РЋРЎв„ўР В Р’В Р В РІР‚В Р В Р’В Р Р†Р вЂљРЎв„ўР В Р Р‹Р Р†РІР‚С›РЎС›Р В Р’В Р вЂ™Р’В Р В Р вЂ Р В РІР‚С™Р Р†РІР‚С›РЎС›Р В Р’В Р Р†Р вЂљРІвЂћСћР В РІР‚в„ўР вЂ™Р’В°C";
 $par2['device_class'] = "temperature";
 $par2['value_template'] = "temperature";
 $par2['json_attributes'] = "linkquality,battery,voltage";
@@ -5680,7 +5804,7 @@ $par2['zigbeeModel'] = 'AC01353010G';
 $par2['type'] = "sensor";
 $par2['state_topic'] =  "<Z2M_PATH>/<FRIENDLY_NAME>";
 $par2['availability_topic'] = "<Z2M_PATH>/bridge/state";
-$par2['unit_of_measurement'] = "Р В РІР‚СљР Р†Р вЂљРЎв„ўР В РІР‚в„ўР вЂ™Р’В°C";
+$par2['unit_of_measurement'] = "Р В Р’В Р вЂ™Р’В Р В Р вЂ Р В РІР‚С™Р РЋРЎв„ўР В Р’В Р В РІР‚В Р В Р’В Р Р†Р вЂљРЎв„ўР В Р Р‹Р Р†РІР‚С›РЎС›Р В Р’В Р вЂ™Р’В Р В Р вЂ Р В РІР‚С™Р Р†РІР‚С›РЎС›Р В Р’В Р Р†Р вЂљРІвЂћСћР В РІР‚в„ўР вЂ™Р’В°C";
 $par2['device_class'] = "";
 $par2['value_template'] = "temperature";
 $par2['json_attributes'] = "";
@@ -7083,6 +7207,249 @@ SQLInsert('zigbee2mqtt_devices_command', $par2);
 ////////////////////////////////////////////////
 
 
+//GL-C-007-2ID;
+$par2['zigbeeModel'] = 'GL-C-007-2ID';
+$par2['type'] = "light";
+$par2['state_topic'] =  "<Z2M_PATH>/<FRIENDLY_NAME>";
+$par2['availability_topic'] = "<Z2M_PATH>/bridge/state";
+$par2['brightness'] = "true";
+$par2['xy'] = "true";
+$par2['command_topic'] = "<Z2M_PATH>/<FRIENDLY_NAME>/set"  ;
+$par2['payload_on'] = "ON";
+$par2['payload_off'] = "OFF";
+$par2['value_template'] = "state";
+$par2['json_attributes'] = "";
+$par2['device_class'] = "";
+$par2['unit_of_measurement'] = "";
+$par2['color_temp'] = "true";
+$par2['command_value'] = "state";
+SQLInsert('zigbee2mqtt_devices_command', $par2);
+
+//GL-C-007-2ID;
+$par2['zigbeeModel'] = 'GL-C-007-2ID';
+$par2['type'] = "white";
+$par2['state_topic'] =  "<Z2M_PATH>/<FRIENDLY_NAME>";
+$par2['availability_topic'] = "<Z2M_PATH>/bridge/state";
+$par2['brightness'] = "true";
+$par2['xy'] = "true";
+$par2['command_topic'] = "<Z2M_PATH>/<FRIENDLY_NAME>/white/set";
+$par2['payload_on'] = "ON";
+$par2['payload_off'] = "OFF";
+$par2['value_template'] = "state_white";
+$par2['json_attributes'] = "";
+$par2['device_class'] = "";
+$par2['unit_of_measurement'] = "";
+$par2['color_temp'] = "";
+$par2['command_value'] = "state";
+SQLInsert('zigbee2mqtt_devices_command', $par2);
+
+
+//GL-C-007-2ID;
+$par2['zigbeeModel'] = 'GL-C-007-2ID';
+$par2['type'] = "light";
+$par2['state_topic'] =  "<Z2M_PATH>/<FRIENDLY_NAME>";
+$par2['availability_topic'] = "<Z2M_PATH>/bridge/state";
+$par2['brightness'] = "true";
+$par2['color_temp'] = "true";
+$par2['xy'] = "true";
+$par2['command_topic'] = "<Z2M_PATH>/<FRIENDLY_NAME>/set"  ;
+$par2['payload_on'] = "";
+$par2['payload_off'] = "";
+$par2['value_template'] = "";
+$par2['json_attributes'] = "";
+$par2['device_class'] = "";
+$par2['unit_of_measurement'] = "";
+$par2['command_value'] = "color";
+SQLInsert('zigbee2mqtt_devices_command', $par2);
+
+//GL-C-007-2ID;
+$par2['zigbeeModel'] = 'GL-C-007-2ID';
+$par2['type'] = "light";
+$par2['state_topic'] =  "<Z2M_PATH>/<FRIENDLY_NAME>";
+$par2['availability_topic'] = "<Z2M_PATH>/bridge/state";
+$par2['brightness'] = "true";
+$par2['color_temp'] = "true";
+$par2['xy'] = "true";
+$par2['command_topic'] = "<Z2M_PATH>/<FRIENDLY_NAME>/set"  ;
+$par2['payload_on'] = "";
+$par2['payload_off'] = "";
+$par2['value_template'] = "brightness";
+$par2['json_attributes'] = "";
+$par2['device_class'] = "";
+$par2['unit_of_measurement'] = "";
+$par2['command_value'] = "brightness";
+SQLInsert('zigbee2mqtt_devices_command', $par2);
+
+//GL-C-007-2ID;
+$par2['zigbeeModel'] = 'GL-C-007-2ID';
+$par2['type'] = "white";
+$par2['state_topic'] =  "<Z2M_PATH>/<FRIENDLY_NAME>";
+$par2['availability_topic'] = "<Z2M_PATH>/bridge/state";
+$par2['brightness'] = "true";
+$par2['color_temp'] = "true";
+$par2['xy'] = "false";
+$par2['command_topic'] = "<Z2M_PATH>/<FRIENDLY_NAME>/white/set"  ;
+$par2['payload_on'] = "";
+$par2['payload_off'] = "";
+$par2['value_template'] = "brightness_white";
+$par2['json_attributes'] = "";
+$par2['device_class'] = "";
+$par2['unit_of_measurement'] = "";
+$par2['command_value'] = "brightness";
+SQLInsert('zigbee2mqtt_devices_command', $par2);
+
+//GL-C-007-2ID;
+$par2['zigbeeModel'] = 'GL-C-007-2ID';
+$par2['type'] = "light";
+$par2['state_topic'] =  "<Z2M_PATH>/<FRIENDLY_NAME>";
+$par2['availability_topic'] = "<Z2M_PATH>/bridge/state";
+$par2['brightness'] = "true";
+$par2['color_temp'] = "true";
+$par2['xy'] = "true";
+$par2['command_topic'] = "<Z2M_PATH>/<FRIENDLY_NAME>/set"  ;
+$par2['payload_on'] = "";
+$par2['payload_off'] = "";
+$par2['value_template'] = "color_temp";
+$par2['json_attributes'] = "";
+$par2['device_class'] = "";
+$par2['unit_of_measurement'] = "";
+$par2['command_value'] = "color_temp";
+SQLInsert('zigbee2mqtt_devices_command', $par2);
+
+//GL-C-007-2ID;
+$par2['zigbeeModel'] = 'GL-C-007-2ID';
+$par2['type'] = "light";
+$par2['state_topic'] =  "<Z2M_PATH>/<FRIENDLY_NAME>";
+$par2['availability_topic'] = "<Z2M_PATH>/bridge/state";
+$par2['brightness'] = "true";
+$par2['color_temp'] = "true";
+$par2['xy'] = "true";
+$par2['command_topic'] = "<Z2M_PATH>/<FRIENDLY_NAME>/set"  ;
+$par2['payload_on'] = "";
+$par2['payload_off'] = "";
+$par2['value_template'] = "xy";
+$par2['json_attributes'] = "";
+$par2['device_class'] = "";
+$par2['unit_of_measurement'] = "";
+$par2['command_value'] = "xy";
+SQLInsert('zigbee2mqtt_devices_command', $par2);
+
+
+////////////////////////////////////////////////
+////////////////////////////////////////////////
+////////////////////////////////////////////////
+
+
+////////////////////////////////////////////////
+////////////////////////////////////////////////
+////////////////////////////////////////////////
+
+
+//GL-C-007;
+$par2['zigbeeModel'] = 'GL-C-007';
+$par2['type'] = "light";
+$par2['state_topic'] =  "<Z2M_PATH>/<FRIENDLY_NAME>";
+$par2['availability_topic'] = "<Z2M_PATH>/bridge/state";
+$par2['brightness'] = "true";
+$par2['xy'] = "true";
+$par2['command_topic'] = "<Z2M_PATH>/<FRIENDLY_NAME>/set"  ;
+$par2['payload_on'] = "ON";
+$par2['payload_off'] = "OFF";
+$par2['value_template'] = "state";
+$par2['json_attributes'] = "";
+$par2['device_class'] = "";
+$par2['unit_of_measurement'] = "";
+$par2['color_temp'] = "";
+$par2['command_value'] = "state";
+SQLInsert('zigbee2mqtt_devices_command', $par2);
+
+
+
+
+//GL-C-007;
+$par2['zigbeeModel'] = 'GL-C-007';
+$par2['type'] = "light";
+$par2['state_topic'] =  "<Z2M_PATH>/<FRIENDLY_NAME>";
+$par2['availability_topic'] = "<Z2M_PATH>/bridge/state";
+$par2['brightness'] = "true";
+$par2['color_temp'] = "true";
+$par2['xy'] = "true";
+$par2['command_topic'] = "<Z2M_PATH>/<FRIENDLY_NAME>/set"  ;
+$par2['payload_on'] = "";
+$par2['payload_off'] = "";
+$par2['value_template'] = "";
+$par2['json_attributes'] = "";
+$par2['device_class'] = "";
+$par2['unit_of_measurement'] = "";
+$par2['command_value'] = "color";
+SQLInsert('zigbee2mqtt_devices_command', $par2);
+
+//GL-C-007;
+$par2['zigbeeModel'] = 'GL-C-007';
+$par2['type'] = "light";
+$par2['state_topic'] =  "<Z2M_PATH>/<FRIENDLY_NAME>";
+$par2['availability_topic'] = "<Z2M_PATH>/bridge/state";
+$par2['brightness'] = "true";
+$par2['color_temp'] = "true";
+$par2['xy'] = "true";
+$par2['command_topic'] = "<Z2M_PATH>/<FRIENDLY_NAME>/set"  ;
+$par2['payload_on'] = "";
+$par2['payload_off'] = "";
+$par2['value_template'] = "brightness";
+$par2['json_attributes'] = "";
+$par2['device_class'] = "";
+$par2['unit_of_measurement'] = "";
+$par2['command_value'] = "brightness";
+SQLInsert('zigbee2mqtt_devices_command', $par2);
+
+
+//GL-C-007;
+$par2['zigbeeModel'] = 'GL-C-007';
+$par2['type'] = "light";
+$par2['state_topic'] =  "<Z2M_PATH>/<FRIENDLY_NAME>";
+$par2['availability_topic'] = "<Z2M_PATH>/bridge/state";
+$par2['brightness'] = "true";
+$par2['color_temp'] = "true";
+$par2['xy'] = "true";
+$par2['command_topic'] = "<Z2M_PATH>/<FRIENDLY_NAME>/set"  ;
+$par2['payload_on'] = "";
+$par2['payload_off'] = "";
+$par2['value_template'] = "color_temp";
+$par2['json_attributes'] = "";
+$par2['device_class'] = "";
+$par2['unit_of_measurement'] = "";
+$par2['command_value'] = "color_temp";
+SQLInsert('zigbee2mqtt_devices_command', $par2);
+
+//GL-C-007;
+$par2['zigbeeModel'] = 'GL-C-007';
+$par2['type'] = "light";
+$par2['state_topic'] =  "<Z2M_PATH>/<FRIENDLY_NAME>";
+$par2['availability_topic'] = "<Z2M_PATH>/bridge/state";
+$par2['brightness'] = "true";
+$par2['color_temp'] = "true";
+$par2['xy'] = "true";
+$par2['command_topic'] = "<Z2M_PATH>/<FRIENDLY_NAME>/set"  ;
+$par2['payload_on'] = "";
+$par2['payload_off'] = "";
+$par2['value_template'] = "xy";
+$par2['json_attributes'] = "";
+$par2['device_class'] = "";
+$par2['unit_of_measurement'] = "";
+$par2['command_value'] = "xy";
+SQLInsert('zigbee2mqtt_devices_command', $par2);
+
+
+
+////////////////////////////////////////////////
+////////////////////////////////////////////////
+////////////////////////////////////////////////
+
+////////////////////////////////////////////////
+////////////////////////////////////////////////
+////////////////////////////////////////////////
+
+
 //GL-C-008;
 $par2['zigbeeModel'] = 'GL-C-008';
 $par2['type'] = "light";
@@ -7713,7 +8080,7 @@ $par2['zigbeeModel'] = '3326-L';
 $par2['type'] = "sensor";
 $par2['state_topic'] =  "<Z2M_PATH>/<FRIENDLY_NAME>";
 $par2['availability_topic'] = "<Z2M_PATH>/bridge/state";
-$par2['unit_of_measurement'] = "Р В РІР‚СљР Р†Р вЂљРЎв„ўР В РІР‚в„ўР вЂ™Р’В°C";
+$par2['unit_of_measurement'] = "Р В Р’В Р вЂ™Р’В Р В Р вЂ Р В РІР‚С™Р РЋРЎв„ўР В Р’В Р В РІР‚В Р В Р’В Р Р†Р вЂљРЎв„ўР В Р Р‹Р Р†РІР‚С›РЎС›Р В Р’В Р вЂ™Р’В Р В Р вЂ Р В РІР‚С™Р Р†РІР‚С›РЎС›Р В Р’В Р Р†Р вЂљРІвЂћСћР В РІР‚в„ўР вЂ™Р’В°C";
 $par2['device_class'] = "temperature";
 $par2['value_template'] = "temperature";
 $par2['json_attributes'] = "" ;
@@ -8995,7 +9362,7 @@ SQLInsert('zigbee2mqtt_devices_command', $par2);
 
 //DIYRuZ_R4_5
 $par2['zigbeeModel'] = 'DIYRuZ_R4_5';
-$par2['type'] = "DIYRuZ_R4_5";
+$par2['type'] = "Relay";
 $par2['state_topic'] =  "<Z2M_PATH>/<FRIENDLY_NAME>";
 $par2['availability_topic'] = "<Z2M_PATH>/bridge/state";
 $par2['payload_off'] = "OFF"  ;
@@ -9013,7 +9380,7 @@ SQLInsert('zigbee2mqtt_devices_command', $par2);
 
 //DIYRuZ_R4_5
 $par2['zigbeeModel'] = 'DIYRuZ_R4_5';
-$par2['type'] = "DIYRuZ_R4_5";
+$par2['type'] = "Relay";
 $par2['state_topic'] =  "<Z2M_PATH>/<FRIENDLY_NAME>";
 $par2['availability_topic'] = "<Z2M_PATH>/bridge/state";
 $par2['payload_off'] = "OFF"  ;
@@ -9031,7 +9398,7 @@ SQLInsert('zigbee2mqtt_devices_command', $par2);
 
 //DIYRuZ_R4_5
 $par2['zigbeeModel'] = 'DIYRuZ_R4_5';
-$par2['type'] = "DIYRuZ_R4_5";
+$par2['type'] = "Relay";
 $par2['state_topic'] =  "<Z2M_PATH>/<FRIENDLY_NAME>";
 $par2['availability_topic'] = "<Z2M_PATH>/bridge/state";
 $par2['payload_off'] = "OFF"  ;
@@ -9049,7 +9416,7 @@ SQLInsert('zigbee2mqtt_devices_command', $par2);
 
 //DIYRuZ_R4_5
 $par2['zigbeeModel'] = 'DIYRuZ_R4_5';
-$par2['type'] = "DIYRuZ_R4_5";
+$par2['type'] = "Relay";
 $par2['state_topic'] =  "<Z2M_PATH>/<FRIENDLY_NAME>";
 $par2['availability_topic'] = "<Z2M_PATH>/bridge/state";
 $par2['payload_off'] = "OFF"  ;
@@ -9067,13 +9434,13 @@ SQLInsert('zigbee2mqtt_devices_command', $par2);
 
 //DIYRuZ_R4_5
 $par2['zigbeeModel'] = 'DIYRuZ_R4_5';
-$par2['type'] = "DIYRuZ_R4_5";
+$par2['type'] = "Relay";
 $par2['state_topic'] =  "<Z2M_PATH>/<FRIENDLY_NAME>";
 $par2['availability_topic'] = "<Z2M_PATH>/bridge/state";
 $par2['payload_off'] = "OFF"  ;
 $par2['payload_on'] = "ON"  ;
 $par2['value_template'] = "state";
-$par2['command_topic'] = "<Z2M_PATH>/<FRIENDLY_NAME>/center/set";
+$par2['command_topic'] = "<Z2M_PATH>/<FRIENDLY_NAME>/set";
 $par2['json_attributes'] = "state";
 $par2['device_class'] = "";
 $par2['unit_of_measurement'] = "";
@@ -9082,6 +9449,145 @@ $par2['color_temp'] = "";
 $par2['xy'] = "";
 $par2['command_value'] = "state";
 SQLInsert('zigbee2mqtt_devices_command', $par2);
+
+
+
+//DIYRuZ_R8_8
+$par2['zigbeeModel'] = 'DIYRuZ_R8_8';
+$par2['type'] = "Relay";
+$par2['state_topic'] =  "<Z2M_PATH>/<FRIENDLY_NAME>";
+$par2['availability_topic'] = "<Z2M_PATH>/bridge/state";
+$par2['payload_off'] = "OFF"  ;
+$par2['payload_on'] = "ON"  ;
+$par2['value_template'] = "state";
+$par2['command_topic'] = "<Z2M_PATH>/<FRIENDLY_NAME>/set";
+$par2['json_attributes'] = "state_l2";
+$par2['device_class'] = "";
+$par2['unit_of_measurement'] = "";
+$par2['brightness'] = "";
+$par2['color_temp'] = "";
+$par2['xy'] = "";
+$par2['command_value'] = "state_l2";
+SQLInsert('zigbee2mqtt_devices_command', $par2);
+
+
+//DIYRuZ_R8_8
+$par2['zigbeeModel'] = 'DIYRuZ_R8_8';
+$par2['type'] = "Relay";
+$par2['state_topic'] =  "<Z2M_PATH>/<FRIENDLY_NAME>";
+$par2['availability_topic'] = "<Z2M_PATH>/bridge/state";
+$par2['payload_off'] = "OFF"  ;
+$par2['payload_on'] = "ON"  ;
+$par2['value_template'] = "state";
+$par2['command_topic'] = "<Z2M_PATH>/<FRIENDLY_NAME>/set";
+$par2['json_attributes'] = "state_l3";
+$par2['device_class'] = "";
+$par2['unit_of_measurement'] = "";
+$par2['brightness'] = "";
+$par2['color_temp'] = "";
+$par2['xy'] = "";
+$par2['command_value'] = "state_l3";
+SQLInsert('zigbee2mqtt_devices_command', $par2);
+
+
+//DIYRuZ_R8_8
+$par2['zigbeeModel'] = 'DIYRuZ_R8_8';
+$par2['type'] = "Relay";
+$par2['state_topic'] =  "<Z2M_PATH>/<FRIENDLY_NAME>";
+$par2['availability_topic'] = "<Z2M_PATH>/bridge/state";
+$par2['payload_off'] = "OFF"  ;
+$par2['payload_on'] = "ON"  ;
+$par2['value_template'] = "state";
+$par2['command_topic'] = "<Z2M_PATH>/<FRIENDLY_NAME>/set";
+$par2['json_attributes'] = "state_l4";
+$par2['device_class'] = "";
+$par2['unit_of_measurement'] = "";
+$par2['brightness'] = "";
+$par2['color_temp'] = "";
+$par2['xy'] = "";
+$par2['command_value'] = "state_l4";
+SQLInsert('zigbee2mqtt_devices_command', $par2);
+
+
+
+//DIYRuZ_R8_8
+$par2['zigbeeModel'] = 'DIYRuZ_R8_8';
+$par2['type'] = "Relay";
+$par2['state_topic'] =  "<Z2M_PATH>/<FRIENDLY_NAME>";
+$par2['availability_topic'] = "<Z2M_PATH>/bridge/state";
+$par2['payload_off'] = "OFF"  ;
+$par2['payload_on'] = "ON"  ;
+$par2['value_template'] = "state";
+$par2['command_topic'] = "<Z2M_PATH>/<FRIENDLY_NAME>/set";
+$par2['json_attributes'] = "state_l5";
+$par2['device_class'] = "";
+$par2['unit_of_measurement'] = "";
+$par2['brightness'] = "";
+$par2['color_temp'] = "";
+$par2['xy'] = "";
+$par2['command_value'] = "state_l5";
+SQLInsert('zigbee2mqtt_devices_command', $par2);
+
+
+
+//DIYRuZ_R8_8
+$par2['zigbeeModel'] = 'DIYRuZ_R8_8';
+$par2['type'] = "Relay";
+$par2['state_topic'] =  "<Z2M_PATH>/<FRIENDLY_NAME>";
+$par2['availability_topic'] = "<Z2M_PATH>/bridge/state";
+$par2['payload_off'] = "OFF"  ;
+$par2['payload_on'] = "ON"  ;
+$par2['value_template'] = "state";
+$par2['command_topic'] = "<Z2M_PATH>/<FRIENDLY_NAME>/set";
+$par2['json_attributes'] = "state_l6";
+$par2['device_class'] = "";
+$par2['unit_of_measurement'] = "";
+$par2['brightness'] = "";
+$par2['color_temp'] = "";
+$par2['xy'] = "";
+$par2['command_value'] = "state_l6";
+SQLInsert('zigbee2mqtt_devices_command', $par2);
+
+
+
+//DIYRuZ_R8_8
+$par2['zigbeeModel'] = 'DIYRuZ_R8_8';
+$par2['type'] = "Relay";
+$par2['state_topic'] =  "<Z2M_PATH>/<FRIENDLY_NAME>";
+$par2['availability_topic'] = "<Z2M_PATH>/bridge/state";
+$par2['payload_off'] = "OFF"  ;                       
+$par2['payload_on'] = "ON"  ;
+$par2['value_template'] = "state";
+$par2['command_topic'] = "<Z2M_PATH>/<FRIENDLY_NAME>/set";
+$par2['json_attributes'] = "state_l7";
+$par2['device_class'] = "";
+$par2['unit_of_measurement'] = "";
+$par2['brightness'] = "";
+$par2['color_temp'] = "";
+$par2['xy'] = "";
+$par2['command_value'] = "state_l7";
+SQLInsert('zigbee2mqtt_devices_command', $par2);
+
+
+
+//DIYRuZ_R8_8
+$par2['zigbeeModel'] = 'DIYRuZ_R8_8';
+$par2['type'] = "Relay";
+$par2['state_topic'] =  "<Z2M_PATH>/<FRIENDLY_NAME>";
+$par2['availability_topic'] = "<Z2M_PATH>/bridge/state";
+$par2['payload_off'] = "OFF"  ;
+$par2['payload_on'] = "ON"  ;
+$par2['value_template'] = "state";
+$par2['command_topic'] = "<Z2M_PATH>/<FRIENDLY_NAME>/set";
+$par2['json_attributes'] = "state_l8";
+$par2['device_class'] = "";
+$par2['unit_of_measurement'] = "";
+$par2['brightness'] = "";
+$par2['color_temp'] = "";
+$par2['xy'] = "";
+$par2['command_value'] = "state_l8";
+SQLInsert('zigbee2mqtt_devices_command', $par2);
+
 
 
 //DIYRuZ_rspm	
@@ -9152,9 +9658,9 @@ $par2['zigbeeModel'] = 'WXCJKG13LM';
 $par2['type'] = "switch";
 $par2['state_topic'] =  "<Z2M_PATH>/<FRIENDLY_NAME>";
 $par2['availability_topic'] = "<Z2M_PATH>/bridge/state";
-$par2['payload_off'] = "OFF"  ;
-$par2['payload_on'] = "ON"  ;
-$par2['value_template'] = "state_left";
+$par2['payload_off'] = ""  ;
+$par2['payload_on'] = ""  ;
+$par2['value_template'] = "operation_mode";
 $par2['command_topic'] = "<Z2M_PATH>/<FRIENDLY_NAME>/set";
 $par2['json_attributes'] = "";
 $par2['device_class'] = "";
@@ -9162,7 +9668,7 @@ $par2['unit_of_measurement'] = "";
 $par2['brightness'] = "";
 $par2['color_temp'] = "";
 $par2['xy'] = "";
-$par2['command_value'] = "state_left";
+$par2['command_value'] = "operation_mode";
 SQLInsert('zigbee2mqtt_devices_command', $par2);
 
 
@@ -9202,7 +9708,8 @@ $par2['availability_topic'] = "<Z2M_PATH>/bridge/state";
 $par2['payload_off'] = "OFF"  ;
 $par2['payload_on'] = "ON"  ;
 $par2['value_template'] = "state_left";
-$par2['command_topic'] = "<Z2M_PATH>/<FRIENDLY_NAME>/left/set";
+//$par2['command_topic'] = "<Z2M_PATH>/<FRIENDLY_NAME>/left/set";
+$par2['command_topic'] = "<Z2M_PATH>/<FRIENDLY_NAME>/set";
 $par2['json_attributes'] = "";
 $par2['device_class'] = "";
 $par2['unit_of_measurement'] = "";
@@ -9221,7 +9728,8 @@ $par2['availability_topic'] = "<Z2M_PATH>/bridge/state";
 $par2['payload_off'] = "OFF"  ;
 $par2['payload_on'] = "ON"  ;
 $par2['value_template'] = "state_right";
-$par2['command_topic'] = "<Z2M_PATH>/<FRIENDLY_NAME>/right/set"  ;
+//$par2['command_topic'] = "<Z2M_PATH>/<FRIENDLY_NAME>/right/set"  ;
+$par2['command_topic'] = "<Z2M_PATH>/<FRIENDLY_NAME>/set";
 $par2['json_attributes'] = "";
 $par2['device_class'] = "";
 $par2['unit_of_measurement'] = "";
@@ -9230,6 +9738,32 @@ $par2['color_temp'] = "";
 $par2['xy'] = "";
 $par2['command_value'] = "state_right";
 SQLInsert('zigbee2mqtt_devices_command', $par2);
+
+
+
+////////////////////////////////////////////////
+////////////////////////////////////////////////
+////////////////////////////////////////////////
+
+
+//TS0001;
+$par2['zigbeeModel'] = 'TS0001';
+$par2['type'] = "switch";
+$par2['state_topic'] =  "<Z2M_PATH>/<FRIENDLY_NAME>";
+$par2['availability_topic'] = "<Z2M_PATH>/bridge/state";
+$par2['payload_off'] = "OFF"  ;
+$par2['payload_on'] = "ON"  ;
+$par2['value_template'] = "state";
+$par2['command_topic'] = "<Z2M_PATH>/<FRIENDLY_NAME>/set";
+$par2['json_attributes'] = "";
+$par2['device_class'] = "";
+$par2['unit_of_measurement'] = "";
+$par2['brightness'] = "";
+$par2['color_temp'] = "";
+$par2['xy'] = "";
+$par2['command_value'] = "state";
+SQLInsert('zigbee2mqtt_devices_command', $par2);
+
 
 ////////////////////////////////////////////////
 ////////////////////////////////////////////////
@@ -9350,6 +9884,342 @@ $par2['command_value'] = "state";
 SQLInsert('zigbee2mqtt_devices_command', $par2);
 
 
+//RICI01
+$par2['zigbeeModel'] = 'RICI01';
+$par2['type'] = "plug";
+$par2['state_topic'] =  "<Z2M_PATH>/<FRIENDLY_NAME>";
+$par2['availability_topic'] = "<Z2M_PATH>/bridge/state";
+$par2['payload_off'] = "OFF"  ;
+$par2['payload_on'] = "ON"  ;
+$par2['value_template'] = "state";
+$par2['command_topic'] = "<Z2M_PATH>/<FRIENDLY_NAME>/set"  ;
+$par2['json_attributes'] = "";
+$par2['device_class'] = "";
+$par2['unit_of_measurement'] = "";
+$par2['brightness'] = "";
+$par2['color_temp'] = "";
+$par2['xy'] = "";
+$par2['command_value'] = "state";
+SQLInsert('zigbee2mqtt_devices_command', $par2);
+
+
+//X711A;     https://www.zigbee2mqtt.io/devices/X711A.html
+$par2['zigbeeModel'] = 'X711A';
+$par2['type'] = "switch";
+$par2['state_topic'] =  "<Z2M_PATH>/<FRIENDLY_NAME>";
+$par2['availability_topic'] = "<Z2M_PATH>/bridge/state";
+$par2['payload_off'] = "OFF"  ;
+$par2['payload_on'] = "ON"  ;
+$par2['value_template'] = "state";
+$par2['command_topic'] = "<Z2M_PATH>/<FRIENDLY_NAME>/set"  ;
+$par2['json_attributes'] = "";
+$par2['device_class'] = "";
+$par2['unit_of_measurement'] = "";
+$par2['brightness'] = "";
+$par2['color_temp'] = "";
+$par2['xy'] = "";
+$par2['command_value'] = "state";
+SQLInsert('zigbee2mqtt_devices_command', $par2);
+
+
+//X712A;     https://www.zigbee2mqtt.io/devices/X712A.html
+$par2['zigbeeModel'] = 'X712A';
+$par2['type'] = "switch";
+$par2['state_topic'] =  "<Z2M_PATH>/<FRIENDLY_NAME>";
+$par2['availability_topic'] = "<Z2M_PATH>/bridge/state";
+$par2['payload_off'] = "OFF"  ;
+$par2['payload_on'] = "ON"  ;
+$par2['value_template'] = "state_l1";
+$par2['command_topic'] = "<Z2M_PATH>/<FRIENDLY_NAME>/l1/set"  ;
+$par2['json_attributes'] = "";
+$par2['device_class'] = "";
+$par2['unit_of_measurement'] = "";
+$par2['brightness'] = "";
+$par2['color_temp'] = "";
+$par2['xy'] = "";
+$par2['command_value'] = "state_l1";
+SQLInsert('zigbee2mqtt_devices_command', $par2);
+
+//X712A;     https://www.zigbee2mqtt.io/devices/X712A.html
+$par2['zigbeeModel'] = 'X712A';
+$par2['type'] = "switch";
+$par2['state_topic'] =  "<Z2M_PATH>/<FRIENDLY_NAME>";
+$par2['availability_topic'] = "<Z2M_PATH>/bridge/state";
+$par2['payload_off'] = "OFF"  ;
+$par2['payload_on'] = "ON"  ;
+$par2['value_template'] = "state_l2";
+$par2['command_topic'] = "<Z2M_PATH>/<FRIENDLY_NAME>/l2/set"  ;
+$par2['json_attributes'] = "";
+$par2['device_class'] = "";
+$par2['unit_of_measurement'] = "";
+$par2['brightness'] = "";
+$par2['color_temp'] = "";
+$par2['xy'] = "";
+$par2['command_value'] = "state_l2";
+SQLInsert('zigbee2mqtt_devices_command', $par2);
+
+
+//X712A     https://www.zigbee2mqtt.io/devices/X703A.html
+$par2['zigbeeModel'] = 'X703A';
+$par2['type'] = "switch";
+$par2['state_topic'] =  "<Z2M_PATH>/<FRIENDLY_NAME>";
+$par2['availability_topic'] = "<Z2M_PATH>/bridge/state";
+$par2['payload_off'] = "OFF"  ;
+$par2['payload_on'] = "ON"  ;
+$par2['value_template'] = "state_l1";
+$par2['command_topic'] = "<Z2M_PATH>/<FRIENDLY_NAME>/l1/set"  ;
+$par2['json_attributes'] = "";
+$par2['device_class'] = "";
+$par2['unit_of_measurement'] = "";
+$par2['brightness'] = "";
+$par2['color_temp'] = "";
+$par2['xy'] = "";
+$par2['command_value'] = "state_l1";
+SQLInsert('zigbee2mqtt_devices_command', $par2);
+
+//X712A  https://www.zigbee2mqtt.io/devices/X703A.html
+$par2['zigbeeModel'] = 'X703A';
+$par2['type'] = "switch";
+$par2['state_topic'] =  "<Z2M_PATH>/<FRIENDLY_NAME>";
+$par2['availability_topic'] = "<Z2M_PATH>/bridge/state";
+$par2['payload_off'] = "OFF"  ;
+$par2['payload_on'] = "ON"  ;
+$par2['value_template'] = "state_l2";
+$par2['command_topic'] = "<Z2M_PATH>/<FRIENDLY_NAME>/l2/set"  ;
+$par2['json_attributes'] = "";
+$par2['device_class'] = "";
+$par2['unit_of_measurement'] = "";
+$par2['brightness'] = "";
+$par2['color_temp'] = "";
+$par2['xy'] = "";
+$par2['command_value'] = "state_l2";
+SQLInsert('zigbee2mqtt_devices_command', $par2);
+
+
+//X712A  https://www.zigbee2mqtt.io/devices/X703A.html
+$par2['zigbeeModel'] = 'X703A';
+$par2['type'] = "switch";
+$par2['state_topic'] =  "<Z2M_PATH>/<FRIENDLY_NAME>";
+$par2['availability_topic'] = "<Z2M_PATH>/bridge/state";
+$par2['payload_off'] = "OFF"  ;
+$par2['payload_on'] = "ON"  ;
+$par2['value_template'] = "state_l3";
+$par2['command_topic'] = "<Z2M_PATH>/<FRIENDLY_NAME>/l3/set"  ;
+$par2['json_attributes'] = "";
+$par2['device_class'] = "";
+$par2['unit_of_measurement'] = "";
+$par2['brightness'] = "";
+$par2['color_temp'] = "";
+$par2['xy'] = "";
+$par2['command_value'] = "state_l3";
+SQLInsert('zigbee2mqtt_devices_command', $par2);
+
+
+
+//DIYRuZ_Flower_WS
+$par2['zigbeeModel'] = 'DIYRuZ_Flower_WS';
+$par2['type'] = "controller";
+$par2['state_topic'] =  "<Z2M_PATH>/<FRIENDLY_NAME>";
+$par2['availability_topic'] = "<Z2M_PATH>/bridge/state";
+$par2['payload_off'] = "OFF"  ;
+$par2['payload_on'] = "ON"  ;
+$par2['value_template'] = "pump_1";
+$par2['command_topic'] = "<Z2M_PATH>/<FRIENDLY_NAME>/set"  ;
+$par2['json_attributes'] = "";
+$par2['device_class'] = "";
+$par2['unit_of_measurement'] = "";
+$par2['brightness'] = "";
+$par2['color_temp'] = "";
+$par2['xy'] = "";
+$par2['command_value'] = "pump_1";
+SQLInsert('zigbee2mqtt_devices_command', $par2);
+
+
+//DIYRuZ_Flower_WS
+$par2['zigbeeModel'] = 'DIYRuZ_Flower_WS';
+$par2['type'] = "controller";
+$par2['state_topic'] =  "<Z2M_PATH>/<FRIENDLY_NAME>";
+$par2['availability_topic'] = "<Z2M_PATH>/bridge/state";
+$par2['payload_off'] = "OFF"  ;
+$par2['payload_on'] = "ON"  ;
+$par2['value_template'] = "pump_2";
+$par2['command_topic'] = "<Z2M_PATH>/<FRIENDLY_NAME>/set"  ;
+$par2['json_attributes'] = "";
+$par2['device_class'] = "";
+$par2['unit_of_measurement'] = "";
+$par2['brightness'] = "";
+$par2['color_temp'] = "";
+$par2['xy'] = "";
+$par2['command_value'] = "pump_2";
+SQLInsert('zigbee2mqtt_devices_command', $par2);
+
+//DIYRuZ_Flower_WS
+$par2['zigbeeModel'] = 'DIYRuZ_Flower_WS';
+$par2['type'] = "controller";
+$par2['state_topic'] =  "<Z2M_PATH>/<FRIENDLY_NAME>";
+$par2['availability_topic'] = "<Z2M_PATH>/bridge/state";
+$par2['payload_off'] = "OFF"  ;
+$par2['payload_on'] = "ON"  ;
+$par2['value_template'] = "pump_3";
+$par2['command_topic'] = "<Z2M_PATH>/<FRIENDLY_NAME>/set"  ;
+$par2['json_attributes'] = "";
+$par2['device_class'] = "";
+$par2['unit_of_measurement'] = "";
+$par2['brightness'] = "";
+$par2['color_temp'] = "";
+$par2['xy'] = "";
+$par2['command_value'] = "pump_3";
+SQLInsert('zigbee2mqtt_devices_command', $par2);
+
+
+//DIYRuZ_Flower_WS
+$par2['zigbeeModel'] = 'DIYRuZ_Flower_WS';
+$par2['type'] = "controller";
+$par2['state_topic'] =  "<Z2M_PATH>/<FRIENDLY_NAME>";
+$par2['availability_topic'] = "<Z2M_PATH>/bridge/state";
+$par2['payload_off'] = ""  ;
+$par2['payload_on'] = ""  ;
+$par2['value_template'] = "pump_timeout_1";
+$par2['command_topic'] = "<Z2M_PATH>/<FRIENDLY_NAME>/set"  ;
+$par2['json_attributes'] = "";
+$par2['device_class'] = "";
+$par2['unit_of_measurement'] = "";
+$par2['brightness'] = "";
+$par2['color_temp'] = "";
+$par2['xy'] = "";
+$par2['command_value'] = "pump_timeout_1";
+SQLInsert('zigbee2mqtt_devices_command', $par2);
+
+
+//DIYRuZ_Flower_WS
+$par2['zigbeeModel'] = 'DIYRuZ_Flower_WS';
+$par2['type'] = "controller";
+$par2['state_topic'] =  "<Z2M_PATH>/<FRIENDLY_NAME>";
+$par2['availability_topic'] = "<Z2M_PATH>/bridge/state";
+$par2['payload_off'] = ""  ;
+$par2['payload_on'] = ""  ;
+$par2['value_template'] = "pump_timeout_2";
+$par2['command_topic'] = "<Z2M_PATH>/<FRIENDLY_NAME>/set"  ;
+$par2['json_attributes'] = "";
+$par2['device_class'] = "";
+$par2['unit_of_measurement'] = "";
+$par2['brightness'] = "";
+$par2['color_temp'] = "";
+$par2['xy'] = "";
+$par2['command_value'] = "pump_timeout_2";
+SQLInsert('zigbee2mqtt_devices_command', $par2);
+
+//DIYRuZ_Flower_WS
+$par2['zigbeeModel'] = 'DIYRuZ_Flower_WS';
+$par2['type'] = "controller";
+$par2['state_topic'] =  "<Z2M_PATH>/<FRIENDLY_NAME>";
+$par2['availability_topic'] = "<Z2M_PATH>/bridge/state";
+$par2['payload_off'] = ""  ;
+$par2['payload_on'] = ""  ;
+$par2['value_template'] = "pump_timeout_3";
+$par2['command_topic'] = "<Z2M_PATH>/<FRIENDLY_NAME>/set"  ;
+$par2['json_attributes'] = "";
+$par2['device_class'] = "";
+$par2['unit_of_measurement'] = "";
+$par2['brightness'] = "";
+$par2['color_temp'] = "";
+$par2['xy'] = "";
+$par2['command_value'] = "pump_timeout_3";
+SQLInsert('zigbee2mqtt_devices_command', $par2);
+
+
+//BHT-002-GCLZB
+$par2['zigbeeModel'] = 'BHT-002-GCLZB';
+$par2['type'] = "thermostat";
+$par2['state_topic'] =  "<Z2M_PATH>/<FRIENDLY_NAME>";
+$par2['availability_topic'] = "<Z2M_PATH>/bridge/state";
+$par2['payload_off'] = "LOCK"  ;
+$par2['payload_on'] = "UNLOCK"  ;
+$par2['value_template'] = "child_lock";
+$par2['command_topic'] = "<Z2M_PATH>/<FRIENDLY_NAME>/set"  ;
+$par2['json_attributes'] = "";
+$par2['device_class'] = "";
+$par2['unit_of_measurement'] = "";
+$par2['brightness'] = "";
+$par2['color_temp'] = "";
+$par2['xy'] = "";
+$par2['command_value'] = "child_lock";
+SQLInsert('zigbee2mqtt_devices_command', $par2);
+
+
+//BHT-002-GCLZB
+$par2['zigbeeModel'] = 'BHT-002-GCLZB';
+$par2['type'] = "thermostat";
+$par2['state_topic'] =  "<Z2M_PATH>/<FRIENDLY_NAME>";
+$par2['availability_topic'] = "<Z2M_PATH>/bridge/state";
+$par2['payload_off'] = ""  ;
+$par2['payload_on'] = ""  ;
+$par2['value_template'] = "current_heating_setpoint";
+$par2['command_topic'] = "<Z2M_PATH>/<FRIENDLY_NAME>/set"  ;
+$par2['json_attributes'] = "";
+$par2['device_class'] = "";
+$par2['unit_of_measurement'] = "";
+$par2['brightness'] = "";
+$par2['color_temp'] = "";
+$par2['xy'] = "";
+$par2['command_value'] = "current_heating_setpoint";
+SQLInsert('zigbee2mqtt_devices_command', $par2);
+
+
+//BHT-002-GCLZB
+$par2['zigbeeModel'] = 'BHT-002-GCLZB';
+$par2['type'] = "thermostat";
+$par2['state_topic'] =  "<Z2M_PATH>/<FRIENDLY_NAME>";
+$par2['availability_topic'] = "<Z2M_PATH>/bridge/state";
+$par2['payload_off'] = "OFF"  ;
+$par2['payload_on'] = "ON"  ;
+$par2['value_template'] = "heat";
+$par2['command_topic'] = "<Z2M_PATH>/<FRIENDLY_NAME>/set"  ;
+$par2['json_attributes'] = "";
+$par2['device_class'] = "";
+$par2['unit_of_measurement'] = "";
+$par2['brightness'] = "";
+$par2['color_temp'] = "";
+$par2['xy'] = "";
+$par2['command_value'] = "heat";
+SQLInsert('zigbee2mqtt_devices_command', $par2);
+
+//livolo switch (new);
+$par2['zigbeeModel'] = 'TI0001-switch';
+$par2['type'] = "light";
+$par2['state_topic'] =  "<Z2M_PATH>/<FRIENDLY_NAME>";
+$par2['availability_topic'] = "<Z2M_PATH>/bridge/state";
+$par2['brightness'] = "";
+$par2['command_topic'] = "<Z2M_PATH>/<FRIENDLY_NAME>/left/set" ;
+$par2['payload_on'] = "ON";
+$par2['payload_off'] = "OFF";
+$par2['value_template'] = "state_left";
+$par2['json_attributes'] = "";
+$par2['device_class'] = "";
+$par2['unit_of_measurement'] = "";
+$par2['color_temp'] = "";
+$par2['xy'] = "";
+$par2['command_value'] = "state";
+SQLInsert('zigbee2mqtt_devices_command', $par2);
+
+
+//livolo socket;
+$par2['zigbeeModel'] = 'TI0001-socket';
+$par2['type'] = "light";
+$par2['state_topic'] =  "<Z2M_PATH>/<FRIENDLY_NAME>";
+$par2['availability_topic'] = "<Z2M_PATH>/bridge/state";
+$par2['brightness'] = "";
+$par2['command_topic'] = "<Z2M_PATH>/<FRIENDLY_NAME>/left/set" ;
+$par2['payload_on'] = "ON";
+$par2['payload_off'] = "OFF";
+$par2['value_template'] = "state_left";
+$par2['json_attributes'] = "";
+$par2['device_class'] = "";
+$par2['unit_of_measurement'] = "";
+$par2['color_temp'] = "";
+$par2['xy'] = "";
+$par2['command_value'] = "state";
+SQLInsert('zigbee2mqtt_devices_command', $par2);
 
 
 }

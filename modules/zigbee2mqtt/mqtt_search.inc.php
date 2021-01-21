@@ -311,6 +311,7 @@ $basa=SQLSelectOne($sql);
  if ($ttype=='dimmer')  $res[$i]['CHANGEABLE']='1';
  if ($ttype=='openable')  $res[$i]['CHANGEABLE']='4';
  if ( ($ttype=='relay')) $res[$i]['CHANGEABLE']='1';
+ if ( ($ttype=='plug')) $res[$i]['CHANGEABLE']='1';
  if ( ($ttype=='switch') && (strpos($basa['description'],'double')>0)) $res[$i]['CHANGEABLE']='2';
  if ( ($ttype=='switch')) $res[$i]['CHANGEABLE']='1';
 
@@ -319,11 +320,59 @@ $basa=SQLSelectOne($sql);
  if ($basa['model']=='GL-C-008')    $res[$i]['CHANGEABLE']='1';
  if ($basa['model']=='GL-C-007')    $res[$i]['CHANGEABLE']='1';
  if ($basa['model']=='LLKZMK11LM')  $res[$i]['CHANGEABLE']='3';
+ if ($basa['model']=='DIYRuZ_R8_8') $res[$i]['CHANGEABLE']='R8';
+ if ($basa['model']=='DIYRuZ_R4_4') $res[$i]['CHANGEABLE']='R4';
+ if ($basa['model']=='DIYRuZ_R4_5') $res[$i]['CHANGEABLE']='R4';
+ if ($basa['model']=='DIYRuZ_Flower_WS') $res[$i]['CHANGEABLE']='R3';
  if ($basa['model']=='TI0001')      $res[$i]['CHANGEABLE']='2';
  if ($basa['model']=='QBKG12LM')    $res[$i]['CHANGEABLE']='2';
  if ($basa['model']=='QBKG11LM')    $res[$i]['CHANGEABLE']='1';
  if ($basa['model']=='QBKG03LM')    $res[$i]['CHANGEABLE']='2';
  if ($basa['model']=='GDKES-02TZXD')$res[$i]['CHANGEABLE']='2';
+
+ if ($basa['model']=='DIYRuZ_R8_8') {
+
+ $s1=SQLSelectOne($sql="SELECT *  FROM  zigbee2mqtt where METRIKA='state_l1'  and DEV_ID='".$res[$i]['DEVID']."'")['VALUE'];
+ if ($s1=="ON")   $res[$i]['CHANGEABLE1']='1';
+
+ $s1=SQLSelectOne($sql="SELECT *  FROM  zigbee2mqtt where METRIKA='state_l2'  and DEV_ID='".$res[$i]['DEVID']."'")['VALUE'];
+ if ($s1=="ON")   $res[$i]['CHANGEABLE2']='1';
+
+ $s1=SQLSelectOne($sql="SELECT *  FROM  zigbee2mqtt where METRIKA='state_l3'  and DEV_ID='".$res[$i]['DEVID']."'")['VALUE'];
+ if ($s1=="ON")   $res[$i]['CHANGEABLE3']='1';
+
+
+ $s1=SQLSelectOne($sql="SELECT *  FROM  zigbee2mqtt where METRIKA='state_l4'  and DEV_ID='".$res[$i]['DEVID']."'")['VALUE'];
+ if ($s1=="ON")   $res[$i]['CHANGEABLE4']='1';
+
+
+ $s1=SQLSelectOne($sql="SELECT *  FROM  zigbee2mqtt where METRIKA='state_l5'  and DEV_ID='".$res[$i]['DEVID']."'")['VALUE'];
+ if ($s1=="ON")   $res[$i]['CHANGEABLE5']='1';
+
+
+ $s1=SQLSelectOne($sql="SELECT *  FROM  zigbee2mqtt where METRIKA='state_l6'  and DEV_ID='".$res[$i]['DEVID']."'")['VALUE'];
+ if ($s1=="ON")   $res[$i]['CHANGEABLE6']='1';
+
+
+ $s1=SQLSelectOne($sql="SELECT *  FROM  zigbee2mqtt where METRIKA='state_l7'  and DEV_ID='".$res[$i]['DEVID']."'")['VALUE'];
+ if ($s1=="ON")   $res[$i]['CHANGEABLE7']='1';
+
+ $s1=SQLSelectOne($sql="SELECT *  FROM  zigbee2mqtt where METRIKA='state_l8'  and DEV_ID='".$res[$i]['DEVID']."'")['VALUE'];
+ if ($s1=="ON")   $res[$i]['CHANGEABLE8']='1';
+
+
+
+
+
+
+
+}
+
+
+
+
+
+
 
 
 
@@ -337,12 +386,22 @@ $basa=SQLSelectOne($sql);
 
 
 
+ if ($basa['model']=='LTW010')  $res[$i]['COLOR_TEMP']='1';	
+ if ($basa['model']=='LTW010')  $res[$i]['XY']='0';	
+
+ if ($basa['model']=='8718696548738')  $res[$i]['COLOR_TEMP']='1';	
+ if ($basa['model']=='8718696548738')  $res[$i]['XY']='0';	
+
+
+
 
 
  if ($basa['model']=='GL-C-008')  $res[$i]['COLOR_TEMP']='1';
  if ($basa['model']=='GL-C-008')  $res[$i]['XY']='1';
  if ($basa['model']=='GL-C-007')  $res[$i]['COLOR_TEMP']='1';
  if ($basa['model']=='GL-C-007')  $res[$i]['XY']='1';
+ if ($basa['model']=='GL-C-007-2ID')  $res[$i]['COLOR_TEMP']='1';
+ if ($basa['model']=='GL-C-007-2ID')  $res[$i]['XY']='1';
 
 
  if ($basa['model']=='LED1624G9')  $res[$i]['XY']='1';
