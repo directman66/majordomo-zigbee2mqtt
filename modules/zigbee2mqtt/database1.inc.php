@@ -28,6 +28,11 @@ $par1['fromZigbee'] = "fz.xiaomi_battery_3v, fz.WXKG01LM_click, fz.ignore_onoff_
 $par1['toZigbee'] = "";		 
 SQLInsert('zigbee2mqtt_devices_list', $par1);						
 
+
+
+
+
+
 $par1['zigbeeModel'] = 'lumi.sensor_switch.aq2';
 $par1['model'] = "WXKG11LM";		 
 $par1['vendor'] = "Xiaomi";		 
@@ -193,6 +198,18 @@ $par1['supports'] = "on/off, power measurement";
 $par1['fromZigbee'] = "";		 
 $par1['toZigbee'] = "";		 
 SQLInsert('zigbee2mqtt_devices_list', $par1);						
+
+$par1['zigbeeModel'] = 'QBKG25LM';
+$par1['model'] = "QBKG25LM";		 
+$par1['vendor'] = "Xiaomi";		 
+$par1['type'] = "switch";		 
+$par1['description'] = "Aqara D1 3 gang smart wall switch (no neutral wire)";		 
+$par1['extend'] = "";		 
+$par1['supports'] = "switch (state), power_outage_memory, action, linkquality";		 
+$par1['fromZigbee'] = "";		 
+$par1['toZigbee'] = "";		 
+SQLInsert('zigbee2mqtt_devices_list', $par1);						
+
 
 
 
