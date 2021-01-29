@@ -103,7 +103,7 @@ while ($zigbee2mqtt_client->proc()) {
         if ($latest_check_cycle + 30 < time())
            {
        $latest_check_cycle = time();
-       saveToCache("MJD:$cycleVarName", $latest_check_cycle);
+       setGlobal((str_replace('.php', '', basename(__FILE__))) . 'Run', time(), 1);
            }
 
         if (file_exists('./reboot') || IsSet($_GET['onetime'])) {
