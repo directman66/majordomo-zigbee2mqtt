@@ -1137,7 +1137,7 @@ else if ($newvalue<>$oldvalue)
 {setGlobal($rec['LINKED_OBJECT'].'.'.$rec['LINKED_PROPERTY'], $newvalue, array($this->name=>'0'));}
      }
      if ($rec['LINKED_OBJECT'] && $rec['LINKED_METHOD']) {
-       callMethod($rec['LINKED_OBJECT'] . '.' . $rec['LINKED_METHOD'], $rec['VALUE']);
+       callMethod($rec['LINKED_OBJECT'] . '.' . $rec['LINKED_METHOD'], array('VALUE'=>$rec['VALUE']));
 
 
 $arr=sqlselectone('select * from  zigbee2mqtt_log  where TITLE="dummy"');
@@ -1252,7 +1252,7 @@ else if ($newvalue<>$oldvalue)
 
 //debmes('выполним метод '.$rec1['LINKED_OBJECT'] . '.' . $rec1['LINKED_METHOD'],'zigbee2mqtt');
 //       callMethod($rec1['LINKED_OBJECT'] . '.' . $rec1['LINKED_METHOD'], $rec1['VALUE']);
-        callMethod($rec1['LINKED_OBJECT'] . '.' . $rec1['LINKED_METHOD']);
+        callMethod($rec1['LINKED_OBJECT'] . '.' . $rec1['LINKED_METHOD'], array('VALUE'=>$rec1['VALUE']));
 	//запишем в лог событие
 	$arr=sqlselectone('select * from  zigbee2mqtt_log  where TITLE="dummy"');
 	$arr['TITLE']= $path;
@@ -1332,7 +1332,7 @@ if ($newvalue<>$oldvalue) setGlobal($rec1['LINKED_OBJECT'].'.'.$rec1['LINKED_PRO
      if ($rec1['LINKED_OBJECT'] && $rec1['LINKED_METHOD']) {
 //debmes('выполним метод '.$rec1['LINKED_OBJECT'] . '.' . $rec1['LINKED_METHOD'],'zigbee2mqtt');
 //       callMethod($rec1['LINKED_OBJECT'] . '.' . $rec1['LINKED_METHOD'], $rec1['VALUE']);
-       callMethod($rec1['LINKED_OBJECT'] . '.' . $rec1['LINKED_METHOD']);
+       callMethod($rec1['LINKED_OBJECT'] . '.' . $rec1['LINKED_METHOD'], array('VALUE'=>$rec1['VALUE']));
 
 	//запишем в лог событие
 	$arr=sqlselectone('select * from  zigbee2mqtt_log  where TITLE="dummy"');
