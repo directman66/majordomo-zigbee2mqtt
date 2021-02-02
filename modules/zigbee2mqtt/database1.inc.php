@@ -3147,7 +3147,19 @@ SQLInsert('zigbee2mqtt_devices_list', $par1);
 
 
 
-
+///////////////////////////////////////////////////
+// _TZ3000_zmy1waw6 (TS011F), _TYZB01_iuepbmpv (TS0121)
+$par1['zigbeeModel'] = 'MS-104Z';
+$par1['model'] = "MS-104Z";
+$par1['type'] = "switch";
+$par1['vendor'] = "Moes";
+$par1['description'] = "Smart light switch module (1 gang)";
+$par1['extend'] = "";
+$par1['supports'] = "on/off, linkquality";
+$par1['fromZigbee'] = "";
+$par1['toZigbee'] = "";
+SQLInsert('zigbee2mqtt_devices_list', $par1);
+////////////////////////////////////////////////////
 
 
 
