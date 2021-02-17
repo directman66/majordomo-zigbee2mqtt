@@ -2515,6 +2515,55 @@ $par1['toZigbee'] = "";
 $par1['extend'] = "";
 SQLInsert('zigbee2mqtt_devices_list', $par1);
 
+
+//SSHM-I1
+$par1['zigbeeModel'] = "WaterSensor-N";
+$par1['model'] = "HS2SK";
+$par1['vendor'] = "HEIMAN";
+$par1['type'] = "plug";
+$par1['description'] = "Heiman power plug";
+$par1['supports'] = "state";
+$par1['fromZigbee'] = "";
+$par1['toZigbee'] = "";
+$par1['extend'] = "";
+SQLInsert('zigbee2mqtt_devices_list', $par1);
+
+
+
+//HS2SK
+$par1['zigbeeModel'] = "WaterSensor-N";
+$par1['model'] = "HS2SK";
+$par1['vendor'] = "GS";
+$par1['type'] = "sensor";
+$par1['description'] = "Smoke detector";
+$par1['supports'] = "leak";
+$par1['fromZigbee'] = "";
+$par1['toZigbee'] = "";
+$par1['extend'] = "";
+SQLInsert('zigbee2mqtt_devices_list', $par1);
+
+
+//HS2WD-E
+$par1['zigbeeModel'] = "HS2WD-E";
+$par1['model'] = "SRHMP-I1";
+$par1['vendor'] = "HEIMAN";
+$par1['type'] = "sensor";
+$par1['description'] = "Smart siren";
+$par1['supports'] = "";
+$par1['fromZigbee'] = "";
+$par1['toZigbee'] = "";
+$par1['extend'] = "";
+SQLInsert('zigbee2mqtt_devices_list', $par1);
+
+
+
+
+
+
+
+
+
+
 // Calex;
 
 $par1['zigbeeModel'] = "EC-Z3.0-CCT ";
