@@ -9769,6 +9769,27 @@ SQLInsert('zigbee2mqtt_devices_command', $par2);
 ////////////////////////////////////////////////
 ////////////////////////////////////////////////
 
+ 
+ ////////////////////////////////////////////////
+// _TZ3000_zmy1waw6 (TS011F), _TYZB01_iuepbmpv (TS0121)
+$par2['zigbeeModel'] = 'MS-104Z';
+$par2['type'] = "switch";
+$par2['state_topic'] =  "<Z2M_PATH>/<FRIENDLY_NAME>";
+$par2['availability_topic'] = "<Z2M_PATH>/bridge/state";
+$par2['payload_off'] = "OFF"  ;
+$par2['payload_on'] = "ON"  ;
+$par2['value_template'] = "state";
+$par2['command_topic'] = "<Z2M_PATH>/<FRIENDLY_NAME>/set";
+$par2['json_attributes'] = "";
+$par2['device_class'] = "";
+$par2['unit_of_measurement'] = "";
+$par2['brightness'] = "";
+$par2['color_temp'] = "";
+$par2['xy'] = "";
+$par2['command_value'] = "state";
+SQLInsert('zigbee2mqtt_devices_command', $par2);
+////////////////////////////////////////////////
+ 
 
 //TS0012;
 $par2['zigbeeModel'] = 'TS0012';
