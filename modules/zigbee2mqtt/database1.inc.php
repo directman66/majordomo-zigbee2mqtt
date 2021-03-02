@@ -3306,7 +3306,7 @@ SQLInsert('zigbee2mqtt_devices_list', $par1);
 $par1['zigbeeModel'] = "JTYJ-GD-01LM_BW";
 $par1['model'] = "JTYJ-GD-01LM_BW";
 $par1['vendor'] = "Xiaomi";
-$par1['type'] = "ыутыщк";
+$par1['type'] = "sensor";
 $par1['description'] = "MiJia Honeywell smoke detector";
 $par1['supports'] = "";
 $par1['extend'] = "";
