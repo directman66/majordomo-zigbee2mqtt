@@ -2470,17 +2470,17 @@ $par2['zigbeeModel'] = 'JTYJ-GD-01LM-BW';
 $par2['type'] = "sensor";
 $par2['state_topic'] =  "<Z2M_PATH>/<FRIENDLY_NAME>";
 $par2['availability_topic'] = "<Z2M_PATH>/bridge/state";
-$par2['device_class'] = "";
-$par2['value_template'] = "sensitivity";
-$par2['json_attributes'] = "" ;
-$par2['command_topic'] = "";
 $par2['payload_on'] = "";
 $par2['payload_off'] = "";
+$par2['value_template'] = "sensitivity";
+$par2['json_attributes'] = "";
+$par2['device_class'] = "";
+$par2['command_topic'] = "<Z2M_PATH>/<FRIENDLY_NAME>/set";
 $par2['unit_of_measurement'] = "";
 $par2['brightness'] = "";
 $par2['color_temp'] = "";
 $par2['xy'] = "";
-$par2['command_value'] = "";
+$par2['command_value'] = "sensitivity";
 SQLInsert('zigbee2mqtt_devices_command', $par2);
 
 
@@ -2503,6 +2503,24 @@ $par2['brightness'] = "";
 $par2['color_temp'] = "";
 $par2['xy'] = "";
 $par2['command_value'] = "";
+SQLInsert('zigbee2mqtt_devices_command', $par2);
+
+//JTQJ-BF-01LM/BW;
+$par2['zigbeeModel'] = 'JTQJ-BF-01LM-BW';
+$par2['type'] = "binary_sensor";
+$par2['state_topic'] =  "<Z2M_PATH>/<FRIENDLY_NAME>";
+$par2['availability_topic'] = "<Z2M_PATH>/bridge/state";
+$par2['payload_off'] = "";
+$par2['payload_on'] = "";
+$par2['value_template'] = "sensitivity";
+$par2['command_topic'] = "<Z2M_PATH>/<FRIENDLY_NAME>/set"  ;
+$par2['json_attributes'] = "";
+$par2['device_class'] = "";
+$par2['unit_of_measurement'] = "";
+$par2['brightness'] = "";
+$par2['color_temp'] = "";
+$par2['xy'] = "";
+$par2['command_value'] = "sensitivity";
 SQLInsert('zigbee2mqtt_devices_command', $par2);
 
 
