@@ -9477,6 +9477,25 @@ $par2['state_topic'] =  "<Z2M_PATH>/<FRIENDLY_NAME>";
 $par2['availability_topic'] = "<Z2M_PATH>/bridge/state";
 $par2['payload_off'] = "OFF"  ;
 $par2['payload_on'] = "ON"  ;
+$par2['value_template'] = "state_l1";
+$par2['command_topic'] = "<Z2M_PATH>/<FRIENDLY_NAME>/set";
+$par2['json_attributes'] = "state_l1";
+$par2['device_class'] = "";
+$par2['unit_of_measurement'] = "";
+$par2['brightness'] = "";
+$par2['color_temp'] = "";
+$par2['xy'] = "";
+$par2['command_value'] = "state_l1";
+SQLInsert('zigbee2mqtt_devices_command', $par2);
+
+
+//DIYRuZ_R8_8
+$par2['zigbeeModel'] = 'DIYRuZ_R8_8';
+$par2['type'] = "Relay";
+$par2['state_topic'] =  "<Z2M_PATH>/<FRIENDLY_NAME>";
+$par2['availability_topic'] = "<Z2M_PATH>/bridge/state";
+$par2['payload_off'] = "OFF"  ;
+$par2['payload_on'] = "ON"  ;
 $par2['value_template'] = "state_l2";
 $par2['command_topic'] = "<Z2M_PATH>/<FRIENDLY_NAME>/set";
 $par2['json_attributes'] = "state_l2";
