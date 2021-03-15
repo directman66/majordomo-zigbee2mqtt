@@ -11,7 +11,7 @@ $total = count($raw["nodes"]);
 $rn = [];
 for ($i=0;$i<$total;$i++) {
     foreach ($maparray as $k => $val) {
-       if ($val["IEEEADDR"] == $raw['nodes'][$i]["ieeeAddr"]) {
+       if ($val["IEEEADDR"] == $raw['nodes'][$i]["friendlyName"]) {
            $dev = $val;
        }
     }
@@ -35,6 +35,7 @@ for ($i=0;$i<$total;$i++) {
     if ($raw['nodes'][$i]["type"] == "Router")
         $node["color"] = "blue";
     
+    if ($raw['nodes'][$i]["friendlyName"] != $raw['nodes'][$i]["ieeeAddr"]) $node["label"] .= "\n".$raw['nodes'][$i]["friendlyName"];
     $node["label"] .= "\n".$raw['nodes'][$i]["ieeeAddr"];
         
     $rn[] = $node;
