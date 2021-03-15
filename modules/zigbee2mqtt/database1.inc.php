@@ -3314,6 +3314,17 @@ $par1['fromZigbee'] = "";
 $par1['toZigbee'] = "";
 SQLInsert('zigbee2mqtt_devices_list', $par1);
 
+// _TZ3000_zmy1waw6 (TS011F), _TYZB01_iuepbmpv (TS0121)
+$par1['zigbeeModel'] = 'TS0121';
+$par1['model'] = "TS0121";
+$par1['type'] = "switch";
+$par1['vendor'] = "TuYa";
+$par1['description'] = "10A UK or 16A EU smart plug";
+$par1['extend'] = "";
+$par1['supports'] = "switch (state), power, current, voltage, energy, power_outage_memory, linkquality";
+$par1['fromZigbee'] = "";
+$par1['toZigbee'] = "";
+SQLInsert('zigbee2mqtt_devices_list', $par1);    
 
 
 
