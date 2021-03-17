@@ -1495,7 +1495,12 @@ function admin(&$out) {
 
 $this->getConfig();
 
-$slslist =(explode(',', $this->config['SLSIP']));
+if (!empty($this->config['SLSIP'])) {
+  $slslist =(explode(',', $this->config['SLSIP']));
+} else {
+  $slslist=array();
+}
+
 $total = count($slslist);
 for ($i = 0; $i < $total; $i++) {
 $out['slsdev'][$i]['IP']=trim($slslist[$i]);
