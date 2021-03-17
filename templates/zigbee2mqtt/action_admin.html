@@ -22,7 +22,7 @@ DATASOURCE: [#DATA_SOURCE#]
    [#endif#]
 
    [#begin slsdev#]
-<li [#if TAB=="slslog" #] class="active" [#endif#]><a href="?data_source=<#DATA_SOURCE#>&view_mode=&id=<#ID#>&tab=slslog&slsipp=[#IP#]">SLS ZGW Log ([#IP#])</a> </li>
+        <li [#if "<#TAB#>"=="slslog" && IP=="<#SLSIPP#>"#] class="active" [#endif#]><a href="?data_source=<#DATA_SOURCE#>&view_mode=&id=<#ID#>&tab=slslog&slsipp=[#IP#]">SLS ZGW Log ([#IP#])</a> </li>
    [#end slsdev#]
 <li [#if TAB=="log2" #] class="active" [#endif#]><a href="?data_source=<#DATA_SOURCE#>&view_mode=&id=<#ID#>&tab=log2">Majorodmo Log</a> </li>
 <li [#if TAB=="service" #] class="active" [#endif#]><a href="?data_source=<#DATA_SOURCE#>&view_mode=&id=<#ID#>&tab=service"><#LANG_GENERAL_SERVICE#></a> </li>
