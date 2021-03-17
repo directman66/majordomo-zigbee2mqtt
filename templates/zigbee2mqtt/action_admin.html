@@ -7,7 +7,7 @@ DATASOURCE: [#DATA_SOURCE#]
 <!-- table zwave_devices search -->
  [#if VIEW_MODE=""||VIEW_MODE="update_log"#]
 	 <ul class="nav nav-tabs">
-<li [#if TAB=="" || TAB=="indata" #] class="active" [#endif#]><a href="?data_source=<#DATA_SOURCE#>&view_mode=&id=<#ID#>&tab=devices"><#LANG_DEVICES#></a> </li>
+<li [#if TAB=="" || TAB=="devices" #] class="active" [#endif#]><a href="?data_source=<#DATA_SOURCE#>&view_mode=&id=<#ID#>&tab=devices"><#LANG_DEVICES#></a> </li>
 <!-- <li [#if TAB=="table" #] class="active" [#endif#]><a href="?data_source=<#DATA_SOURCE#>&view_mode=&id=<#ID#>&tab=table">Devices table</a> </li>-->
 <!--<li [#if TAB=="groups" #] class="active" [#endif#]><a href="?data_source=<#DATA_SOURCE#>&view_mode=&id=<#ID#>&tab=groups"><#LANG_GROUPS#></a> </li> -->
 <li [#if TAB=="bind" #] class="active" [#endif#]><a href="?data_source=<#DATA_SOURCE#>&view_mode=&id=<#ID#>&tab=bind">Bind</a> </li>
@@ -22,7 +22,7 @@ DATASOURCE: [#DATA_SOURCE#]
    [#endif#]
 
    [#begin slsdev#]
-<li [#if TAB=="slslog" #] class="active" [#endif#]><a href="?data_source=<#DATA_SOURCE#>&view_mode=&id=<#ID#>&tab=slslog&slsipp=[#IP#]">SLS ZGW Log ([#IP#])</a> </li>
+        <li [#if "<#TAB#>"=="slslog" && IP=="<#SLSIPP#>"#] class="active" [#endif#]><a href="?data_source=<#DATA_SOURCE#>&view_mode=&id=<#ID#>&tab=slslog&slsipp=[#IP#]">SLS ZGW Log ([#IP#])</a> </li>
    [#end slsdev#]
 <li [#if TAB=="log2" #] class="active" [#endif#]><a href="?data_source=<#DATA_SOURCE#>&view_mode=&id=<#ID#>&tab=log2">Majorodmo Log</a> </li>
 <li [#if TAB=="service" #] class="active" [#endif#]><a href="?data_source=<#DATA_SOURCE#>&view_mode=&id=<#ID#>&tab=service"><#LANG_GENERAL_SERVICE#></a> </li>
