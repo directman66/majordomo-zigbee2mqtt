@@ -806,14 +806,14 @@ $this->getConfig();
 $gw=explode('/',$path)[0];
 
 
-if (strpos($path,'/0x')>0) {$msgtype='device_state';}
 if (strpos($path,'/bridge/state')>0) {$msgtype='bridge_state';}
-if (strpos($path,'/bridge/config')>0) {$msgtype='bridge_config';}
-if (strpos($path,'/bridge/networkmap/raw')>0) {$msgtype='raw_map';}
-if (strpos($path,'/bridge/networkmap')>0) {$msgtype='graphwiz';}
-if (strpos($path,'/bridge/networkmap/raw/nodes')>0) {$msgtype='rawnodes';}
+else if (strpos($path,'/bridge/config')>0) {$msgtype='bridge_config';}
+else if (strpos($path,'/bridge/networkmap/raw')>0) {$msgtype='raw_map';}
+else if (strpos($path,'/bridge/networkmap')>0) {$msgtype='graphwiz';}
+else if (strpos($path,'/bridge/networkmap/raw/nodes')>0) {$msgtype='rawnodes';}
+else if (strpos($path,'/bridge/log')>0) {$msgtype='log';}
+else {$msgtype='device_state';}
 
-if (strpos($path,'/bridge/log')>0) {$msgtype='log';}
 
 
 //if ($path=='zigbee2mqtt/bridge/log') {$msgtype=$json->{'type'};}
