@@ -2356,7 +2356,7 @@ $out['stricta']=$stricta;
 
 // if ($this-tab=='map') {
 //global $tab;
- if (tab=='map') {
+ if ($tab=='map') {
 
    $this->redirect("?tab=map");
 }
