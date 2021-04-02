@@ -3224,6 +3224,19 @@ $par1['fromZigbee'] = "";
 $par1['toZigbee'] = "";
 SQLInsert('zigbee2mqtt_devices_list', $par1);
 
+// TS0201
+$par1['zigbeeModel'] = 'TS0201';
+$par1['model'] = "TS0201";
+$par1['type'] = "sensor";
+$par1['vendor'] = "TUYA";
+$par1['description'] = "Temperature & humidity sensor with display";
+$par1['extend'] = "";
+$par1['supports'] = "";
+$par1['fromZigbee'] = "";
+$par1['toZigbee'] = "";
+SQLInsert('zigbee2mqtt_devices_list', $par1);
+
+
 
 
 // TS0011
