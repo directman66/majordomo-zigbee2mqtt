@@ -3376,6 +3376,17 @@ $par1['fromZigbee'] = "";
 $par1['toZigbee'] = "";
 SQLInsert('zigbee2mqtt_devices_list', $par1);    
 
+// TS110F
+$par1['zigbeeModel'] = 'TS110F';
+$par1['model'] = "TS110F";
+$par1['type'] = "dimmer";
+$par1['vendor'] = "TuYa";
+$par1['description'] = "1 gang smart dimmer switch module without neutral";
+$par1['extend'] = "";
+$par1['supports'] = "light (state, brightness), linkquality";
+$par1['fromZigbee'] = "";
+$par1['toZigbee'] = "";
+SQLInsert('zigbee2mqtt_devices_list', $par1);    
 
 
 
