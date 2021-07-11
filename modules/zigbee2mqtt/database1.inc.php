@@ -3389,6 +3389,17 @@ $par1['toZigbee'] = "";
 SQLInsert('zigbee2mqtt_devices_list', $par1);    
 
 
+    //Efekta
+$par1['zigbeeModel'] = "EFEKTA_PWS";
+$par1['model'] = "EFEKTA_PWS";
+$par1['vendor'] = "EFEKTALAB";
+$par1['type'] = "semsor";
+$par1['description'] = "Plant Wattering Sensor";
+$par1['supports'] = "";
+$par1['extend'] = "";
+$par1['fromZigbee'] = "";
+$par1['toZigbee'] = "";
+SQLInsert('zigbee2mqtt_devices_list', $par1);
 
 
 
