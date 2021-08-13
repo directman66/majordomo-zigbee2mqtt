@@ -79,14 +79,19 @@ DATASOURCE: [#DATA_SOURCE#]
  [#if VIEW_MODE=""#] [#inc devices_old.html#] [#endif#]
  [#endif#]
 
+[#if DEVICE_TITLE!=""#]
+<a href="?" class="btn btn-default"><#LANG_BACK#></a>
+<h3>[#DEVICE_TITLE#]</h3>
+[#endif#]
+
  [#if VIEW_MODE="view_mqtt"#]
 	 <ul class="nav nav-tabs">
-<li [#if TAB=="edit_device" #] class="active" [#endif#]><a href="?data_source=<#DATA_SOURCE#>&view_mode=view_mqtt&id=<#ID#>&tab=edit_device">Edit device</a> </li>
-<li [#if TAB=="edit_parametrs" #] class="active" [#endif#]><a href="?data_source=<#DATA_SOURCE#>&view_mode=view_mqtt&id=<#ID#>&tab=edit_parametrs">Parameters</a> </li>
-<li [#if TAB=="view_det" #] class="active" [#endif#]><a href="?data_source=<#DATA_SOURCE#>&view_mode=view_mqtt&id=<#ID#>&tab=view_det">Detail</a> </li>
-<li [#if TAB=="device_log" #] class="active" [#endif#]><a href="?data_source=<#DATA_SOURCE#>&view_mode=view_mqtt&id=<#ID#>&tab=device_log">Device log</a> </li>
+<li [#if TAB=="edit_device" #] class="active" [#endif#]><a href="?data_source=<#DATA_SOURCE#>&view_mode=view_mqtt&id=<#ID#>&tab=edit_device"><#LANG_EDIT#></a> </li>
+<li [#if TAB=="edit_parametrs" #] class="active" [#endif#]><a href="?data_source=<#DATA_SOURCE#>&view_mode=view_mqtt&id=<#ID#>&tab=edit_parametrs"><#LANG_PROPERTIES#></a> </li>
+<li [#if TAB=="view_det" #] class="active" [#endif#]><a href="?data_source=<#DATA_SOURCE#>&view_mode=view_mqtt&id=<#ID#>&tab=view_det"><#LANG_DETAILS#></a> </li>
+<li [#if TAB=="device_log" #] class="active" [#endif#]><a href="?data_source=<#DATA_SOURCE#>&view_mode=view_mqtt&id=<#ID#>&tab=device_log"><#LANG_LOG#></a> </li>
 <!--<li [#if TAB=="edit_data" #] class="active" [#endif#]><a href="?data_source=<#DATA_SOURCE#>&view_mode=view_mqtt&id=<#ID#>&tab=edit_data">Data</a> </li> -->
-</ul>
+</ul>&nbsp;
  [#endif#]
 
 

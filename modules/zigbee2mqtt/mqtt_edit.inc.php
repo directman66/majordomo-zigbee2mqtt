@@ -16,6 +16,12 @@ $sql="SELECT * FROM $table_name WHERE ID='$id'";
 debmes($sql,'zigbee2mqtt');
   $rec=SQLSelectOne($sql);
 
+  if ($rec['DEV_ID']) {
+      $device=SQLSelectOne("SELECT ID, TITLE FROM zigbee2mqtt_devices WHERE ID=".$rec['DEV_ID']);
+      $out['DEVICE_TITLE']=$device['TITLE'];
+      $out['DEVICE_ID']=$device['ID'];
+  }
+
 
 
   if ($this->mode=='creategroup') {
