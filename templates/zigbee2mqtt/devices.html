@@ -597,7 +597,8 @@
               <li><a href="?view_mode=delete_dev_z2m_only&id=[#DEVID#]&ieee=[#IEEEADDR#]&location=<#LOCATION_ID#>&type_id=<#ZIGBEE2MQTTDEV#>&vendor_id=<#VENDOR#>&vid_id=<#VID#>&group_list_id=<#group_list_id#>&friendlyname=[#IEEEADDR#]&gw=[#GW#]" onClick="return confirm('Are you sure? Please confirm.')" style="color: #a94442;"><span class="glyphicon glyphicon-trash"></span>Исключить из сети zigbee</a></li>
             </ul>             
           </div>
-          <h3 class="panel-title" [#if LOST#]style="color:lightgray;"[#endif#]>	<div  style="white-space: nowrap;" title="[#GW#]"> [#TITLE#]
+          <h3 class="panel-title" [#if LOST#]style="color:lightgray;"[#endif#]>	<div  style="white-space: nowrap;" title="[#GW#]">
+              <a href="?view_mode=view_mqtt&id=[#DEVID#]&tab=edit_parametrs">[#TITLE#]</a>
 <!--
 <div class="pull-right signal-level" style="background: linear-gradient(to right,  [#LQI#] 0%,  #999 [#LQI#]%);">
 <!--				<div class="pull-right signal-level" style="background: linear-gradient(to right, [#RSSI_COLOR#] 100%,  #999 100%);"> -->
