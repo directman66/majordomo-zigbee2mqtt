@@ -8,7 +8,7 @@ include_once("./lib/threads.php");
 set_time_limit(0);
 
 // connecting to database
-$db = new mysql(DB_HOST, '', DB_USER, DB_PASSWORD, DB_NAME);
+//$db = new mysql(DB_HOST, '', DB_USER, DB_PASSWORD, DB_NAME);
 
 include_once("./load_settings.php");
 include_once(DIR_MODULES . "control_modules/control_modules.class.php");
@@ -81,6 +81,8 @@ foreach ($topics as $k => $v) {
 $previousMillis = 0;
 $cycleVarName='ThisComputer.'.str_replace('.php', '', basename(__FILE__)).'Run';
 
+$all_topics = array();
+
 while ($zigbee2mqtt_client->proc()) {
 
     /*
@@ -123,21 +125,21 @@ $zigbee2mqtt_client->close();
  * @return void
  */
 function procmsg($topic, $msg) {
-    //$url = BASE_URL . '/ajax/mqtt.html?op=process&topic='.urlencode($topic)."&msg=".urlencode($msg);
-    //getURLBackground($url);
-
-debmes($topic.":".$msg, 'z2m');
-
+    //debmes($topic.":".$msg, 'z2m');
+    
+    global $all_topics;
+    
     if (!isset($topic) || !isset($msg)) return false;
 
-    echo date("Y-m-d H:i:s") . " Topic:{$topic} $msg\n";
-    if (function_exists('callAPI')) {
-//        callAPI('/api/module/zigbee2mqtt','GET',array('topic'=>$topic,'msg'=>$msg));
-      callAPI('/api/module/zigbee2mqtt','POST',array('topic'=>$topic,'msg'=>$msg));
-    } else {
-        global $zigbee2mqtt;
-        $zigbee2mqtt->processMessage($topic, $msg);
+    if (!isset($all_topics[$topic]) or $all_topics[$topic] != $msg) {
+        $all_topics[$topic] = $msg;
+        if (function_exists('callAPI')) {
+            callAPI('/api/module/zigbee2mqtt','POST',array('topic'=>$topic,'msg'=>$msg));
+        } else {
+            global $zigbee2mqtt;
+            $zigbee2mqtt->processMessage($topic, $msg);
+        }
     }
 }
 
-$db->Disconnect(); // closing database connection
+//$db->Disconnect(); // closing database connection
