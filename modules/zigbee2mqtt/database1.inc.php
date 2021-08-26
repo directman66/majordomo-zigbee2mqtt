@@ -2916,7 +2916,19 @@ $par1['fromZigbee'] = "";
 $par1['toZigbee'] = "";
 SQLInsert('zigbee2mqtt_devices_list', $par1);
 
-//BASICZBR3
+//ZBMINI
+$par1['zigbeeModel'] = "ZBMINI";
+$par1['model'] = "ZBMINI";
+$par1['vendor'] = "SONOFF";
+$par1['type'] = "relay";
+$par1['description'] = "Zigbee two way smart switch";
+$par1['supports'] = "";
+$par1['extend'] = "";
+$par1['fromZigbee'] = "";
+$par1['toZigbee'] = "";
+SQLInsert('zigbee2mqtt_devices_list', $par1);
+    
+//S31ZB
 $par1['zigbeeModel'] = "S31ZB";
 $par1['model'] = "S31ZB";
 $par1['vendor'] = "SONOFF";
