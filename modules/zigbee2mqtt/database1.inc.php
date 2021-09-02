@@ -3405,7 +3405,7 @@ SQLInsert('zigbee2mqtt_devices_list', $par1);
 $par1['zigbeeModel'] = "EFEKTA_PWS";
 $par1['model'] = "EFEKTA_PWS";
 $par1['vendor'] = "EFEKTALAB";
-$par1['type'] = "semsor";
+$par1['type'] = "sensor";
 $par1['description'] = "Plant Wattering Sensor";
 $par1['supports'] = "";
 $par1['extend'] = "";
@@ -3413,6 +3413,17 @@ $par1['fromZigbee'] = "";
 $par1['toZigbee'] = "";
 SQLInsert('zigbee2mqtt_devices_list', $par1);
 
+// Xiaomi SSM-U01
+$par1['zigbeeModel'] = 'SSM-U01';
+$par1['model'] = "SSM-U01";
+$par1['type'] = "switch";
+$par1['vendor'] = "Xiaomi";
+$par1['description'] = "Aqara single switch module T1 (with neutral)";
+$par1['extend'] = "";
+$par1['supports'] = "switch (state), energy, power, device_temperature, power_outage_memory, switch_type, linkquality";
+$par1['fromZigbee'] = "";
+$par1['toZigbee'] = "";
+SQLInsert('zigbee2mqtt_devices_list', $par1);    
 
 
 
