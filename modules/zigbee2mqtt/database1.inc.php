@@ -2946,9 +2946,9 @@ SQLInsert('zigbee2mqtt_devices_list', $par1);
 $par1['zigbeeModel'] = "SNZB-01";
 $par1['model'] = "SNZB-01";
 $par1['vendor'] = "SONOFF";
-$par1['type'] = "remote";
+$par1['type'] = "relay";
 $par1['description'] = "Wireless button";
-$par1['supports'] = "single, double, long";
+$par1['supports'] = "";
 $par1['extend'] = "";
 $par1['fromZigbee'] = "";
 $par1['toZigbee'] = "";
@@ -3425,6 +3425,17 @@ $par1['fromZigbee'] = "";
 $par1['toZigbee'] = "";
 SQLInsert('zigbee2mqtt_devices_list', $par1);    
 
+// Xiaomi SSM-U02
+$par1['zigbeeModel'] = 'SSM-U02';
+$par1['model'] = "SSM-U02";
+$par1['type'] = "switch";
+$par1['vendor'] = "Xiaomi";
+$par1['description'] = "Aqara single switch module T1 (тщ neutral)";
+$par1['extend'] = "";
+$par1['supports'] = "switch (state), energy, power, device_temperature, power_outage_memory, switch_type, linkquality";
+$par1['fromZigbee'] = "";
+$par1['toZigbee'] = "";
+SQLInsert('zigbee2mqtt_devices_list', $par1);    
 
 
 }
