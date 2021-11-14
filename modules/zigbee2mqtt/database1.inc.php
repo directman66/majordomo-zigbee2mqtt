@@ -3430,9 +3430,22 @@ $par1['zigbeeModel'] = 'SSM-U02';
 $par1['model'] = "SSM-U02";
 $par1['type'] = "switch";
 $par1['vendor'] = "Xiaomi";
-$par1['description'] = "Aqara single switch module T1 (тщ neutral)";
+$par1['description'] = "Aqara single switch module T1 (С‚С‰ neutral)";
 $par1['extend'] = "";
 $par1['supports'] = "switch (state), energy, power, device_temperature, power_outage_memory, switch_type, linkquality";
+$par1['fromZigbee'] = "";
+$par1['toZigbee'] = "";
+SQLInsert('zigbee2mqtt_devices_list', $par1);    
+
+
+// Xiaomi SSM-U02
+$par1['zigbeeModel'] = 'lumi.switch.n3acn3';
+$par1['model'] = "QBKG26LM";
+$par1['type'] = "switch";
+$par1['vendor'] = "Xiaomi";
+$par1['description'] = "Aqara D1 3 gang smart wall switch (with neutral wire)";
+$par1['extend'] = "";
+$par1['supports'] = "switch (state), operation_mode, power, action, linkquality";
 $par1['fromZigbee'] = "";
 $par1['toZigbee'] = "";
 SQLInsert('zigbee2mqtt_devices_list', $par1);    
