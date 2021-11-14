@@ -11071,6 +11071,63 @@ $par2['command_value'] = "power_outage_memory";
 SQLInsert('zigbee2mqtt_devices_command', $par2);
 
 
+//QBKG26LM      https://www.zigbee2mqtt.io/devices/QBKG26LM.html
+$par2['zigbeeModel'] = 'QBKG26LM';
+$par2['type'] = "switch";
+$par2['state_topic'] =  "<Z2M_PATH>/<FRIENDLY_NAME>";
+$par2['availability_topic'] = "<Z2M_PATH>/bridge/state";
+$par2['payload_off'] = "OFF"  ;
+$par2['payload_on'] = "ON"  ;
+$par2['value_template'] = "state_left";
+$par2['command_topic'] = "<Z2M_PATH>/<FRIENDLY_NAME>/state_left/set"  ;
+$par2['json_attributes'] = "";
+$par2['device_class'] = "";
+$par2['unit_of_measurement'] = "";
+$par2['brightness'] = "";
+$par2['color_temp'] = "";
+$par2['xy'] = "";
+$par2['command_value'] = "state_left";
+SQLInsert('zigbee2mqtt_devices_command', $par2);
+
+//QBKG26LM      https://www.zigbee2mqtt.io/devices/QBKG26LM.html
+$par2['zigbeeModel'] = 'QBKG26LM';
+$par2['type'] = "switch";
+$par2['state_topic'] =  "<Z2M_PATH>/<FRIENDLY_NAME>";
+$par2['availability_topic'] = "<Z2M_PATH>/bridge/state";
+$par2['payload_off'] = "OFF"  ;
+$par2['payload_on'] = "ON"  ;
+$par2['value_template'] = "state_center";
+$par2['command_topic'] = "<Z2M_PATH>/<FRIENDLY_NAME>/state_center/set"  ;
+$par2['json_attributes'] = "";
+$par2['device_class'] = "";
+$par2['unit_of_measurement'] = "";
+$par2['brightness'] = "";
+$par2['color_temp'] = "";
+$par2['xy'] = "";
+$par2['command_value'] = "state_center";
+SQLInsert('zigbee2mqtt_devices_command', $par2);
+
+//QBKG26LM      https://www.zigbee2mqtt.io/devices/QBKG26LM.html
+$par2['zigbeeModel'] = 'QBKG26LM';
+$par2['type'] = "switch";
+$par2['state_topic'] =  "<Z2M_PATH>/<FRIENDLY_NAME>";
+$par2['availability_topic'] = "<Z2M_PATH>/bridge/state";
+$par2['payload_off'] = "OFF"  ;
+$par2['payload_on'] = "ON"  ;
+$par2['value_template'] = "state_right";
+$par2['command_topic'] = "<Z2M_PATH>/<FRIENDLY_NAME>/state_right/set"  ;
+$par2['json_attributes'] = "";
+$par2['device_class'] = "";
+$par2['unit_of_measurement'] = "";
+$par2['brightness'] = "";
+$par2['color_temp'] = "";
+$par2['xy'] = "";
+$par2['command_value'] = "state_right";
+SQLInsert('zigbee2mqtt_devices_command', $par2);
+
+
+
+
 }
 
 
