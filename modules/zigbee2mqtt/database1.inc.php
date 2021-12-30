@@ -5,6 +5,18 @@ $par1=SQLSelectOne ("select * from zigbee2mqtt_devices_list where ID=1");
 
 if (!$par1['ID']) {
 
+//MCCGQ14LM
+$par1['zigbeeModel'] = 'lumi.magnet.acn001';
+$par1['model'] = "MCCGQ14LM";		 
+$par1['type'] = "sensor";		 
+$par1['vendor'] = "Xiaomi";		 
+$par1['description'] = "Aqara E1 door & window contact sensor";		 
+$par1['extend'] = "";		 
+$par1['supports'] = "contact";		 
+$par1['fromZigbee'] = "fz.ias_contact_alarm_1, fz.aqara_opple";		 
+$par1['toZigbee'] = "";		 
+SQLInsert('zigbee2mqtt_devices_list', $par1);
+    
 $par1['zigbeeModel'] = 'lumi.light.aqcn02';
 $par1['model'] = "ZNLDP12LM";		 
 $par1['vendor'] = "Xiaomi";		 
