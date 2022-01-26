@@ -3448,7 +3448,19 @@ $par1['extend'] = "";
 $par1['supports'] = "switch (state), operation_mode, power, action, linkquality";
 $par1['fromZigbee'] = "";
 $par1['toZigbee'] = "";
-SQLInsert('zigbee2mqtt_devices_list', $par1);    
+SQLInsert('zigbee2mqtt_devices_list', $par1);
+
+// TuYa TS011F_plug_3
+$par1['zigbeeModel'] = 'TS011F_plug_3';
+$par1['model'] = "TS011F_plug_3";
+$par1['type'] = "Power plug";
+$par1['vendor'] = "TuYa";
+$par1['description'] = "Smart plug (with power monitoring by polling)";
+$par1['extend'] = "";
+$par1['supports'] = "switch (state), voltage, power, energy, linkquality";
+$par1['fromZigbee'] = "";
+$par1['toZigbee'] = "";
+SQLInsert('zigbee2mqtt_devices_list', $par1);   
 
 
 }
