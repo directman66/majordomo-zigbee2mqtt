@@ -3451,6 +3451,19 @@ $par1['toZigbee'] = "";
 SQLInsert('zigbee2mqtt_devices_list', $par1);    
 
 
+//TS130F
+$par1['zigbeeModel'] = 'TS130F';
+$par1['model'] = "SC400";		 
+$par1['vendor'] = "TUYA";		 
+$par1['type'] = "openable";		 
+$par1['description'] = "TuYa curtain switch";		 
+$par1['extend'] = "";		 
+$par1['supports'] = "backlight_mode, calibration, linkquality, motor_reversal, moving, position";		 
+$par1['fromZigbee'] = "";		 
+$par1['toZigbee'] = "";		 
+SQLInsert('zigbee2mqtt_devices_list', $par1);	
+
+
 }
 
 
