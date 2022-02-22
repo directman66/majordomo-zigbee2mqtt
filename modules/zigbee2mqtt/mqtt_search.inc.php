@@ -415,7 +415,7 @@ $basa=SQLSelectOne($sql);
  if ($basa['model']=='group')      $res[$i]['COLOR_TEMP']='1';
  //https://www.zigbee2mqtt.io/devices/ZB-RGBCW.html#lonsonho-zb-rgbcw
  if ($basa['model']=='ZB-RGBCW')  	   $res[$i]['XY']='1';
- if ($basa['model']=='ZB-RGBCW')  	   $res[$i]['COLOR_TEMP']='1';
+ //if ($basa['model']=='ZB-RGBCW')  	   $res[$i]['COLOR_TEMP']='1';
 
 
 
