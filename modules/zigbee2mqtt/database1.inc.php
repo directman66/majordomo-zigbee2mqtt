@@ -3374,7 +3374,19 @@ $par1['extend'] = "";
 $par1['supports'] = "light (state, brightness), linkquality";
 $par1['fromZigbee'] = "";
 $par1['toZigbee'] = "";
-SQLInsert('zigbee2mqtt_devices_list', $par1);    
+SQLInsert('zigbee2mqtt_devices_list', $par1);
+
+// https://www.zigbee2mqtt.io/devices/ZB-RGBCW.html#lonsonho-zb-rgbcw
+$par1['zigbeeModel'] = 'ZB-CL01';
+$par1['model'] = "ZB-RGBCW";
+$par1['type'] = "bulb";
+$par1['vendor'] = "Lonsonho";
+$par1['description'] = "Zigbee 3.0 LED-bulb, RGBW LED";
+$par1['extend'] = "";
+$par1['supports'] = "light (state, brightness, color_temp, color_xy), linkquality";
+$par1['fromZigbee'] = "";
+$par1['toZigbee'] = "";
+SQLInsert('zigbee2mqtt_devices_list', $par1);
 
 // TS0110F
 $par1['zigbeeModel'] = 'TS0110F';
