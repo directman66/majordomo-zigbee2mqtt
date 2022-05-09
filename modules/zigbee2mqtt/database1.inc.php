@@ -3464,6 +3464,19 @@ $par1['toZigbee'] = "";
 SQLInsert('zigbee2mqtt_devices_list', $par1);	
 
 
+//WHD02			https://www.zigbee2mqtt.io/devices/WHD02.html
+$par1['zigbeeModel'] = "WHD02";
+$par1['model'] = "WHD02";
+$par1['vendor'] = "TUYA";
+$par1['type'] = "relay";
+$par1['description'] = "Wall switch module";
+$par1['supports'] = "";
+$par1['extend'] = "";
+$par1['fromZigbee'] = "";
+$par1['toZigbee'] = "";
+SQLInsert('zigbee2mqtt_devices_list', $par1);
+
+
 }
 
 
