@@ -704,17 +704,29 @@ else
 
     function clearloghourly()
     {
-
-
         $this->getConfig();
-        if ($this->config['Z2M_HIST']) {
-            $hist = $this->config['Z2M_HIST'];
-        } else {
-            $hist = 30;
+
+        // 0 в настройках означает, что журнал не ведётся, поэтому очищаем его полностью.
+        $hist = isset($this->config['Z2M_HIST']) ? (int)$this->config['Z2M_HIST'] : 30;
+        if ($hist <= 0) {
+            sqlexec('TRUNCATE TABLE zigbee2mqtt_log');
+            return;
         }
 
-        sqlexec('delete from zigbee2mqtt_log where  FIND<(CURDATE()- INTERVAL ' . $hist . ' DAY)');
+        // Удаляем записи старше заданного количества дней.
+        sqlexec('DELETE FROM zigbee2mqtt_log WHERE FIND < (NOW() - INTERVAL ' . $hist . ' DAY)');
 
+        // Дополнительно ограничиваем таблицу последними 1000 записями.
+        // Это защищает диск от неконтролируемого роста при всплесках MQTT-трафика.
+        $row = SQLSelectOne('SELECT MAX(ID) AS MAX_ID FROM zigbee2mqtt_log');
+        $max_id = isset($row['MAX_ID']) ? (int)$row['MAX_ID'] : 0;
+        if ($max_id > 1000) {
+            sqlexec('DELETE FROM zigbee2mqtt_log WHERE ID < ' . ($max_id - 1000));
+        }
+
+        // Таблица создаётся с движком MyISAM: DELETE не возвращает место ОС.
+        // OPTIMIZE TABLE принудительно пересоздаёт файл .MYD и реально освобождает место на диске.
+        sqlexec('OPTIMIZE TABLE zigbee2mqtt_log');
     }
 
 
@@ -846,30 +858,32 @@ else
             $msgtype = $json->{'type'};
 //debmes('Пришло важное сообщение, поместим его в журнал :'.$path." value:". $value." type:".$json->{'type'},'zigbee2mqtt');
 //список исключений, по которым лог не храним
-            $arr2 = sqlselect('select IEEEADDR from  zigbee2mqtt_devices  where HISTORY="0"');
-            $cntt = count($arr2);
-            for ($i = 0; $i < $cntt; $i++) {
-                $arr3[] = $arr2[$i]['IEEEADDR'];
+            // Список устройств, для которых ведение журнала отключено (HISTORY = 0).
+            $arr3 = array();
+            $arr2 = SQLSelect('SELECT IEEEADDR FROM zigbee2mqtt_devices WHERE HISTORY="0"');
+            foreach ($arr2 as $device) {
+                $arr3[] = $device['IEEEADDR'];
             }
 
 //        debmes($arr3, 'zm2');
 
-            //$need = array_search(explode('/',$path)[1], $arr2);
-            if (is_array(explode('/', $path)[1])) {
-                $need = in_array(explode('/', $path)[1], $arr3);
-            }
-            //debmes($path, 'zm2');
-            //debmes(explode('/',$path)[1], 'zm2');
-            //debmes('need '.$need, 'zm2');
-            //if (!$need) {debmes('no need '.$need, 'zm2'); }
-            //else {debmes('need '.$need, 'zm2'); }
-
+            // Было: is_array(explode('/', $path)[1]) — всегда false, поэтому исключения
+            // устройств с HISTORY="0" никогда не работали, а $need оставался неопределённым.
+            $path_parts = explode('/', $path);
+            $need = (isset($path_parts[1]) && is_array($arr3))
+                ? in_array($path_parts[1], $arr3)
+                : false;
 
             $this->getConfig();
-            $hist = $this->config['Z2M_HIST'];
+            $hist = !empty($this->config['Z2M_HIST']) ? (int)$this->config['Z2M_HIST'] : 0;
 
+            // Служебные топики bridge/info/* (definitions, config_schema и т.п.) и
+            // bridge/health присылают очень большие JSON-дампы. Они не нужны в журнале
+            // и являются главной причиной раздувания таблицы zigbee2mqtt_log.
+            $skip_heavy_bridge = (strpos($path, 'bridge/info') !== false
+                || strpos($path, 'bridge/health') !== false);
 
-            if ((!$need) && ($hist) && ($hist <> "0")) {
+            if (!$skip_heavy_bridge && !$need && $hist > 0) {
 //{"type":"groups","message":{"1":{"friendly_name":"232323"},"2":{"friendly_name":"group1"},"3":{"friendly_name":"group1"},"4":{"friendly_name":"group1"}}}
                 $arr = sqlselectone('select * from  zigbee2mqtt_log  where TITLE="dummy"');
                 $arr['TITLE'] = $path;
