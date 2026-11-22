@@ -1,7 +1,7 @@
 <form action="?" method="post" enctype="multipart/form-data" name="frmEdit" class="form-horizontal">
 <fieldset>
 	<div class="form-group">
-		<h3 class="controls" style="padding-top:0.5em">MQTT settings</h3>
+		<h3 class="controls" style="padding-top:0.5em"><#LANG_Z2M_SETTINGS_MQTT#></h3>
 	</div>
 	
   <div class="form-group">
@@ -23,10 +23,10 @@
     </div>
   </div>
   <div class="form-group">
-    <label class="col-sm-3 control-label" [#if ERR_MQTT_QUERY#] style="color:red;font-weight:bold"[#endif#]>Subscription path: (*)</label>
+    <label class="col-sm-3 control-label" [#if ERR_MQTT_QUERY#] style="color:red;font-weight:bold"[#endif#]><#LANG_Z2M_LABEL_SUBSCRIPTION#>: (*)</label>
     <div class="col-sm-9">
       <input class="form-control" type="text" name="mqtt_query" value="<#MQTT_QUERY#>">
-    <label >(use delimiter to add multiple gateways, ex: ZigBeeCA20/#,zigbee2mqtt/#)</label>
+    <label >(<#LANG_Z2M_HINT_GATEWAYS#>)</label>
     </div>
   </div>  
   
@@ -37,37 +37,37 @@
 	</div>  
   
   <div class="form-group">
-    <label class="col-sm-3 control-label" [#if ERR_MQTT_QUERY#] style="color:red;font-weight:bold"[#endif#]>Authorization:</label>
+    <label class="col-sm-3 control-label" [#if ERR_MQTT_QUERY#] style="color:red;font-weight:bold"[#endif#]><#LANG_Z2M_LABEL_AUTH#>:</label>
     <div class="col-sm-9">
       <div class="form-inline form-group">
 		  <div class="input-group col-sm-6">
 			<span class="input-group-addon"><span class="glyphicon glyphicon-user"></span></span>
-			<input type="text" name="mqtt_username" value="<#MQTT_USERNAME#>" class="form-control" placeholder="Login">
+			<input type="text" name="mqtt_username" value="<#MQTT_USERNAME#>" class="form-control" placeholder="<#LANG_Z2M_LOGIN#>">
 		  </div>
 		  <div class="input-group col-sm-6">
 			<span class="input-group-addon"><span class="glyphicon glyphicon-lock"></span></span>
-			<input type="password" name="mqtt_password" value="<#MQTT_PASSWORD#>" class="form-control" placeholder="Password">
+			<input type="password" name="mqtt_password" value="<#MQTT_PASSWORD#>" class="form-control" placeholder="<#LANG_Z2M_PASSWORD#>">
 		  </div>	  
 	  </div>
     </div>
   </div>  
 
  	<div class="form-group">
-		<h3 class="controls">Zigbee2MQTT settings</h3>
+		<h3 class="controls"><#LANG_Z2M_SETTINGS_Z2M#></h3>
 	</div> 
 	
 	
 	
   <div class="form-group">
-    <label class="col-sm-3 control-label" [#if ERR_MQTT_QUERY#] style="color:red;font-weight:bold"[#endif#]>Folder path:</label>
+    <label class="col-sm-3 control-label" [#if ERR_MQTT_QUERY#] style="color:red;font-weight:bold"[#endif#]><#LANG_Z2M_LABEL_FOLDER#>:</label>
     <div class="col-sm-9">
       <input class="form-control" type="text" name="zigbee2mqttpath" value="<#ZIGBEE2MQTTPATH#>">
-    <label >(ex: /opt/zigbee2mqtt)</label>
+    <label >(<#LANG_Z2M_HINT_FOLDER#>)</label>
     </div>
   </div> 
 
   <div class="form-group">
-    <label class="col-sm-3 control-label" [#if ERR_Z2M_LOGMODE#] style="color:red;font-weight:bold"[#endif#]>Log level [#Z2M_LOGMODE#]:</label>
+    <label class="col-sm-3 control-label" [#if ERR_Z2M_LOGMODE#] style="color:red;font-weight:bold"[#endif#]><#LANG_Z2M_LABEL_LOGLEVEL#> [#Z2M_LOGMODE#]:</label>
     <div class="col-sm-9">
      <select name="z2m_logmode2" id="z2m_logmode2" class="form-control">
       <option value="debug"[#if Z2M_LOGMODE="debug"#] selected[#endif#]>debug</option>
@@ -81,48 +81,49 @@
 
 
  	<div class="form-group">
-		<h3 class="controls">SLS Zigbee gateway settings</h3>
+		<h3 class="controls"><#LANG_Z2M_SETTINGS_SLS#></h3>
 	</div> 
 	
 	
 	
   <div class="form-group">
-    <label class="col-sm-3 control-label" [#if ERR_MQTT_QUERY#] style="color:red;font-weight:bold"[#endif#]>SLS ZGW IP adress :</label>
+    <label class="col-sm-3 control-label" [#if ERR_MQTT_QUERY#] style="color:red;font-weight:bold"[#endif#]><#LANG_Z2M_LABEL_SLS_IP#> :</label>
 
 
 
     <div class="col-sm-9">
       <input class="form-control" type="text" name="slsip" value="<#SLSIP#>">
-    <label >(use delimiter to add multiple gateways, ex: 192.168.1.35,192.168.1.36)</label>
+    <label >(<#LANG_Z2M_HINT_SLS#>)</label>
     </div>
   </div> 
   
 
 <div class="form-group">
-		<h3 class="controls">Majordomo settings</h3>
+		<h3 class="controls"><#LANG_Z2M_SETTINGS_SYSTEM#></h3>
 	</div> 
 
   <div class="form-group">
-    <label class="col-sm-3 control-label" [#if ERR_Z2M_HIST#] style="color:red;font-weight:bold"[#endif#]>History retention period (days):</label>
+    <label class="col-sm-3 control-label" [#if ERR_Z2M_HIST#] style="color:red;font-weight:bold"[#endif#]><#LANG_Z2M_LABEL_HISTORY#>:</label>
     <div class="col-sm-9">
       <input class="form-control" type="text" name="z2m_hist" value="<#Z2M_HIST#>">
+      <label ><#LANG_Z2M_HINT_HISTORY#></label>
     </div>
   </div>
 
 
   <div class="form-group">
-    <label class="col-sm-3 control-label" [#if ERR_VIEW#] style="color:red;font-weight:bold"[#endif#]>View mode:</label>
+    <label class="col-sm-3 control-label" [#if ERR_VIEW#] style="color:red;font-weight:bold"[#endif#]><#LANG_Z2M_LABEL_VIEW#>:</label>
     <div class="col-sm-9">
 		 <select name="z2m_view" id="z2m_view" class="form-control">
-		  <option value="container-fluid"[#if Z2M_VIEW="container-fluid"#] selected[#endif#]>tiles</option>
-		  <option value="table"[#if Z2M_VIEW="table"#] selected[#endif#]>table (old)</option>
+		  <option value="container-fluid"[#if Z2M_VIEW="container-fluid"#] selected[#endif#]><#LANG_Z2M_VIEW_TILES#></option>
+		  <option value="table"[#if Z2M_VIEW="table"#] selected[#endif#]><#LANG_Z2M_VIEW_TABLE#></option>
 		 </select>
     </div>
   </div> 
 
 
   <div class="form-group">
-    <label class="col-sm-3 control-label" [#if ERR_Z2M_NTILES#] style="color:red;font-weight:bold"[#endif#]>Number of tiles:</label>
+    <label class="col-sm-3 control-label" [#if ERR_Z2M_NTILES#] style="color:red;font-weight:bold"[#endif#]><#LANG_Z2M_LABEL_NTILES#>:</label>
     <div class="col-sm-9">
 		 <select name="z2m_ntiles" id="z2m_ntiles" class="form-control">
 		  <option value="3"[#if Z2M_NTILES="3"#] selected[#endif#]>3</option>
@@ -138,7 +139,7 @@
 
 	<div class="form-group">
 	 <div class="controls">
-	 <label><input type="checkbox" name="mqtt_debug" value="1"[#if MQTT_DEBUG="1"#] checked[#endif#]> enable  debmes message [#ZMQTT_DEBUG#]</label>
+	 <label><input type="checkbox" name="mqtt_debug" value="1"[#if MQTT_DEBUG="1"#] checked[#endif#]> <#LANG_Z2M_LABEL_DEBUG#> [#ZMQTT_DEBUG#]</label>
 	 </div>
 	</div> 
 
