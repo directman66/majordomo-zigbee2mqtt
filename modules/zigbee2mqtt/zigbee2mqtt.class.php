@@ -27,6 +27,11 @@ class zigbee2mqtt extends module
         $this->name = "zigbee2mqtt";
         $this->title = "zigbee2mqtt";
         $this->module_category = "<#LANG_SECTION_DEVICES#>";
+
+        // Языковые строки и голосовые фразы (en / ru / uk).
+        include_once(dirname(__FILE__) . '/zigbee2mqtt.i18n.php');
+        z2m_strings();
+
         $this->checkInstalled();
     }
 

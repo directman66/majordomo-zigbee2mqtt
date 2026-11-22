@@ -185,4 +185,8 @@ https://www.zigbee2mqtt.io/information/supported_devices.html
 
 Обсуждение умных ламп http://majordomo.smartliving.ru/forum/viewtopic.php?f=8&t=6016&p=95733#p95733
 
+# Языки интерфейса и голосовые фразы
+
+Поддерживаются английский (`en`), русский (`ru`) и украинский (`uk`) язык. Язык берётся из системной настройки MajorDoMo `SETTINGS_SITE_LANGUAGE`; для украинского ядро использует код `ua`, для которого тоже есть словарь. Подробности, список ключей и примеры вызова голосовых фраз — в [docs/I18N.ru.md](docs/I18N.ru.md).
+
 # Более подробная информация содержится на форуме  https://mjdm.ru/forum/viewtopic.php?f=5&t=6011 
