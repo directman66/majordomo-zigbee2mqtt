@@ -110,7 +110,11 @@ class zigbee2mqtt extends module
     {
         global $session;
 
-        define("ZMQTT_DEBUG", "1");
+        // Флаг отладки берётся из настроек модуля, а не задаётся принудительно.
+        $this->getConfig();
+        if (!defined('ZMQTT_DEBUG')) {
+            define('ZMQTT_DEBUG', !empty($this->config['MQTT_DEBUG']) ? $this->config['MQTT_DEBUG'] : '0');
+        }
 
         $out = array();
         if ($this->action == 'admin') {
@@ -725,8 +729,9 @@ else
 // debmes($params,'zigbee2mqtt_api');
 // debmes($_REQUEST,'zigbee2mqtt_api');
 
-        if ($_REQUEST['topic']) {
-            $this->processMessage($_REQUEST['topic'], $_REQUEST['msg']);
+        if (!empty($_REQUEST['topic'])) {
+            $msg = isset($_REQUEST['msg']) ? $_REQUEST['msg'] : '';
+            $this->processMessage($_REQUEST['topic'], $msg);
         }
     }
 
@@ -831,7 +836,8 @@ else
 //debmes('$msgtype: '.$msgtype, 'zzz222');
 //debmes($value, 'zzz222');
         if ($msgtype == 'rawnodes') {
-            $this->parse_rawnodes($json, $gw);
+            // parse_rawnodes ожидает строку JSON: $json здесь ещё не определён.
+            $this->parse_rawnodes($value, $gw);
         }
 
 
@@ -1563,7 +1569,7 @@ else
         }
 
 //print_r($_GET);
-        $slsipp = $_GET['slsipp'];
+        $slsipp = isset($_GET['slsipp']) ? $_GET['slsipp'] : '';
         $out['SLSIPP'] = trim($slsipp);
 
 
@@ -1575,7 +1581,9 @@ else
 
 
 //define("ZMQTT_DEBUG", $this->config['MQTT_DEBUG']);
-        define("ZMQTT_DEBUG", "1");
+        if (!defined('ZMQTT_DEBUG')) {
+            define('ZMQTT_DEBUG', !empty($this->config['MQTT_DEBUG']) ? $this->config['MQTT_DEBUG'] : '0');
+        }
 
 
         $out['ZMQTT_DEBUG'] = ZMQTT_DEBUG;
@@ -3922,8 +3930,11 @@ SQLIsert('zigbee2mqtt_devices', $res2);
 //if (ZMQTT_DEBUG=="1" ) debmes($map, 'zigbee2mqtt');
 
 //$json1=json_decode($map);
-        $json1 = json_decode($json, JSON_OBJECT_AS_ARRAY);
+        // Ниже элементы читаются как объекты ($str->{'sourceIeeeAddr'}),
+        // поэтому декодировать в ассоциативные массивы нельзя.
+        $json1 = json_decode($json);
 
+        $allieee = '';
         $total = count($json1);
 //if (ZMQTT_DEBUG=="1" ) debmes($total, 'zigbee2mqtt');
 
