@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<module>
+    <name>zigbee2mqtt</name>
+    <title>Zigbee2MQTT — Zigbee devices in MajorDoMo</title>
+    <title_ru>Zigbee2MQTT — устройства Zigbee в MajorDoMo</title_ru>
+    <title_uk>Zigbee2MQTT — пристрої Zigbee у MajorDoMo</title_uk>
+    <category>devices</category>
+    <author>directman66</author>
+    <url>https://github.com/directman66/majordomo-zigbee2mqtt</url>
+    <version>1.0.0</version>
+    <description>Zigbee device integration for MajorDoMo via zigbee2mqtt and MQTT: automatic device discovery, metrics, control, network map and log.</description>
+    <description_ru>Интеграция устройств Zigbee в MajorDoMo через zigbee2mqtt и MQTT: автоматическое создание устройств, метрики, управление, карта сети и журнал с ограниченным размером.</description_ru>
+    <support>https://github.com/directman66/majordomo-zigbee2mqtt/issues</support>
+    <requires>
+        <module>control_modules</module>
+    </requires>
+</module>
