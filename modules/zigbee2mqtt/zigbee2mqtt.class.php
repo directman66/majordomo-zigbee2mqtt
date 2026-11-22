@@ -3148,6 +3148,11 @@ if ($property_id) {
 // echo "</script>";
 
 
+        if (isset($_GET['z2m_restart_cycle']) && (int)$_GET['z2m_restart_cycle'] === 1) {
+            setGlobal('cycle_zigbee2mqttControl', 'restart');
+            $this->redirect('?tab=settings');
+        }
+
         if ($this->view_mode == 'update_settings') {
 
 
@@ -3173,6 +3178,59 @@ if ($property_id) {
 // echo "</script>";
 
 
+            // Проверка значений перед сохранением. Ошибки остаются на странице настроек.
+            $settings_errors = array();
+
+            $clean_port = (int)$mqtt_port;
+            if ($clean_port < 1 || $clean_port > 65535) {
+                $settings_errors['MQTT_PORT'] = 'Порт MQTT должен быть числом от 1 до 65535';
+            }
+
+            $clean_query = trim($mqtt_query);
+            if ($clean_query === '') {
+                $settings_errors['MQTT_QUERY'] = 'Укажите путь подписки MQTT';
+            }
+
+            $clean_hist = trim($z2m_hist);
+            if ($clean_hist === '' || !ctype_digit($clean_hist)) {
+                $settings_errors['Z2M_HIST'] = 'Срок хранения журнала должен быть целым числом (0 — отключить журнал)';
+            }
+
+            $clean_ntiles = trim($z2m_ntiles);
+            if (!in_array($clean_ntiles, array('3', '4', '5', '6'), true)) {
+                $settings_errors['Z2M_NTILES'] = 'Выберите количество плиток от 3 до 6';
+            }
+
+            if ($settings_errors) {
+                foreach ($settings_errors as $field => $message) {
+                    $out['ERR_' . $field] = 1;
+                }
+                $out['SETTINGS_ERROR'] = implode(' ', $settings_errors);
+
+                // Возвращаемся к шаблону вкладки настроек, а не к несуществующему
+                // шаблону update_settings.html.
+                $this->view_mode = '';
+                $this->tab = 'settings';
+                $out['VIEW_MODE'] = '';
+                $out['TAB'] = 'settings';
+
+                // Оставляем введённые значения, чтобы их не пришлось заполнять заново.
+                $out['MQTT_CLIENT'] = trim($mqtt_client);
+                $out['MQTT_HOST'] = trim($mqtt_host);
+                $out['MQTT_PORT'] = $mqtt_port;
+                $out['MQTT_QUERY'] = $mqtt_query;
+                $out['MQTT_USERNAME'] = trim($mqtt_username);
+                $out['MQTT_PASSWORD'] = trim($mqtt_password);
+                $out['MQTT_AUTH'] = (int)$mqtt_auth;
+                $out['Z2M_LOGMODE'] = trim($z2m_logmode2);
+                $out['ZIGBEE2MQTTPATH'] = trim($zigbee2mqttpath);
+                $out['SLSIP'] = trim($slsip);
+                $out['Z2M_HIST'] = $z2m_hist;
+                $out['Z2M_VIEW'] = trim($z2m_view);
+                $out['Z2M_NTILES'] = $z2m_ntiles;
+                $out['MQTT_DEBUG'] = trim($mqtt_debug);
+            } else {
+
             $this->config['MQTT_CLIENT'] = trim($mqtt_client);
             $this->config['MQTT_DEBUG'] = trim($mqtt_debug);
             $this->config['ZIGBEE2MQTTPATH'] = trim($zigbee2mqttpath);
@@ -3180,13 +3238,13 @@ if ($property_id) {
             $this->config['MQTT_USERNAME'] = trim($mqtt_username);
             $this->config['MQTT_PASSWORD'] = trim($mqtt_password);
             $this->config['MQTT_AUTH'] = (int)$mqtt_auth;
-            $this->config['MQTT_PORT'] = (int)$mqtt_port;
-            $this->config['MQTT_QUERY'] = trim($mqtt_query);
+            $this->config['MQTT_PORT'] = $clean_port;
+            $this->config['MQTT_QUERY'] = $clean_query;
             $this->config['Z2M_LOGMODE'] = trim($z2m_logmode2);
             $this->config['Z2M_VIEW'] = trim($z2m_view);
-            $this->config['Z2M_HIST'] = trim($z2m_hist);
+            $this->config['Z2M_HIST'] = $clean_hist;
             $this->config['SLSIP'] = trim($slsip);
-            $this->config['Z2M_NTILES'] = trim($z2m_ntiles);
+            $this->config['Z2M_NTILES'] = $clean_ntiles;
 
 
 // $this->sendcommand('zigbee2mqtt/bridge/config/log_level', $z2m_logmode);
@@ -3209,6 +3267,7 @@ $z2m->sendcommand($zz."/bridge/config/log_level", "' . $z2m_logmode2 . '");';
 
 
             $this->redirect("?tab=settings");
+            }
         }
 
         if (!$this->config['MQTT_HOST']) {

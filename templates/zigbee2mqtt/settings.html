@@ -1,5 +1,8 @@
 <form action="?" method="post" enctype="multipart/form-data" name="frmEdit" class="form-horizontal">
 <fieldset>
+	[#if SETTINGS_ERROR#]
+	<div class="alert alert-danger"><#SETTINGS_ERROR#></div>
+	[#endif#]
 	<div class="form-group">
 		<h3 class="controls" style="padding-top:0.5em">MQTT settings</h3>
 	</div>
@@ -19,7 +22,7 @@
   <div class="form-group">
     <label class="col-sm-3 control-label" [#if ERR_MQTT_PORT#] style="color:red;font-weight:bold"[#endif#]><#LANG_PORT#>: (*)</label>
     <div class="col-sm-9">
-      <input class="form-control" type="text" name="mqtt_port" value="<#MQTT_PORT#>">
+      <input class="form-control" type="number" min="1" max="65535" name="mqtt_port" value="<#MQTT_PORT#>">
     </div>
   </div>
   <div class="form-group">
@@ -105,7 +108,7 @@
   <div class="form-group">
     <label class="col-sm-3 control-label" [#if ERR_Z2M_HIST#] style="color:red;font-weight:bold"[#endif#]>History retention period (days):</label>
     <div class="col-sm-9">
-      <input class="form-control" type="text" name="z2m_hist" value="<#Z2M_HIST#>">
+      <input class="form-control" type="number" min="0" step="1" name="z2m_hist" value="<#Z2M_HIST#>">
     </div>
   </div>
 
@@ -147,6 +150,7 @@
  
 <div class="form-actions">
 <button type="submit" name="subm" value="Submit" class="btn btn-primary"><#LANG_UPDATE#></button>
+<a href="?tab=settings&z2m_restart_cycle=1" class="btn btn-default">Restart MQTT cycle</a>
 <input type="hidden" name="view_mode" value="update_settings">
 <input type="hidden" name="mode" value="update">
 <input type="hidden" name="tab" value="settings">
