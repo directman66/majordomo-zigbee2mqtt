@@ -1,0 +1,16 @@
+{
+  "SCRIPTS": [
+    {
+      "TITLE": "zigbee2mqtt_intent",
+      "DESCRIPTION": "Zigbee2MQTT: разбор голосовой команды. Вызовите runScript('zigbee2mqtt_intent'), положив фразу в $phrase (или $command). Результат — в zigbee2mqttLastResult.",
+      "CATEGORY_TITLE": "Zigbee2MQTT",
+      "CODE": "if (!function_exists('z2m_intent_handle') && defined('DIR_MODULES')) {\n    include_once(DIR_MODULES . 'zigbee2mqtt/zigbee2mqtt.intents.php');\n}\n$text = '';\nif (isset($phrase) && $phrase !== '') {\n    $text = $phrase;\n} elseif (isset($command) && $command !== '') {\n    $text = $command;\n} elseif (isset($details) && is_array($details) && isset($details['message'])) {\n    $text = $details['message'];\n}\n$res = z2m_intent_handle($text);\nif (function_exists('sg')) {\n    sg('zigbee2mqttLastResult', $res['message']);\n}\nreturn $res;",
+      "RUN_PERIODICALLY": 0,
+      "RUN_DAYS": "",
+      "RUN_TIME": "",
+      "AUTO_LINK": 0,
+      "LINKED_OBJECT": "",
+      "LINKED_PROPERTY": ""
+    }
+  ]
+}
